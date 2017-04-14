@@ -55,8 +55,8 @@ facturapi.products.create({
   // By default, taxes are calculated from the price with IVA 16%
   // But again, you can override that by explicitly providing a taxes array
   // taxes: [
-  //   { type: 'IVA', rate: 0.16 },
-  //   { type: 'IVA', rate: 0.03666, withholding: true }
+  //   { type: facturapi.TaxType.IVA, rate: 0.16 },
+  //   { type: facturapi.TaxType.ISR, rate: 0.03666, withholding: true }
   // ]
 }).then(product => {
   // Remember to store the product.id in your records.
