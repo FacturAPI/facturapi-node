@@ -19,5 +19,11 @@
   "bugs": {
     "url": "https://github.com/javorosas/facturapi-node/issues"
   },
-  "homepage": "https://github.com/javorosas/facturapi-node#readme"
+  "homepage": "https://github.com/javorosas/facturapi-node#readme",
+  "dependencies": {
+    "axios": "^0.16.1"
+  },
+  "devDependencies": {
+    "semistandard": "^10.0.0"
+  }
 }
