@@ -1,0 +1,32 @@
+{
+  "name": "facturapi",
+  "version": "0.1.0",
+  "description": "FacturAPI makes it easy for developers to generate valid Invoices in Mexico (known as Factura Electrónica or CFDI).",
+  "main": "index.js",
+  "engines": {
+    "node": ">=4.0.0"
+  },
+  "scripts": {
+    "test": "mocha"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/javorosas/facturapi-node.git"
+  },
+  "keywords": [
+    "cfdi",
+    "factura"
+  ],
+  "author": "Javo Rosas <javier@facturapi.io>",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/javorosas/facturapi-node/issues"
+  },
+  "homepage": "https://github.com/javorosas/facturapi-node#readme",
+  "dependencies": {
+    "axios": "^0.16.1"
+  },
+  "devDependencies": {
+    "semistandard": "^10.0.0"
+  }
+}
