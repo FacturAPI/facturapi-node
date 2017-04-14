@@ -7,7 +7,7 @@ This is the official Node.js wrapper for https://facturapi.io
 
 FacturAPI makes it easy for developers to generate valid Invoices in Mexico (known as Factura Electrónica or CFDI).
 
-If you've ever used [Stripe](https://stripe.com) or [Conekta](https://conekta.mx), you'll find FacturAPI very straightforward to understand and integrate in your server app.
+If you've ever used [Stripe](https://stripe.com) or [Conekta](https://conekta.io), you'll find FacturAPI very straightforward to understand and integrate in your server app.
 
 ## Install
 
@@ -72,7 +72,7 @@ facturapi.products.create({
 const facturapi = require('facturapi')('YOUR_API_KEY');
 facturapi.invoices.create({
   customer: 'YOUR_CUSTOMER_ID',
-  payment_form: facturapi.PaymentForm.ELECTRONIC_PAYMENT, // Constant from SAT's catalog. Check out our documentation to learn more.
+  payment_form: facturapi.PaymentForm.TRANSFERENCIA_ELECTRONICA, // Constant from SAT's catalog. Check out our documentation to learn more.
   items: [
     {
       quantity: 1, // Optional. Defaults to 1.
