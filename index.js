@@ -1,4 +1,5 @@
 var Wrapper = require('./lib/wrapper');
+var enums = require('./lib/enums');
 module.exports = function (apiKey) {
   var wrapper = new Wrapper(apiKey);
   return {
@@ -21,6 +22,9 @@ module.exports = function (apiKey) {
       retrieve: wrapper.retrieveInvoice,
       create: wrapper.createInvoice,
       cancel: wrapper.cancelInvoice
-    }
+    },
+    PaymentForm: enums.PaymentForm,
+    PaymentFormList: enums.PaymentFormList,
+    TaxType: enums.TaxType
   };
 };
