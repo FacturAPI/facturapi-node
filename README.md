@@ -54,7 +54,7 @@ facturapi.customers.create({
 ```javascript
 const facturapi = require('facturapi')('YOUR_API_KEY');
 facturapi.products.create({
-  product_key: '43191501',  // Clave Producto/Servicio from SAT's catalog. Log in to FacturAPI and use our tool to look it up.
+  product_key: '43191501R14',  // Clave Producto/Servicio from SAT's catalog. Log in to FacturAPI and use our tool to look it up.
   description: 'Apple iPhone 8',
   price: 20000, // price in MXN.
   // By default, taxes are calculated from the price with IVA 16%
@@ -76,26 +76,37 @@ const facturapi = require('facturapi')('YOUR_API_KEY');
 facturapi.invoices.create({
   customer: 'YOUR_CUSTOMER_ID',
   payment_form: facturapi.PaymentForm.TRANSFERENCIA_ELECTRONICA, // Constant from SAT's catalog. Check out our documentation to learn more.
-  items: [
-    {
-      quantity: 1, // Optional. Defaults to 1.
-      product: 'YOUR_PRODUCT_ID'
-    },
-    { ... } // Add as many products as you want to include in your invoice
-  ]
-}).then(invoice => {
-  // You have successfully created your invoice. Now you can...
-  const pdfStream = facturapi.downloadPdf(invoice.id); // stream containing the PDF
-  const xmlStream = facturapi.downloadXml(invoice.id); // stream containing the XML
-  const zipStream = facturapi.downloadZip(invoice.id); // stream containing the PDF and XML as a ZIP file
-  // Save your invoice to a folder
-  const fs = require('fs');
-  const myZipFile = fs.createWriteStream('/path/to/destination/folder');
-  zipStream.pipe(myZipFile);
-  myZipFile.on('finish', () => { /* Finished downloading, Yay! */ });
-  // Or send the invoice to your customer's email (if any)
-  facturapi.invoices.sendByEmail(invioce.id); // Also returns a Promise
-}).catch(err => console.log(err)); // Handle the error.
+  items: [{
+    quantity: 1, // Optional. Defaults to 1.
+    product: 'YOUR_PRODUCT_ID'
+  }] // Add as many products as you want to include in your invoice
+}).then(invoice => { ... });
+```
+
+#### Download your invoice
+
+```javascript
+// Once you have successfully created your invoice, you can...
+const pdfStream = facturapi.downloadPdf(invoice.id); // stream containing the PDF
+const xmlStream = facturapi.downloadXml(invoice.id); // stream containing the XML
+const zipStream = facturapi.downloadZip(invoice.id); // stream containing the PDF and XML as a ZIP file
+// Save your invoice to a folder
+const fs = require('fs');
+const myZipFile = fs.createWriteStream('/path/to/destination/folder');
+zipStream.pipe(myZipFile);
+myZipFile.on('finish', () => {
+  // Finished downloading, Yay!
+});
+```
+
+#### Send your invoice by email
+
+```javascript
+// Send the invoice to your customer's email (if any)
+facturapi.invoices.sendByEmail(invioce.id) // Also returns a Promise
+  .then(() => {
+    // Successfully sent
+  }).catch(err => console.log(err)); // Handle the error.
 ```
 
 ## Documentation
