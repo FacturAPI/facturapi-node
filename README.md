@@ -87,16 +87,16 @@ facturapi.invoices.create({
 
 ```javascript
 // Once you have successfully created your invoice, you can...
-const pdfStream = facturapi.downloadPdf(invoice.id); // stream containing the PDF
-const xmlStream = facturapi.downloadXml(invoice.id); // stream containing the XML
-const zipStream = facturapi.downloadZip(invoice.id); // stream containing the PDF and XML as a ZIP file
-// Save your invoice to a folder
 const fs = require('fs');
-const myZipFile = fs.createWriteStream('/path/to/destination/folder');
-zipStream.pipe(myZipFile);
-myZipFile.on('finish', () => {
-  // Finished downloading, Yay!
-});
+facturapi.invoices.downloadZip(invoice.id) // or downloadPdf or downloadXml
+  .then(zipStream => {
+    // stream containing the PDF and XML as a ZIP file
+    // Save your invoice to a folder
+    const myZipFile = fs.createWriteStream('/path/to/destination/folder');
+    zipStream.pipe(myZipFile);
+    myZipFile.on('finish', () => {
+      // Finished downloading, Yay!
+    });
 ```
 
 #### Send your invoice by email
