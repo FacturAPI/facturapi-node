@@ -1,14 +1,17 @@
+'use strict';
+
 var constants = require('./constants');
 var axios = require('axios');
 
 axios.defaults.baseURL = constants.BASE_URL;
 axios.defaults.headers.post['Content-Type'] = 'application/json';
 axios.defaults.headers.put['Content-Type'] = 'application/json';
-axios.defaults.interceptors.response.use(function (response) {
+var responseInterceptor = function (response) {
   return response.data;
-}, function (error) {
+};
+var errorInterceptor = function (error) {
   return Promise.reject(error.response.data);
-});
+};
 
 function encodeStringToBase64 (text) {
   // Make sure text is a string
@@ -24,12 +27,10 @@ function encodeStringToBase64 (text) {
 class Wrapper {
   constructor (apiKey) {
     this.client = axios.create();
+    this.client.interceptors.response.use(responseInterceptor, errorInterceptor);
+    this.t = 23;
     this.client.defaults.headers.common['Authorization'] = 'Basic ' + encodeStringToBase64(apiKey + ':');
   }
-  /**
-   * Gets a paginated list of customers that belong to your organization
-   * @param {Object} params
-   */
   listCustomers (params) {
     if (!params) params = {};
     return this.client.get('/customers', { params: params });
@@ -131,6 +132,37 @@ class Wrapper {
    */
   cancelInvoice (id) {
     return this.client.delete('/invoices/' + id);
+  }
+  /**
+   * Sends the invoice to the customer's email
+   * @param {string} id Invoice Id
+   */
+  sendInvoiceByEmail (id) {
+    return this.client.post('/invoices/' + id + '/email');
+  }
+  /**
+   * Downloads the specified invoice in PDF format
+   * @param {string} id Invoice Id
+   * @returns {Promise<ReadStream>} PDF file in a stream
+   */
+  downloadPdf (id) {
+    return this.client.get('/invoices/' + id + '/pdf', { responseType: 'stream' });
+  }
+  /**
+   * Downloads the specified invoice in XML format
+   * @param {string} id Invoice Id
+   * @returns {Promise<ReadStream>} XML file in a stream
+   */
+  downloadXml (id) {
+    return this.client.get('/invoices/' + id + '/xml', { responseType: 'stream' });
+  }
+  /**
+   * Downloads the specified invoice in a ZIP package containing both PDF and XML files
+   * @param {string} id Invoice Id
+   * @returns {Promise<ReadStream>} ZIP file in a stream
+   */
+  downloadZip (id) {
+    return this.client.get('/invoices/' + id + '/zip', { responseType: 'stream' });
   }
 }
 
