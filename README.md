@@ -4,9 +4,7 @@ FacturAPI
 [![npm version](https://badge.fury.io/js/facturapi.svg)](https://badge.fury.io/js/facturapi)
 [![js-semistandard-style](https://img.shields.io/badge/code%20style-semistandard-brightgreen.svg?style=flat-square)](https://github.com/Flet/semistandard)
 
-**IMPORTANT**: This is a Work-in-progress. FacturAPI is still not available. We hope to release our service very soon :)
-
-This is the official Node.js wrapper for https://facturapi.io
+This is the official Node.js wrapper for https://www.facturapi.io
 
 FacturAPI makes it easy for developers to generate valid Invoices in Mexico (known as Factura Electrónica or CFDI).
 
