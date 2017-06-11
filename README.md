@@ -54,7 +54,7 @@ facturapi.customers.create({
 ```javascript
 const facturapi = require('facturapi')('YOUR_API_KEY');
 facturapi.products.create({
-  product_key: '43191501R14',  // Clave Producto/Servicio from SAT's catalog. Log in to FacturAPI and use our tool to look it up.
+  product_key: '4319150114',  // Clave Producto/Servicio from SAT's catalog. Log in to FacturAPI and use our tool to look it up.
   description: 'Apple iPhone 8',
   price: 20000, // price in MXN.
   // By default, taxes are calculated from the price with IVA 16%
@@ -78,7 +78,7 @@ facturapi.invoices.create({
   payment_form: facturapi.PaymentForm.TRANSFERENCIA_ELECTRONICA, // Constant from SAT's catalog. Check out our documentation to learn more.
   items: [{
     quantity: 1, // Optional. Defaults to 1.
-    product: 'YOUR_PRODUCT_ID'
+    product: 'YOUR_PRODUCT_ID' // You can also pass a product object instead
   }] // Add as many products as you want to include in your invoice
 }).then(invoice => { ... });
 ```
