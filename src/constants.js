@@ -1,4 +1,3 @@
 module.exports = {
-  // BASE_URL: 'https://facturapi.io/v1'
-  BASE_URL: 'http://localhost:2017/v1'
+  BASE_URL: 'https://www.facturapi.io/v1'
 };
