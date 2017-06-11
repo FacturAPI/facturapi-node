@@ -4,9 +4,7 @@ FacturAPI
 [![npm version](https://badge.fury.io/js/facturapi.svg)](https://badge.fury.io/js/facturapi)
 [![js-semistandard-style](https://img.shields.io/badge/code%20style-semistandard-brightgreen.svg?style=flat-square)](https://github.com/Flet/semistandard)
 
-**IMPORTANT**: This is a Work-in-progress. FacturAPI is still not available. We hope to release our service very soon :)
-
-This is the official Node.js wrapper for https://facturapi.io
+This is the official Node.js wrapper for https://www.facturapi.io
 
 FacturAPI makes it easy for developers to generate valid Invoices in Mexico (known as Factura Electrónica or CFDI).
 
@@ -54,7 +52,7 @@ facturapi.customers.create({
 ```javascript
 const facturapi = require('facturapi')('YOUR_API_KEY');
 facturapi.products.create({
-  product_key: '43191501R14',  // Clave Producto/Servicio from SAT's catalog. Log in to FacturAPI and use our tool to look it up.
+  product_key: '4319150114',  // Clave Producto/Servicio from SAT's catalog. Log in to FacturAPI and use our tool to look it up.
   description: 'Apple iPhone 8',
   price: 20000, // price in MXN.
   // By default, taxes are calculated from the price with IVA 16%
@@ -78,7 +76,7 @@ facturapi.invoices.create({
   payment_form: facturapi.PaymentForm.TRANSFERENCIA_ELECTRONICA, // Constant from SAT's catalog. Check out our documentation to learn more.
   items: [{
     quantity: 1, // Optional. Defaults to 1.
-    product: 'YOUR_PRODUCT_ID'
+    product: 'YOUR_PRODUCT_ID' // You can also pass a product object instead
   }] // Add as many products as you want to include in your invoice
 }).then(invoice => { ... });
 ```
