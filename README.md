@@ -111,7 +111,7 @@ facturapi.invoices.sendByEmail(invioce.id) // Also returns a Promise
 
 There's more you can do with this library: List, retrieve, update, and remove Customers, Products and Invoices.
 
-Visit the documentation at https://docs.facturapi.io.
+Visit the full documentation at http://docs.facturapi.io.
 
 ## Help
 
