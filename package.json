@@ -1,6 +1,6 @@
 {
   "name": "facturapi",
-  "version": "0.1.1",
+  "version": "0.1.2",
   "description": "FacturAPI makes it easy for developers to generate valid Invoices in Mexico (known as Factura Electrónica or CFDI).",
   "main": "index.js",
   "engines": {
