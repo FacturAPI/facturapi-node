@@ -18,7 +18,7 @@ npm install --save facturapi
 
 ## Before you begin
 
-Make sure you have created your free account on [FacturAPI](https://facturapi.io) and that you have your **API Keys**.
+Make sure you have created your free account on [FacturAPI](https://www.facturapi.io) and that you have your **API Keys**.
 
 ## Getting started
 
@@ -111,7 +111,7 @@ facturapi.invoices.sendByEmail(invioce.id) // Also returns a Promise
 
 There's more you can do with this library: List, retrieve, update, and remove Customers, Products and Invoices.
 
-Visit the documentation at https://facturapi.io/docs.
+Visit the documentation at https://docs.facturapi.io.
 
 ## Help
 
