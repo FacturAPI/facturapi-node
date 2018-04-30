@@ -1,11 +1,11 @@
-'use strict'
+'use strict';
 
 class Products {
   /**
    * @param {Wrapper} wrapper
    */
   constructor (wrapper) {
-    this.wrapper = wrapper
+    this.wrapper = wrapper;
   }
 
   /**
@@ -14,7 +14,7 @@ class Products {
    * @returns {Promise}
    */
   create (data) {
-    return this.wrapper.createProduct(data)
+    return this.wrapper.createProduct(data);
   }
 
   /**
@@ -23,7 +23,7 @@ class Products {
    * @returns {Promise}
    */
   list (params) {
-    return this.wrapper.listProducts(params)
+    return this.wrapper.listProducts(params);
   }
 
   /**
@@ -32,7 +32,7 @@ class Products {
    * @returns {Promise}
    */
   retrieve (id) {
-    return this.wrapper.retrieveProduct(id)
+    return this.wrapper.retrieveProduct(id);
   }
 
   /**
@@ -42,7 +42,7 @@ class Products {
    * @returns {Promise}
    */
   update (id, data) {
-    return this.wrapper.updateProduct(id, data)
+    return this.wrapper.updateProduct(id, data);
   }
 
   /**
@@ -51,7 +51,7 @@ class Products {
    * @returns {Promise}
    */
   del (id) {
-    return this.wrapper.removeProduct(id)
+    return this.wrapper.removeProduct(id);
   }
 
   /**
@@ -60,7 +60,7 @@ class Products {
    * @returns {Promise}
    */
   keys (criteria) {
-    return this.wrapper.keys(criteria)
+    return this.wrapper.keys(criteria);
   }
 
   /**
@@ -69,8 +69,8 @@ class Products {
    * @returns {Promise}
    */
   units (criteria) {
-    return this.wrapper.units(criteria)
+    return this.wrapper.units(criteria);
   }
 }
 
-module.exports = Products
+module.exports = Products;

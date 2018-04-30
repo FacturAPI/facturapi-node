@@ -1,40 +1,40 @@
-'use strict'
+'use strict';
 
-var constants = require('./constants')
-var axios = require('axios')
+var constants = require('./constants');
+var axios = require('axios');
 
-axios.defaults.baseURL = constants.BASE_URL
-axios.defaults.headers.post['Content-Type'] = 'application/json'
-axios.defaults.headers.put['Content-Type'] = 'application/json'
+axios.defaults.baseURL = constants.BASE_URL;
+axios.defaults.headers.post['Content-Type'] = 'application/json';
+axios.defaults.headers.put['Content-Type'] = 'application/json';
 var responseInterceptor = function (response) {
-  return response.data
-}
+  return response.data;
+};
 var errorInterceptor = function (error) {
-  return Promise.reject(error.response.data)
-}
+  return Promise.reject(error.response.data);
+};
 
 function encodeStringToBase64 (text) {
   // Make sure text is a string
-  text = text.toString()
+  text = text.toString();
   // Check if this node.js version supports the safe method to create buffers
   if (Buffer.allocUnsafe) {
-    return Buffer.from(text).toString('base64')
+    return Buffer.from(text).toString('base64');
   } else {
-    return new Buffer(text).toString('base64')
+    return new Buffer(text).toString('base64');
   }
 }
 
 class Wrapper {
   constructor (apiKey) {
-    this.client = axios.create()
-    this.client.interceptors.response.use(responseInterceptor, errorInterceptor)
-    this.t = 23
-    this.client.defaults.headers.common['Authorization'] = 'Basic ' + encodeStringToBase64(apiKey + ':')
+    this.client = axios.create();
+    this.client.interceptors.response.use(responseInterceptor, errorInterceptor);
+    this.t = 23;
+    this.client.defaults.headers.common['Authorization'] = 'Basic ' + encodeStringToBase64(apiKey + ':');
   }
 
   listCustomers (params) {
-    if (!params) params = {}
-    return this.client.get('/customers', {params: params})
+    if (!params) params = {};
+    return this.client.get('/customers', {params: params});
   }
 
   /**
@@ -42,8 +42,8 @@ class Wrapper {
    * @param {string} id
    */
   retrieveCustomer (id) {
-    if (!id) return Promise.reject(new Error('id is required'))
-    return this.client.get('/customers/' + id)
+    if (!id) return Promise.reject(new Error('id is required'));
+    return this.client.get('/customers/' + id);
   }
 
   /**
@@ -51,7 +51,7 @@ class Wrapper {
    * @param {Object} data
    */
   createCustomer (data) {
-    return this.client.post('/customers', data)
+    return this.client.post('/customers', data);
   }
 
   /**
@@ -60,7 +60,7 @@ class Wrapper {
    * @param {Object} data
    */
   updateCustomer (id, data) {
-    return this.client.put('/customers/' + id, data)
+    return this.client.put('/customers/' + id, data);
   }
 
   /**
@@ -68,7 +68,7 @@ class Wrapper {
    * @param {string} id
    */
   removeCustomer (id) {
-    return this.client.delete('/customers/' + id)
+    return this.client.delete('/customers/' + id);
   }
 
   /**
@@ -76,8 +76,8 @@ class Wrapper {
    * @param {Object} params
    */
   listProducts (params) {
-    if (!params) params = {}
-    return this.client.get('/products', {params: params})
+    if (!params) params = {};
+    return this.client.get('/products', {params: params});
   }
 
   /**
@@ -85,8 +85,8 @@ class Wrapper {
    * @param {string} id
    */
   retrieveProduct (id) {
-    if (!id) return Promise.reject(new Error('id is required'))
-    return this.client.get('/products/' + id)
+    if (!id) return Promise.reject(new Error('id is required'));
+    return this.client.get('/products/' + id);
   }
 
   /**
@@ -94,7 +94,7 @@ class Wrapper {
    * @param {Object} data
    */
   createProduct (data) {
-    return this.client.post('/products', data)
+    return this.client.post('/products', data);
   }
 
   /**
@@ -103,7 +103,7 @@ class Wrapper {
    * @param {object} data
    */
   updateProduct (id, data) {
-    return this.client.put('/products/' + id, data)
+    return this.client.put('/products/' + id, data);
   }
 
   /**
@@ -111,7 +111,7 @@ class Wrapper {
    * @param {string} id
    */
   removeProduct (id) {
-    return this.client.delete('/products/' + id)
+    return this.client.delete('/products/' + id);
   }
 
   /**
@@ -119,7 +119,7 @@ class Wrapper {
    * @param {string} q
    */
   keys (q) {
-    return this.client.get('/products/keys', {q: q})
+    return this.client.get('/products/keys', {q: q});
   }
 
   /**
@@ -127,7 +127,7 @@ class Wrapper {
    * @param {string} q
    */
   units (q) {
-    return this.client.get('/products/units', {q: q})
+    return this.client.get('/products/units', {q: q});
   }
 
   /**
@@ -135,8 +135,8 @@ class Wrapper {
    * @param {Object} params
    */
   listInvoices (params) {
-    if (!params) params = {}
-    return this.client.get('/invoices', {params: params})
+    if (!params) params = {};
+    return this.client.get('/invoices', {params: params});
   }
 
   /**
@@ -144,8 +144,8 @@ class Wrapper {
    * @param {string} id
    */
   retrieveInvoice (id) {
-    if (!id) return Promise.reject(new Error('id is required'))
-    return this.client.get('/invoices/' + id)
+    if (!id) return Promise.reject(new Error('id is required'));
+    return this.client.get('/invoices/' + id);
   }
 
   /**
@@ -153,7 +153,7 @@ class Wrapper {
    * @param {Object} data
    */
   createInvoice (data) {
-    return this.client.post('/invoices', data)
+    return this.client.post('/invoices', data);
   }
 
   /**
@@ -161,7 +161,7 @@ class Wrapper {
    * @param {string} id
    */
   cancelInvoice (id) {
-    return this.client.delete('/invoices/' + id)
+    return this.client.delete('/invoices/' + id);
   }
 
   /**
@@ -169,7 +169,7 @@ class Wrapper {
    * @param {string} id Invoice Id
    */
   sendInvoiceByEmail (id) {
-    return this.client.post('/invoices/' + id + '/email')
+    return this.client.post('/invoices/' + id + '/email');
   }
 
   /**
@@ -178,7 +178,7 @@ class Wrapper {
    * @returns {Promise<ReadStream>} PDF file in a stream
    */
   downloadPdf (id) {
-    return this.client.get('/invoices/' + id + '/pdf', {responseType: 'stream'})
+    return this.client.get('/invoices/' + id + '/pdf', {responseType: 'stream'});
   }
 
   /**
@@ -187,7 +187,7 @@ class Wrapper {
    * @returns {Promise<ReadStream>} XML file in a stream
    */
   downloadXml (id) {
-    return this.client.get('/invoices/' + id + '/xml', {responseType: 'stream'})
+    return this.client.get('/invoices/' + id + '/xml', {responseType: 'stream'});
   }
 
   /**
@@ -196,8 +196,8 @@ class Wrapper {
    * @returns {Promise<ReadStream>} ZIP file in a stream
    */
   downloadZip (id) {
-    return this.client.get('/invoices/' + id + '/zip', {responseType: 'stream'})
+    return this.client.get('/invoices/' + id + '/zip', {responseType: 'stream'});
   }
 }
 
-module.exports = Wrapper
+module.exports = Wrapper;
