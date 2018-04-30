@@ -24,7 +24,6 @@ class Facturapi {
   }
 }
 
-
 module.exports = function (apiKey) {
   if (!(this instanceof Facturapi)) {
     return new Facturapi(apiKey);

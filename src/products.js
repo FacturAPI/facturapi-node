@@ -7,6 +7,7 @@ class Products {
   constructor (wrapper) {
     this.wrapper = wrapper;
   }
+
   /**
    * Creates a new product in your organization
    * @param {Object} data
@@ -15,6 +16,7 @@ class Products {
   create (data) {
     return this.wrapper.createProduct(data);
   }
+
   /**
    * Gets a paginated list of products that belong to your organization
    * @param {[Object]} params - Search parameters
@@ -23,6 +25,7 @@ class Products {
   list (params) {
     return this.wrapper.listProducts(params);
   }
+
   /**
    * Gets a single product object
    * @param {string} id
@@ -31,6 +34,7 @@ class Products {
   retrieve (id) {
     return this.wrapper.retrieveProduct(id);
   }
+
   /**
    * Updates a product
    * @param {string} id
@@ -40,6 +44,7 @@ class Products {
   update (id, data) {
     return this.wrapper.updateProduct(id, data);
   }
+
   /**
    * Permanently removes a product from your organization.
    * @param {string} id
@@ -47,6 +52,24 @@ class Products {
    */
   del (id) {
     return this.wrapper.removeProduct(id);
+  }
+
+  /**
+   * Searches product keys by criteria
+   * @param {string} criteria
+   * @returns {Promise}
+   */
+  keys (criteria) {
+    return this.wrapper.keys(criteria);
+  }
+
+  /**
+   * Searches products units by criteria
+   * @param {string} criteria
+   * @returns {Promise}
+   */
+  units (criteria) {
+    return this.wrapper.units(criteria);
   }
 }
 

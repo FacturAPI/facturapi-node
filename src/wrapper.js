@@ -31,10 +31,12 @@ class Wrapper {
     this.t = 23;
     this.client.defaults.headers.common['Authorization'] = 'Basic ' + encodeStringToBase64(apiKey + ':');
   }
+
   listCustomers (params) {
     if (!params) params = {};
     return this.client.get('/customers', { params: params });
   }
+
   /**
    * Gets a single customer object
    * @param {string} id
@@ -43,6 +45,7 @@ class Wrapper {
     if (!id) return Promise.reject(new Error('id is required'));
     return this.client.get('/customers/' + id);
   }
+
   /**
    * Creates a new customer in your organization
    * @param {Object} data
@@ -50,6 +53,7 @@ class Wrapper {
   createCustomer (data) {
     return this.client.post('/customers', data);
   }
+
   /**
    * Updates a customer
    * @param {string} id
@@ -58,6 +62,7 @@ class Wrapper {
   updateCustomer (id, data) {
     return this.client.put('/customers/' + id, data);
   }
+
   /**
    * Permanently removes a customer from your organization.
    * @param {string} id
@@ -65,6 +70,7 @@ class Wrapper {
   removeCustomer (id) {
     return this.client.delete('/customers/' + id);
   }
+
   /**
    * Gets a paginated list of products that belong to your organization
    * @param {Object} params
@@ -73,7 +79,8 @@ class Wrapper {
     if (!params) params = {};
     return this.client.get('/products', { params: params });
   }
-    /**
+
+  /**
    * Gets a single product object
    * @param {string} id
    */
@@ -81,6 +88,7 @@ class Wrapper {
     if (!id) return Promise.reject(new Error('id is required'));
     return this.client.get('/products/' + id);
   }
+
   /**
    * Creates a new product in your organization
    * @param {Object} data
@@ -88,6 +96,7 @@ class Wrapper {
   createProduct (data) {
     return this.client.post('/products', data);
   }
+
   /**
    * Updates a product
    * @param {string} id
@@ -96,6 +105,7 @@ class Wrapper {
   updateProduct (id, data) {
     return this.client.put('/products/' + id, data);
   }
+
   /**
    * Permanently removes a product from your organization
    * @param {string} id
@@ -103,6 +113,23 @@ class Wrapper {
   removeProduct (id) {
     return this.client.delete('/products/' + id);
   }
+
+  /**
+   * Searches product keys by criteria "q"
+   * @param {string} q
+   */
+  keys (q) {
+    return this.client.get('/products/keys', { q: q });
+  }
+
+  /**
+   * Searches product units by criteria "q"
+   * @param {string} q
+   */
+  units (q) {
+    return this.client.get('/products/units', { q: q });
+  }
+
   /**
    * Gets a paginated list of invoices created by your organization
    * @param {Object} params
@@ -111,6 +138,7 @@ class Wrapper {
     if (!params) params = {};
     return this.client.get('/invoices', { params: params });
   }
+
   /**
    * Gets a single invoice object
    * @param {string} id
@@ -119,6 +147,7 @@ class Wrapper {
     if (!id) return Promise.reject(new Error('id is required'));
     return this.client.get('/invoices/' + id);
   }
+
   /**
    * Creates a new valid invoice (CFDI).
    * @param {Object} data
@@ -126,6 +155,7 @@ class Wrapper {
   createInvoice (data) {
     return this.client.post('/invoices', data);
   }
+
   /**
    * Cancels an invoice. The invoice will not be valid anymore and will change its status to canceled.
    * @param {string} id
@@ -133,6 +163,7 @@ class Wrapper {
   cancelInvoice (id) {
     return this.client.delete('/invoices/' + id);
   }
+
   /**
    * Sends the invoice to the customer's email
    * @param {string} id Invoice Id
@@ -140,6 +171,7 @@ class Wrapper {
   sendInvoiceByEmail (id) {
     return this.client.post('/invoices/' + id + '/email');
   }
+
   /**
    * Downloads the specified invoice in PDF format
    * @param {string} id Invoice Id
@@ -148,6 +180,7 @@ class Wrapper {
   downloadPdf (id) {
     return this.client.get('/invoices/' + id + '/pdf', { responseType: 'stream' });
   }
+
   /**
    * Downloads the specified invoice in XML format
    * @param {string} id Invoice Id
@@ -156,6 +189,7 @@ class Wrapper {
   downloadXml (id) {
     return this.client.get('/invoices/' + id + '/xml', { responseType: 'stream' });
   }
+
   /**
    * Downloads the specified invoice in a ZIP package containing both PDF and XML files
    * @param {string} id Invoice Id
