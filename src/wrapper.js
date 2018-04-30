@@ -34,7 +34,7 @@ class Wrapper {
 
   listCustomers (params) {
     if (!params) params = {};
-    return this.client.get('/customers', {params: params});
+    return this.client.get('/customers', { params: params });
   }
 
   /**
@@ -77,7 +77,7 @@ class Wrapper {
    */
   listProducts (params) {
     if (!params) params = {};
-    return this.client.get('/products', {params: params});
+    return this.client.get('/products', { params: params });
   }
 
   /**
@@ -119,7 +119,7 @@ class Wrapper {
    * @param {string} q
    */
   keys (q) {
-    return this.client.get('/products/keys', {q: q});
+    return this.client.get('/products/keys', { q: q });
   }
 
   /**
@@ -127,7 +127,7 @@ class Wrapper {
    * @param {string} q
    */
   units (q) {
-    return this.client.get('/products/units', {q: q});
+    return this.client.get('/products/units', { q: q });
   }
 
   /**
@@ -136,7 +136,7 @@ class Wrapper {
    */
   listInvoices (params) {
     if (!params) params = {};
-    return this.client.get('/invoices', {params: params});
+    return this.client.get('/invoices', { params: params });
   }
 
   /**
@@ -178,7 +178,7 @@ class Wrapper {
    * @returns {Promise<ReadStream>} PDF file in a stream
    */
   downloadPdf (id) {
-    return this.client.get('/invoices/' + id + '/pdf', {responseType: 'stream'});
+    return this.client.get('/invoices/' + id + '/pdf', { responseType: 'stream' });
   }
 
   /**
@@ -187,7 +187,7 @@ class Wrapper {
    * @returns {Promise<ReadStream>} XML file in a stream
    */
   downloadXml (id) {
-    return this.client.get('/invoices/' + id + '/xml', {responseType: 'stream'});
+    return this.client.get('/invoices/' + id + '/xml', { responseType: 'stream' });
   }
 
   /**
@@ -196,7 +196,7 @@ class Wrapper {
    * @returns {Promise<ReadStream>} ZIP file in a stream
    */
   downloadZip (id) {
-    return this.client.get('/invoices/' + id + '/zip', {responseType: 'stream'});
+    return this.client.get('/invoices/' + id + '/zip', { responseType: 'stream' });
   }
 }
 
