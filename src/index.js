@@ -13,14 +13,17 @@ var enums = require('./enums');
  * @returns {Facturapi} Instance of this library
  */
 class Facturapi {
+  static get TaxType () { return enums.TaxType; }
+  static get PaymentForm () { return enums.PaymentForm; }
+  static get PaymentMethod () { return enums.PaymentMethod; }
+  static get InvoiceType () { return enums.InvoiceType; }
+  static get InvoiceUse () { return enums.InvoiceUse; }
+  static get InvoiceRelation () { return enums.InvoiceRelation; }
   constructor (apiKey) {
     const wrapper = new Wrapper(apiKey);
     this.customers = new Customers(wrapper);
     this.products = new Products(wrapper);
     this.invoices = new Invoices(wrapper);
-    this.PaymentForm = enums.PaymentForm;
-    this.PaymentFormList = enums.PaymentFormList;
-    this.TaxType = enums.TaxType;
   }
 }
 
