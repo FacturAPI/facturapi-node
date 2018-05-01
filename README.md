@@ -16,16 +16,20 @@ If you've ever used [Stripe](https://stripe.com) or [Conekta](https://conekta.io
 npm install --save facturapi
 ```
 
-## Before you begin
+## Getting started
+
+### Authenticate with your API Key
 
 Make sure you have created your free account on [FacturAPI](https://www.facturapi.io) and that you have your **API Keys**.
 
-## Getting started
+```javascript
+const Facturapi = require('facturapi');
+const facturapi = new Facturapi('YOUR_API_KEY');
+```
 
 ### Create a customer
 
 ```javascript
-const facturapi = require('facturapi')('YOUR_API_KEY');
 facturapi.customers.create({
   legal_name: 'Walter White',     // Razón social
   tax_id: 'WIWA761018',           // RFC
@@ -50,7 +54,6 @@ facturapi.customers.create({
 ### Create a product
 
 ```javascript
-const facturapi = require('facturapi')('YOUR_API_KEY');
 facturapi.products.create({
   product_key: '4319150114',  // Clave Producto/Servicio from SAT's catalog. Log in to FacturAPI and use our tool to look it up.
   description: 'Apple iPhone 8',
@@ -58,8 +61,8 @@ facturapi.products.create({
   // By default, taxes are calculated from the price with IVA 16%
   // But again, you can override that by explicitly providing a taxes array
   // taxes: [
-  //   { type: facturapi.TaxType.IVA, rate: 0.16 },
-  //   { type: facturapi.TaxType.ISR, rate: 0.03666, withholding: true }
+  //   { type: Facturapi.TaxType.IVA, rate: 0.16 },
+  //   { type: Facturapi.TaxType.ISR, rate: 0.03666, withholding: true }
   // ]
 }).then(product => {
   // Remember to store the product.id in your records.
@@ -70,10 +73,9 @@ facturapi.products.create({
 ### Create an invoice
 
 ```javascript
-const facturapi = require('facturapi')('YOUR_API_KEY');
 facturapi.invoices.create({
   customer: 'YOUR_CUSTOMER_ID',
-  payment_form: facturapi.PaymentForm.TRANSFERENCIA_ELECTRONICA, // Constant from SAT's catalog. Check out our documentation to learn more.
+  payment_form: Facturapi.PaymentForm.TRANSFERENCIA_ELECTRONICA, // Constant from SAT's catalog. Check out our documentation to learn more.
   items: [{
     quantity: 1, // Optional. Defaults to 1.
     product: 'YOUR_PRODUCT_ID' // You can also pass a product object instead
