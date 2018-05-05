@@ -1,5 +1,3 @@
-'use strict';
-
 class Customers {
   /**
    * @param {Wrapper} wrapper
