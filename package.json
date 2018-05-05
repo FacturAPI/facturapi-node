@@ -25,7 +25,9 @@
     "*.{js,jsx,css}": ["prettier-eslint --write", "git add"]
   },
   "dependencies": {
-    "axios": "^0.18.0"
+    "axios": "^0.18.0",
+    "form-data": "^2.3.2",
+    "safe-buffer": "^5.1.2"
   },
   "devDependencies": {
     "eslint-config-prettier": "^2.9.0",
