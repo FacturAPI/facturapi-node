@@ -1,4 +1,4 @@
 {
-  "standard.autoFixOnSave": true,
-  "standard.semistandard": true
+  "prettier.eslintIntegration": true,
+  "editor.formatOnSave": true
 }
