@@ -30,6 +30,9 @@ class Facturapi {
   static get InvoiceRelation () {
     return enums.InvoiceRelation;
   }
+  static get TaxSystem () {
+    return enums.TaxSystem;
+  }
   constructor (apiKey) {
     const wrapper = new Wrapper(apiKey);
     this.customers = new Customers(wrapper);
