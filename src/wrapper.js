@@ -1,11 +1,11 @@
-'use strict';
-
-var constants = require('./constants');
-var axios = require('axios');
+var constants = require("./constants");
+var axios = require("axios");
+var FormData = require("form-data");
+var Buffer = require("safe-buffer").Buffer;
 
 axios.defaults.baseURL = constants.BASE_URL;
-axios.defaults.headers.post['Content-Type'] = 'application/json';
-axios.defaults.headers.put['Content-Type'] = 'application/json';
+axios.defaults.headers.post["Content-Type"] = "application/json";
+axios.defaults.headers.put["Content-Type"] = "application/json";
 var responseInterceptor = function (response) {
   return response.data;
 };
@@ -16,25 +16,24 @@ var errorInterceptor = function (error) {
 function encodeStringToBase64 (text) {
   // Make sure text is a string
   text = text.toString();
-  // Check if this node.js version supports the safe method to create buffers
-  if (Buffer.allocUnsafe) {
-    return Buffer.from(text).toString('base64');
-  } else {
-    return new Buffer(text).toString('base64');
-  }
+  return Buffer.from(text).toString("base64");
 }
 
 class Wrapper {
   constructor (apiKey) {
     this.client = axios.create();
-    this.client.interceptors.response.use(responseInterceptor, errorInterceptor);
+    this.client.interceptors.response.use(
+      responseInterceptor,
+      errorInterceptor
+    );
     this.t = 23;
-    this.client.defaults.headers.common['Authorization'] = 'Basic ' + encodeStringToBase64(apiKey + ':');
+    this.client.defaults.headers.common["Authorization"] =
+      "Basic " + encodeStringToBase64(apiKey + ":");
   }
 
   listCustomers (params) {
     if (!params) params = {};
-    return this.client.get('/customers', { params: params });
+    return this.client.get("/customers", { params: params });
   }
 
   /**
@@ -42,8 +41,8 @@ class Wrapper {
    * @param {string} id
    */
   retrieveCustomer (id) {
-    if (!id) return Promise.reject(new Error('id is required'));
-    return this.client.get('/customers/' + id);
+    if (!id) return Promise.reject(new Error("id is required"));
+    return this.client.get("/customers/" + id);
   }
 
   /**
@@ -51,7 +50,7 @@ class Wrapper {
    * @param {Object} data
    */
   createCustomer (data) {
-    return this.client.post('/customers', data);
+    return this.client.post("/customers", data);
   }
 
   /**
@@ -60,7 +59,7 @@ class Wrapper {
    * @param {Object} data
    */
   updateCustomer (id, data) {
-    return this.client.put('/customers/' + id, data);
+    return this.client.put("/customers/" + id, data);
   }
 
   /**
@@ -68,7 +67,7 @@ class Wrapper {
    * @param {string} id
    */
   removeCustomer (id) {
-    return this.client.delete('/customers/' + id);
+    return this.client.delete("/customers/" + id);
   }
 
   /**
@@ -77,7 +76,7 @@ class Wrapper {
    */
   listProducts (params) {
     if (!params) params = {};
-    return this.client.get('/products', { params: params });
+    return this.client.get("/products", { params: params });
   }
 
   /**
@@ -85,8 +84,8 @@ class Wrapper {
    * @param {string} id
    */
   retrieveProduct (id) {
-    if (!id) return Promise.reject(new Error('id is required'));
-    return this.client.get('/products/' + id);
+    if (!id) return Promise.reject(new Error("id is required"));
+    return this.client.get("/products/" + id);
   }
 
   /**
@@ -94,7 +93,7 @@ class Wrapper {
    * @param {Object} data
    */
   createProduct (data) {
-    return this.client.post('/products', data);
+    return this.client.post("/products", data);
   }
 
   /**
@@ -103,7 +102,7 @@ class Wrapper {
    * @param {object} data
    */
   updateProduct (id, data) {
-    return this.client.put('/products/' + id, data);
+    return this.client.put("/products/" + id, data);
   }
 
   /**
@@ -111,7 +110,7 @@ class Wrapper {
    * @param {string} id
    */
   removeProduct (id) {
-    return this.client.delete('/products/' + id);
+    return this.client.delete("/products/" + id);
   }
 
   /**
@@ -119,7 +118,7 @@ class Wrapper {
    * @param {string} q
    */
   keys (q) {
-    return this.client.get('/products/keys', { q: q });
+    return this.client.get("/products/keys", { q: q });
   }
 
   /**
@@ -127,7 +126,7 @@ class Wrapper {
    * @param {string} q
    */
   units (q) {
-    return this.client.get('/products/units', { q: q });
+    return this.client.get("/products/units", { q: q });
   }
 
   /**
@@ -136,7 +135,7 @@ class Wrapper {
    */
   listInvoices (params) {
     if (!params) params = {};
-    return this.client.get('/invoices', { params: params });
+    return this.client.get("/invoices", { params: params });
   }
 
   /**
@@ -144,8 +143,8 @@ class Wrapper {
    * @param {string} id
    */
   retrieveInvoice (id) {
-    if (!id) return Promise.reject(new Error('id is required'));
-    return this.client.get('/invoices/' + id);
+    if (!id) return Promise.reject(new Error("id is required"));
+    return this.client.get("/invoices/" + id);
   }
 
   /**
@@ -153,7 +152,7 @@ class Wrapper {
    * @param {Object} data
    */
   createInvoice (data) {
-    return this.client.post('/invoices', data);
+    return this.client.post("/invoices", data);
   }
 
   /**
@@ -161,7 +160,7 @@ class Wrapper {
    * @param {string} id
    */
   cancelInvoice (id) {
-    return this.client.delete('/invoices/' + id);
+    return this.client.delete("/invoices/" + id);
   }
 
   /**
@@ -169,7 +168,7 @@ class Wrapper {
    * @param {string} id Invoice Id
    */
   sendInvoiceByEmail (id) {
-    return this.client.post('/invoices/' + id + '/email');
+    return this.client.post("/invoices/" + id + "/email");
   }
 
   /**
@@ -178,7 +177,9 @@ class Wrapper {
    * @returns {Promise<ReadStream>} PDF file in a stream
    */
   downloadPdf (id) {
-    return this.client.get('/invoices/' + id + '/pdf', { responseType: 'stream' });
+    return this.client.get("/invoices/" + id + "/pdf", {
+      responseType: "stream"
+    });
   }
 
   /**
@@ -187,7 +188,9 @@ class Wrapper {
    * @returns {Promise<ReadStream>} XML file in a stream
    */
   downloadXml (id) {
-    return this.client.get('/invoices/' + id + '/xml', { responseType: 'stream' });
+    return this.client.get("/invoices/" + id + "/xml", {
+      responseType: "stream"
+    });
   }
 
   /**
@@ -196,7 +199,102 @@ class Wrapper {
    * @returns {Promise<ReadStream>} ZIP file in a stream
    */
   downloadZip (id) {
-    return this.client.get('/invoices/' + id + '/zip', { responseType: 'stream' });
+    return this.client.get("/invoices/" + id + "/zip", {
+      responseType: "stream"
+    });
+  }
+
+  /**
+   * Creates a new organization in your account
+   * @param {Object} data
+   */
+  createOrganization (data) {
+    return this.client.post("/organizations", data);
+  }
+
+  /**
+   * Gets a paginated list of organizations that belong to your account
+   * @param {Object} params
+   */
+  listOrganizations (params) {
+    if (!params) params = {};
+    return this.client.get("/organizations", { params: params });
+  }
+
+  /**
+   * Gets a single organization object
+   * @param {string} id
+   */
+  retrieveOrganization (id) {
+    if (!id) return Promise.reject(new Error("id is required"));
+    return this.client.get("/organizations/" + id);
+  }
+
+  /**
+   * Gets the api keys for an organization
+   * @param {string} id
+   */
+  getOrganizationApiKeys (id) {
+    if (!id) return Promise.reject(new Error("id is required"));
+    return this.client.get("/organizations/" + id + "/apikeys");
+  }
+
+  /**
+   * Permanently removes an organization from your account.
+   * @param {string} id
+   */
+  removeOrganization (id) {
+    if (!id) return Promise.reject(new Error("id is required"));
+    return this.client.delete("/organizations/" + id);
+  }
+
+  /**
+   * Updates the organization's legal information
+   * @param {string} id
+   * @param {object} data
+   */
+  updateOrganizationLegal (id, data) {
+    if (!id) return Promise.reject(new Error("id is required"));
+    return this.client.put("/organizations/" + id + "/legal", data);
+  }
+
+  /**
+   * Updates the organization's customization information
+   * @param {string} id
+   * @param {object} data
+   */
+  updateOrganizationCustomization (id, data) {
+    return this.client.put("/organizations/" + id + "/customization", data);
+  }
+
+  /**
+   * Uploads the organization's logo
+   * @param {string} id
+   * @param {ReadableStream} file
+   */
+  uploadOrganizationLogo (id, file) {
+    const formData = new FormData();
+    formData.append("file", file);
+    return this.client.put("/organizations/" + id + "/logo", formData, {
+      headers: formData.getHeaders()
+    });
+  }
+
+  /**
+   * Uploads the organization's certificate (CSD)
+   * @param {string} id
+   * @param {ReadableStream} cerFile
+   * @param {ReadableStream} keyFile
+   * @param {string} password
+   */
+  uploadOrganizationCertificate (id, cerFile, keyFile, password) {
+    const formData = new FormData();
+    formData.append("cer", cerFile);
+    formData.append("key", keyFile);
+    formData.append("password", password);
+    return this.client.put("/organizations/" + id + "/certificate", formData, {
+      headers: formData.getHeaders()
+    });
   }
 }
 
