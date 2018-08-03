@@ -5,7 +5,29 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](http://keepachangelog.com/en/1.0.0/)
 and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.html).
 
-## [1.2.0]
+## [2.0.0] 2018-08-04
+
+## Breaking changes
+
+- Now you must create the Facturapi instance using the `new` keyword every time.
+
+**Before:**
+
+```javascript
+// This was allowed
+const facturapi = Facturapi("YOUR_API_KEY");
+```
+
+**Now:**
+
+```javascript
+// Now you must always use new
+const facturapi = new Facturapi("YOUR_API_KEY");
+```
+
+## [1.2.0] 2018-08-04
+
+### Fixed
 
 - Reject with an Error, not with an object
 
