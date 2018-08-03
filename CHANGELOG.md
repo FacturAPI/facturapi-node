@@ -5,23 +5,27 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](http://keepachangelog.com/en/1.0.0/)
 and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.html).
 
+## [1.2.0]
+
+- Reject with an Error, not with an object
+
 ## [1.1.0] 2018-05-06
 
 ### Added
 
-* Support Organizations API
+- Support Organizations API
 
 ## [1.0.0] - 2018-05-01
 
 ### Added
 
-* Search `product_key`s using `facturapi.products.keys('your search')`
-* Search `unit_key`s using `facturapi.products.units('your search')`
-* Constants for PaymentMethod, InvoiceType, InvoiceUse, InvoiceRelation
+- Search `product_key`s using `facturapi.products.keys('your search')`
+- Search `unit_key`s using `facturapi.products.units('your search')`
+- Constants for PaymentMethod, InvoiceType, InvoiceUse, InvoiceRelation
 
 ### Breaking changes
 
-* Now contants should be accessed as static properties from the Facturapi class, instead of from the instance.
+- Now contants should be accessed as static properties from the Facturapi class, instead of from the instance.
 
 **Before:**
 
@@ -40,15 +44,15 @@ console.log(Facturapi.TaxType.IVA); // > IVA
 
 ### Fixed
 
-* Protocol should be HTTPS
+- Protocol should be HTTPS
 
 ## [0.1.2] - 2017-06-20
 
 ### Added
 
-* First release
-* Wrapper methods for:
-  * Customers
-  * Products
-  * Invoices
-* Added README file
+- First release
+- Wrapper methods for:
+  - Customers
+  - Products
+  - Invoices
+- Added README file
