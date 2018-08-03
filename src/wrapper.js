@@ -10,7 +10,7 @@ var responseInterceptor = function (response) {
   return response.data;
 };
 var errorInterceptor = function (error) {
-  return Promise.reject(error.response.data);
+  return Promise.reject(new Error(error.response.data.message));
 };
 
 function encodeStringToBase64 (text) {
