@@ -141,6 +141,7 @@ class Wrapper {
   /**
    * Gets a single invoice object
    * @param {string} id
+   * @returns {Promise<Object>} Invoice object
    */
   retrieveInvoice (id) {
     if (!id) return Promise.reject(new Error("id is required"));
@@ -166,9 +167,11 @@ class Wrapper {
   /**
    * Sends the invoice to the customer's email
    * @param {string} id Invoice Id
+   * @param {Object} data
+   * @param {string} data.email Email address to send the invoice to
    */
-  sendInvoiceByEmail (id) {
-    return this.client.post("/invoices/" + id + "/email");
+  sendInvoiceByEmail (id, data) {
+    return this.client.post("/invoices/" + id + "/email", data);
   }
 
   /**

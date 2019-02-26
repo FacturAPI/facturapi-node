@@ -39,11 +39,13 @@ class Invoices {
   }
   /**
    * Sends the invoice to the customer's email
-   * @param {string} id Invoice Id
+   * @param {String} id Invoice Id
+   * @param {Object} data Additional arguments
+   * @param {String} data.email Email address to send the invoice to
    * @returns {Promise}
    */
-  sendByEmail (id) {
-    return this.wrapper.sendInvoiceByEmail(id);
+  sendByEmail (id, data) {
+    return this.wrapper.sendInvoiceByEmail(id, data);
   }
   /**
    * Downloads the specified invoice in PDF format
