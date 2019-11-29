@@ -56,18 +56,20 @@ class Products {
    * Searches product keys by criteria
    * @param {string} criteria
    * @returns {Promise}
+   * @deprecated use `catalogs.searchProducts` instead. This method will be removed on the next major version.
    */
   keys (criteria) {
-    return this.wrapper.keys(criteria);
+    return this.wrapper.searchProducts({ q: criteria });
   }
 
   /**
    * Searches products units by criteria
    * @param {string} criteria
    * @returns {Promise}
+   * @deprecated use `catalogs.searchUnits` instead. This method will be removed on the next major version.
    */
   units (criteria) {
-    return this.wrapper.units(criteria);
+    return this.wrapper.searchUnits({ q: criteria });
   }
 }
 

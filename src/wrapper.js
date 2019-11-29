@@ -1,22 +1,26 @@
-var constants = require("./constants");
-var axios = require("axios");
-var FormData = require("form-data");
-var Buffer = require("safe-buffer").Buffer;
+var constants = require('./constants');
+var axios = require('axios');
+var FormData = require('form-data');
+var Buffer = require('safe-buffer').Buffer;
 
 axios.defaults.baseURL = constants.BASE_URL;
-axios.defaults.headers.post["Content-Type"] = "application/json";
-axios.defaults.headers.put["Content-Type"] = "application/json";
+axios.defaults.headers.post['Content-Type'] = 'application/json';
+axios.defaults.headers.put['Content-Type'] = 'application/json';
 var responseInterceptor = function (response) {
   return response.data;
 };
 var errorInterceptor = function (error) {
-  return Promise.reject(new Error(error.response.data.message));
+  if (error.isAxiosError) {
+    return Promise.reject(new Error(error.response.data.message));
+  } else {
+    return Promise.reject(new Error(error.message));
+  }
 };
 
 function encodeStringToBase64 (text) {
   // Make sure text is a string
   text = text.toString();
-  return Buffer.from(text).toString("base64");
+  return Buffer.from(text).toString('base64');
 }
 
 class Wrapper {
@@ -27,13 +31,13 @@ class Wrapper {
       errorInterceptor
     );
     this.t = 23;
-    this.client.defaults.headers.common["Authorization"] =
-      "Basic " + encodeStringToBase64(apiKey + ":");
+    this.client.defaults.headers.common.Authorization =
+      'Basic ' + encodeStringToBase64(apiKey + ':');
   }
 
   listCustomers (params) {
     if (!params) params = {};
-    return this.client.get("/customers", { params: params });
+    return this.client.get('/customers', { params: params });
   }
 
   /**
@@ -41,8 +45,8 @@ class Wrapper {
    * @param {string} id
    */
   retrieveCustomer (id) {
-    if (!id) return Promise.reject(new Error("id is required"));
-    return this.client.get("/customers/" + id);
+    if (!id) return Promise.reject(new Error('id is required'));
+    return this.client.get('/customers/' + id);
   }
 
   /**
@@ -50,7 +54,7 @@ class Wrapper {
    * @param {Object} data
    */
   createCustomer (data) {
-    return this.client.post("/customers", data);
+    return this.client.post('/customers', data);
   }
 
   /**
@@ -59,7 +63,7 @@ class Wrapper {
    * @param {Object} data
    */
   updateCustomer (id, data) {
-    return this.client.put("/customers/" + id, data);
+    return this.client.put('/customers/' + id, data);
   }
 
   /**
@@ -67,7 +71,7 @@ class Wrapper {
    * @param {string} id
    */
   removeCustomer (id) {
-    return this.client.delete("/customers/" + id);
+    return this.client.delete('/customers/' + id);
   }
 
   /**
@@ -76,7 +80,7 @@ class Wrapper {
    */
   listProducts (params) {
     if (!params) params = {};
-    return this.client.get("/products", { params: params });
+    return this.client.get('/products', { params: params });
   }
 
   /**
@@ -84,8 +88,8 @@ class Wrapper {
    * @param {string} id
    */
   retrieveProduct (id) {
-    if (!id) return Promise.reject(new Error("id is required"));
-    return this.client.get("/products/" + id);
+    if (!id) return Promise.reject(new Error('id is required'));
+    return this.client.get('/products/' + id);
   }
 
   /**
@@ -93,7 +97,7 @@ class Wrapper {
    * @param {Object} data
    */
   createProduct (data) {
-    return this.client.post("/products", data);
+    return this.client.post('/products', data);
   }
 
   /**
@@ -102,7 +106,7 @@ class Wrapper {
    * @param {object} data
    */
   updateProduct (id, data) {
-    return this.client.put("/products/" + id, data);
+    return this.client.put('/products/' + id, data);
   }
 
   /**
@@ -110,23 +114,23 @@ class Wrapper {
    * @param {string} id
    */
   removeProduct (id) {
-    return this.client.delete("/products/" + id);
+    return this.client.delete('/products/' + id);
   }
 
   /**
-   * Searches product keys by criteria "q"
-   * @param {string} q
+   * Searches product keys
+   * @param {object} params
    */
-  keys (q) {
-    return this.client.get("/products/keys", { q: q });
+  searchProducts (params) {
+    return this.client.get('/catalogs/keys', { params });
   }
 
   /**
-   * Searches product units by criteria "q"
-   * @param {string} q
+   * Searches product units
+   * @param {object} params
    */
-  units (q) {
-    return this.client.get("/products/units", { q: q });
+  searchUnits (params) {
+    return this.client.get('/catalogs/units', { params });
   }
 
   /**
@@ -135,7 +139,7 @@ class Wrapper {
    */
   listInvoices (params) {
     if (!params) params = {};
-    return this.client.get("/invoices", { params: params });
+    return this.client.get('/invoices', { params });
   }
 
   /**
@@ -144,8 +148,8 @@ class Wrapper {
    * @returns {Promise<Object>} Invoice object
    */
   retrieveInvoice (id) {
-    if (!id) return Promise.reject(new Error("id is required"));
-    return this.client.get("/invoices/" + id);
+    if (!id) return Promise.reject(new Error('id is required'));
+    return this.client.get('/invoices/' + id);
   }
 
   /**
@@ -153,7 +157,7 @@ class Wrapper {
    * @param {Object} data
    */
   createInvoice (data) {
-    return this.client.post("/invoices", data);
+    return this.client.post('/invoices', data);
   }
 
   /**
@@ -161,7 +165,7 @@ class Wrapper {
    * @param {string} id
    */
   cancelInvoice (id) {
-    return this.client.delete("/invoices/" + id);
+    return this.client.delete('/invoices/' + id);
   }
 
   /**
@@ -171,7 +175,7 @@ class Wrapper {
    * @param {string} data.email Email address to send the invoice to
    */
   sendInvoiceByEmail (id, data) {
-    return this.client.post("/invoices/" + id + "/email", data);
+    return this.client.post('/invoices/' + id + '/email', data);
   }
 
   /**
@@ -180,8 +184,8 @@ class Wrapper {
    * @returns {Promise<ReadStream>} PDF file in a stream
    */
   downloadPdf (id) {
-    return this.client.get("/invoices/" + id + "/pdf", {
-      responseType: "stream"
+    return this.client.get('/invoices/' + id + '/pdf', {
+      responseType: 'stream'
     });
   }
 
@@ -191,8 +195,8 @@ class Wrapper {
    * @returns {Promise<ReadStream>} XML file in a stream
    */
   downloadXml (id) {
-    return this.client.get("/invoices/" + id + "/xml", {
-      responseType: "stream"
+    return this.client.get('/invoices/' + id + '/xml', {
+      responseType: 'stream'
     });
   }
 
@@ -202,8 +206,8 @@ class Wrapper {
    * @returns {Promise<ReadStream>} ZIP file in a stream
    */
   downloadZip (id) {
-    return this.client.get("/invoices/" + id + "/zip", {
-      responseType: "stream"
+    return this.client.get('/invoices/' + id + '/zip', {
+      responseType: 'stream'
     });
   }
 
@@ -212,7 +216,7 @@ class Wrapper {
    * @param {Object} data
    */
   createOrganization (data) {
-    return this.client.post("/organizations", data);
+    return this.client.post('/organizations', data);
   }
 
   /**
@@ -221,7 +225,7 @@ class Wrapper {
    */
   listOrganizations (params) {
     if (!params) params = {};
-    return this.client.get("/organizations", { params: params });
+    return this.client.get('/organizations', { params: params });
   }
 
   /**
@@ -229,8 +233,8 @@ class Wrapper {
    * @param {string} id
    */
   retrieveOrganization (id) {
-    if (!id) return Promise.reject(new Error("id is required"));
-    return this.client.get("/organizations/" + id);
+    if (!id) return Promise.reject(new Error('id is required'));
+    return this.client.get('/organizations/' + id);
   }
 
   /**
@@ -238,8 +242,8 @@ class Wrapper {
    * @param {string} id
    */
   getOrganizationApiKeys (id) {
-    if (!id) return Promise.reject(new Error("id is required"));
-    return this.client.get("/organizations/" + id + "/apikeys");
+    if (!id) return Promise.reject(new Error('id is required'));
+    return this.client.get('/organizations/' + id + '/apikeys');
   }
 
   /**
@@ -247,8 +251,8 @@ class Wrapper {
    * @param {string} id
    */
   removeOrganization (id) {
-    if (!id) return Promise.reject(new Error("id is required"));
-    return this.client.delete("/organizations/" + id);
+    if (!id) return Promise.reject(new Error('id is required'));
+    return this.client.delete('/organizations/' + id);
   }
 
   /**
@@ -257,8 +261,8 @@ class Wrapper {
    * @param {object} data
    */
   updateOrganizationLegal (id, data) {
-    if (!id) return Promise.reject(new Error("id is required"));
-    return this.client.put("/organizations/" + id + "/legal", data);
+    if (!id) return Promise.reject(new Error('id is required'));
+    return this.client.put('/organizations/' + id + '/legal', data);
   }
 
   /**
@@ -267,7 +271,7 @@ class Wrapper {
    * @param {object} data
    */
   updateOrganizationCustomization (id, data) {
-    return this.client.put("/organizations/" + id + "/customization", data);
+    return this.client.put('/organizations/' + id + '/customization', data);
   }
 
   /**
@@ -277,8 +281,8 @@ class Wrapper {
    */
   uploadOrganizationLogo (id, file) {
     const formData = new FormData();
-    formData.append("file", file);
-    return this.client.put("/organizations/" + id + "/logo", formData, {
+    formData.append('file', file);
+    return this.client.put('/organizations/' + id + '/logo', formData, {
       headers: formData.getHeaders()
     });
   }
@@ -292,10 +296,10 @@ class Wrapper {
    */
   uploadOrganizationCertificate (id, cerFile, keyFile, password) {
     const formData = new FormData();
-    formData.append("cer", cerFile);
-    formData.append("key", keyFile);
-    formData.append("password", password);
-    return this.client.put("/organizations/" + id + "/certificate", formData, {
+    formData.append('cer', cerFile);
+    formData.append('key', keyFile);
+    formData.append('password', password);
+    return this.client.put('/organizations/' + id + '/certificate', formData, {
       headers: formData.getHeaders()
     });
   }

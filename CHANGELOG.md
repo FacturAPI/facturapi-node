@@ -5,9 +5,26 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](http://keepachangelog.com/en/1.0.0/)
 and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.html).
 
+## [2.2.2] 2019-11-29
+
+### Added
+
+- Catalogs API
+  - Search product keys using `catalogs.searchProduct`.
+  - Search units using `using`catalogs.searchUnits`.
+
+### Fixed
+
+- Updated all dependencies to clear security warnings
+- Previously swallowing messages from non-axios errors
+
+### Deprecated
+
+- `product.keys` and `product.units` are deprecated in favor of the new catalogs API, and will be removed on the next major release.
+
 ## [2.0.0] 2018-08-04
 
-## Breaking changes
+### Breaking changes
 
 - Now you must create the Facturapi instance using the `new` keyword every time.
 
@@ -15,14 +32,14 @@ and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.
 
 ```javascript
 // This was allowed
-const facturapi = Facturapi("YOUR_API_KEY");
+const facturapi = Facturapi('YOUR_API_KEY');
 ```
 
 **Now:**
 
 ```javascript
 // Now you must always use new
-const facturapi = new Facturapi("YOUR_API_KEY");
+const facturapi = new Facturapi('YOUR_API_KEY');
 ```
 
 ## [1.2.0] 2018-08-04
@@ -52,7 +69,7 @@ const facturapi = new Facturapi("YOUR_API_KEY");
 **Before:**
 
 ```javascript
-const facturapi = new Facturapi("YOUR_API_KEY");
+const facturapi = new Facturapi('YOUR_API_KEY');
 console.log(facturapi.TaxType.IVA); // > IVA
 ```
 

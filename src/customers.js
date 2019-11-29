@@ -5,6 +5,7 @@ class Customers {
   constructor (wrapper) {
     this.wrapper = wrapper;
   }
+
   /**
    * Creates a new customer in your organization
    * @param {Object} data
@@ -13,6 +14,7 @@ class Customers {
   create (data) {
     return this.wrapper.createCustomer(data);
   }
+
   /**
    * Gets a paginated list of customers that belong to your organization
    * @param {[Object]} params - Search parameters
@@ -21,6 +23,7 @@ class Customers {
   list (params) {
     return this.wrapper.listCustomers(params);
   }
+
   /**
    * Gets a single customer object
    * @param {string} id
@@ -29,6 +32,7 @@ class Customers {
   retrieve (id) {
     return this.wrapper.retrieveCustomer(id);
   }
+
   /**
    * Updates a customer
    * @param {string} id
@@ -38,6 +42,7 @@ class Customers {
   update (id, data) {
     return this.wrapper.updateCustomer(id, data);
   }
+
   /**
    * Permanently removes a customer from your organization.
    * @param {string} id
