@@ -122,7 +122,7 @@ class Wrapper {
    * @param {object} params
    */
   searchProducts (params) {
-    return this.client.get('/catalogs/keys', { params });
+    return this.client.get('/catalogs/products', { params });
   }
 
   /**
