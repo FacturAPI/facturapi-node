@@ -303,6 +303,76 @@ class Wrapper {
       headers: formData.getHeaders()
     });
   }
+
+  /**
+   * Gets a paginated list of receipts created by your organization
+   * @param {Object} params
+   */
+  listReceipts (params) {
+    if (!params) params = {};
+    return this.client.get('/receipts', { params });
+  }
+
+  /**
+   * Gets a single receipt
+   * @param {string} id
+   * @returns {Promise<Object>} Receipt object
+   */
+  retrieveReceipt (id) {
+    if (!id) return Promise.reject(new Error('id is required'));
+    return this.client.get('/receipts/' + id);
+  }
+
+  /**
+   * Creates a new receipt.
+   * @param {Object} data
+   */
+  createReceipt (data) {
+    return this.client.post('/receipts', data);
+  }
+
+  /**
+   * Cancels an receipt.
+   * @param {string} id
+   */
+  cancelReceipt (id) {
+    return this.client.delete('/receipts/' + id);
+  }
+
+  /**
+   * Updates the organization's receipts settings
+   * @param {string} id
+   * @param {object} data
+   */
+  invoiceReceipt (id, data) {
+    return this.client.post('/receipts/' + id + '/invoice', data);
+  }
+
+  /**
+   * Updates the organization's receipts settings
+   * @param {string} id
+   * @param {object} data
+   */
+  updateReceiptSettings (id, data) {
+    return this.client.put('/organizations/' + id + '/receipts', data);
+  }
+
+  /**
+   * Updates the organization's domain
+   * @param {string} id
+   * @param {object} data
+   */
+  updateDomain (id, data) {
+    return this.client.put('/organizations/' + id + '/domain', data);
+  }
+
+  /**
+   * Checks if a domain is available for self invoices
+   * @param {object} data
+   */
+  checkDomainIsAvailable (data) {
+    return this.client.put('/organizations/domain-check', data);
+  }
 }
 
 module.exports = Wrapper;

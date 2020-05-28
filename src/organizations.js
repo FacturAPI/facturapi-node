@@ -54,6 +54,35 @@ class Organizations {
   }
 
   /**
+   * Updates the organization's customization information
+   * @param {string} id
+   * @param {Object} data
+   * @returns {Promise}
+   */
+  updateReceiptSettings (id, data) {
+    return this.wrapper.updateReceiptSettings(id, data);
+  }
+
+  /**
+   * Updates the organization's customization information
+   * @param {string} id
+   * @param {Object} data
+   * @returns {Promise}
+   */
+  updateDomain (id, data) {
+    return this.wrapper.updateDomain(id, data);
+  }
+
+  /**
+   * Checks if a domain is available for self invoices
+   * @param {object} data
+   * @returns {Promise<{ available: boolean }>}
+   */
+  checkDomainIsAvailable (data) {
+    return this.wrapper.checkDomainIsAvailable(data);
+  }
+
+  /**
    * Uploads the organization's logo
    * @param {string} id
    * @param {ReadableStream} file

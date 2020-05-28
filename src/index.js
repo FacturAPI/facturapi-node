@@ -1,10 +1,11 @@
-var Wrapper = require('./wrapper');
-var Customers = require('./customers');
-var Products = require('./products');
-var Invoices = require('./invoices');
-var Organizations = require('./organizations');
-var Catalogs = require('./catalogs');
-var enums = require('./enums');
+const Wrapper = require('./wrapper');
+const Customers = require('./customers');
+const Products = require('./products');
+const Invoices = require('./invoices');
+const Organizations = require('./organizations');
+const Catalogs = require('./catalogs');
+const Receipts = require('./receipts');
+const enums = require('./enums');
 
 /**
  * Get an instance of the Facturapi library
@@ -48,6 +49,7 @@ class Facturapi {
     this.invoices = new Invoices(wrapper);
     this.organizations = new Organizations(wrapper);
     this.catalogs = new Catalogs(wrapper);
+    this.receipts = new Receipts(wrapper);
   }
 }
 
