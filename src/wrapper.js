@@ -30,6 +30,10 @@ class Wrapper {
       responseInterceptor,
       errorInterceptor
     );
+    this.client.interceptors.request.use(function (config) {
+      console.log({ config });
+      return config;
+    });
     this.t = 23;
     this.client.defaults.headers.common.Authorization =
       'Basic ' + encodeStringToBase64(apiKey + ':');
@@ -277,11 +281,11 @@ class Wrapper {
   /**
    * Uploads the organization's logo
    * @param {string} id
-   * @param {ReadableStream} file
+   * @param {ReadableStream|Buffer} file
    */
   uploadOrganizationLogo (id, file) {
     const formData = new FormData();
-    formData.append('file', file);
+    formData.append('file', file, 'file');
     return this.client.put('/organizations/' + id + '/logo', formData, {
       headers: formData.getHeaders()
     });
@@ -290,14 +294,14 @@ class Wrapper {
   /**
    * Uploads the organization's certificate (CSD)
    * @param {string} id
-   * @param {ReadableStream} cerFile
-   * @param {ReadableStream} keyFile
+   * @param {ReadableStream|Buffer} cerFile
+   * @param {ReadableStream|Buffer} keyFile
    * @param {string} password
    */
   uploadOrganizationCertificate (id, cerFile, keyFile, password) {
     const formData = new FormData();
-    formData.append('cer', cerFile);
-    formData.append('key', keyFile);
+    formData.append('cer', cerFile, { filename: 'cer.cer' });
+    formData.append('key', keyFile, { filename: 'key.key' });
     formData.append('password', password);
     return this.client.put('/organizations/' + id + '/certificate', formData, {
       headers: formData.getHeaders()
