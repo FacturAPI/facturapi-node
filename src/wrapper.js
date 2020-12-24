@@ -344,12 +344,20 @@ class Wrapper {
   }
 
   /**
-   * Updates the organization's receipts settings
+   * Creates an invoice for an open receipt
    * @param {string} id
    * @param {object} data
    */
   invoiceReceipt (id, data) {
     return this.client.post('/receipts/' + id + '/invoice', data);
+  }
+
+  /**
+   * Creates a global invoice for open receipts
+   * @param {object} data
+   */
+  createGlobalInvoice (data) {
+    return this.client.post('/receipts/global-invoice', data);
   }
 
   /**

@@ -44,7 +44,16 @@ class Receipts {
   }
 
   /**
-   * Permanently removes a receipt from your organization.
+   * Creates a global invoice for open receipts
+   * @param {Object} data
+   * @returns {Promise}
+   */
+  createGlobalInvoice (data) {
+    return this.wrapper.createGlobalInvoice(data);
+  }
+
+  /**
+   * Marks a receipt as canceled. The receipt won't be available for invoicing anymore.
    * @param {string} id
    * @returns {Promise}
    */
