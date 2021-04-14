@@ -1,15 +1,15 @@
-var constants = require('./constants');
-var axios = require('axios');
-var FormData = require('form-data');
-var Buffer = require('safe-buffer').Buffer;
+const constants = require('./constants');
+const axios = require('axios');
+const FormData = require('form-data');
+const Buffer = require('safe-buffer').Buffer;
 
 axios.defaults.baseURL = constants.BASE_URL;
 axios.defaults.headers.post['Content-Type'] = 'application/json';
 axios.defaults.headers.put['Content-Type'] = 'application/json';
-var responseInterceptor = function (response) {
+const responseInterceptor = function (response) {
   return response.data;
 };
-var errorInterceptor = function (error) {
+const errorInterceptor = function (error) {
   if (error.isAxiosError) {
     return Promise.reject(new Error(error.response.data.message));
   } else {
@@ -384,6 +384,61 @@ class Wrapper {
    */
   checkDomainIsAvailable (data) {
     return this.client.put('/organizations/domain-check', data);
+  }
+
+  createRetention (data) {
+    return this.client.post('/retentions', data);
+  }
+
+  listRetentions (params) {
+    if (!params) params = {};
+    return this.client.get('/retentions', { params });
+  }
+
+  retrieveRetention (id) {
+    if (!id) return Promise.reject(new Error('id is required'));
+    return this.client.get('/retentions/' + id);
+  }
+
+  cancelRetention (id) {
+    return this.client.delete('/retentions/' + id);
+  }
+
+  sendRetentionByEmail (id, data) {
+    return this.client.post('/retentions/' + id + '/email', data);
+  }
+
+  /**
+   * Downloads the specified invoice in PDF format
+   * @param {string} id Invoice Id
+   * @returns {Promise<ReadStream>} PDF file in a stream
+   */
+  downloadRetentionPdf (id) {
+    return this.client.get('/retentions/' + id + '/pdf', {
+      responseType: 'stream'
+    });
+  }
+
+  /**
+   * Downloads the specified invoice in XML format
+   * @param {string} id Invoice Id
+   * @returns {Promise<ReadStream>} XML file in a stream
+   */
+  downloadRetentionXml (id) {
+    return this.client.get('/retentions/' + id + '/xml', {
+      responseType: 'stream'
+    });
+  }
+
+  /**
+   * Downloads the specified invoice in a ZIP package containing both PDF and XML files
+   * @param {string} id Invoice Id
+   * @returns {Promise<ReadStream>} ZIP file in a stream
+   */
+  downloadRetentionZip (id) {
+    return this.client.get('/retentions/' + id + '/zip', {
+      responseType: 'stream'
+    });
   }
 }
 

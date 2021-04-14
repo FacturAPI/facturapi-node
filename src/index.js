@@ -5,6 +5,7 @@ const Invoices = require('./invoices');
 const Organizations = require('./organizations');
 const Catalogs = require('./catalogs');
 const Receipts = require('./receipts');
+const Retentions = require('./retentions');
 const enums = require('./enums');
 
 /**
@@ -50,6 +51,7 @@ class Facturapi {
     this.organizations = new Organizations(wrapper);
     this.catalogs = new Catalogs(wrapper);
     this.receipts = new Receipts(wrapper);
+    this.retentions = new Retentions(wrapper);
   }
 }
 

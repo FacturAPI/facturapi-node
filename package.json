@@ -1,6 +1,6 @@
 {
   "name": "facturapi",
-  "version": "2.4.0",
+  "version": "2.5.1",
   "description": "FacturAPI makes it easy for developers to generate valid Invoices in Mexico (known as Factura Electrónica or CFDI).",
   "main": "index.js",
   "scripts": {
@@ -35,7 +35,7 @@
     "safe-buffer": "^5.2.1"
   },
   "devDependencies": {
-    "eslint": "^7.16.0",
+    "eslint": "^7.24.0",
     "eslint-config-prettier": "^7.1.0",
     "husky": "^4.3.6",
     "lint-staged": "^10.5.3",
