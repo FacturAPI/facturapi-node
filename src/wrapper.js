@@ -31,7 +31,6 @@ class Wrapper {
       errorInterceptor
     );
     this.client.interceptors.request.use(function (config) {
-      console.log({ config });
       return config;
     });
     this.t = 23;
