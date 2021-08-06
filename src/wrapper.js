@@ -440,6 +440,14 @@ class Wrapper {
       responseType: 'stream'
     });
   }
+  
+  validateTaxId (taxId) {
+    return this.client.get('/tools/tax_id_validation', {
+      params: {
+        tax_id: taxId
+      }
+    });
+  }
 }
 
 module.exports = Wrapper;
