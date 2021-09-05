@@ -30,10 +30,11 @@ class Wrapper {
       responseInterceptor,
       errorInterceptor
     );
-    this.client.interceptors.request.use(function (config) {
-      console.log({ config });
-      return config;
-    });
+    // Uncomment to debug request config
+    // this.client.interceptors.request.use(function (config) {
+    //   console.log({ config });
+    //   return config;
+    // });
     this.t = 23;
     this.client.defaults.headers.common.Authorization =
       'Basic ' + encodeStringToBase64(apiKey + ':');
