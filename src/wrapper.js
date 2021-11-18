@@ -30,9 +30,11 @@ class Wrapper {
       responseInterceptor,
       errorInterceptor
     );
-    this.client.interceptors.request.use(function (config) {
-      return config;
-    });
+    // Uncomment to debug request config
+    // this.client.interceptors.request.use(function (config) {
+    //   console.log({ config });
+    //   return config;
+    // });
     this.t = 23;
     this.client.defaults.headers.common.Authorization =
       'Basic ' + encodeStringToBase64(apiKey + ':');
@@ -437,6 +439,14 @@ class Wrapper {
   downloadRetentionZip (id) {
     return this.client.get('/retentions/' + id + '/zip', {
       responseType: 'stream'
+    });
+  }
+  
+  validateTaxId (taxId) {
+    return this.client.get('/tools/tax_id_validation', {
+      params: {
+        tax_id: taxId
+      }
     });
   }
 }
