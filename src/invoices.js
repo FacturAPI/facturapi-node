@@ -36,16 +36,17 @@ class Invoices {
   /**
    * Cancels an invoice. The invoice will not be valid anymore and will change its status to canceled.
    * @param {string} id
+   * @param {any} params
    * @returns {Promise}
    */
-  cancel (id) {
-    return this.wrapper.cancelInvoice(id);
+  cancel (id, params) {
+    return this.wrapper.cancelInvoice(id, params);
   }
 
   /**
    * Sends the invoice to the customer's email
    * @param {String} id Invoice Id
-   * @param {Object} data Additional arguments
+   * @param {any} data Additional arguments
    * @param {String} data.email Email address to send the invoice to
    * @returns {Promise}
    */

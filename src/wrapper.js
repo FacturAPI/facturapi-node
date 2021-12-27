@@ -168,9 +168,10 @@ class Wrapper {
   /**
    * Cancels an invoice. The invoice will not be valid anymore and will change its status to canceled.
    * @param {string} id
+   * @param {any} params
    */
-  cancelInvoice (id) {
-    return this.client.delete('/invoices/' + id);
+  cancelInvoice (id, params) {
+    return this.client.delete('/invoices/' + id, { params });
   }
 
   /**
@@ -441,7 +442,7 @@ class Wrapper {
       responseType: 'stream'
     });
   }
-  
+
   validateTaxId (taxId) {
     return this.client.get('/tools/tax_id_validation', {
       params: {
