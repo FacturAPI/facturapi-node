@@ -1,7 +1,7 @@
 {
   "name": "facturapi",
-  "version": "2.7.0",
-  "description": "FacturAPI makes it easy for developers to generate valid Invoices in Mexico (known as Factura Electrónica or CFDI).",
+  "version": "3.0.0",
+  "description": "Librería oficial de Facturapi. Crea CFDIs timbrados y enviados al SAT",
   "main": "index.js",
   "scripts": {
     "precommit": "lint-staged"
