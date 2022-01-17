@@ -8,6 +8,9 @@ const Receipts = require('./receipts');
 const Retentions = require('./retentions');
 const Tools = require('./tools');
 const enums = require('./enums');
+const { DEFAULT_API_VERSION } = require('./constants');
+
+const VALID_API_VERSIONS = ['v1', 'v2'];
 
 /**
  * Get an instance of the Facturapi library
@@ -44,8 +47,19 @@ class Facturapi {
     return enums.TaxSystem;
   }
 
-  constructor (apiKey) {
-    const wrapper = new Wrapper(apiKey);
+  constructor (apiKey, options = {}) {
+    if (options.apiVersion) {
+      if (!VALID_API_VERSIONS.includes(options.apiVersion)) {
+        throw new Error(
+          'Invalid API version. Valid values are: ' +
+            VALID_API_VERSIONS.join(', ')
+        );
+      }
+      this.apiVersion = options.apiVersion;
+    } else {
+      this.apiVersion = DEFAULT_API_VERSION;
+    }
+    const wrapper = new Wrapper(apiKey, this.apiVersion);
     this.customers = new Customers(wrapper);
     this.products = new Products(wrapper);
     this.invoices = new Invoices(wrapper);

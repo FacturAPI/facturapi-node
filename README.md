@@ -24,7 +24,9 @@ Make sure you have created your free account on [FacturAPI](https://www.facturap
 
 ```javascript
 const Facturapi = require('facturapi');
-const facturapi = new Facturapi('YOUR_API_KEY');
+const facturapi = new Facturapi('YOUR_API_KEY', {
+  apiVersion: 'v2' // Optional, say what API version you want to use. Defaults to the latest version.
+});
 ```
 
 ### Create a customer

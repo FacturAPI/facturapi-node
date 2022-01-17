@@ -3,9 +3,9 @@ const axios = require('axios');
 const FormData = require('form-data');
 const Buffer = require('safe-buffer').Buffer;
 
-axios.defaults.baseURL = constants.BASE_URL;
 axios.defaults.headers.post['Content-Type'] = 'application/json';
 axios.defaults.headers.put['Content-Type'] = 'application/json';
+
 const responseInterceptor = function (response) {
   return response.data;
 };
@@ -24,8 +24,10 @@ function encodeStringToBase64 (text) {
 }
 
 class Wrapper {
-  constructor (apiKey) {
-    this.client = axios.create();
+  constructor (apiKey, apiVersion) {
+    this.client = axios.create({
+      baseURL: apiVersion === 'v1' ? constants.BASE_URL_V1 : constants.BASE_URL
+    });
     this.client.interceptors.response.use(
       responseInterceptor,
       errorInterceptor
