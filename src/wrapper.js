@@ -246,15 +246,6 @@ class Wrapper {
   }
 
   /**
-   * Gets the api keys for an organization
-   * @param {string} id
-   */
-  getOrganizationApiKeys (id) {
-    if (!id) return Promise.reject(new Error('id is required'));
-    return this.client.get('/organizations/' + id + '/apikeys');
-  }
-
-  /**
    * Permanently removes an organization from your account.
    * @param {string} id
    */
@@ -451,6 +442,18 @@ class Wrapper {
         tax_id: taxId
       }
     });
+  }
+
+  getTestApiKey (id) {
+    return this.client.get('/organizations/' + id + '/apikeys/test');
+  }
+
+  renewTestApiKey (id) {
+    return this.client.put('/organizations/' + id + '/apikeys/test');
+  }
+
+  renewLiveApiKey (id) {
+    return this.client.put('/organizations/' + id + '/apikeys/live');
   }
 }
 

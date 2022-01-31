@@ -5,13 +5,27 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](http://keepachangelog.com/en/1.0.0/)
 and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.html).
 
+## [3.2.0] 2022-01-17
+
+Note: Although this update includes a breaking change, only the minor version will be bumped, since we haven't officially announced the new API version yet.
+
+### Breaking
+
+- Remove `organizations.getApiKeys`.
+
+### Added
+
+- Add `organizations.getTestApiKey`, `organizations.renewTestApiKey` and `organizations.renewLiveApiKey`.
+
 ## [3.1.0] 2022-01-17
+
+### Added
 
 - Allow setting the API version in the client constructor.
 
 ## [3.0.0] 2022-01-16
 
-## Breaking
+### Breaking
 
 - Change API version to point to /v2, in order to support CFDI 4.0
 

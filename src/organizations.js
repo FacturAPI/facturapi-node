@@ -112,19 +112,37 @@ class Organizations {
   /**
    * Permanently removes a organization from your account.
    * @param {string} id
-   * @returns {Promise}
+   * @returns {Promise<void>}
    */
   del (id) {
     return this.wrapper.removeOrganization(id);
   }
 
   /**
-   * Gets the api keys for an organization
+   * Gets the test api key for an organization
    * @param {string} id
-   * @returns {Promise}
+   * @returns {Promise<string>}
    */
-  getApiKeys (id) {
-    return this.wrapper.getOrganizationApiKeys(id);
+  getTestApiKey (id) {
+    return this.wrapper.getTestApiKey(id);
+  }
+
+  /**
+   * Renews the test api key and makes the previous one unusable
+   * @param {string} id
+   * @returns {Promise<string>}
+   */
+  renewTestApiKey (id) {
+    return this.wrapper.renewTestApiKey(id);
+  }
+
+  /**
+   * Renews the live api key and makes the previous one unusable
+   * @param {string} id
+   * @returns {Promise<string>}
+   */
+  renewLiveApiKey (id) {
+    return this.wrapper.renewLiveApiKey(id);
   }
 }
 
