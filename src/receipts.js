@@ -60,6 +60,26 @@ class Receipts {
   cancel (id) {
     return this.wrapper.cancelReceipt(id);
   }
+
+  /**
+   * Sends the receipt to the customer's email
+   * @param {String} id Receipt Id
+   * @param {any} data Additional arguments
+   * @param {String} data.email Email address to send the receipt to
+   * @returns {Promise}
+   */
+  sendByEmail (id, data) {
+    return this.wrapper.sendReceiptByEmail(id, data);
+  }
+
+  /**
+   * Downloads the specified receipt in PDF format
+   * @param {string} id Receipt Id
+   * @returns {Promise<ReadStream>} PDF file in a stream
+   */
+  downloadPdf (id) {
+    return this.wrapper.downloadReceiptPdf(id);
+  }
 }
 
 module.exports = Receipts;

@@ -361,6 +361,16 @@ class Wrapper {
     return this.client.post('/receipts/global-invoice', data);
   }
 
+  sendReceiptByEmail (id, data) {
+    return this.client.post('/receipts/' + id + '/email', data);
+  }
+
+  downloadReceiptPdf (id) {
+    return this.client.get('/receipts/' + id + '/pdf', {
+      responseType: 'stream'
+    });
+  }
+
   /**
    * Updates the organization's receipts settings
    * @param {string} id
