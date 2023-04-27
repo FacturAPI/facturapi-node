@@ -51,6 +51,15 @@ class Customers {
   del (id) {
     return this.wrapper.removeCustomer(id);
   }
+
+  /**
+   * Validate customer with SAT validation.
+   * @param {string} id
+   * @returns {Promise}
+   */
+  validateTaxInfo (id) {
+    return this.wrapper.verifyCustomer(id)
+  }
 }
 
 module.exports = Customers;

@@ -82,6 +82,14 @@ class Wrapper {
   }
 
   /**
+   * Validate the customer tax data with sat validation.
+   * @param {string} id
+   */
+  verifyCustomer (id) {
+    return this.client.get('/customers/' + id + '/tax-info-validation');
+  }
+
+  /**
    * Gets a paginated list of products that belong to your organization
    * @param {Object} params
    */
