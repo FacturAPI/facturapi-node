@@ -233,6 +233,18 @@ class Wrapper {
     });
   }
 
+   /**
+   * Downloads the specified invoice in a PDF file
+   * @param {string} id Invoice Id
+   * @returns {Promise<ReadStream>} pdf file in a stream
+   */
+  downloadCancellationReceiptPdf (id) {
+    return this.client.get('/invoices/' + id + '/cancellation_receipt/pdf', {
+      responseType: 'stream'
+    });
+  }
+
+
   /**
    * Creates a new organization in your account
    * @param {Object} data
