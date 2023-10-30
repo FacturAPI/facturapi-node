@@ -6,6 +6,7 @@ const Organizations = require('./organizations');
 const Catalogs = require('./catalogs');
 const Receipts = require('./receipts');
 const Retentions = require('./retentions');
+const Webhooks = require('./webhooks')
 const Tools = require('./tools');
 const enums = require('./enums');
 const { DEFAULT_API_VERSION } = require('./constants');
@@ -68,6 +69,7 @@ class Facturapi {
     this.receipts = new Receipts(wrapper);
     this.retentions = new Retentions(wrapper);
     this.tools = new Tools(wrapper);
+    this.webhooks = new Webhooks(wrapper)
   }
 }
 
