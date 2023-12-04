@@ -89,6 +89,16 @@ class Invoices {
   downloadCancellationReceiptXml (id) {
     return this.wrapper.downloadCancellationReceiptXml(id);
   }
+
+
+  /**
+   * Downloads the cancellation receipt of a canceled invoice in PDF format
+   * @param {string} id Invoice Id
+   * @returns {Promise<ReadStream>} XML file in a stream
+   */
+  downloadCancellationReceiptPdf (id) {
+    return this.wrapper.downloadCancellationReceiptPdf(id);
+  }
 }
 
 module.exports = Invoices;

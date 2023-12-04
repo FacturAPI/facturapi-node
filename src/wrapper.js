@@ -233,6 +233,12 @@ class Wrapper {
     });
   }
 
+  downloadCancellationReceiptPdf (id) {
+    return this.client.get('/invoices/' + id + '/cancellation_receipt/pdf', {
+      responseType: 'stream'
+    });
+  }
+
   /**
    * Creates a new organization in your account
    * @param {Object} data
