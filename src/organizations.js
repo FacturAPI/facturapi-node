@@ -110,6 +110,16 @@ class Organizations {
   }
 
   /**
+   * Deletes the organization's certificate (CSD)
+   * @param {string} id
+   * @returns {Promise}
+   */
+    deleteCertificate (id) {
+      return this.wrapper.deleteOrganizationCertificate(id);
+  }
+
+
+  /**
    * Permanently removes a organization from your account.
    * @param {string} id
    * @returns {Promise<void>}

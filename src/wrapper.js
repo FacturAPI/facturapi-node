@@ -42,6 +42,50 @@ class Wrapper {
       'Basic ' + encodeStringToBase64(apiKey + ':');
   }
 
+    /**
+   * Gets a paginated list of webhooks that belong to your organization
+   * @param {Object} params
+   */
+  listWebhooks (params) {
+    if (!params) params = {};
+    return this.client.get('/webhooks', { params: params });
+  }
+
+  /**
+   * Gets a single webhook object
+   * @param {string} id
+   */
+  retrieveWebhook (id) {
+    if (!id) return Promise.reject(new Error('id is required'));
+    return this.client.get('/webhooks/' + id);
+  }
+
+  /**
+   * Creates a new webhook in your organization
+   * @param {Object} data
+   */
+  createWebhook (data) {
+    return this.client.post('/webhooks', data);
+  }
+
+  /**
+   * Updates a webhook
+   * @param {string} id
+   * @param {object} data
+   */
+  updateWebhook (id, data) {
+    return this.client.put('/webhooks/' + id, data);
+  }
+
+  /**
+   * Permanently removes a product from your organization
+   * @param {string} id
+   */
+  removeWebhook (id) {
+    return this.client.delete('/webhooks/' + id);
+  }
+
+
   listCustomers (params) {
     if (!params) params = {};
     return this.client.get('/customers', { params: params });
@@ -233,6 +277,18 @@ class Wrapper {
     });
   }
 
+   /**
+   * Downloads the specified invoice in a PDF file
+   * @param {string} id Invoice Id
+   * @returns {Promise<ReadStream>} pdf file in a stream
+   */
+  downloadCancellationReceiptPdf (id) {
+    return this.client.get('/invoices/' + id + '/cancellation_receipt/pdf', {
+      responseType: 'stream'
+    });
+  }
+
+
   /**
    * Creates a new organization in your account
    * @param {Object} data
@@ -315,6 +371,15 @@ class Wrapper {
     return this.client.put('/organizations/' + id + '/certificate', formData, {
       headers: formData.getHeaders()
     });
+  }
+
+  /**
+   * Deletes the organization's certificate (CSD)
+   * @param {string} id
+   * @returns {Promise}
+   */
+  deleteOrganizationCertificate (id) {
+      return this.client.delete('/organizations/' + id + '/certificate');
   }
 
   /**
@@ -482,3 +547,4 @@ class Wrapper {
 }
 
 module.exports = Wrapper;
+
