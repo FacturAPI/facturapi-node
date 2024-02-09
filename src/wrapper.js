@@ -374,6 +374,15 @@ class Wrapper {
   }
 
   /**
+   * Deletes the organization's certificate (CSD)
+   * @param {string} id
+   * @returns {Promise}
+   */
+  deleteOrganizationCertificate (id) {
+      return this.client.delete('/organizations/' + id + '/certificate');
+  }
+
+  /**
    * Gets a paginated list of receipts created by your organization
    * @param {Object} params
    */
@@ -538,3 +547,4 @@ class Wrapper {
 }
 
 module.exports = Wrapper;
+
