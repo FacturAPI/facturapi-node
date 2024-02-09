@@ -171,8 +171,8 @@ class Wrapper {
    * Creates a new valid invoice (CFDI).
    * @param {Object} data
    */
-  createInvoice (data) {
-    return this.client.post('/invoices', data);
+  createInvoice (data, params = null) {
+    return this.client.post('/invoices', data, { params });
   }
 
   /**

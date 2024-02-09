@@ -11,8 +11,8 @@ class Invoices {
    * @param {Object} data
    * @returns {Promise}
    */
-  create (data) {
-    return this.wrapper.createInvoice(data);
+  create (data, params = null) {
+    return this.wrapper.createInvoice(data, params);
   }
 
   /**
