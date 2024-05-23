@@ -42,7 +42,7 @@ class Wrapper {
       'Basic ' + encodeStringToBase64(apiKey + ':');
   }
 
-    /**
+  /**
    * Gets a paginated list of webhooks that belong to your organization
    * @param {Object} params
    */
@@ -84,7 +84,6 @@ class Wrapper {
   removeWebhook (id) {
     return this.client.delete('/webhooks/' + id);
   }
-
 
   listCustomers (params) {
     if (!params) params = {};
@@ -277,7 +276,7 @@ class Wrapper {
     });
   }
 
-   /**
+  /**
    * Downloads the specified invoice in a PDF file
    * @param {string} id Invoice Id
    * @returns {Promise<ReadStream>} pdf file in a stream
@@ -287,7 +286,6 @@ class Wrapper {
       responseType: 'stream'
     });
   }
-
 
   /**
    * Creates a new organization in your account
@@ -379,7 +377,7 @@ class Wrapper {
    * @returns {Promise}
    */
   deleteOrganizationCertificate (id) {
-      return this.client.delete('/organizations/' + id + '/certificate');
+    return this.client.delete('/organizations/' + id + '/certificate');
   }
 
   /**
@@ -544,7 +542,18 @@ class Wrapper {
   renewLiveApiKey (id) {
     return this.client.put('/organizations/' + id + '/apikeys/live');
   }
+
+  editDraftInvoice (id, data) {
+    return this.client.put('/invoices/' + id, data);
+  }
+
+  stampDraftInvoice (id, params = null) {
+    return this.client.post('/invoices/' + id + '/stamp', { params });
+  }
+
+  updateInvoiceStatus (id) {
+    return this.client.put('/invoices/' + id + '/status');
+  }
 }
 
 module.exports = Wrapper;
-
