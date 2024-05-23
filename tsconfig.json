@@ -1,0 +1,11 @@
+{
+  "compilerOptions": {
+    "target": "ES2019",
+    "module": "CommonJS",
+    "strict": true,  // Enable stricter type checking (optional but recommended)
+    "outDir": "lib",   // Output compiled JavaScript to the "lib" directory
+    "declaration": true,  // Generate type declaration files (.d.ts)
+    "types": ["node"]  // Include type definitions for Node.js
+  },
+  "include": ["src"]  // Include files from the "src" directory for compilation
+}
