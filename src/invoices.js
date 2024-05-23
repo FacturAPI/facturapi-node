@@ -98,6 +98,35 @@ class Invoices {
   downloadCancellationReceiptPdf (id) {
     return this.wrapper.downloadCancellationReceiptPdf(id);
   }
+
+  /**
+   * Edits an invoice with "draft" status.
+   * @param {string} id Invoice Id
+   * @param {Object} data Invoice data to edit
+   * @returns {Promise}
+   */
+  editDraft (id, data) {
+    return this.wrapper.editDraftInvoice(id, data);
+  }
+
+  /**
+   * Stamps an invoice with "draft" status.
+   * @param {string} id Invoice Id
+   * @param {Object} options Query options
+   * @returns {Promise}
+   */
+  stampDraft (id, params) {
+    return this.wrapper.stampDraftInvoice(id, params);
+  }
+
+  /**
+   * Updates the latest status of the invoice from the SAT
+   * @param {string} id Invoice Id
+   * @returns {Promise}
+   */
+  updateStatus (id) {
+    return this.wrapper.updateInvoiceStatus(id);
+  }
 }
 
 module.exports = Invoices;
