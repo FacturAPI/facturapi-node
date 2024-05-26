@@ -141,5 +141,14 @@ export default class Invoices {
   updateStatus (id: string) {
     return this.client.put('/invoices/' + id + '/status').then(r => r.data);
   }
+
+  /**
+   * Creates a draft invoice from any other invoice
+   * @param {string} id Invoice Id
+   * @returns {Promise} Draft invoice
+   */
+  copyToDraft (id: string) {
+    return this.client.post('/invoices/' + id + '/copy').then(r => r.data);
+  }
 }
 

@@ -11,12 +11,14 @@ and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.
 
 - Remove deprecated method `products.keys` in favor of `catalogs.searchProducts`.
 - Remove deprecated method `products.units` in favor of `catalogs.searchUnits`.
+- Corrected the name of the method `invoices.editDraft` to `invoices.updateDraft`.
 - The rest of the changes are internal and should not affect the public API.
 
 ### Added
 
 - We rewrote the the library in TypeScript and now it's partially typed. Most request parameters and responses are not typed yet, but we plan to add more types in future releases.
 - We export all type definitions, so you can use them in your TypeScript projects.
+- New method to copy invoices to a new draft: `invoices.copyToDraft`.
 
 ## [3.6.0] 2024-05-23
 
