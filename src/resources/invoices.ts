@@ -119,7 +119,7 @@ export default class Invoices {
    * @param {Object} data Invoice data to edit
    * @returns {Promise} Edited invoice
    */
-  editDraft (id: string, data: Record<string, any>) {
+  updateDraft (id: string, data: Record<string, any>) {
     return this.client.put('/invoices/' + id, data).then(r => r.data);
   }
 
