@@ -1,4 +1,4 @@
-exports.PaymentForm = {
+export const PaymentForm = {
   EFECTIVO: '01',
   CHEQUE_NOMINATIVO: '02',
   TRANSFERENCIA_ELECTRONICA_DE_FONDOS: '03',
@@ -21,9 +21,9 @@ exports.PaymentForm = {
   APLICACION_DE_ANTICIPOS: '30',
   INTERMEDIARIO_DE_PAGOS: '31',
   POR_DEFINIR: '99'
-};
+} as const;
 
-exports.PaymentFormList = [
+export const PaymentFormList = [
   { value: '01', label: 'Efectivo' },
   { value: '02', label: 'Cheque nominativo' },
   { value: '03', label: 'Transferencia electrónica de fondos' },
@@ -46,20 +46,20 @@ exports.PaymentFormList = [
   { value: '30', label: 'Aplicación de anticipos' },
   { value: '31', label: 'Intermediario de pagos' },
   { value: '99', label: 'Por definir' }
-];
+] as const;
 
-exports.TaxType = {
+export const TaxType = {
   IVA: 'IVA',
   IEPS: 'IEPS',
   ISR: 'ISR'
-};
+} as const;
 
-exports.PaymentMethod = {
+export const PaymentMethod = {
   PAGO_EN_UNA_EXHIBICION: 'PUE',
   PAGO_EN_PARCIALIDADES_DIFERIDO: 'PPD'
-};
+} as const;
 
-exports.InvoiceUse = {
+export const InvoiceUse = {
   ADQUISICION_MERCANCIAS: 'G01',
   DEVOLUCIONES_DESCUENTOS_BONIFICACIONES: 'G02',
   GASTOS_EN_GENERAL: 'G03',
@@ -85,17 +85,17 @@ exports.InvoiceUse = {
   PAGOS: 'CP01',
   NOMINA: 'CN01',
   POR_DEFINIR: 'P01'
-};
+} as const;
 
-exports.InvoiceType = {
+export const InvoiceType = {
   INGRESO: 'I',
   EGRESO: 'E',
   TRASLADO: 'T',
   NOMINA: 'N',
   PAGO: 'P'
-};
+} as const;
 
-exports.InvoiceRelation = {
+export const InvoiceRelation = {
   NOTA_DE_CREDITO: '01',
   NOTA_DE_DEBITO: '02',
   DELOVUCION_DE_MERCANCIA: '03',
@@ -103,9 +103,9 @@ exports.InvoiceRelation = {
   TRASLADOS_DE_MERCANCIA_FACTURADOS_PREVIAMENTE: '05',
   FACTURA_POR_TRASLADOS_PREVIOS: '06',
   APLICACION_DE_ANTICIPO: '07'
-};
+} as const;
 
-exports.TaxSystem = {
+export const TaxSystem = {
   GENERAL_LEY_DE_PERSONAS_MORALES: '601',
   PERSONAS_MORALES_CON_FINES_NO_LUCRATIVOS: '603',
   SUELDOS_Y_SALARIOS: '605',
@@ -127,4 +127,4 @@ exports.TaxSystem = {
   ACTIVIDADES_EMPRESARIALES_CON_INGRESOS_A_TRAVÉS_DE_PLATAFORMAS_TECNOLÓGICAS:
     '625',
   RÉGIMEN_SIMPLIFICADO_DE_CONFIANZA: '626'
-};
+} as const;

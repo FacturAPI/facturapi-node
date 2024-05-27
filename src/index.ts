@@ -1,17 +1,23 @@
-const Wrapper = require('./wrapper');
-const Customers = require('./customers');
-const Products = require('./products');
-const Invoices = require('./invoices');
-const Organizations = require('./organizations');
-const Catalogs = require('./catalogs');
-const Receipts = require('./receipts');
-const Retentions = require('./retentions');
-const Webhooks = require('./webhooks')
-const Tools = require('./tools');
-const enums = require('./enums');
-const { DEFAULT_API_VERSION } = require('./constants');
+import Customers from './resources/customers';
+import Products from './resources/products';
+import Invoices from './resources/invoices';
+import Organizations from './resources/organizations';
+import Catalogs from './tools/catalogs';
+import Receipts from './resources/receipts';
+import Retentions from './resources/retentions';
+import Webhooks from './tools/webhooks';
+import Tools from './tools/tools';
+import * as enums from './enums';
+import { createWrapper } from './wrapper';
+import { DEFAULT_API_VERSION } from './constants';
 
 const VALID_API_VERSIONS = ['v1', 'v2'];
+
+export type ApiVersion = 'v1' | 'v2';
+
+export interface FacturapiOptions {
+  apiVersion?: ApiVersion;
+}
 
 /**
  * Get an instance of the Facturapi library
@@ -19,7 +25,18 @@ const VALID_API_VERSIONS = ['v1', 'v2'];
  * @param {string} apiKey Test or Live key.
  * @returns {Facturapi} Instance of this library
  */
-class Facturapi {
+export default class Facturapi {
+  apiVersion: ApiVersion;
+  customers: Customers;
+  products: Products;
+  invoices: Invoices;
+  organizations: Organizations;
+  catalogs: Catalogs;
+  receipts: Receipts;
+  retentions: Retentions;
+  tools: Tools;
+  webhooks: Webhooks;
+
   static get TaxType () {
     return enums.TaxType;
   }
@@ -48,7 +65,8 @@ class Facturapi {
     return enums.TaxSystem;
   }
 
-  constructor (apiKey, options = {}) {
+  constructor (apiKey: string, options: FacturapiOptions = {}) {
+
     if (options.apiVersion) {
       if (!VALID_API_VERSIONS.includes(options.apiVersion)) {
         throw new Error(
@@ -60,7 +78,7 @@ class Facturapi {
     } else {
       this.apiVersion = DEFAULT_API_VERSION;
     }
-    const wrapper = new Wrapper(apiKey, this.apiVersion);
+    const wrapper = createWrapper(apiKey, this.apiVersion);
     this.customers = new Customers(wrapper);
     this.products = new Products(wrapper);
     this.invoices = new Invoices(wrapper);
@@ -73,4 +91,3 @@ class Facturapi {
   }
 }
 
-module.exports = Facturapi;

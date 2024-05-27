@@ -1,28 +1,29 @@
 {
   "name": "facturapi",
-  "version": "3.6.0",
+  "version": "4.0.0",
   "description": "Librería oficial de Facturapi. Crea CFDIs timbrados y enviados al SAT, XML y PDF",
-  "main": "index.js",
+  "main": "lib/index.js",
   "scripts": {
-    "precommit": "lint-staged"
+    "precommit": "lint-staged",
+    "build": "tsc"
   },
   "engines": {
     "node": ">=12.0.0"
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/javorosas/facturapi-node.git"
+    "url": "git+https://github.com/facturapi/facturapi-node.git"
   },
   "keywords": [
     "cfdi",
     "factura"
   ],
-  "author": "Javo Rosas <javier@facturapi.io>",
+  "author": "Facturación Espacial <contacto@facturapi.io>",
   "license": "MIT",
   "bugs": {
-    "url": "https://github.com/javorosas/facturapi-node/issues"
+    "url": "https://github.com/facturapi/facturapi-node/issues"
   },
-  "homepage": "https://github.com/javorosas/facturapi-node#readme",
+  "homepage": "https://github.com/facturapi/facturapi-node#readme",
   "lint-staged": {
     "*.{js,jsx,css}": [
       "prettier-eslint --write",
@@ -30,17 +31,20 @@
     ]
   },
   "dependencies": {
-    "axios": "^0.24.0",
-    "form-data": "^3.0.0",
+    "axios": "^1.7.2",
+    "form-data": "^4.0.0",
     "safe-buffer": "^5.2.1"
   },
   "devDependencies": {
-    "eslint": "^7.24.0",
-    "eslint-config-prettier": "^7.1.0",
-    "husky": "^4.3.6",
-    "lint-staged": "^10.5.3",
-    "prettier-eslint": "^12.0.0",
-    "prettier-eslint-cli": "^5.0.0",
-    "semistandard": "^16.0.0"
+    "@types/form-data": "^2.5.0",
+    "@types/node": "^20.12.12",
+    "eslint": "^8.0.0",
+    "eslint-config-prettier": "^9.1.0",
+    "husky": "^9.0.1",
+    "lint-staged": "^15.2.4",
+    "prettier-eslint": "^16.3.0",
+    "prettier-eslint-cli": "^8.0.1",
+    "semistandard": "^17.0.0",
+    "typescript": "^5.4.5"
   }
 }
