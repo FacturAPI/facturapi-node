@@ -201,7 +201,7 @@ export default class Organizations {
    */
   listSeriesGroup(organization_id: string) {
     return this.client
-      .get('/organizations/' + organization_id + 'series-group')
+      .get('/organizations/' + organization_id + '/series-group')
       .then((r) => r.data);
   }
 
@@ -213,7 +213,7 @@ export default class Organizations {
    */
   createSeriesGroup(organization_id: string, seriesData: Series) {
     return this.client
-      .post('/organizations/' + organization_id + 'series-group', seriesData)
+      .post('/organizations/' + organization_id + '/series-group', seriesData)
       .then((r) => r.data);
   }
 
