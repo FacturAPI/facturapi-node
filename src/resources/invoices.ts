@@ -1,9 +1,9 @@
-import { AxiosInstance } from "axios";
+import { AxiosInstance } from 'axios';
 
 export default class Invoices {
   client: AxiosInstance;
-  
-  constructor (client: AxiosInstance) {
+
+  constructor(client: AxiosInstance) {
     this.client = client;
   }
 
@@ -12,8 +12,8 @@ export default class Invoices {
    * @param {Object} data Invoice data
    * @returns {Promise} Invoice object
    */
-  create (data: Record<string, any>, params: Record<string, any> | null) {
-    return this.client.post('/invoices', data, { params }).then(r => r.data);
+  create(data: Record<string, any>, params?: Record<string, any> | null) {
+    return this.client.post('/invoices', data, { params }).then((r) => r.data);
   }
 
   /**
@@ -21,9 +21,9 @@ export default class Invoices {
    * @param {[Object]} params - Search parameters
    * @returns {Promise} Search results object. The object contains a `data` property with the list of invoices.
    */
-  list (params: Record<string, any> | null) {
+  list(params?: Record<string, any> | null) {
     if (!params) params = {};
-    return this.client.get('/invoices', { params }).then(r => r.data);
+    return this.client.get('/invoices', { params }).then((r) => r.data);
   }
 
   /**
@@ -31,9 +31,9 @@ export default class Invoices {
    * @param {string} id Invoice Id
    * @returns {Promise} Invoice object
    */
-  retrieve (id: string) {
+  retrieve(id: string) {
     if (!id) return Promise.reject(new Error('id is required'));
-    return this.client.get('/invoices/' + id).then(r => r.data);
+    return this.client.get('/invoices/' + id).then((r) => r.data);
   }
 
   /**
@@ -42,8 +42,10 @@ export default class Invoices {
    * @param {any} params
    * @returns {Promise}
    */
-  cancel (id: string, params: Record<string, any> | null ) {
-    return this.client.delete('/invoices/' + id, { params }).then(r => r.data);
+  cancel(id: string, params: Record<string, any> | null) {
+    return this.client
+      .delete('/invoices/' + id, { params })
+      .then((r) => r.data);
   }
 
   /**
@@ -53,8 +55,10 @@ export default class Invoices {
    * @param {String} data.email Email address to send the invoice to
    * @returns {Promise}
    */
-  sendByEmail (id: string, data: Record<string, any> | null) {
-    return this.client.post('/invoices/' + id + '/email', data).then(r => r.data);
+  sendByEmail(id: string, data: Record<string, any> | null) {
+    return this.client
+      .post('/invoices/' + id + '/email', data)
+      .then((r) => r.data);
   }
 
   /**
@@ -62,10 +66,12 @@ export default class Invoices {
    * @param {string} id Invoice Id
    * @returns {Promise<NodeJS.ReadableStream>} PDF file in a stream
    */
-  downloadPdf (id: string): Promise<NodeJS.ReadableStream> {
-    return this.client.get('/invoices/' + id + '/pdf', {
-      responseType: 'stream'
-    }).then(r => r.data);
+  downloadPdf(id: string): Promise<NodeJS.ReadableStream> {
+    return this.client
+      .get('/invoices/' + id + '/pdf', {
+        responseType: 'stream',
+      })
+      .then((r) => r.data);
   }
 
   /**
@@ -73,10 +79,12 @@ export default class Invoices {
    * @param {string} id Invoice Id
    * @returns {Promise<NodeJS.ReadableStream>} XML file in a stream
    */
-  downloadXml (id: string): Promise<NodeJS.ReadableStream> {
-    return this.client.get('/invoices/' + id + '/xml', {
-      responseType: 'stream'
-    }).then(r => r.data);
+  downloadXml(id: string): Promise<NodeJS.ReadableStream> {
+    return this.client
+      .get('/invoices/' + id + '/xml', {
+        responseType: 'stream',
+      })
+      .then((r) => r.data);
   }
 
   /**
@@ -84,10 +92,12 @@ export default class Invoices {
    * @param {string} id Invoice Id
    * @returns {Promise<NodeJS.ReadableStream>} ZIP file in a stream
    */
-  downloadZip (id: string): Promise<NodeJS.ReadableStream> {
-    return this.client.get('/invoices/' + id + '/zip', {
-      responseType: 'stream'
-    }).then(r => r.data);
+  downloadZip(id: string): Promise<NodeJS.ReadableStream> {
+    return this.client
+      .get('/invoices/' + id + '/zip', {
+        responseType: 'stream',
+      })
+      .then((r) => r.data);
   }
 
   /**
@@ -95,10 +105,12 @@ export default class Invoices {
    * @param {string} id Invoice Id
    * @returns {Promise<NodeJS.ReadableStream>} XML file in a stream
    */
-  downloadCancellationReceiptXml (id: string): Promise<NodeJS.ReadableStream> {
-    return this.client.get('/invoices/' + id + '/cancellation_receipt/xml', {
-      responseType: 'stream'
-    }).then(r => r.data);
+  downloadCancellationReceiptXml(id: string): Promise<NodeJS.ReadableStream> {
+    return this.client
+      .get('/invoices/' + id + '/cancellation_receipt/xml', {
+        responseType: 'stream',
+      })
+      .then((r) => r.data);
   }
 
   /**
@@ -106,12 +118,13 @@ export default class Invoices {
    * @param {string} id Invoice Id
    * @returns {Promise<NodeJS.ReadableStream>} PDF file in a stream
    */
-  downloadCancellationReceiptPdf (id: string): Promise<NodeJS.ReadableStream> {
-    return this.client.get('/invoices/' + id + '/cancellation_receipt/pdf', {
-      responseType: 'stream'
-    }).then(r => r.data);
+  downloadCancellationReceiptPdf(id: string): Promise<NodeJS.ReadableStream> {
+    return this.client
+      .get('/invoices/' + id + '/cancellation_receipt/pdf', {
+        responseType: 'stream',
+      })
+      .then((r) => r.data);
   }
-
 
   /**
    * Edits an invoice with "draft" status.
@@ -119,8 +132,8 @@ export default class Invoices {
    * @param {Object} data Invoice data to edit
    * @returns {Promise} Edited invoice
    */
-  updateDraft (id: string, data: Record<string, any>) {
-    return this.client.put('/invoices/' + id, data).then(r => r.data);
+  updateDraft(id: string, data: Record<string, any>) {
+    return this.client.put('/invoices/' + id, data).then((r) => r.data);
   }
 
   /**
@@ -129,8 +142,10 @@ export default class Invoices {
    * @param {Object} options Query options
    * @returns {Promise} Stamped invoice
    */
-  stampDraft (id: string, params: Record<string, any> | null) {
-    return this.client.post('/invoices/' + id + '/stamp', { params }).then(r => r.data);
+  stampDraft(id: string, params?: Record<string, any> | null) {
+    return this.client
+      .post('/invoices/' + id + '/stamp', { params })
+      .then((r) => r.data);
   }
 
   /**
@@ -138,8 +153,8 @@ export default class Invoices {
    * @param {string} id Invoice Id
    * @returns {Promise} Updated invoice
    */
-  updateStatus (id: string) {
-    return this.client.put('/invoices/' + id + '/status').then(r => r.data);
+  updateStatus(id: string) {
+    return this.client.put('/invoices/' + id + '/status').then((r) => r.data);
   }
 
   /**
@@ -147,8 +162,7 @@ export default class Invoices {
    * @param {string} id Invoice Id
    * @returns {Promise} Draft invoice
    */
-  copyToDraft (id: string) {
-    return this.client.post('/invoices/' + id + '/copy').then(r => r.data);
+  copyToDraft(id: string) {
+    return this.client.post('/invoices/' + id + '/copy').then((r) => r.data);
   }
 }
-
