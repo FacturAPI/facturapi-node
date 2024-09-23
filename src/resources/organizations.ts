@@ -1,6 +1,6 @@
 import { AxiosInstance } from 'axios';
 import * as FormData from 'form-data';
-import { Series } from '../types/organization/organization';
+import { ApiKeys, Series } from '../types/organization/organization';
 
 export default class Organizations {
   client: AxiosInstance;
@@ -186,11 +186,9 @@ export default class Organizations {
   /**
    * List live api keys
    * @param {string} id Organization Id
-   * @returns {Promise<Array<{
-   * first_12: string
-   * created_at: string}>>} List of live api key
+   * @returns {Promise<Array<ApiKeys>>} List of live api key
    */
-  listLiveApiKey(id: string) {
+  async listLiveApiKeys(id: string): Promise<Array<ApiKeys>> {
     return this.client
       .get('/organizations/' + id + '/apikeys/live')
       .then((r) => r.data);
@@ -209,12 +207,16 @@ export default class Organizations {
 
   /**
    * Delete a live api key
-   * @param {string} id Organization Id
-   * @returns {Promise<boolean>}
+   * @param {string} organizationId Organization Id
+   * @param {string} apiKeyId Api Key Id
+   * @returns {Promise<Array<ApiKeys>>}
    */
-  deleteLiveApiKey(id: string, first_12: string) {
+  async deleteLiveApiKey(
+    organizationId: string,
+    apiKeyId: string,
+  ): Promise<Array<ApiKeys>> {
     return this.client
-      .delete('/organizations/' + id + '/apikeys/live/' + first_12)
+      .delete('/organizations/' + organizationId + '/apikeys/live/' + apiKeyId)
       .then((r) => r.data);
   }
 
