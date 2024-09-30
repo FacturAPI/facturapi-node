@@ -1,6 +1,6 @@
 import { AxiosInstance } from 'axios';
 import * as FormData from 'form-data';
-import { Series } from '../types/organization/organization';
+import { ApiKeys, Series } from '../types/organization/organization';
 
 export default class Organizations {
   client: AxiosInstance;
@@ -127,7 +127,7 @@ export default class Organizations {
     id: string,
     cerFile: NodeJS.ReadableStream,
     keyFile: NodeJS.ReadableStream,
-    password: string
+    password: string,
   ) {
     const formData = new FormData();
     formData.append('cer', cerFile, { filename: 'cer.cer' });
@@ -184,6 +184,17 @@ export default class Organizations {
   }
 
   /**
+   * List live api keys
+   * @param {string} id Organization Id
+   * @returns {Promise<Array<ApiKeys>>} List of live api key
+   */
+  async listLiveApiKeys(id: string): Promise<Array<ApiKeys>> {
+    return this.client
+      .get('/organizations/' + id + '/apikeys/live')
+      .then((r) => r.data);
+  }
+
+  /**
    * Renews the live api key and makes the previous one unusable
    * @param {string} id Organization Id
    * @returns {Promise<string>} New live api key
@@ -191,6 +202,21 @@ export default class Organizations {
   renewLiveApiKey(id: string) {
     return this.client
       .put('/organizations/' + id + '/apikeys/live')
+      .then((r) => r.data);
+  }
+
+  /**
+   * Delete a live api key
+   * @param {string} organizationId Organization Id
+   * @param {string} apiKeyId Api Key Id
+   * @returns {Promise<Array<ApiKeys>>}
+   */
+  async deleteLiveApiKey(
+    organizationId: string,
+    apiKeyId: string,
+  ): Promise<Array<ApiKeys>> {
+    return this.client
+      .delete('/organizations/' + organizationId + '/apikeys/live/' + apiKeyId)
       .then((r) => r.data);
   }
 
@@ -227,7 +253,7 @@ export default class Organizations {
   updateSeriesGroup(
     organization_id: string,
     seriesName: string,
-    data: Pick<Series, 'next_folio' | 'next_folio_test'>
+    data: Pick<Series, 'next_folio' | 'next_folio_test'>,
   ) {
     return this.client
       .put(`/organizations/${organization_id}/series-group/${seriesName}`, data)
