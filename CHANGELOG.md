@@ -5,12 +5,13 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](http://keepachangelog.com/en/1.0.0/)
 and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.html).
 
-## [4.2.0] 2024-09-23
+## [4.2.0] 2024-10-10
 
 ### Added
 
-- Add list of live api keys
-- Add delete of live api keys
+- List Live Api Keys: `listLiveApiKeys` for organizations
+- Delete Live Api Keys: `deleteLiveApiKey` for organizations
+- Validate webhooks responses: `validateSignature` for webhooks
 
 ## [4.1.2] 2024-07-15
 
