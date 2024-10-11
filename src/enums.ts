@@ -20,7 +20,7 @@ export const PaymentForm = {
   TARJETA_DE_SERVICIOS: '29',
   APLICACION_DE_ANTICIPOS: '30',
   INTERMEDIARIO_DE_PAGOS: '31',
-  POR_DEFINIR: '99'
+  POR_DEFINIR: '99',
 } as const;
 
 export const PaymentFormList = [
@@ -45,18 +45,18 @@ export const PaymentFormList = [
   { value: '29', label: 'Tarjeta de servicios' },
   { value: '30', label: 'Aplicación de anticipos' },
   { value: '31', label: 'Intermediario de pagos' },
-  { value: '99', label: 'Por definir' }
+  { value: '99', label: 'Por definir' },
 ] as const;
 
 export const TaxType = {
   IVA: 'IVA',
   IEPS: 'IEPS',
-  ISR: 'ISR'
+  ISR: 'ISR',
 } as const;
 
 export const PaymentMethod = {
   PAGO_EN_UNA_EXHIBICION: 'PUE',
-  PAGO_EN_PARCIALIDADES_DIFERIDO: 'PPD'
+  PAGO_EN_PARCIALIDADES_DIFERIDO: 'PPD',
 } as const;
 
 export const InvoiceUse = {
@@ -84,7 +84,7 @@ export const InvoiceUse = {
   SIN_EFECTOS_FISCALES: 'S01',
   PAGOS: 'CP01',
   NOMINA: 'CN01',
-  POR_DEFINIR: 'P01'
+  POR_DEFINIR: 'P01',
 } as const;
 
 export const InvoiceType = {
@@ -92,7 +92,7 @@ export const InvoiceType = {
   EGRESO: 'E',
   TRASLADO: 'T',
   NOMINA: 'N',
-  PAGO: 'P'
+  PAGO: 'P',
 } as const;
 
 export const InvoiceRelation = {
@@ -102,7 +102,7 @@ export const InvoiceRelation = {
   SUSTITUCION_DE_CFDI_PREVIOS: '04',
   TRASLADOS_DE_MERCANCIA_FACTURADOS_PREVIAMENTE: '05',
   FACTURA_POR_TRASLADOS_PREVIOS: '06',
-  APLICACION_DE_ANTICIPO: '07'
+  APLICACION_DE_ANTICIPO: '07',
 } as const;
 
 export const TaxSystem = {
@@ -126,5 +126,13 @@ export const TaxSystem = {
   COORDINADOS: '624',
   ACTIVIDADES_EMPRESARIALES_CON_INGRESOS_A_TRAVÉS_DE_PLATAFORMAS_TECNOLÓGICAS:
     '625',
-  RÉGIMEN_SIMPLIFICADO_DE_CONFIANZA: '626'
+  RÉGIMEN_SIMPLIFICADO_DE_CONFIANZA: '626',
+} as const;
+
+export const InvoiceStatus = {
+  DRAFT: 'draft',
+  PENDING: 'pending',
+  VALID: 'valid',
+  CANCELED: 'canceled',
+  FAILED: 'failed',
 } as const;
