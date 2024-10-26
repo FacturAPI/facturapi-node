@@ -3,6 +3,7 @@
   "version": "4.2.0",
   "description": "Librería oficial de Facturapi. Crea CFDIs timbrados y enviados al SAT, XML y PDF",
   "main": "lib/index.js",
+  "types": "lib/index.d.ts",
   "scripts": {
     "precommit": "lint-staged",
     "build": "tsc"

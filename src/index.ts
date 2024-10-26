@@ -11,6 +11,9 @@ import * as enums from './enums';
 import { createWrapper } from './wrapper';
 import { DEFAULT_API_VERSION } from './constants';
 
+export * from './enums';
+export * from './types';
+
 const VALID_API_VERSIONS = ['v1', 'v2'];
 
 export type ApiVersion = 'v1' | 'v2';
@@ -39,6 +42,14 @@ export default class Facturapi {
 
   static get TaxType() {
     return enums.TaxType;
+  }
+
+  static get TaxFactor() {
+    return enums.TaxFactor;
+  }
+
+  static get IepsMode() {
+    return enums.IepsMode;
   }
 
   static get PaymentForm() {
