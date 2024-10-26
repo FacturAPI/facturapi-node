@@ -1,6 +1,6 @@
 import { AxiosInstance } from 'axios';
 import * as FormData from 'form-data';
-import { ApiKeys, Series } from '../types/organization/organization';
+import type { ApiKeys, Series } from '../types/organization';
 
 export default class Organizations {
   client: AxiosInstance;
