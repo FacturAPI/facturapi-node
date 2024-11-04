@@ -11,6 +11,9 @@ import * as enums from './enums';
 import { createWrapper } from './wrapper';
 import { DEFAULT_API_VERSION } from './constants';
 
+export * from './enums';
+export * from './types';
+
 const VALID_API_VERSIONS = ['v1', 'v2'];
 
 export type ApiVersion = 'v1' | 'v2';
@@ -37,41 +40,52 @@ export default class Facturapi {
   tools: Tools;
   webhooks: Webhooks;
 
-  static get TaxType () {
+  static get TaxType() {
     return enums.TaxType;
   }
 
-  static get PaymentForm () {
+  static get TaxFactor() {
+    return enums.TaxFactor;
+  }
+
+  static get IepsMode() {
+    return enums.IepsMode;
+  }
+
+  static get PaymentForm() {
     return enums.PaymentForm;
   }
 
-  static get PaymentMethod () {
+  static get PaymentMethod() {
     return enums.PaymentMethod;
   }
 
-  static get InvoiceType () {
+  static get InvoiceType() {
     return enums.InvoiceType;
   }
 
-  static get InvoiceUse () {
+  static get InvoiceUse() {
     return enums.InvoiceUse;
   }
 
-  static get InvoiceRelation () {
+  static get InvoiceRelation() {
     return enums.InvoiceRelation;
   }
 
-  static get TaxSystem () {
+  static get TaxSystem() {
     return enums.TaxSystem;
   }
 
-  constructor (apiKey: string, options: FacturapiOptions = {}) {
+  static get InvoiceStatus() {
+    return enums.InvoiceStatus;
+  }
 
+  constructor(apiKey: string, options: FacturapiOptions = {}) {
     if (options.apiVersion) {
       if (!VALID_API_VERSIONS.includes(options.apiVersion)) {
         throw new Error(
           'Invalid API version. Valid values are: ' +
-            VALID_API_VERSIONS.join(', ')
+            VALID_API_VERSIONS.join(', '),
         );
       }
       this.apiVersion = options.apiVersion;
@@ -87,7 +101,6 @@ export default class Facturapi {
     this.receipts = new Receipts(wrapper);
     this.retentions = new Retentions(wrapper);
     this.tools = new Tools(wrapper);
-    this.webhooks = new Webhooks(wrapper)
+    this.webhooks = new Webhooks(wrapper);
   }
 }
-

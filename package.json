@@ -1,8 +1,9 @@
 {
   "name": "facturapi",
-  "version": "4.2.0",
+  "version": "4.3.0",
   "description": "Librería oficial de Facturapi. Crea CFDIs timbrados y enviados al SAT, XML y PDF",
   "main": "lib/index.js",
+  "types": "lib/index.d.ts",
   "scripts": {
     "precommit": "lint-staged",
     "build": "tsc"
@@ -16,7 +17,10 @@
   },
   "keywords": [
     "cfdi",
-    "factura"
+    "factura",
+    "sat",
+    "facturación",
+    "facturapi"
   ],
   "author": "Facturación Espacial <contacto@facturapi.io>",
   "license": "MIT",
@@ -31,8 +35,8 @@
     ]
   },
   "dependencies": {
-    "axios": "^1.7.2",
-    "form-data": "^4.0.0",
+    "axios": "^1.7.7",
+    "form-data": "^4.0.1",
     "safe-buffer": "^5.2.1"
   },
   "devDependencies": {
