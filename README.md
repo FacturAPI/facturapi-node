@@ -1,5 +1,4 @@
-FacturAPI
-=========
+# FacturAPI
 
 [![npm version](https://badge.fury.io/js/facturapi.svg)](https://badge.fury.io/js/facturapi)
 [![js-semistandard-style](https://img.shields.io/badge/code%20style-semistandard-brightgreen.svg?style=flat-square)](https://github.com/Flet/semistandard)
@@ -23,53 +22,60 @@ npm install --save facturapi
 Make sure you have created your free account on [FacturAPI](https://www.facturapi.io) and that you have your **API Keys**.
 
 ```javascript
-const Facturapi = require('facturapi');
+import Facturapi from 'facturapi';
+
 const facturapi = new Facturapi('YOUR_API_KEY', {
-  apiVersion: 'v2' // Optional, say what API version you want to use. Defaults to the latest version.
+  apiVersion: 'v2', // Optional, say what API version you want to use. Defaults to the latest version.
 });
 ```
 
 ### Create a customer
 
 ```javascript
-facturapi.customers.create({
-  legal_name: 'Walter White',     // Razón social
-  tax_id: 'WIWA761018',           // RFC
-  email: 'walterwhite@gmail.com', // Optional but useful to send invoice by email
-  address: {
-    street: 'Av. de los Rosales',
-    exterior: '123',
-    neighborhood: 'Tepito',
-    zip: '06800',
-    // city, municipality and state are filled automatically from the zip code
-    // but if you want to, you can override their values
-    // city: 'México',
-    // municipality: 'Cuauhtémoc',
-    // state: 'Ciudad de México'
-  }
-}).then(customer => {
-  // Remember to store the customer.id in your records.
-  // You will need it to create an invoice for this customer.
-}).catch(err => console.log(err)); // Handle the error.
+facturapi.customers
+  .create({
+    legal_name: 'Walter White', // Razón social
+    tax_id: 'WIWA761018', // RFC
+    email: 'walterwhite@gmail.com', // Optional but useful to send invoice by email
+    address: {
+      street: 'Av. de los Rosales',
+      exterior: '123',
+      neighborhood: 'Tepito',
+      zip: '06800',
+      // city, municipality and state are filled automatically from the zip code
+      // but if you want to, you can override their values
+      // city: 'México',
+      // municipality: 'Cuauhtémoc',
+      // state: 'Ciudad de México'
+    },
+  })
+  .then((customer) => {
+    // Remember to store the customer.id in your records.
+    // You will need it to create an invoice for this customer.
+  })
+  .catch((err) => console.log(err)); // Handle the error.
 ```
 
 ### Create a product
 
 ```javascript
-facturapi.products.create({
-  product_key: '4319150114',  // Clave Producto/Servicio from SAT's catalog. Log in to FacturAPI and use our tool to look it up.
-  description: 'Apple iPhone 8',
-  price: 20000, // price in MXN.
-  // By default, taxes are calculated from the price with IVA 16%
-  // But again, you can override that by explicitly providing a taxes array
-  // taxes: [
-  //   { type: Facturapi.TaxType.IVA, rate: 0.16 },
-  //   { type: Facturapi.TaxType.ISR, rate: 0.03666, withholding: true }
-  // ]
-}).then(product => {
-  // Remember to store the product.id in your records.
-  // You will need it to create an invoice for this product.
-}).catch(err => console.log(err)); // Handle the error.
+facturapi.products
+  .create({
+    product_key: '4319150114', // Clave Producto/Servicio from SAT's catalog. Log in to FacturAPI and use our tool to look it up.
+    description: 'Apple iPhone 8',
+    price: 20000, // price in MXN.
+    // By default, taxes are calculated from the price with IVA 16%
+    // But again, you can override that by explicitly providing a taxes array
+    // taxes: [
+    //   { type: Facturapi.TaxType.IVA, rate: 0.16 },
+    //   { type: Facturapi.TaxType.ISR, rate: 0.03666, withholding: true }
+    // ]
+  })
+  .then((product) => {
+    // Remember to store the product.id in your records.
+    // You will need it to create an invoice for this product.
+  })
+  .catch((err) => console.log(err)); // Handle the error.
 ```
 
 ### Create an invoice
@@ -105,10 +111,12 @@ facturapi.invoices.downloadZip(invoice.id) // or downloadPdf or downloadXml
 
 ```javascript
 // Send the invoice to your customer's email (if any)
-facturapi.invoices.sendByEmail(invioce.id) // Also returns a Promise
+facturapi.invoices
+  .sendByEmail(invioce.id) // Also returns a Promise
   .then(() => {
     // Successfully sent
-  }).catch(err => console.log(err)); // Handle the error.
+  })
+  .catch((err) => console.log(err)); // Handle the error.
 ```
 
 ## Documentation
