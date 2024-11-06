@@ -4,7 +4,7 @@ export interface Address {
   street?: string | null;
   exterior?: string | null;
   interior?: string | null;
-  neighborhood: string;
+  neighborhood?: string | null;
   zip: string;
   city?: string | null;
   municipality?: string | null;
