@@ -1,9 +1,9 @@
-import { AxiosInstance } from 'axios';
 import { Product, SearchResult } from '../types';
+import { WrapperClient } from '../wrapper';
 
 export default class Products {
-  client: AxiosInstance;
-  constructor(client: AxiosInstance) {
+  client: WrapperClient;
+  constructor(client: WrapperClient) {
     this.client = client;
   }
 
@@ -13,7 +13,7 @@ export default class Products {
    * @returns Product object
    */
   create(data: Record<string, any>): Promise<Product> {
-    return this.client.post('/products', data).then((r) => r.data);
+    return this.client.post('/products', data);
   }
 
   /**
@@ -22,7 +22,7 @@ export default class Products {
    * @returns Search results object. The object contains a `data` property with the list of products.
    */
   list(params?: Record<string, any> | null): Promise<SearchResult<Product>> {
-    return this.client.get('/products', { params: params }).then((r) => r.data);
+    return this.client.get('/products', { params: params });
   }
 
   /**
@@ -32,7 +32,7 @@ export default class Products {
    */
   retrieve(id: string): Promise<Product> {
     if (!id) return Promise.reject(new Error('id is required'));
-    return this.client.get('/products/' + id).then((r) => r.data);
+    return this.client.get('/products/' + id);
   }
 
   /**
@@ -42,7 +42,7 @@ export default class Products {
    * @returns Updated product
    */
   update(id: string, data: Record<string, any>): Promise<Product> {
-    return this.client.put('/products/' + id, data).then((r) => r.data);
+    return this.client.put('/products/' + id, data);
   }
 
   /**
@@ -51,6 +51,6 @@ export default class Products {
    * @returns Deleted product
    */
   del(id: string): Promise<Product> {
-    return this.client.delete('/products/' + id).then((r) => r.data);
+    return this.client.delete('/products/' + id);
   }
 }

@@ -1,11 +1,11 @@
-import { AxiosInstance } from 'axios';
-import * as FormData from 'form-data';
+import { WrapperClient, NodeFormData, UniversalFormData } from '../wrapper';
 import type { ApiKeys, Organization, Series } from '../types/organization';
 import { SearchResult } from '../types/common';
+import { isNode } from '../constants';
 
 export default class Organizations {
-  client: AxiosInstance;
-  constructor(client: AxiosInstance) {
+  client: WrapperClient;
+  constructor(client: WrapperClient) {
     this.client = client;
   }
 
@@ -15,7 +15,7 @@ export default class Organizations {
    * @returns Organization object
    */
   create(data: Record<string, any>): Promise<Organization> {
-    return this.client.post('/organizations', data).then((r) => r.data);
+    return this.client.post('/organizations', { body: data });
   }
 
   /**
@@ -27,9 +27,7 @@ export default class Organizations {
     params?: Record<string, any> | null,
   ): Promise<SearchResult<Organization>> {
     if (!params) params = {};
-    return this.client
-      .get('/organizations', { params: params })
-      .then((r) => r.data);
+    return this.client.get('/organizations', { params: params });
   }
 
   /**
@@ -39,7 +37,7 @@ export default class Organizations {
    */
   retrieve(id: string): Promise<Organization> {
     if (!id) return Promise.reject(new Error('id is required'));
-    return this.client.get('/organizations/' + id).then((r) => r.data);
+    return this.client.get('/organizations/' + id);
   }
 
   /**
@@ -50,9 +48,7 @@ export default class Organizations {
    */
   updateLegal(id: string, data: Record<string, any>): Promise<Organization> {
     if (!id) return Promise.reject(new Error('id is required'));
-    return this.client
-      .put('/organizations/' + id + '/legal', data)
-      .then((r) => r.data);
+    return this.client.put('/organizations/' + id + '/legal', { body: data });
   }
 
   /**
@@ -65,9 +61,9 @@ export default class Organizations {
     id: string,
     data: Record<string, any>,
   ): Promise<Organization> {
-    return this.client
-      .put('/organizations/' + id + '/customization', data)
-      .then((r) => r.data);
+    return this.client.put('/organizations/' + id + '/customization', {
+      body: data,
+    });
   }
 
   /**
@@ -80,9 +76,9 @@ export default class Organizations {
     id: string,
     data: Record<string, any>,
   ): Promise<Organization> {
-    return this.client
-      .put('/organizations/' + id + '/receipts', data)
-      .then((r) => r.data);
+    return this.client.put('/organizations/' + id + '/receipts', {
+      body: data,
+    });
   }
 
   /**
@@ -92,9 +88,7 @@ export default class Organizations {
    * @returns Organization object
    */
   updateDomain(id: string, data: Record<string, any>): Promise<Organization> {
-    return this.client
-      .put('/organizations/' + id + '/domain', data)
-      .then((r) => r.data);
+    return this.client.put('/organizations/' + id + '/domain', { body: data });
   }
 
   /**
@@ -105,9 +99,7 @@ export default class Organizations {
   checkDomainIsAvailable(
     data: Record<string, any>,
   ): Promise<{ available: boolean }> {
-    return this.client
-      .put('/organizations/domain-check', data)
-      .then((r) => r.data);
+    return this.client.put('/organizations/domain-check', { body: data });
   }
 
   /**
@@ -116,14 +108,22 @@ export default class Organizations {
    * @param file Logo file
    * @returns Organization object
    */
-  uploadLogo(id: string, file: NodeJS.ReadableStream): Promise<Organization> {
-    const formData = new FormData();
-    formData.append('file', file, 'file');
-    return this.client
-      .put('/organizations/' + id + '/logo', formData, {
-        headers: formData.getHeaders(),
-      })
-      .then((r) => r.data);
+  uploadLogo(
+    id: string,
+    file: NodeJS.ReadableStream | Buffer | File | Blob,
+  ): Promise<Organization> {
+    const formData: UniversalFormData = new (
+      isNode ? NodeFormData : FormData
+    )();
+    if (isNode) {
+      (formData as InstanceType<NodeFormData>).append('file', file, {
+        filename: 'file',
+        contentType: 'application/octet-stream',
+      });
+    } else {
+      formData.append('file', file as File | Blob, 'file');
+    }
+    return this.client.put('/organizations/' + id + '/logo', { formData });
   }
 
   /**
@@ -136,19 +136,31 @@ export default class Organizations {
    */
   uploadCertificate(
     id: string,
-    cerFile: NodeJS.ReadableStream,
-    keyFile: NodeJS.ReadableStream,
+    cerFile: NodeJS.ReadableStream | Buffer | File | Blob,
+    keyFile: NodeJS.ReadableStream | Buffer | File | Blob,
     password: string,
   ): Promise<Organization> {
-    const formData = new FormData();
-    formData.append('cer', cerFile, { filename: 'cer.cer' });
-    formData.append('key', keyFile, { filename: 'key.key' });
+    const formData = new (isNode ? NodeFormData : FormData)();
+    if (isNode) {
+      (formData as InstanceType<NodeFormData>).append('cer', cerFile, {
+        filename: 'cer.cer',
+        contentType: 'application/octet-stream',
+      });
+    } else {
+      formData.append('cer', cerFile as File | Blob, 'cer.cer');
+    }
+    if (isNode) {
+      (formData as InstanceType<NodeFormData>).append('key', keyFile, {
+        filename: 'key.key',
+        contentType: 'application/octet-stream',
+      });
+    } else {
+      formData.append('key', keyFile as File | Blob, 'key.key');
+    }
     formData.append('password', password);
-    return this.client
-      .put('/organizations/' + id + '/certificate', formData, {
-        headers: formData.getHeaders(),
-      })
-      .then((r) => r.data);
+    return this.client.put('/organizations/' + id + '/certificate', {
+      formData,
+    });
   }
 
   /**
@@ -157,9 +169,7 @@ export default class Organizations {
    * @returns Organization object
    */
   deleteCertificate(id: string): Promise<Organization> {
-    return this.client
-      .delete('/organizations/' + id + '/certificate')
-      .then((r) => r.data);
+    return this.client.delete('/organizations/' + id + '/certificate');
   }
 
   /**
@@ -169,7 +179,7 @@ export default class Organizations {
    */
   del(id: string): Promise<Organization> {
     if (!id) return Promise.reject(new Error('id is required'));
-    return this.client.delete('/organizations/' + id).then((r) => r.data);
+    return this.client.delete('/organizations/' + id);
   }
 
   /**
@@ -178,9 +188,7 @@ export default class Organizations {
    * @returns Test api key
    */
   getTestApiKey(id: string): Promise<string> {
-    return this.client
-      .get('/organizations/' + id + '/apikeys/test')
-      .then((r) => r.data);
+    return this.client.get('/organizations/' + id + '/apikeys/test');
   }
 
   /**
@@ -189,9 +197,7 @@ export default class Organizations {
    * @returns New test api key
    */
   renewTestApiKey(id: string): Promise<string> {
-    return this.client
-      .put('/organizations/' + id + '/apikeys/test')
-      .then((r) => r.data);
+    return this.client.put('/organizations/' + id + '/apikeys/test');
   }
 
   /**
@@ -200,9 +206,7 @@ export default class Organizations {
    * @returns List of live api keys
    */
   async listLiveApiKeys(id: string): Promise<ApiKeys[]> {
-    return this.client
-      .get('/organizations/' + id + '/apikeys/live')
-      .then((r) => r.data);
+    return this.client.get('/organizations/' + id + '/apikeys/live');
   }
 
   /**
@@ -211,9 +215,7 @@ export default class Organizations {
    * @returns New live api key
    */
   renewLiveApiKey(id: string): Promise<string> {
-    return this.client
-      .put('/organizations/' + id + '/apikeys/live')
-      .then((r) => r.data);
+    return this.client.put('/organizations/' + id + '/apikeys/live');
   }
 
   /**
@@ -226,9 +228,9 @@ export default class Organizations {
     organizationId: string,
     apiKeyId: string,
   ): Promise<ApiKeys[]> {
-    return this.client
-      .delete('/organizations/' + organizationId + '/apikeys/live/' + apiKeyId)
-      .then((r) => r.data);
+    return this.client.delete(
+      '/organizations/' + organizationId + '/apikeys/live/' + apiKeyId,
+    );
   }
 
   /**
@@ -237,9 +239,9 @@ export default class Organizations {
    * @returns Series object
    */
   listSeriesGroup(organization_id: string): Promise<Series[]> {
-    return this.client
-      .get('/organizations/' + organization_id + '/series-group')
-      .then((r) => r.data);
+    return this.client.get(
+      '/organizations/' + organization_id + '/series-group',
+    );
   }
 
   /**
@@ -252,9 +254,12 @@ export default class Organizations {
     organization_id: string,
     seriesData: Series,
   ): Promise<Series> {
-    return this.client
-      .post('/organizations/' + organization_id + '/series-group', seriesData)
-      .then((r) => r.data);
+    return this.client.post(
+      '/organizations/' + organization_id + '/series-group',
+      {
+        body: seriesData,
+      },
+    );
   }
 
   /**
@@ -269,9 +274,12 @@ export default class Organizations {
     seriesName: string,
     data: Pick<Series, 'next_folio' | 'next_folio_test'>,
   ): Promise<Series> {
-    return this.client
-      .put(`/organizations/${organization_id}/series-group/${seriesName}`, data)
-      .then((r) => r.data);
+    return this.client.put(
+      `/organizations/${organization_id}/series-group/${seriesName}`,
+      {
+        body: data,
+      },
+    );
   }
 
   /**
@@ -284,8 +292,8 @@ export default class Organizations {
     organization_id: string,
     seriesName: string,
   ): Promise<Series> {
-    return this.client
-      .delete(`/organizations/${organization_id}/series-group/${seriesName}`)
-      .then((r) => r.data);
+    return this.client.delete(
+      `/organizations/${organization_id}/series-group/${seriesName}`,
+    );
   }
 }

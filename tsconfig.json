@@ -5,7 +5,8 @@
     "strict": true,  // Enable stricter type checking (optional but recommended)
     "outDir": "lib",   // Output compiled JavaScript to the "lib" directory
     "declaration": true,  // Generate type declaration files (.d.ts)
-    "types": ["node"]  // Include type definitions for Node.js
+    "types": ["node"],  // Include type definitions for Node.js
+    "lib": ["es2019", "dom"]  // Include DOM library for browser compatibility
   },
   "include": ["src"]  // Include files from the "src" directory for compilation
 }

@@ -1,11 +1,10 @@
-import { AxiosInstance } from 'axios';
-import { ApiEvent, ApiEventType, Webhook } from '../types/webhook';
-import { SearchResult } from '../types';
+import { SearchResult, Webhook, ApiEvent, ApiEventType } from '../types';
+import { WrapperClient } from '../wrapper';
 
 export default class Webhooks {
-  client: AxiosInstance;
+  client: WrapperClient;
 
-  constructor(client: AxiosInstance) {
+  constructor(client: WrapperClient) {
     this.client = client;
   }
 
@@ -14,7 +13,7 @@ export default class Webhooks {
    * @param data - Webhook options
    * @returns Webhook object
    */
-  create(data: Record<string, any>): Webhook {
+  create(data: Record<string, any>): Promise<Webhook> {
     return this.client.post('/webhooks', data);
   }
 
@@ -71,6 +70,6 @@ export default class Webhooks {
     signature: string;
     payload: ApiEvent<T>;
   }): Promise<ApiEvent<T>> {
-    return this.client.post('/webhooks/validate-signature', data);
+    return this.client.post('/webhooks/validate-signature', { body: data });
   }
 }
