@@ -5,7 +5,15 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](http://keepachangelog.com/en/1.0.0/)
 and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.html).
 
+## [4.4.0] 2024-11-07
+
+### Added
+
+- Compatibility with browser environments and React Native. Now you can use Facturapi in the browser or in React Native, as long as you have a Fetch API compatible environment.
+
 ## [4.3.0] 2024-11-04
+
+### Added
 
 - Add types for all method responses. Method parameters are still not typed.
 

@@ -3,6 +3,7 @@ import {
   BASE_URL_V1,
   DEFAULT_API_VERSION,
   isNode,
+  isReactNative,
 } from './constants';
 
 let fetch: typeof globalThis.fetch;
@@ -14,6 +15,10 @@ if (isNode) {
   fetch = require('node-fetch');
   btoa = (data: string) => Buffer.from(data).toString('base64');
   NodeFormData = require('form-data');
+} else if (isReactNative) {
+  // React Native environment
+  fetch = globalThis.fetch;
+  btoa = (data: string) => globalThis.Buffer.from(data).toString('base64');
 } else {
   // Browser environment
   fetch = globalThis.fetch;
