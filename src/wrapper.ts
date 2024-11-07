@@ -5,27 +5,24 @@ import {
   isNode,
   isReactNative,
 } from './constants';
+import fetch from 'cross-fetch';
 
-let fetch: typeof globalThis.fetch;
 let btoa: (data: string) => string;
-export type NodeFormData = typeof import('form-data');
+export type NodeFormData = any;
 export let NodeFormData: NodeFormData;
 
 if (isNode) {
-  fetch = require('node-fetch');
   btoa = (data: string) => Buffer.from(data).toString('base64');
   NodeFormData = require('form-data');
 } else if (isReactNative) {
   // React Native environment
-  fetch = globalThis.fetch;
   btoa = (data: string) => globalThis.Buffer.from(data).toString('base64');
 } else {
   // Browser environment
-  fetch = globalThis.fetch;
   btoa = globalThis.btoa;
 }
 
-export type UniversalFormData = FormData | InstanceType<NodeFormData>;
+export type UniversalFormData = FormData | InstanceType<any>;
 
 const responseInterceptor = async (response: Response) => {
   if (!response.ok) {

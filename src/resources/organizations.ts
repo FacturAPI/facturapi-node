@@ -1,4 +1,4 @@
-import { WrapperClient, NodeFormData, UniversalFormData } from '../wrapper';
+import { WrapperClient, NodeFormData } from '../wrapper';
 import type { ApiKeys, Organization, Series } from '../types/organization';
 import { SearchResult } from '../types/common';
 import { isNode } from '../constants';
@@ -112,9 +112,7 @@ export default class Organizations {
     id: string,
     file: NodeJS.ReadableStream | Buffer | File | Blob,
   ): Promise<Organization> {
-    const formData: UniversalFormData = new (
-      isNode ? NodeFormData : FormData
-    )();
+    const formData = new (isNode ? NodeFormData : FormData)();
     if (isNode) {
       (formData as InstanceType<NodeFormData>).append('file', file, {
         filename: 'file',
