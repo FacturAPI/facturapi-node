@@ -6,3 +6,4 @@ export * from './retention';
 export * from './organization';
 export * from './receipt';
 export * from './invoice';
+export * from './webhook';
