@@ -65,7 +65,7 @@ export default class Invoices {
    * @param data.email Email address to send the invoice to
    * @returns {Promise}
    */
-  sendByEmail(id: string, data: SendEmailBody): Promise<GenericResponse> {
+  sendByEmail(id: string, data?: SendEmailBody): Promise<GenericResponse> {
     return this.client
       .post('/invoices/' + id + '/email', data)
       .then((r) => r.data);
