@@ -11,6 +11,7 @@ and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.
 
 - Compatibility with browser environments and React Native. Now you can use Facturapi in the browser or in React Native, as long as you have a Fetch API compatible environment.
 - Types for webhooks responses.
+- Add `organizations.me` method to get the organization information.
 
 ### Fixed
 

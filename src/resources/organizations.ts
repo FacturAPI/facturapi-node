@@ -294,4 +294,12 @@ export default class Organizations {
       `/organizations/${organization_id}/series-group/${seriesName}`,
     );
   }
+
+  /**
+   * Get the organization that belongs to the authenticated API key
+   * @returns Organization object
+   */
+  me(): Promise<Organization> {
+    return this.client.get('/organizations/me');
+  }
 }
