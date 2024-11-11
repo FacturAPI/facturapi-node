@@ -1,9 +1,9 @@
-import { AxiosInstance } from "axios";
+import { WrapperClient } from '../wrapper';
 
 export default class Catalogs {
-  client: AxiosInstance;
-  
-  constructor (client: AxiosInstance) {
+  client: WrapperClient;
+
+  constructor(client: WrapperClient) {
     this.client = client;
   }
 
@@ -12,8 +12,8 @@ export default class Catalogs {
    * @param {Object} params - Search parameters
    * @returns {Promise}
    */
-  searchProducts (params: Record<string, any> | null) {
-    return this.client.get('/catalogs/products', { params }).then(response => response.data);
+  searchProducts(params: Record<string, any> | null) {
+    return this.client.get('/catalogs/products', { params });
   }
 
   /**
@@ -21,7 +21,7 @@ export default class Catalogs {
    * @param {[Object]} params - Search parameters
    * @returns {Promise}
    */
-  searchUnits (params: Record<string, any> | null) {
-    return this.client.get('/catalogs/units', { params }).then(response => response.data);
+  searchUnits(params: Record<string, any> | null) {
+    return this.client.get('/catalogs/units', { params });
   }
 }

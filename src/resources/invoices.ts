@@ -1,4 +1,3 @@
-import { AxiosInstance } from 'axios';
 import {
   CancelInvoiceOptions,
   GenericResponse,
@@ -6,24 +5,25 @@ import {
   SearchResult,
   SendEmailBody,
 } from '../types';
+import { WrapperClient } from '../wrapper';
 
 export default class Invoices {
-  client: AxiosInstance;
+  client: WrapperClient;
 
-  constructor(client: AxiosInstance) {
+  constructor(client: WrapperClient) {
     this.client = client;
   }
 
   /**
    * Creates a new valid invoice (CFDI).
-   * @param data Invoice data
+   * @param body Invoice data
    * @returns Invoice object
    */
   create(
-    data: Record<string, any>,
+    body: Record<string, any>,
     params?: Record<string, any> | null,
   ): Promise<Invoice> {
-    return this.client.post('/invoices', data, { params }).then((r) => r.data);
+    return this.client.post('/invoices', { body, params });
   }
 
   /**
@@ -33,7 +33,7 @@ export default class Invoices {
    */
   list(params?: Record<string, any> | null): Promise<SearchResult<Invoice>> {
     if (!params) params = {};
-    return this.client.get('/invoices', { params }).then((r) => r.data);
+    return this.client.get('/invoices', { params });
   }
 
   /**
@@ -43,7 +43,7 @@ export default class Invoices {
    */
   retrieve(id: string): Promise<Invoice> {
     if (!id) return Promise.reject(new Error('id is required'));
-    return this.client.get('/invoices/' + id).then((r) => r.data);
+    return this.client.get('/invoices/' + id);
   }
 
   /**
@@ -53,87 +53,67 @@ export default class Invoices {
    * @returns Canceled invoice
    */
   cancel(id: string, params: CancelInvoiceOptions): Promise<Invoice> {
-    return this.client
-      .delete('/invoices/' + id, { params })
-      .then((r) => r.data);
+    return this.client.delete('/invoices/' + id, { params });
   }
 
   /**
    * Sends the invoice to the customer's email
    * @param id Invoice Id
-   * @param data Additional arguments
-   * @param data.email Email address to send the invoice to
-   * @returns {Promise}
+   * @param options Additional arguments
+   * @param options.email Email address to send the invoice to
+   * @returns Object with 'ok' property set to true if the email was sent successfully
    */
-  sendByEmail(id: string, data?: SendEmailBody): Promise<GenericResponse> {
-    return this.client
-      .post('/invoices/' + id + '/email', data)
-      .then((r) => r.data);
+  sendByEmail(id: string, options?: SendEmailBody): Promise<GenericResponse> {
+    return this.client.post('/invoices/' + id + '/email', { body: options });
   }
 
   /**
    * Downloads the specified invoice in PDF format
    * @param id Invoice Id
-   * @returns {Promise<NodeJS.ReadableStream>} PDF file in a stream
+   * @returns PDF file in a stream (Node.js) or Blob (browser)
    */
-  downloadPdf(id: string): Promise<NodeJS.ReadableStream> {
-    return this.client
-      .get('/invoices/' + id + '/pdf', {
-        responseType: 'stream',
-      })
-      .then((r) => r.data);
+  async downloadPdf(id: string): Promise<NodeJS.ReadableStream | Blob> {
+    return this.client.get('/invoices/' + id + '/pdf');
   }
 
   /**
    * Downloads the specified invoice in XML format
    * @param id Invoice Id
-   * @returns {Promise<NodeJS.ReadableStream>} XML file in a stream
+   * @returns XML file in a stream (Node.js) or Blob (browser)
    */
-  downloadXml(id: string): Promise<NodeJS.ReadableStream> {
-    return this.client
-      .get('/invoices/' + id + '/xml', {
-        responseType: 'stream',
-      })
-      .then((r) => r.data);
+  async downloadXml(id: string): Promise<NodeJS.ReadableStream | Blob> {
+    return this.client.get('/invoices/' + id + '/xml');
   }
 
   /**
    * Downloads the specified invoice in a ZIP package containing both PDF and XML files
    * @param id Invoice Id
-   * @returns {Promise<NodeJS.ReadableStream>} ZIP file in a stream
+   * @returns ZIP file in a stream (Node.js) or Blob (browser)
    */
-  downloadZip(id: string): Promise<NodeJS.ReadableStream> {
-    return this.client
-      .get('/invoices/' + id + '/zip', {
-        responseType: 'stream',
-      })
-      .then((r) => r.data);
+  downloadZip(id: string): Promise<NodeJS.ReadableStream | Blob> {
+    return this.client.get('/invoices/' + id + '/zip');
   }
 
   /**
    * Downloads the cancellation receipt of a canceled invoice in XML format
    * @param id Invoice Id
-   * @returns {Promise<NodeJS.ReadableStream>} XML file in a stream
+   * @returns XML file in a stream (Node.js) or Blob (browser)
    */
-  downloadCancellationReceiptXml(id: string): Promise<NodeJS.ReadableStream> {
-    return this.client
-      .get('/invoices/' + id + '/cancellation_receipt/xml', {
-        responseType: 'stream',
-      })
-      .then((r) => r.data);
+  downloadCancellationReceiptXml(
+    id: string,
+  ): Promise<NodeJS.ReadableStream | Blob> {
+    return this.client.get('/invoices/' + id + '/cancellation_receipt/xml');
   }
 
   /**
    * Downloads the cancellation receipt of a canceled invoice in PDF format
    * @param id Invoice Id
-   * @returns PDF file in a stream
+   * @returns PDF file in a stream (Node.js) or Blob (browser)
    */
-  downloadCancellationReceiptPdf(id: string): Promise<NodeJS.ReadableStream> {
-    return this.client
-      .get('/invoices/' + id + '/cancellation_receipt/pdf', {
-        responseType: 'stream',
-      })
-      .then((r) => r.data);
+  downloadCancellationReceiptPdf(
+    id: string,
+  ): Promise<NodeJS.ReadableStream | Blob> {
+    return this.client.get('/invoices/' + id + '/cancellation_receipt/pdf');
   }
 
   /**
@@ -143,7 +123,7 @@ export default class Invoices {
    * @returns Edited invoice
    */
   updateDraft(id: string, data: Record<string, any>): Promise<Invoice> {
-    return this.client.put('/invoices/' + id, data).then((r) => r.data);
+    return this.client.put('/invoices/' + id, { body: data });
   }
 
   /**
@@ -156,9 +136,7 @@ export default class Invoices {
     id: string,
     params?: Record<string, any> | null,
   ): Promise<Invoice> {
-    return this.client
-      .post('/invoices/' + id + '/stamp', { params })
-      .then((r) => r.data);
+    return this.client.post('/invoices/' + id + '/stamp', { params });
   }
 
   /**
@@ -167,7 +145,7 @@ export default class Invoices {
    * @returns Updated invoice
    */
   updateStatus(id: string): Promise<Invoice> {
-    return this.client.put('/invoices/' + id + '/status').then((r) => r.data);
+    return this.client.put('/invoices/' + id + '/status');
   }
 
   /**
@@ -176,6 +154,6 @@ export default class Invoices {
    * @returns Draft invoice
    */
   copyToDraft(id: string): Promise<Invoice> {
-    return this.client.post('/invoices/' + id + '/copy').then((r) => r.data);
+    return this.client.post('/invoices/' + id + '/copy');
   }
 }

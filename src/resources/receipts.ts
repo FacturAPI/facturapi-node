@@ -1,4 +1,3 @@
-import { AxiosInstance } from 'axios';
 import {
   GenericResponse,
   Invoice,
@@ -6,10 +5,11 @@ import {
   SearchResult,
   SendEmailBody,
 } from '../types';
+import { WrapperClient } from '../wrapper';
 
 export default class Receipts {
-  client: AxiosInstance;
-  constructor(client: AxiosInstance) {
+  client: WrapperClient;
+  constructor(client: WrapperClient) {
     this.client = client;
   }
 
@@ -19,9 +19,7 @@ export default class Receipts {
    * @returns Receipt object
    */
   create(data: Record<string, any>): Promise<Receipt> {
-    return this.client
-      .post('/receipts', data)
-      .then((response) => response.data);
+    return this.client.post('/receipts', data);
   }
 
   /**
@@ -31,9 +29,7 @@ export default class Receipts {
    */
   list(params?: Record<string, any> | null): Promise<SearchResult<Receipt>> {
     if (!params) params = {};
-    return this.client
-      .get('/receipts', { params })
-      .then((response) => response.data);
+    return this.client.get('/receipts', { params });
   }
 
   /**
@@ -43,7 +39,7 @@ export default class Receipts {
    */
   retrieve(id: string): Promise<Receipt> {
     if (!id) return Promise.reject(new Error('id is required'));
-    return this.client.get('/receipts/' + id).then((response) => response.data);
+    return this.client.get('/receipts/' + id);
   }
 
   /**
@@ -53,9 +49,7 @@ export default class Receipts {
    * @returns Invoice object
    */
   invoice(id: string, data: Record<string, any>): Promise<Invoice> {
-    return this.client
-      .post('/receipts/' + id + '/invoice', data)
-      .then((response) => response.data);
+    return this.client.post('/receipts/' + id + '/invoice', data);
   }
 
   /**
@@ -64,9 +58,7 @@ export default class Receipts {
    * @returns
    */
   createGlobalInvoice(data: Record<string, any>): Promise<Invoice> {
-    return this.client
-      .post('/receipts/global-invoice', data)
-      .then((response) => response.data);
+    return this.client.post('/receipts/global-invoice', data);
   }
 
   /**
@@ -75,9 +67,7 @@ export default class Receipts {
    * @returns
    */
   cancel(id: string): Promise<Receipt> {
-    return this.client
-      .delete('/receipts/' + id)
-      .then((response) => response.data);
+    return this.client.delete('/receipts/' + id);
   }
 
   /**
@@ -88,21 +78,15 @@ export default class Receipts {
    * @returns Email sent confirmation
    */
   sendByEmail(id: string, data?: SendEmailBody): Promise<GenericResponse> {
-    return this.client
-      .post('/receipts/' + id + '/email', data)
-      .then((response) => response.data);
+    return this.client.post('/receipts/' + id + '/email', { body: data });
   }
 
   /**
    * Downloads the specified receipt in PDF format
    * @param id Receipt Id
-   * @returns PDF file in a stream
+   * @returns PDF file in a stream (Node.js) or Blob (browser)
    */
-  downloadPdf(id: string): Promise<NodeJS.ReadableStream> {
-    return this.client
-      .get('/receipts/' + id + '/pdf', {
-        responseType: 'stream',
-      })
-      .then((response) => response.data);
+  downloadPdf(id: string): Promise<NodeJS.ReadableStream | Blob> {
+    return this.client.get('/receipts/' + id + '/pdf');
   }
 }

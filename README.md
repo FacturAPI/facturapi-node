@@ -3,11 +3,17 @@
 [![npm version](https://badge.fury.io/js/facturapi.svg)](https://badge.fury.io/js/facturapi)
 [![js-semistandard-style](https://img.shields.io/badge/code%20style-semistandard-brightgreen.svg?style=flat-square)](https://github.com/Flet/semistandard)
 
-This is the official Node.js wrapper for https://www.facturapi.io
+This is the official HTTP client for https://www.facturapi.io
 
 FacturAPI makes it easy for developers to generate valid Invoices in Mexico (known as Factura Electrónica or CFDI).
 
 If you've ever used [Stripe](https://stripe.com) or [Conekta](https://conekta.io), you'll find FacturAPI very straightforward to understand and integrate in your server app.
+
+## Compatibility
+
+- Node.js 12.x or higher
+- Browsers with Fetch API support
+- React Native
 
 ## Install
 
@@ -22,7 +28,10 @@ npm install --save facturapi
 Make sure you have created your free account on [FacturAPI](https://www.facturapi.io) and that you have your **API Keys**.
 
 ```javascript
+// ES6
 import Facturapi from 'facturapi';
+// CommonJS
+const Facturapi = require('facturapi').default;
 
 const facturapi = new Facturapi('YOUR_API_KEY', {
   apiVersion: 'v2', // Optional, say what API version you want to use. Defaults to the latest version.

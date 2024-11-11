@@ -1,9 +1,9 @@
-import { AxiosInstance } from 'axios';
 import { Customer, SearchResult, TaxInfoValidation } from '../types';
+import { WrapperClient } from '../wrapper';
 
 export default class Customers {
-  client: AxiosInstance;
-  constructor(client: AxiosInstance) {
+  client: WrapperClient;
+  constructor(client: WrapperClient) {
     this.client = client;
   }
 
@@ -13,9 +13,7 @@ export default class Customers {
    * @returns Customer object
    */
   create(data: Record<string, any>): Promise<Customer> {
-    return this.client
-      .post('/customers', data)
-      .then((response) => response.data);
+    return this.client.post('/customers', data);
   }
 
   /**
@@ -25,9 +23,7 @@ export default class Customers {
    */
   list(params: Record<string, any>): Promise<SearchResult<Customer>> {
     if (!params) params = {};
-    return this.client
-      .get('/customers', { params: params })
-      .then((response) => response.data);
+    return this.client.get('/customers', { params: params });
   }
 
   /**
@@ -37,9 +33,7 @@ export default class Customers {
    */
   retrieve(id: string): Promise<Customer> {
     if (!id) return Promise.reject(new Error('id is required'));
-    return this.client
-      .get('/customers/' + id)
-      .then((response) => response.data);
+    return this.client.get('/customers/' + id);
   }
 
   /**
@@ -49,9 +43,7 @@ export default class Customers {
    * @returns Updated customer
    */
   update(id: string, data: Record<string, any>): Promise<Customer> {
-    return this.client
-      .put('/customers/' + id, data)
-      .then((response) => response.data);
+    return this.client.put('/customers/' + id, data);
   }
 
   /**
@@ -60,9 +52,7 @@ export default class Customers {
    * @returns Deleted customer
    */
   del(id: string): Promise<Customer> {
-    return this.client
-      .delete('/customers/' + id)
-      .then((response) => response.data);
+    return this.client.delete('/customers/' + id);
   }
 
   /**
@@ -71,8 +61,6 @@ export default class Customers {
    * @returns Validation result
    */
   validateTaxInfo(id: string): Promise<TaxInfoValidation> {
-    return this.client
-      .get('/customers/' + id + '/tax-info-validation')
-      .then((response) => response.data);
+    return this.client.get('/customers/' + id + '/tax-info-validation');
   }
 }

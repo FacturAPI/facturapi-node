@@ -1,11 +1,11 @@
-import { AxiosInstance } from "axios";
+import { WrapperClient } from '../wrapper';
 
 export default class Tools {
-  client: AxiosInstance
+  client: WrapperClient;
   /**
    * @param {Client} client
    */
-  constructor (client: AxiosInstance) {
+  constructor(client: WrapperClient) {
     this.client = client;
   }
 
@@ -14,11 +14,11 @@ export default class Tools {
    * @param {Object} taxId - Search parameters
    * @returns {Promise}
    */
-  validateTaxId (taxId: string) {
+  validateTaxId(taxId: string) {
     return this.client.get('/tools/tax_id_validation', {
       params: {
-        tax_id: taxId
-      }
-    }).then(response => response.data);
+        tax_id: taxId,
+      },
+    });
   }
 }
