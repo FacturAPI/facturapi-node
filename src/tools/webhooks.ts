@@ -14,7 +14,7 @@ export default class Webhooks {
    * @returns Webhook object
    */
   create(data: Record<string, any>): Promise<Webhook> {
-    return this.client.post('/webhooks', data);
+    return this.client.post('/webhooks', { body: data });
   }
 
   /**
@@ -46,7 +46,7 @@ export default class Webhooks {
    * @returns
    */
   update(id: string, data: Record<string, any>): Promise<Webhook> {
-    return this.client.put('/webhooks/' + id, data);
+    return this.client.put('/webhooks/' + id, { body: data });
   }
 
   /**
