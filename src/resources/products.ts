@@ -13,7 +13,7 @@ export default class Products {
    * @returns Product object
    */
   create(data: Record<string, any>): Promise<Product> {
-    return this.client.post('/products', data);
+    return this.client.post('/products', { body: data });
   }
 
   /**
@@ -42,7 +42,7 @@ export default class Products {
    * @returns Updated product
    */
   update(id: string, data: Record<string, any>): Promise<Product> {
-    return this.client.put('/products/' + id, data);
+    return this.client.put('/products/' + id, { body: data });
   }
 
   /**

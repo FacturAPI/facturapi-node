@@ -19,7 +19,7 @@ export default class Receipts {
    * @returns Receipt object
    */
   create(data: Record<string, any>): Promise<Receipt> {
-    return this.client.post('/receipts', data);
+    return this.client.post('/receipts', { body: data });
   }
 
   /**
@@ -49,7 +49,7 @@ export default class Receipts {
    * @returns Invoice object
    */
   invoice(id: string, data: Record<string, any>): Promise<Invoice> {
-    return this.client.post('/receipts/' + id + '/invoice', data);
+    return this.client.post('/receipts/' + id + '/invoice', { body: data });
   }
 
   /**
@@ -58,7 +58,7 @@ export default class Receipts {
    * @returns
    */
   createGlobalInvoice(data: Record<string, any>): Promise<Invoice> {
-    return this.client.post('/receipts/global-invoice', data);
+    return this.client.post('/receipts/global-invoice', { body: data });
   }
 
   /**

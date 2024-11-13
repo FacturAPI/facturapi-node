@@ -18,7 +18,7 @@ export default class Retentions {
    * @returns
    */
   create(data: Record<string, any>): Promise<Retention> {
-    return this.client.post('/retentions', data);
+    return this.client.post('/retentions', { body: data });
   }
 
   /**

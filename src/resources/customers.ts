@@ -13,7 +13,7 @@ export default class Customers {
    * @returns Customer object
    */
   create(data: Record<string, any>): Promise<Customer> {
-    return this.client.post('/customers', data);
+    return this.client.post('/customers', { body: data });
   }
 
   /**
@@ -43,7 +43,7 @@ export default class Customers {
    * @returns Updated customer
    */
   update(id: string, data: Record<string, any>): Promise<Customer> {
-    return this.client.put('/customers/' + id, data);
+    return this.client.put('/customers/' + id, { body: data });
   }
 
   /**
