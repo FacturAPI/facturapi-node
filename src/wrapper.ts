@@ -38,7 +38,22 @@ const responseInterceptor = async (response: Response) => {
       contentType.includes('application/zip')
     ) {
       if (isNode) {
-        return response.body as unknown as NodeJS.ReadableStream;
+        const reader = response.body?.getReader();
+        if (!reader) {
+          return response.body;
+        }
+        const { Readable } = require('stream');
+        return new Readable({
+          read() {
+            reader.read().then(({ done, value }) => {
+              if (done) {
+                this.push(null); // end stream
+              } else {
+                this.push(Buffer.from(value)); // push data to stream
+              }
+            });
+          },
+        });
       } else {
         return response.blob();
       }
