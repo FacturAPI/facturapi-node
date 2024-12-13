@@ -42,7 +42,7 @@ const responseInterceptor = async (response: Response) => {
         if (!reader) {
           return response.body;
         }
-        const { Readable } = require('stream');
+        const { Readable } = await import('stream');
         return new Readable({
           read() {
             reader.read().then(({ done, value }) => {
