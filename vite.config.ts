@@ -8,7 +8,7 @@ export default defineConfig({
       fileName: (format) => `index.${format}.js`,
     },
     rollupOptions: {
-      external: ['form-data'],
+      external: ['form-data', 'stream'],
       output: {
         exports: 'named', // Use named exports to avoid the warning
       },

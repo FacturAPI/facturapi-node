@@ -42,18 +42,24 @@ const responseInterceptor = async (response: Response) => {
         if (!reader) {
           return response.body;
         }
-        const { Readable } = await import('stream');
-        return new Readable({
-          read() {
-            reader.read().then(({ done, value }) => {
-              if (done) {
-                this.push(null); // end stream
-              } else {
-                this.push(Buffer.from(value)); // push data to stream
-              }
-            });
-          },
-        });
+        try {
+          const { Readable } = await import('stream');
+          return new Readable({
+            read() {
+              reader.read().then(({ done, value }) => {
+                if (done) {
+                  this.push(null); // end stream
+                } else {
+                  this.push(Buffer.from(value)); // push data to stream
+                }
+              });
+            },
+          });
+        } catch (e) {
+          throw new Error(
+            'Node.js streams are not available in this environment. Please install the "stream" package.',
+          );
+        }
       } else {
         return response.blob();
       }
