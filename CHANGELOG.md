@@ -5,6 +5,13 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](http://keepachangelog.com/en/1.0.0/)
 and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.html).
 
+## [4.5.0] 2025-01-07
+
+### Added
+
+- New fields for the Invoice object: `received_payment_ids` and `target_invoice_ids`,
+  used to track payments and PPD invoices.
+
 ## [4.4.4] 2024-12-18
 
 ### Fixed

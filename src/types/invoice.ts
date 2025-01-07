@@ -83,7 +83,8 @@ export interface Invoice {
   complements?: InvoiceComplement[] | null;
   related_documents?: RelatedDocument[] | null;
   namespaces?: XmlNamespace[] | null;
-  payment_related_ids?: string[] | null;
+  received_payment_ids?: string[] | null;
+  target_invoice_ids?: string[] | null;
 }
 
 export interface CancelInvoiceOptions {
