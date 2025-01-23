@@ -27,7 +27,7 @@ export interface GlobalInfo {
 
 export interface InvoiceComplement {
   type: InvoiceComplementType;
-  data: string | PagoComplementData | NominaComplementData;
+  data: string | PagoComplementData[] | NominaComplementData;
 }
 
 export interface Invoice {
