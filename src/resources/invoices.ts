@@ -17,6 +17,7 @@ export default class Invoices {
   /**
    * Creates a new valid invoice (CFDI).
    * @param body Invoice data
+   * @param params Query params
    * @returns Invoice object
    */
   create(
@@ -129,7 +130,7 @@ export default class Invoices {
   /**
    * Stamps an invoice with "draft" status.
    * @param id Invoice Id
-   * @param options Query options
+   * @param params Query params
    * @returns Stamped invoice
    */
   stampDraft(

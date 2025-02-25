@@ -25,4 +25,7 @@ export interface Customer {
   address: Address;
   external_id?: string;
   default_invoice_use?: InvoiceUse;
+  sat_validated_at?: Date;
+  edit_link?: string;
+  edit_link_expires_at?: Date;
 }
