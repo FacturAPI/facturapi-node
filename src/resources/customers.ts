@@ -10,10 +10,14 @@ export default class Customers {
   /**
    * Creates a new customer in your organization
    * @param data Customer data
+   * @param params Query params
    * @returns Customer object
    */
-  create(data: Record<string, any>): Promise<Customer> {
-    return this.client.post('/customers', { body: data });
+  create(
+    data: Record<string, any>,
+    params: Record<string, any> | null = null,
+  ): Promise<Customer> {
+    return this.client.post('/customers', { body: data, params });
   }
 
   /**
@@ -40,10 +44,15 @@ export default class Customers {
    * Updates a customer
    * @param id Customer Id
    * @param data Customer data to update
+   * @param params Query params
    * @returns Updated customer
    */
-  update(id: string, data: Record<string, any>): Promise<Customer> {
-    return this.client.put('/customers/' + id, { body: data });
+  update(
+    id: string,
+    data: Record<string, any>,
+    params: Record<string, any> | null = null,
+  ): Promise<Customer> {
+    return this.client.put('/customers/' + id, { body: data, params });
   }
 
   /**
