@@ -7,6 +7,7 @@ export enum ApiEventType {
   RECEIPT_STATUS_UPDATED = 'receipt.status_updated',
   GLOBAL_INVOICE = 'invoice.global_invoice_created',
   INVOICES_STATUS_UPDATED = 'invoice.status_updated',
+  INVOICES_CREATED_FROM_DASHBOARD = 'invoice.created_from_dashboard',
 }
 
 export enum ApiEventDataType {
@@ -20,6 +21,7 @@ type ApiEventTypeMap = {
   [ApiEventType.RECEIPT_STATUS_UPDATED]: ApiEventDataType.RECEIPT;
   [ApiEventType.GLOBAL_INVOICE]: ApiEventDataType.INVOICE;
   [ApiEventType.INVOICES_STATUS_UPDATED]: ApiEventDataType.INVOICE;
+  [ApiEventType.INVOICES_CREATED_FROM_DASHBOARD]: ApiEventDataType.INVOICE;
   '': '';
 };
 
