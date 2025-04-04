@@ -1,4 +1,9 @@
-import { Customer, SearchResult, TaxInfoValidation } from '../types';
+import {
+  Customer,
+  GenericResponse,
+  SearchResult,
+  TaxInfoValidation,
+} from '../types';
 import { WrapperClient } from '../wrapper';
 
 export default class Customers {
@@ -71,5 +76,22 @@ export default class Customers {
    */
   validateTaxInfo(id: string): Promise<TaxInfoValidation> {
     return this.client.get('/customers/' + id + '/tax-info-validation');
+  }
+
+  /**
+   * Send the cusotmer an email with a link to edit their information.
+   * @param id Customer Id
+   * @param options Email options
+   * @param options.email Email address to send the link to
+   */
+  sendEditLinkByEmail(
+    id: string,
+    options: {
+      email: string;
+    },
+  ): Promise<GenericResponse> {
+    return this.client.post('/customers/' + id + '/edit-link', {
+      body: options,
+    });
   }
 }
