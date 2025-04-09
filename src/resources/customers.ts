@@ -79,7 +79,7 @@ export default class Customers {
   }
 
   /**
-   * Send the cusotmer an email with a link to edit their information.
+   * Send the customer an email with a link to edit their information.
    * @param id Customer Id
    * @param options Email options
    * @param options.email Email address to send the link to
