@@ -90,7 +90,7 @@ export default class Customers {
       email: string;
     },
   ): Promise<GenericResponse> {
-    return this.client.post('/customers/' + id + '/edit-link', {
+    return this.client.post('/customers/' + id + '/email-edit-link', {
       body: options,
     });
   }
