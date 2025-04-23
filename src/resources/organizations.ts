@@ -1,8 +1,26 @@
-import { WrapperClient, NodeFormData } from '../wrapper';
+import { FormData, File, Blob } from 'formdata-node';
+import { WrapperClient } from '../wrapper';
 import type { ApiKeys, Organization, Series } from '../types/organization';
 import { SearchResult } from '../types/common';
 import { isNode } from '../constants';
+import { streamToBuffer } from '../utils/streamToBuffer'; // Import a utility function to convert streams to buffers
 
+const prepareFile = async (
+  file: NodeJS.ReadableStream | Buffer | File | Blob,
+  filename: string,
+  fileType: string,
+): Promise<File | Blob> => {
+  if (isNode) {
+    const buffer =
+      file instanceof Buffer
+        ? file
+        : await streamToBuffer(file as NodeJS.ReadableStream);
+    return new File([buffer], filename, {
+      type: fileType,
+    });
+  }
+  return file as File | Blob;
+};
 export default class Organizations {
   client: WrapperClient;
   constructor(client: WrapperClient) {
@@ -108,19 +126,17 @@ export default class Organizations {
    * @param file Logo file
    * @returns Organization object
    */
-  uploadLogo(
+  async uploadLogo(
     id: string,
     file: NodeJS.ReadableStream | Buffer | File | Blob,
   ): Promise<Organization> {
-    const formData = new (isNode ? NodeFormData : FormData)();
-    if (isNode) {
-      (formData as InstanceType<NodeFormData>).append('file', file, {
-        filename: 'file',
-        contentType: 'application/octet-stream',
-      });
-    } else {
-      formData.append('file', file as File | Blob, 'file');
-    }
+    const preparedFile = await prepareFile(
+      file,
+      'file',
+      'application/octet-stream',
+    );
+    const formData = new FormData();
+    formData.append('file', preparedFile, 'file');
     return this.client.put('/organizations/' + id + '/logo', { formData });
   }
 
@@ -132,29 +148,20 @@ export default class Organizations {
    * @param password Certificate password
    * @returns Organization object
    */
-  uploadCertificate(
+  async uploadCertificate(
     id: string,
     cerFile: NodeJS.ReadableStream | Buffer | File | Blob,
     keyFile: NodeJS.ReadableStream | Buffer | File | Blob,
     password: string,
   ): Promise<Organization> {
-    const formData = new (isNode ? NodeFormData : FormData)();
-    if (isNode) {
-      (formData as InstanceType<NodeFormData>).append('cer', cerFile, {
-        filename: 'cer.cer',
-        contentType: 'application/octet-stream',
-      });
-    } else {
-      formData.append('cer', cerFile as File | Blob, 'cer.cer');
-    }
-    if (isNode) {
-      (formData as InstanceType<NodeFormData>).append('key', keyFile, {
-        filename: 'key.key',
-        contentType: 'application/octet-stream',
-      });
-    } else {
-      formData.append('key', keyFile as File | Blob, 'key.key');
-    }
+    let formData = new FormData();
+    const [cerFileOrBlob, keyFileOrBlob] = await Promise.all([
+      prepareFile(cerFile, 'cer.cer', 'application/octet-stream'),
+      prepareFile(keyFile, 'key.key', 'application/octet-stream'),
+    ]);
+
+    formData.append('cer', cerFileOrBlob, 'cer.cer');
+    formData.append('key', keyFileOrBlob, 'key.key');
     formData.append('password', password);
     return this.client.put('/organizations/' + id + '/certificate', {
       formData,

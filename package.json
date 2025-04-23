@@ -1,6 +1,6 @@
 {
   "name": "facturapi",
-  "version": "4.8.1",
+  "version": "4.8.2",
   "description": "Librería oficial de Facturapi. Crea CFDIs timbrados y enviados al SAT, XML y PDF",
   "main": "dist/index.cjs.js",
   "module": "dist/index.es.js",
@@ -36,23 +36,22 @@
     ]
   },
   "dependencies": {
-    "cross-fetch": "^4.0.0",
-    "form-data": "^4.0.1"
+    "cross-fetch": "^4.1.0",
+    "formdata-node": "^6.0.3"
   },
   "devDependencies": {
-    "@rollup/plugin-commonjs": "^21.0.0",
-    "@rollup/plugin-node-resolve": "^13.0.0",
-    "@rollup/plugin-replace": "^4.0.0",
-    "@types/form-data": "^2.5.0",
-    "@types/node": "^20.12.12",
-    "eslint": "^8.0.0",
-    "eslint-config-prettier": "^9.1.0",
-    "husky": "^9.0.1",
-    "lint-staged": "^15.2.4",
-    "prettier-eslint": "^16.3.0",
+    "@rollup/plugin-commonjs": "^28.0.3",
+    "@rollup/plugin-node-resolve": "^16.0.1",
+    "@rollup/plugin-replace": "^6.0.2",
+    "@types/node": "^22.14.1",
+    "eslint": "^9.25.1",
+    "eslint-config-prettier": "^10.1.2",
+    "husky": "^9.1.7",
+    "lint-staged": "^15.5.1",
+    "prettier-eslint": "^16.4.1",
     "prettier-eslint-cli": "^8.0.1",
     "semistandard": "^17.0.0",
-    "typescript": "^5.4.5",
-    "vite": "^4.0.0"
+    "typescript": "^5.8.3",
+    "vite": "^6.3.2"
   }
 }
