@@ -8,12 +8,9 @@ import {
 import fetch from 'cross-fetch';
 
 let btoa: (data: string) => string;
-export type NodeFormData = any;
-export let NodeFormData: NodeFormData;
 
 if (isNode) {
   btoa = (data: string) => Buffer.from(data).toString('base64');
-  NodeFormData = require('form-data');
 } else if (isReactNative) {
   // React Native environment
   btoa = (data: string) => globalThis.Buffer.from(data).toString('base64');
@@ -81,7 +78,6 @@ export const createWrapper = (
   const baseURL = apiVersion === 'v1' ? BASE_URL_V1 : BASE_URL;
   const defaultHeaders = {
     Authorization: `Basic ${encodeStringToBase64(apiKey + ':')}`,
-    'Content-Type': 'application/json',
   };
 
   const client = {
@@ -90,7 +86,7 @@ export const createWrapper = (
       options?: {
         params?: Record<string, any> | null;
         body?: any;
-        formData?: UniversalFormData;
+        formData?: FormData;
         method?: string;
       },
     ) {
@@ -98,16 +94,12 @@ export const createWrapper = (
       const queryString = params
         ? '?' + new URLSearchParams(params).toString()
         : '';
-      const headers =
-        formData && isNode
-          ? {
-              ...defaultHeaders,
-              ...(formData as InstanceType<NodeFormData>).getHeaders(),
-            }
-          : defaultHeaders;
       const fetchOptions: RequestInit = {
         ...restOptions,
-        headers,
+        headers: {
+          ...defaultHeaders,
+          ...(formData ? {} : { 'Content-Type': 'application/json' }),
+        },
         body: formData
           ? (formData as BodyInit)
           : body
