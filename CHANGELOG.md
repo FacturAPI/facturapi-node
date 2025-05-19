@@ -5,6 +5,13 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](http://keepachangelog.com/en/1.0.0/)
 and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.html).
 
+## [4.8.3] 2025-05-19
+
+### Fixed
+
+- Webhook validation. Now the signature is validated locally in Node and web environments (but not in React Native, where the API is still used).
+- Type fixes for signature validation.
+
 ## [4.8.2] 2025-04-23
 
 ### Fixed
