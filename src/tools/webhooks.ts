@@ -66,7 +66,7 @@ export default class Webhooks {
    * @param payload - Received event object to validate
    * @returns When the signature is valid, it returns the event object
    */
-  async validateSignature<T extends ApiEventType>(data: {
+  async validateSignature<T extends ApiEventType = any>(data: {
     secret: string;
     signature: string;
     payload: string | Buffer | ApiEvent<T>;
