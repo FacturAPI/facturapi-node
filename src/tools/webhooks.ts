@@ -84,18 +84,7 @@ export default class Webhooks {
       throw new Error('Invalid payload type');
     }
 
-    if (isNode) {
-      const crypto = await import('crypto');
-      const hmac = crypto.createHmac('sha256', secret);
-      const digest = hmac
-        .update(payloadString)
-        .digest('hex')
-        .toLowerCase();
-      if (signature !== digest) {
-        throw new Error('Invalid signature');
-      }
-      return JSON.parse(payloadString) as ApiEvent<T>;
-    } else if (isReactNative) {
+    if (isReactNative) {
       // Call the API to validate signature in React Native
       return this.client.post('/webhooks/validate-signature', {
         body: {
@@ -104,6 +93,23 @@ export default class Webhooks {
           payload: payloadString,
         },
       });
+    } else if (isNode) {
+      const crypto = await import('crypto');
+      const hmac = crypto.createHmac('sha256', secret);
+      const digestBuffer = hmac
+        .update(payloadString)
+        .digest();
+      // Compare the digest with the signature and prevent timing attacks
+      // by using a constant-time comparison
+      const signatureBuffer = Buffer.from(signature, 'hex');
+      if (digestBuffer.length !== signatureBuffer.length) {
+        throw new Error('Invalid signature');
+      }
+      const isValid = crypto.timingSafeEqual(digestBuffer, signatureBuffer);
+      if (!isValid) {
+        throw new Error('Invalid signature');
+      }
+      return JSON.parse(payloadString) as ApiEvent<T>;
     } else { // Web browsers
       const encoder = new TextEncoder();
       const encodedData = encoder.encode(payloadString);
@@ -126,7 +132,7 @@ export default class Webhooks {
       if (signature !== hexDigest) {
         throw new Error('Invalid signature');
       }
-      return JSON.parse(payloadString) as ApiEvent<T>;
     }
+    return JSON.parse(payloadString) as ApiEvent<T>;
   }
 }
