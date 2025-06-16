@@ -81,6 +81,8 @@ export interface Organization {
   self_invoice: {
     allowed_cfdi_uses: string[];
     apply_resico_isr: boolean;
+    support_email: string;
+    support_email_verified: boolean;
   };
   pending_plan_update: {
     plan: string;

@@ -1,6 +1,6 @@
 {
   "name": "facturapi",
-  "version": "4.8.3",
+  "version": "4.9.0",
   "description": "Librería oficial de Facturapi. Crea CFDIs timbrados y enviados al SAT, XML y PDF",
   "main": "dist/index.cjs.js",
   "module": "dist/index.es.js",
@@ -52,6 +52,6 @@
     "prettier-eslint-cli": "^8.0.1",
     "semistandard": "^17.0.0",
     "typescript": "^5.8.3",
-    "vite": "^6.3.2"
+    "vite": "^6.3.5"
   }
 }
