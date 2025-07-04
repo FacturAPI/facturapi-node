@@ -309,4 +309,19 @@ export default class Organizations {
   me(): Promise<Organization> {
     return this.client.get('/organizations/me');
   }
+
+  /**
+   * Updates the organization's self-invoice settings
+   * @param id Organization Id
+   * @param data Self-invoice settings
+   * @returns Organization object
+   */
+  updateSelfInvoiceSettings(
+    id: string,
+    data: Record<string, any>,
+  ): Promise<Organization> {
+    return this.client.put('/organizations/' + id + '/self-invoice', {
+      body: data,
+    });
+  }
 }
