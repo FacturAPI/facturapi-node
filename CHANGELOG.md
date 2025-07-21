@@ -7,7 +7,14 @@ and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.
 
 ## [4.9.1] 2025-07-21:
 
-- Deprecate `organization.plan` property and add `add_ons` property to the Organization type.
+### Fixed
+
+- Deprecate `Organization.plan` property.
+
+### Added
+
+- Add `add_ons` property to the Organization type.
+- Add missing attributes to `Organization.customization.pdf_extra`.
 
 ## [4.9.0] 2025-06-16
 

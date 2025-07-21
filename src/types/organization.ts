@@ -54,6 +54,8 @@ export interface Organization {
       round_unit_price: boolean;
       tax_breakdown: boolean;
       ieps_breakdown: boolean;
+      render_carta_porte: boolean;
+      repeat_signature: boolean;
     };
     default_series: {
       I: string;
