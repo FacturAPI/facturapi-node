@@ -16,7 +16,11 @@ export interface ApiKeys {
 export interface Organization {
   id: string;
   created_at: Date;
-  plan: string;
+  /**
+   * @deprecated Organization-level plans are no longer offered. Use the add_ons property to determine contracted features.
+   */
+  plan: string | null;
+  add_ons: string[];
   is_production_ready: boolean;
   pending_steps: {
     type: string;
