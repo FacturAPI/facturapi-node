@@ -8,7 +8,7 @@ import Retentions from './resources/retentions';
 import Webhooks from './tools/webhooks';
 import Tools from './tools/tools';
 import * as enums from './enums';
-import { createWrapper } from './wrapper';
+import { createWrapper, WrapperClient } from './wrapper';
 import { DEFAULT_API_VERSION } from './constants';
 
 export * from './enums';
@@ -30,6 +30,7 @@ export interface FacturapiOptions {
  */
 export default class Facturapi {
   apiVersion: ApiVersion;
+  private _wrapper: WrapperClient;
   customers: Customers;
   products: Products;
   invoices: Invoices;
@@ -39,6 +40,18 @@ export default class Facturapi {
   retentions: Retentions;
   tools: Tools;
   webhooks: Webhooks;
+
+  /**
+   * Get or set the base URL used for API requests.
+   * Allows overriding the default API host, e.g. for testing.
+   * Usage: facturapi.BASE_URL = 'http://localhost:3000/v2'
+   */
+  get BASE_URL(): string {
+    return this._wrapper.baseURL;
+  }
+  set BASE_URL(url: string) {
+    this._wrapper.baseURL = url;
+  }
 
   static get TaxType() {
     return enums.TaxType;
@@ -92,15 +105,15 @@ export default class Facturapi {
     } else {
       this.apiVersion = DEFAULT_API_VERSION;
     }
-    const wrapper = createWrapper(apiKey, this.apiVersion);
-    this.customers = new Customers(wrapper);
-    this.products = new Products(wrapper);
-    this.invoices = new Invoices(wrapper);
-    this.organizations = new Organizations(wrapper);
-    this.catalogs = new Catalogs(wrapper);
-    this.receipts = new Receipts(wrapper);
-    this.retentions = new Retentions(wrapper);
-    this.tools = new Tools(wrapper);
-    this.webhooks = new Webhooks(wrapper);
+    this._wrapper = createWrapper(apiKey, this.apiVersion);
+    this.customers = new Customers(this._wrapper);
+    this.products = new Products(this._wrapper);
+    this.invoices = new Invoices(this._wrapper);
+    this.organizations = new Organizations(this._wrapper);
+    this.catalogs = new Catalogs(this._wrapper);
+    this.receipts = new Receipts(this._wrapper);
+    this.retentions = new Retentions(this._wrapper);
+    this.tools = new Tools(this._wrapper);
+    this.webhooks = new Webhooks(this._wrapper);
   }
 }

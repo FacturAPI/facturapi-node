@@ -75,12 +75,18 @@ export const createWrapper = (
   apiKey: string,
   apiVersion: 'v1' | 'v2' = DEFAULT_API_VERSION,
 ) => {
-  const baseURL = apiVersion === 'v1' ? BASE_URL_V1 : BASE_URL;
+  let baseURL = apiVersion === 'v1' ? BASE_URL_V1 : BASE_URL;
   const defaultHeaders = {
     Authorization: `Basic ${encodeStringToBase64(apiKey + ':')}`,
   };
 
   const client = {
+    get baseURL(): string {
+      return baseURL;
+    },
+    set baseURL(url: string) {
+      baseURL = url;
+    },
     async request(
       url: string,
       options?: {
