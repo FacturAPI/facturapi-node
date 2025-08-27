@@ -80,6 +80,10 @@ export default class Facturapi {
     return enums.InvoiceStatus;
   }
 
+  static get CancellationMotive() {
+    return enums.CancellationMotive;
+  }
+
   constructor(apiKey: string, options: FacturapiOptions = {}) {
     if (options.apiVersion) {
       if (!VALID_API_VERSIONS.includes(options.apiVersion)) {
