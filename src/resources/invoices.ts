@@ -157,4 +157,13 @@ export default class Invoices {
   copyToDraft(id: string): Promise<Invoice> {
     return this.client.post('/invoices/' + id + '/copy');
   }
+
+  /**
+   * Previews an invoice PDF before stamping it
+   * @param body Invoice data
+   * @returns PDF file in a stream (Node.js) or Blob (browser)
+   */
+  previewPdf(body: Record<string, any>): Promise<NodeJS.ReadableStream | Blob> {
+    return this.client.post('/invoices/preview/pdf', { body });
+  }
 }

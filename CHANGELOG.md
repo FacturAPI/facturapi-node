@@ -5,7 +5,13 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](http://keepachangelog.com/en/1.0.0/)
 and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.html).
 
-## [4.9.1] 2025-07-21:
+## [4.10.0] 2025-09-04
+
+### Added
+
+- Add `invoices.previewPdf` method to generate a preview PDF of an invoice before stamping it.
+
+## [4.9.1] 2025-07-21
 
 ### Fixed
 
