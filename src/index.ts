@@ -10,6 +10,7 @@ import Tools from './tools/tools';
 import * as enums from './enums';
 import { createWrapper, WrapperClient } from './wrapper';
 import { DEFAULT_API_VERSION } from './constants';
+import CartaPorteCatalogs from './tools/cartaPorteCatalogs';
 
 export * from './enums';
 export * from './types';
@@ -36,6 +37,7 @@ export default class Facturapi {
   invoices: Invoices;
   organizations: Organizations;
   catalogs: Catalogs;
+  cartaPorteCatalogs: CartaPorteCatalogs;
   receipts: Receipts;
   retentions: Retentions;
   tools: Tools;
@@ -115,6 +117,7 @@ export default class Facturapi {
     this.invoices = new Invoices(this._wrapper);
     this.organizations = new Organizations(this._wrapper);
     this.catalogs = new Catalogs(this._wrapper);
+    this.cartaPorteCatalogs = new CartaPorteCatalogs(this._wrapper);
     this.receipts = new Receipts(this._wrapper);
     this.retentions = new Retentions(this._wrapper);
     this.tools = new Tools(this._wrapper);
