@@ -44,10 +44,11 @@ export default class Retentions {
   /**
    * Cancels a retention.
    * @param id
+   * @param params - Optional cancellation parameters (e.g., motive, substitution)
    * @returns
    */
-  cancel(id: string): Promise<Retention> {
-    return this.client.delete('/retentions/' + id);
+  cancel(id: string, params?: Record<string, any>): Promise<Retention> {
+    return this.client.delete('/retentions/' + id, { params });
   }
 
   /**
