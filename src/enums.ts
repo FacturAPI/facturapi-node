@@ -172,6 +172,7 @@ export enum CancellationStatus {
   NONE = 'none',
   ACCEPTED = 'accepted',
   PENDING = 'pending',
+  VERIFYING = 'verifying',
   REJECTED = 'rejected',
   EXPIRED = 'expired',
 }
