@@ -28,6 +28,11 @@ jobs:
       - name: Build project
         run: npm run build
 
+      - name: Debug OIDC availability
+        run: |
+          echo "OIDC URL set? ${ACTIONS_ID_TOKEN_REQUEST_URL:+yes}"
+          echo "OIDC token request token set? ${ACTIONS_ID_TOKEN_REQUEST_TOKEN:+yes}"
+
       - name: Check if version exists
         id: check-version
         run: |
