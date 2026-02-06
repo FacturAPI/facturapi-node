@@ -33,6 +33,39 @@ jobs:
           echo "OIDC URL set? ${ACTIONS_ID_TOKEN_REQUEST_URL:+yes}"
           echo "OIDC token request token set? ${ACTIONS_ID_TOKEN_REQUEST_TOKEN:+yes}"
 
+      - name: Debug OIDC claims
+        run: |
+          node -e '
+            (async () => {
+              const url = process.env.ACTIONS_ID_TOKEN_REQUEST_URL;
+              const reqToken = process.env.ACTIONS_ID_TOKEN_REQUEST_TOKEN;
+              if (!url || !reqToken) {
+                console.log("OIDC claims debug skipped: missing OIDC env vars");
+                process.exit(0);
+              }
+              const audience = "npm:registry.npmjs.org";
+              const response = await fetch(`${url}&audience=${encodeURIComponent(audience)}`, {
+                headers: { Authorization: `bearer ${reqToken}` },
+              });
+              console.log("OIDC token endpoint status:", response.status);
+              if (!response.ok) {
+                const text = await response.text();
+                console.log("OIDC token endpoint response:", text.slice(0, 400));
+                process.exit(0);
+              }
+              const data = await response.json();
+              const payload = JSON.parse(Buffer.from(data.value.split(".")[1], "base64url").toString("utf8"));
+              console.log("OIDC aud:", payload.aud);
+              console.log("OIDC sub:", payload.sub);
+              console.log("OIDC repository:", payload.repository);
+              console.log("OIDC ref:", payload.ref);
+              console.log("OIDC workflow_ref:", payload.job_workflow_ref);
+            })().catch((error) => {
+              console.log("OIDC claims debug error:", error.message);
+              process.exit(0);
+            });
+          '
+
       - name: Check if version exists
         id: check-version
         run: |
