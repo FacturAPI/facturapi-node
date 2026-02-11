@@ -11,6 +11,10 @@ and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.
 
 - Fix `organizations.uploadLogo` and `organizations.uploadCertificate` in Node.js 18 by avoiding `File` constructor usage during upload preparation.
 
+### Changed
+
+- Update declared Node.js engine requirement to `>=18.0.0` to match runtime dependencies.
+
 ## [4.13.0] 2026-02-06
 
 ### Added
