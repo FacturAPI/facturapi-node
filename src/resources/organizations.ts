@@ -1,4 +1,4 @@
-import { FormData, File, Blob } from 'formdata-node';
+import { FormData, Blob } from 'formdata-node';
 import { WrapperClient } from '../wrapper';
 import type { ApiKeys, Organization, Series } from '../types/organization';
 import { SearchResult } from '../types/common';
@@ -7,19 +7,18 @@ import { streamToBuffer } from '../utils/streamToBuffer'; // Import a utility fu
 
 const prepareFile = async (
   file: NodeJS.ReadableStream | Buffer | File | Blob,
-  filename: string,
   fileType: string,
-): Promise<File | Blob> => {
+): Promise<Blob | File> => {
   if (isNode) {
     const buffer =
       file instanceof Buffer
         ? file
         : await streamToBuffer(file as NodeJS.ReadableStream);
-    return new File([buffer], filename, {
+    return new Blob([buffer], {
       type: fileType,
     });
   }
-  return file as File | Blob;
+  return file as Blob | File;
 };
 export default class Organizations {
   client: WrapperClient;
@@ -132,7 +131,6 @@ export default class Organizations {
   ): Promise<Organization> {
     const preparedFile = await prepareFile(
       file,
-      'file',
       'application/octet-stream',
     );
     const formData = new FormData();
@@ -156,8 +154,8 @@ export default class Organizations {
   ): Promise<Organization> {
     let formData = new FormData();
     const [cerFileOrBlob, keyFileOrBlob] = await Promise.all([
-      prepareFile(cerFile, 'cer.cer', 'application/octet-stream'),
-      prepareFile(keyFile, 'key.key', 'application/octet-stream'),
+      prepareFile(cerFile, 'application/octet-stream'),
+      prepareFile(keyFile, 'application/octet-stream'),
     ]);
 
     formData.append('cer', cerFileOrBlob, 'cer.cer');
