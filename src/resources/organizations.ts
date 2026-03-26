@@ -1,6 +1,18 @@
 import { FormData, Blob } from 'formdata-node';
 import { WrapperClient } from '../wrapper';
-import type { ApiKeys, Organization, Series } from '../types/organization';
+import type {
+  ApiKeys,
+  Organization,
+  OrganizationInvite,
+  OrganizationInviteCreateInput,
+  OrganizationInviteResponseInput,
+  OrganizationTeamRole,
+  OrganizationTeamRoleCreateInput,
+  OrganizationTeamRoleTemplate,
+  OrganizationTeamRoleUpdateInput,
+  OrganizationUserAccess,
+  Series,
+} from '../types/organization';
 import { SearchResult } from '../types/common';
 import { isNode } from '../constants';
 import { streamToBuffer } from '../utils/streamToBuffer'; // Import a utility function to convert streams to buffers
@@ -321,5 +333,224 @@ export default class Organizations {
     return this.client.put('/organizations/' + id + '/self-invoice', {
       body: data,
     });
+  }
+
+  /**
+   * Lists users with access to an organization.
+   * @param organizationId Organization Id
+   * @returns Array of organization access objects
+   */
+  listTeamAccess(organizationId: string): Promise<OrganizationUserAccess[]> {
+    return this.client.get('/organizations/' + organizationId + '/team');
+  }
+
+  /**
+   * Retrieves a specific user access in an organization.
+   * @param organizationId Organization Id
+   * @param accessId Access Id
+   * @returns Organization access object
+   */
+  retrieveTeamAccess(
+    organizationId: string,
+    accessId: string,
+  ): Promise<OrganizationUserAccess> {
+    return this.client.get(
+      '/organizations/' + organizationId + '/team/' + accessId,
+    );
+  }
+
+  /**
+   * Reassigns role for a specific access in an organization.
+   * @param organizationId Organization Id
+   * @param accessId Access Id
+   * @param role Role Id
+   * @returns Updated organization access object
+   */
+  updateTeamAccessRole(
+    organizationId: string,
+    accessId: string,
+    role: string,
+  ): Promise<OrganizationUserAccess> {
+    return this.client.put(
+      '/organizations/' + organizationId + '/team/' + accessId + '/role',
+      {
+        body: { role },
+      },
+    );
+  }
+
+  /**
+   * Removes user access from an organization.
+   * @param organizationId Organization Id
+   * @param accessId Access Id
+   * @returns Ok response
+   */
+  removeTeamAccess(
+    organizationId: string,
+    accessId: string,
+  ): Promise<{ ok: boolean }> {
+    return this.client.delete(
+      '/organizations/' + organizationId + '/team/' + accessId,
+    );
+  }
+
+  /**
+   * Lists invites sent from an organization.
+   * @param organizationId Organization Id
+   * @returns Array of organization invite objects
+   */
+  listSentTeamInvites(organizationId: string): Promise<OrganizationInvite[]> {
+    return this.client.get('/organizations/' + organizationId + '/team/invites');
+  }
+
+  /**
+   * Creates or updates an invite for an organization.
+   * @param organizationId Organization Id
+   * @param data Invite payload
+   * @returns Organization invite object
+   */
+  inviteUserToTeam(
+    organizationId: string,
+    data: OrganizationInviteCreateInput,
+  ): Promise<OrganizationInvite> {
+    return this.client.post('/organizations/' + organizationId + '/team/invites', {
+      body: data,
+    });
+  }
+
+  /**
+   * Cancels a sent invite.
+   * @param organizationId Organization Id
+   * @param inviteKey Invite Key
+   * @returns Ok response
+   */
+  cancelTeamInvite(
+    organizationId: string,
+    inviteKey: string,
+  ): Promise<{ ok: boolean }> {
+    return this.client.delete(
+      '/organizations/' + organizationId + '/team/invites/' + inviteKey,
+    );
+  }
+
+  /**
+   * Lists pending invites received by authenticated user.
+   * @returns Array of organization invite objects
+   */
+  listReceivedTeamInvites(): Promise<OrganizationInvite[]> {
+    return this.client.get('/organizations/invites/pending');
+  }
+
+  /**
+   * Accepts or rejects an invite.
+   * @param inviteKey Invite Key
+   * @param data Invite response payload
+   * @returns Ok response
+   */
+  respondTeamInvite(
+    inviteKey: string,
+    data: OrganizationInviteResponseInput,
+  ): Promise<{ ok: boolean }> {
+    return this.client.post('/organizations/invites/' + inviteKey + '/response', {
+      body: data,
+    });
+  }
+
+  /**
+   * Lists organization roles.
+   * @param organizationId Organization Id
+   * @returns Array of organization role objects
+   */
+  listTeamRoles(organizationId: string): Promise<OrganizationTeamRole[]> {
+    return this.client.get('/organizations/' + organizationId + '/team/roles');
+  }
+
+  /**
+   * Lists role templates for organization scope.
+   * @param organizationId Organization Id
+   * @returns Array of organization role templates
+   */
+  listTeamRoleTemplates(
+    organizationId: string,
+  ): Promise<OrganizationTeamRoleTemplate[]> {
+    return this.client.get(
+      '/organizations/' + organizationId + '/team/roles/templates',
+    );
+  }
+
+  /**
+   * Lists available operation codes for organization roles.
+   * @param organizationId Organization Id
+   * @returns Array of operation codes
+   */
+  listTeamRoleOperations(organizationId: string): Promise<string[]> {
+    return this.client.get(
+      '/organizations/' + organizationId + '/team/roles/operations',
+    );
+  }
+
+  /**
+   * Retrieves an organization role.
+   * @param organizationId Organization Id
+   * @param roleId Role Id
+   * @returns Organization role object
+   */
+  retrieveTeamRole(
+    organizationId: string,
+    roleId: string,
+  ): Promise<OrganizationTeamRole> {
+    return this.client.get(
+      '/organizations/' + organizationId + '/team/roles/' + roleId,
+    );
+  }
+
+  /**
+   * Creates an organization role.
+   * @param organizationId Organization Id
+   * @param data Role payload
+   * @returns Organization role object
+   */
+  createTeamRole(
+    organizationId: string,
+    data: OrganizationTeamRoleCreateInput,
+  ): Promise<OrganizationTeamRole> {
+    return this.client.post('/organizations/' + organizationId + '/team/roles', {
+      body: data,
+    });
+  }
+
+  /**
+   * Updates an organization role.
+   * @param organizationId Organization Id
+   * @param roleId Role Id
+   * @param data Role payload
+   * @returns Organization role object
+   */
+  updateTeamRole(
+    organizationId: string,
+    roleId: string,
+    data: OrganizationTeamRoleUpdateInput,
+  ): Promise<OrganizationTeamRole> {
+    return this.client.put(
+      '/organizations/' + organizationId + '/team/roles/' + roleId,
+      {
+        body: data,
+      },
+    );
+  }
+
+  /**
+   * Deletes an organization role.
+   * @param organizationId Organization Id
+   * @param roleId Role Id
+   * @returns Ok response
+   */
+  deleteTeamRole(
+    organizationId: string,
+    roleId: string,
+  ): Promise<{ ok: boolean }> {
+    return this.client.delete(
+      '/organizations/' + organizationId + '/team/roles/' + roleId,
+    );
   }
 }

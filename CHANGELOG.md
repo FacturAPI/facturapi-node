@@ -8,6 +8,17 @@ and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.
 ## [4.14.0] 2026-03-04
 ### Added
 - Add `facturapi.comercioExteriorCatalogs.searchTariffFractions` method for Fracción Arancelaria SAT catalog
+- Add organization team/access management methods under `organizations`:
+  `listTeamAccess`, `retrieveTeamAccess`, `removeTeamAccess`,
+  `listSentTeamInvites`, `inviteUserToTeam`, `cancelTeamInvite`,
+  `listReceivedTeamInvites`, `respondTeamInvite`,
+  `listTeamRoles`, `listTeamRoleTemplates`, `listTeamRoleOperations`,
+  `retrieveTeamRole`, `createTeamRole`, `updateTeamRole`, and `deleteTeamRole`.
+- Add typed responses and inputs for organization access, invites, and roles.
+
+### Changed
+- Use `PUT` for role reassignment/update methods:
+  `organizations.updateTeamAccessRole` and `organizations.updateTeamRole`.
 
 ## [4.13.1] 2026-02-11
 
