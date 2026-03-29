@@ -2,11 +2,7 @@ import {
   BASE_URL,
   BASE_URL_V1,
   DEFAULT_API_VERSION,
-  isNode,
-  isReactNative,
 } from './constants';
-
-let btoa: (data: string) => string;
 
 const getRuntimeFetch = () => {
   const runtimeFetch = globalThis.fetch;
@@ -18,14 +14,12 @@ const getRuntimeFetch = () => {
   return runtimeFetch.bind(globalThis);
 };
 
-if (isNode) {
-  btoa = (data: string) => Buffer.from(data).toString('base64');
-} else if (isReactNative) {
-  // React Native environment
-  btoa = (data: string) => globalThis.Buffer.from(data).toString('base64');
-} else {
-  // Browser environment
-  btoa = globalThis.btoa;
+function hasBuffer(): boolean {
+  return typeof Buffer !== 'undefined';
+}
+
+function hasBtoa(): boolean {
+  return typeof globalThis.btoa === 'function';
 }
 
 export type UniversalFormData = FormData | InstanceType<any>;
@@ -55,10 +49,10 @@ const responseInterceptor = async (response: Response) => {
       contentType.includes('application/xml') ||
       contentType.includes('application/zip')
     ) {
-      if (isNode) {
+      if (hasBuffer()) {
         const reader = response.body?.getReader();
         if (!reader) {
-          return response.body;
+          return response.blob();
         }
         try {
           const { Readable } = await import('stream');
@@ -74,9 +68,7 @@ const responseInterceptor = async (response: Response) => {
             },
           });
         } catch (e) {
-          throw new Error(
-            'Node.js streams are not available in this environment. Please install the "stream" package.',
-          );
+          return response.blob();
         }
       } else {
         return response.blob();
@@ -89,7 +81,15 @@ const responseInterceptor = async (response: Response) => {
 };
 
 function encodeStringToBase64(text: string) {
-  return btoa(text);
+  if (hasBuffer()) {
+    return Buffer.from(text, 'utf8').toString('base64');
+  }
+  if (hasBtoa()) {
+    return globalThis.btoa(text);
+  }
+  throw new Error(
+    'No base64 encoder available in this runtime. Provide Buffer or btoa.',
+  );
 }
 
 export const createWrapper = (
