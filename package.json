@@ -5,6 +5,15 @@
   "main": "dist/index.cjs.js",
   "module": "dist/index.es.js",
   "types": "dist/index.d.ts",
+  "exports": {
+    ".": {
+      "types": "./dist/index.d.ts",
+      "import": "./dist/index.es.js",
+      "require": "./dist/index.cjs.js",
+      "default": "./dist/index.es.js"
+    },
+    "./package.json": "./package.json"
+  },
   "scripts": {
     "precommit": "lint-staged",
     "build": "vite build && tsc --emitDeclarationOnly"
@@ -34,10 +43,6 @@
       "prettier-eslint --write",
       "git add"
     ]
-  },
-  "dependencies": {
-    "cross-fetch": "^4.1.0",
-    "formdata-node": "^6.0.3"
   },
   "devDependencies": {
     "@rollup/plugin-commonjs": "^28.0.6",

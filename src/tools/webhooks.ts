@@ -1,5 +1,10 @@
 import { isNode, isReactNative } from '../constants';
-import { SearchResult, Webhook, ApiEvent, ApiEventType } from '../types';
+import {
+  SearchResult,
+  Webhook,
+  ApiEvent,
+  ApiEventType,
+} from '../types';
 import { WrapperClient } from '../wrapper';
 
 export default class Webhooks {
@@ -69,14 +74,21 @@ export default class Webhooks {
   async validateSignature<T extends ApiEventType = any>(data: {
     secret: string;
     signature: string;
-    payload: string | Buffer | ApiEvent<T>;
+    payload: string | Uint8Array | ArrayBuffer | ApiEvent<T>;
   }): Promise<ApiEvent<T>> {
     // Validated locally
     const { secret, signature, payload } = data;
     let payloadString: string;
     if (typeof payload === 'string') {
       payloadString = payload;
-    } else if (Buffer.isBuffer(payload)) {
+    } else if (payload instanceof Uint8Array) {
+      payloadString = new TextDecoder().decode(payload);
+    } else if (payload instanceof ArrayBuffer) {
+      payloadString = new TextDecoder().decode(new Uint8Array(payload));
+    } else if (
+      typeof Buffer !== 'undefined' &&
+      Buffer.isBuffer(payload)
+    ) {
       payloadString = payload.toString('utf8');
     } else if (typeof payload === 'object') {
       payloadString = JSON.stringify(payload);

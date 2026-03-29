@@ -11,7 +11,7 @@ If you've ever used [Stripe](https://stripe.com) or [Conekta](https://conekta.io
 
 ## Compatibility
 
-- Node.js 12.x or higher
+- Node.js 18.x or higher
 - Browsers with Fetch API support
 - React Native
 

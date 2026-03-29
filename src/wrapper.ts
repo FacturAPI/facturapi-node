@@ -5,9 +5,18 @@ import {
   isNode,
   isReactNative,
 } from './constants';
-import fetch from 'cross-fetch';
 
 let btoa: (data: string) => string;
+
+const getRuntimeFetch = () => {
+  const runtimeFetch = globalThis.fetch;
+  if (!runtimeFetch) {
+    throw new Error(
+      'Fetch API is not available in this runtime. Use Node.js 18+ or provide a global fetch implementation.',
+    );
+  }
+  return runtimeFetch.bind(globalThis);
+};
 
 if (isNode) {
   btoa = (data: string) => Buffer.from(data).toString('base64');
@@ -23,8 +32,20 @@ export type UniversalFormData = FormData | InstanceType<any>;
 
 const responseInterceptor = async (response: Response) => {
   if (!response.ok) {
-    const errorData = await response.json();
-    throw new Error(errorData.message || response.statusText);
+    const contentType = response.headers.get('content-type') || '';
+    try {
+      if (contentType.includes('application/json')) {
+        const errorData = await response.json();
+        throw new Error(errorData.message || response.statusText);
+      }
+      const errorText = await response.text();
+      throw new Error(errorText || response.statusText);
+    } catch (e) {
+      if (e instanceof Error) {
+        throw e;
+      }
+      throw new Error(response.statusText);
+    }
   }
   const contentType = response.headers.get('content-type');
   if (contentType) {
@@ -112,7 +133,10 @@ export const createWrapper = (
             ? JSON.stringify(body)
             : undefined,
       };
-      const response = await fetch(baseURL + url + queryString, fetchOptions);
+      const response = await getRuntimeFetch()(
+        baseURL + url + queryString,
+        fetchOptions,
+      );
       return responseInterceptor(response);
     },
     get(url: string, options?: { params?: Record<string, any> | null }) {

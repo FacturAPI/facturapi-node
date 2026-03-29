@@ -1,4 +1,5 @@
 import {
+  BinaryDownload,
   GenericResponse,
   Retention,
   SearchResult,
@@ -65,27 +66,27 @@ export default class Retentions {
   /**
    * Downloads the specified retention in PDF format
    * @param id Retention Id
-   * @returns PDF file in a stream
+   * @returns PDF file in a stream (Node.js) or Blob (browser)
    */
-  downloadPdf(id: string): Promise<NodeJS.ReadableStream> {
+  downloadPdf(id: string): Promise<BinaryDownload> {
     return this.client.get('/retentions/' + id + '/pdf');
   }
 
   /**
    * Downloads the specified retention in XML format
    * @param id Retention Id
-   * @returns XML file in a stream
+   * @returns XML file in a stream (Node.js) or Blob (browser)
    */
-  downloadXml(id: string): Promise<NodeJS.ReadableStream> {
+  downloadXml(id: string): Promise<BinaryDownload> {
     return this.client.get('/retentions/' + id + '/xml');
   }
 
   /**
    * Downloads the specified retention in a ZIP package containing both PDF and XML files
    * @param id Retention Id
-   * @returns ZIP file in a stream
+   * @returns ZIP file in a stream (Node.js) or Blob (browser)
    */
-  downloadZip(id: string): Promise<NodeJS.ReadableStream> {
+  downloadZip(id: string): Promise<BinaryDownload> {
     return this.client.get('/retentions/' + id + '/zip');
   }
 }

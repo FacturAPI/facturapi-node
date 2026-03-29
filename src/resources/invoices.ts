@@ -1,4 +1,5 @@
 import {
+  BinaryDownload,
   CancelInvoiceOptions,
   GenericResponse,
   Invoice,
@@ -73,7 +74,7 @@ export default class Invoices {
    * @param id Invoice Id
    * @returns PDF file in a stream (Node.js) or Blob (browser)
    */
-  async downloadPdf(id: string): Promise<NodeJS.ReadableStream | Blob> {
+  async downloadPdf(id: string): Promise<BinaryDownload> {
     return this.client.get('/invoices/' + id + '/pdf');
   }
 
@@ -82,7 +83,7 @@ export default class Invoices {
    * @param id Invoice Id
    * @returns XML file in a stream (Node.js) or Blob (browser)
    */
-  async downloadXml(id: string): Promise<NodeJS.ReadableStream | Blob> {
+  async downloadXml(id: string): Promise<BinaryDownload> {
     return this.client.get('/invoices/' + id + '/xml');
   }
 
@@ -91,7 +92,7 @@ export default class Invoices {
    * @param id Invoice Id
    * @returns ZIP file in a stream (Node.js) or Blob (browser)
    */
-  downloadZip(id: string): Promise<NodeJS.ReadableStream | Blob> {
+  downloadZip(id: string): Promise<BinaryDownload> {
     return this.client.get('/invoices/' + id + '/zip');
   }
 
@@ -102,7 +103,7 @@ export default class Invoices {
    */
   downloadCancellationReceiptXml(
     id: string,
-  ): Promise<NodeJS.ReadableStream | Blob> {
+  ): Promise<BinaryDownload> {
     return this.client.get('/invoices/' + id + '/cancellation_receipt/xml');
   }
 
@@ -113,7 +114,7 @@ export default class Invoices {
    */
   downloadCancellationReceiptPdf(
     id: string,
-  ): Promise<NodeJS.ReadableStream | Blob> {
+  ): Promise<BinaryDownload> {
     return this.client.get('/invoices/' + id + '/cancellation_receipt/pdf');
   }
 
@@ -163,7 +164,7 @@ export default class Invoices {
    * @param body Invoice data
    * @returns PDF file in a stream (Node.js) or Blob (browser)
    */
-  previewPdf(body: Record<string, any>): Promise<NodeJS.ReadableStream | Blob> {
+  previewPdf(body: Record<string, any>): Promise<BinaryDownload> {
     return this.client.post('/invoices/preview/pdf', { body });
   }
 }
