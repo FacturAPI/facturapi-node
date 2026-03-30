@@ -10,6 +10,7 @@
     "build": "vite build && tsc --emitDeclarationOnly",
     "test:node": "vitest run --config vitest.node.config.ts",
     "test:web": "vitest run --config vitest.web.config.ts",
+    "test:browser": "npm run build && playwright test",
     "test:unit": "npm run test:node && npm run test:web",
     "test:types": "tsd",
     "test": "npm run build && npm run test:unit && npm run test:types",
@@ -42,6 +43,7 @@
     ]
   },
   "devDependencies": {
+    "@playwright/test": "^1.58.2",
     "@rollup/plugin-commonjs": "^28.0.6",
     "@rollup/plugin-node-resolve": "^16.0.1",
     "@rollup/plugin-replace": "^6.0.2",
