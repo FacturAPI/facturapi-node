@@ -1,0 +1,117 @@
+import crypto from 'node:crypto';
+import { afterEach, describe, expect, it, vi } from 'vitest';
+
+import Facturapi from '../../src';
+
+const originalFetch = globalThis.fetch;
+
+function createClient() {
+  const client = new Facturapi('sk_test_123');
+  client.BASE_URL = 'https://api.test.local/v2';
+  return client;
+}
+
+function getHeader(
+  headers: HeadersInit | undefined,
+  name: string,
+): string | undefined {
+  if (!headers) return undefined;
+  if (headers instanceof Headers) return headers.get(name) || undefined;
+  if (Array.isArray(headers)) {
+    const match = headers.find(
+      ([key]) => key.toLowerCase() === name.toLowerCase(),
+    );
+    return match?.[1];
+  }
+  const map = headers as Record<string, string>;
+  return map[name] || map[name.toLowerCase()];
+}
+
+afterEach(() => {
+  globalThis.fetch = originalFetch;
+  vi.restoreAllMocks();
+});
+
+describe('runtime compatibility (node)', () => {
+  it('parses JSON responses and sends auth header', async () => {
+    const client = createClient();
+
+    globalThis.fetch = vi.fn(async (url, options) => {
+      expect(url).toBe('https://api.test.local/v2/invoices/inv_123');
+      expect(options?.method).toBe('GET');
+      expect(getHeader(options?.headers, 'Authorization')).toMatch(/^Basic\s+/);
+      expect(getHeader(options?.headers, 'Content-Type')).toBe(
+        'application/json',
+      );
+
+      return new Response(
+        JSON.stringify({
+          id: 'inv_123',
+          object: 'invoice',
+        }),
+        {
+          status: 200,
+          headers: { 'content-type': 'application/json' },
+        },
+      );
+    }) as typeof fetch;
+
+    const invoice = await client.invoices.retrieve('inv_123');
+    expect(invoice.id).toBe('inv_123');
+  });
+
+  it('returns a pipeable stream-like object for binary downloads', async () => {
+    const client = createClient();
+
+    globalThis.fetch = vi.fn(async () => {
+      return new Response(new Blob([Buffer.from('zip-binary-content')]), {
+        status: 200,
+        headers: { 'content-type': 'application/zip' },
+      });
+    }) as typeof fetch;
+
+    const zip = await client.invoices.downloadZip('inv_123');
+
+    expect(zip instanceof Blob).toBe(false);
+    expect(typeof (zip as any).pipe).toBe('function');
+
+    const chunks: Buffer[] = [];
+    await new Promise<void>((resolve, reject) => {
+      (zip as any).on('data', (chunk: unknown) => {
+        chunks.push(Buffer.from(chunk as Uint8Array));
+      });
+      (zip as any).on('error', reject);
+      (zip as any).on('end', resolve);
+    });
+
+    expect(Buffer.concat(chunks).toString('utf8')).toBe('zip-binary-content');
+  });
+
+  it('validates webhook signatures locally in Node crypto', async () => {
+    const client = createClient();
+    const payload = '{"id":"evt_123","type":"invoice.created"}';
+    const secret = 'whsec_test_fixed';
+    const precomputedSignature =
+      'cebe006de72ff7836e0a39b2dcb7c6304f27039441ae21b52fba413f24516d6e';
+
+    const event = await client.webhooks.validateSignature({
+      secret,
+      signature: precomputedSignature,
+      payload,
+    });
+
+    expect(event.id).toBe('evt_123');
+    expect(event.type).toBe('invoice.created');
+
+    await expect(
+      client.webhooks.validateSignature({
+        secret,
+        signature: crypto
+          .createHmac('sha256', 'different_secret')
+          .update(payload)
+          .digest('hex'),
+        payload,
+      }),
+    ).rejects.toThrow('Invalid signature');
+  });
+});

@@ -8,8 +8,11 @@
   "scripts": {
     "precommit": "lint-staged",
     "build": "vite build && tsc --emitDeclarationOnly",
-    "test:unit": "node --test test/unit/**/*.test.cjs",
-    "test": "npm run build && npm run test:unit",
+    "test:node": "vitest run --config vitest.node.config.ts",
+    "test:web": "vitest run --config vitest.web.config.ts",
+    "test:unit": "npm run test:node && npm run test:web",
+    "test:types": "tsd",
+    "test": "npm run build && npm run test:unit && npm run test:types",
     "ci": "npm run test"
   },
   "engines": {
@@ -46,11 +49,14 @@
     "eslint": "^9.31.0",
     "eslint-config-prettier": "^10.1.8",
     "husky": "^9.1.7",
+    "jsdom": "^29.0.1",
     "lint-staged": "^16.1.2",
     "prettier-eslint": "^16.4.2",
     "prettier-eslint-cli": "^8.0.1",
     "semistandard": "^17.0.0",
+    "tsd": "^0.33.0",
     "typescript": "^5.8.3",
-    "vite": "^7.0.5"
+    "vite": "^7.0.5",
+    "vitest": "^4.1.2"
   }
 }

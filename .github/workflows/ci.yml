@@ -11,7 +11,7 @@ on:
   workflow_dispatch:
 
 jobs:
-  test:
+  node-runtime:
     runs-on: ubuntu-latest
     strategy:
       fail-fast: false
@@ -31,5 +31,49 @@ jobs:
       - name: Install dependencies
         run: npm ci
 
-      - name: Build and test
-        run: npm run test
+      - name: Run Node runtime tests
+        run: npm run test:node
+
+  web-runtime:
+    runs-on: ubuntu-latest
+    strategy:
+      fail-fast: false
+      matrix:
+        node-version: [20, 22]
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Setup Node
+        uses: actions/setup-node@v4
+        with:
+          node-version: ${{ matrix.node-version }}
+          cache: npm
+
+      - name: Install dependencies
+        run: npm ci
+
+      - name: Run web-simulated runtime tests
+        run: npm run test:web
+
+  build-and-types:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Setup Node
+        uses: actions/setup-node@v4
+        with:
+          node-version: 22
+          cache: npm
+
+      - name: Install dependencies
+        run: npm ci
+
+      - name: Build package
+        run: npm run build
+
+      - name: Run type contract tests
+        run: npm run test:types
