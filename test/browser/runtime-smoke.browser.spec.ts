@@ -1,11 +1,11 @@
 import { createServer, IncomingMessage, ServerResponse } from 'node:http';
 import { readFile } from 'node:fs/promises';
 import { join } from 'node:path';
-import { describe, expect, test } from '@playwright/test';
+import { expect, test } from '@playwright/test';
 
-describe.configure({ mode: 'serial' });
+test.describe.configure({ mode: 'serial' });
 
-describe('browser smoke (real chromium)', () => {
+test.describe('browser smoke (real chromium)', () => {
   let server: ReturnType<typeof createServer>;
   let baseUrl = '';
   let latestUploadContentType: string | undefined;

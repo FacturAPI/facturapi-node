@@ -17,6 +17,16 @@ function hasWebCryptoSubtle(): boolean {
   );
 }
 
+function signatureHexToBytes(signature: string): Uint8Array | null {
+  if (signature.length % 2 !== 0) return null;
+  if (!/^[0-9a-fA-F]+$/.test(signature)) return null;
+  const bytes = new Uint8Array(signature.length / 2);
+  for (let i = 0; i < signature.length; i += 2) {
+    bytes[i / 2] = parseInt(signature.slice(i, i + 2), 16);
+  }
+  return bytes;
+}
+
 export default class Webhooks {
   client: WrapperClient;
 
@@ -140,22 +150,24 @@ export default class Webhooks {
       const encoder = new TextEncoder();
       const encodedData = encoder.encode(payloadString);
       const encodedSecret = encoder.encode(secret);
-      const digest = await globalThis.crypto.subtle.sign(
+      const signatureBytes = signatureHexToBytes(signature);
+      if (!signatureBytes) {
+        throw new Error('Invalid signature');
+      }
+      const key = await globalThis.crypto.subtle.importKey(
+        'raw',
+        encodedSecret,
+        { name: 'HMAC', hash: 'SHA-256' },
+        false,
+        ['verify'],
+      );
+      const isValid = await globalThis.crypto.subtle.verify(
         'HMAC',
-        await globalThis.crypto.subtle.importKey(
-          'raw',
-          encodedSecret,
-          { name: 'HMAC', hash: 'SHA-256' },
-          false,
-          ['sign'],
-        ),
+        key,
+        signatureBytes,
         encodedData,
       );
-      const hexDigest = Array.from(new Uint8Array(digest))
-        .map((b) => b.toString(16).padStart(2, '0'))
-        .join('')
-        .toLowerCase();
-      if (signature !== hexDigest) {
+      if (!isValid) {
         throw new Error('Invalid signature');
       }
       return JSON.parse(payloadString) as ApiEvent<T>;

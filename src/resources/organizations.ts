@@ -51,7 +51,16 @@ const prepareFile = async (
     });
   }
 
-  throw new Error('Unsupported file type in browser environment');
+  const type = file === null ? 'null' : typeof file;
+  const constructorName = (
+    file &&
+    typeof file === 'object' &&
+    'constructor' in file &&
+    (file as { constructor?: { name?: string } }).constructor?.name
+  )
+    ? ` (${(file as { constructor: { name: string } }).constructor.name})`
+    : '';
+  throw new Error(`Unsupported file input type: ${type}${constructorName}`);
 };
 export default class Organizations {
   client: WrapperClient;

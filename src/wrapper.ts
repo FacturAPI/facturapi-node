@@ -23,11 +23,17 @@ export type UniversalFormData = FormData | InstanceType<any>;
 const responseInterceptor = async (response: Response) => {
   if (!response.ok) {
     const contentType = response.headers.get('content-type') || '';
-    try {
-      if (contentType.includes('application/json')) {
+    if (contentType.includes('application/json')) {
+      try {
         const errorData = await response.json();
-        throw new Error(errorData.message || response.statusText);
+        if (errorData && typeof errorData.message === 'string' && errorData.message.trim()) {
+          throw new Error(errorData.message);
+        }
+      } catch (e) {
+        // continue with text/status fallback
       }
+    }
+    try {
       const errorText = await response.text();
       throw new Error(errorText || response.statusText);
     } catch (e) {
@@ -54,13 +60,22 @@ const responseInterceptor = async (response: Response) => {
           const { Readable } = await import('stream');
           return new Readable({
             read() {
-              reader.read().then(({ done, value }) => {
-                if (done) {
-                  this.push(null); // end stream
-                } else {
-                  this.push(Buffer.from(value)); // push data to stream
-                }
-              });
+              reader.read()
+                .then(({ done, value }) => {
+                  if (done) {
+                    this.push(null); // end stream
+                  } else {
+                    this.push(Buffer.from(value)); // push data to stream
+                  }
+                })
+                .catch((error: unknown) => {
+                  void reader.cancel(error).catch(() => undefined);
+                  this.destroy(
+                    error instanceof Error
+                      ? error
+                      : new Error('Failed to read binary response stream'),
+                  );
+                });
             },
           });
         } catch (e) {
