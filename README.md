@@ -12,9 +12,11 @@ If you've used [Stripe](https://stripe.com) or [Conekta](https://conekta.io), yo
 
 ## Compatibility
 
-- Node.js `18+`
-- Browsers with Fetch API support (`fetch`, `FormData`, `Blob`)
-- React Native
+| Runtime | Support |
+| --- | --- |
+| Node.js | `>=18` (CI tested on 18, 20, 22, 24) |
+| Browser | Environments with `fetch`, `FormData`, and `Blob` |
+| React Native | Versions that provide global `fetch`, `FormData`, and `Blob` |
 
 ## Install
 

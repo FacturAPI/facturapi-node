@@ -5,6 +5,13 @@
   "main": "dist/index.cjs.js",
   "module": "dist/index.es.js",
   "types": "dist/index.d.ts",
+  "files": [
+    "dist",
+    "README.md",
+    "CHANGELOG.md",
+    "LICENSE"
+  ],
+  "packageManager": "npm@10.9.2",
   "scripts": {
     "precommit": "lint-staged",
     "build": "vite build && tsc --emitDeclarationOnly",

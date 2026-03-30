@@ -25,6 +25,8 @@ and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.
   `organizations.updateTeamAccessRole` and `organizations.updateTeamRole`.
 - Use `Authorization: Bearer <apiKey>` by default in SDK requests (API supports this scheme).
 - Improve cross-runtime compatibility through feature-detection based runtime handling and binary type normalization.
+- Restrict npm published contents to runtime artifacts/docs (`dist`, `README`, `CHANGELOG`, `LICENSE`) using a package `files` whitelist.
+- Pin `npm` to `10.9.2` in CI/deploy workflows for deterministic lockfile validation across Node versions.
 
 ### Fixed
 - Improve non-OK HTTP error handling fallback when JSON error bodies are malformed or missing, returning clearer text/status errors.
