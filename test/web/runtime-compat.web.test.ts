@@ -4,6 +4,7 @@ import Facturapi from '../../src';
 
 const originalFetch = globalThis.fetch;
 const originalBuffer = (globalThis as any).Buffer;
+const originalBtoa = globalThis.btoa;
 
 function createClient() {
   const client = new Facturapi('sk_test_123');
@@ -30,10 +31,46 @@ function getHeader(
 afterEach(() => {
   globalThis.fetch = originalFetch;
   (globalThis as any).Buffer = originalBuffer;
+  globalThis.btoa = originalBtoa;
   vi.restoreAllMocks();
 });
 
 describe('runtime compatibility (web simulation)', () => {
+  it('encodes basic auth with btoa when Buffer is unavailable', async () => {
+    (globalThis as any).Buffer = undefined;
+    globalThis.btoa = vi.fn((text: string) => {
+      if (text === 'sk_test_123:') return 'c2tfdGVzdF8xMjM6';
+      throw new Error(`Unexpected btoa input: ${text}`);
+    });
+
+    const client = createClient();
+
+    globalThis.fetch = vi.fn(async (_url, options) => {
+      expect(globalThis.btoa).toHaveBeenCalledWith('sk_test_123:');
+      expect(getHeader(options?.headers, 'Authorization')).toBe(
+        'Basic c2tfdGVzdF8xMjM6',
+      );
+      return {
+        ok: true,
+        headers: {
+          get(name: string) {
+            return name.toLowerCase() === 'content-type'
+              ? 'application/json'
+              : null;
+          },
+        },
+        async json() {
+          return { id: 'inv_123' };
+        },
+        async text() {
+          return '';
+        },
+      } as unknown as Response;
+    }) as typeof fetch;
+
+    await client.invoices.retrieve('inv_123');
+  });
+
   it('returns Blob for binary downloads when Buffer is unavailable', async () => {
     const client = createClient();
     (globalThis as any).Buffer = undefined;

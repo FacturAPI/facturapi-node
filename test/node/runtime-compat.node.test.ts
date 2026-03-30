@@ -33,6 +33,21 @@ afterEach(() => {
 });
 
 describe('runtime compatibility (node)', () => {
+  it('encodes basic auth with Buffer in Node', async () => {
+    const client = createClient();
+    const expected = `Basic ${Buffer.from('sk_test_123:').toString('base64')}`;
+
+    globalThis.fetch = vi.fn(async (_url, options) => {
+      expect(getHeader(options?.headers, 'Authorization')).toBe(expected);
+      return new Response(JSON.stringify({ id: 'inv_123' }), {
+        status: 200,
+        headers: { 'content-type': 'application/json' },
+      });
+    }) as typeof fetch;
+
+    await client.invoices.retrieve('inv_123');
+  });
+
   it('parses JSON responses and sends auth header', async () => {
     const client = createClient();
 
