@@ -78,6 +78,57 @@ describe('runtime compatibility (node)', () => {
     expect(invoice.id).toBe('inv_123');
   });
 
+  it('surfaces API message from non-OK JSON responses', async () => {
+    const client = createClient();
+
+    globalThis.fetch = vi.fn(async () => {
+      return new Response(
+        JSON.stringify({
+          message: 'invoice not found',
+        }),
+        {
+          status: 404,
+          headers: { 'content-type': 'application/json' },
+        },
+      );
+    }) as typeof fetch;
+
+    await expect(client.invoices.retrieve('inv_123')).rejects.toThrow(
+      'invoice not found',
+    );
+  });
+
+  it('falls back to raw text when non-OK JSON body is malformed', async () => {
+    const client = createClient();
+
+    globalThis.fetch = vi.fn(async () => {
+      return new Response('not-a-json-body', {
+        status: 500,
+        headers: { 'content-type': 'application/json' },
+      });
+    }) as typeof fetch;
+
+    await expect(client.invoices.retrieve('inv_123')).rejects.toThrow(
+      'not-a-json-body',
+    );
+  });
+
+  it('falls back to status text when non-OK body is empty', async () => {
+    const client = createClient();
+
+    globalThis.fetch = vi.fn(async () => {
+      return new Response('', {
+        status: 400,
+        statusText: 'Bad Request',
+        headers: { 'content-type': 'text/plain' },
+      });
+    }) as typeof fetch;
+
+    await expect(client.invoices.retrieve('inv_123')).rejects.toThrow(
+      'Bad Request',
+    );
+  });
+
   it('returns a pipeable stream-like object for binary downloads', async () => {
     const client = createClient();
 
