@@ -23,25 +23,26 @@ export type UniversalFormData = FormData | InstanceType<any>;
 const responseInterceptor = async (response: Response) => {
   if (!response.ok) {
     const contentType = response.headers.get('content-type') || '';
-    if (contentType.includes('application/json')) {
-      try {
-        const errorData = await response.json();
-        if (errorData && typeof errorData.message === 'string' && errorData.message.trim()) {
-          throw new Error(errorData.message);
-        }
-      } catch (e) {
-        // continue with text/status fallback
-      }
-    }
+    let bodyText: string | null = null;
     try {
-      const errorText = await response.text();
-      throw new Error(errorText || response.statusText);
-    } catch (e) {
-      if (e instanceof Error) {
-        throw e;
-      }
-      throw new Error(response.statusText);
+      bodyText = await response.text();
+    } catch {
+      bodyText = null;
     }
+
+    let jsonMessage: string | null = null;
+    if (contentType.includes('application/json') && bodyText) {
+      try {
+        const errorData = JSON.parse(bodyText) as { message?: unknown };
+        if (typeof errorData.message === 'string' && errorData.message.trim()) {
+          jsonMessage = errorData.message;
+        }
+      } catch {
+        // non-JSON body; fall through to body/status error
+      }
+    }
+
+    throw new Error(jsonMessage || bodyText || response.statusText);
   }
   const contentType = response.headers.get('content-type');
   if (contentType) {
