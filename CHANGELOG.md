@@ -15,10 +15,24 @@ and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.
   `listTeamRoles`, `listTeamRoleTemplates`, `listTeamRoleOperations`,
   `retrieveTeamRole`, `createTeamRole`, `updateTeamRole`, and `deleteTeamRole`.
 - Add typed responses and inputs for organization access, invites, and roles.
+- Add automated test suites for Node runtime (`vitest`), web-simulated runtime (`vitest` + `jsdom`), and browser smoke tests (`playwright`).
+- Add TypeScript contract tests with `tsd` for public SDK types.
+- Add CI workflow to run runtime tests, type tests, and browser smoke tests in GitHub Actions.
+- Include `rfc_provider_cert` in stamp-related invoice typings and responses (thanks to @tetexxr).
 
 ### Changed
 - Use `PUT` for role reassignment/update methods:
   `organizations.updateTeamAccessRole` and `organizations.updateTeamRole`.
+- Use `Authorization: Bearer <apiKey>` by default in SDK requests (API supports this scheme).
+- Improve cross-runtime compatibility through feature-detection based runtime handling and binary type normalization.
+- Restrict npm published contents to runtime artifacts/docs (`dist`, `README`, `CHANGELOG`, `LICENSE`) using a package `files` whitelist.
+- Pin `npm` to `10.9.2` in CI/deploy workflows for deterministic lockfile validation across Node versions.
+
+### Fixed
+- Improve non-OK HTTP error handling fallback when JSON error bodies are malformed or missing, returning clearer text/status errors.
+- Handle `ReadableStream` read failures during binary download conversion to Node streams to avoid unhandled rejections.
+- Strengthen WebCrypto webhook signature validation by using `subtle.verify` and explicit hex signature validation.
+- Improve debugging for invalid upload inputs with clearer unsupported file type errors.
 
 ## [4.13.1] 2026-02-11
 

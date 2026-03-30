@@ -1,0 +1,28 @@
+import { expectType, expectError } from 'tsd';
+import Facturapi, {
+  BinaryDownload,
+  NodeLikeReadableStream,
+} from '../dist';
+
+const client = new Facturapi('sk_test_123');
+
+const zipPromise = client.invoices.downloadZip('inv_123');
+expectType<Promise<BinaryDownload>>(zipPromise);
+
+declare const nodeLike: NodeLikeReadableStream;
+nodeLike.on('data', (chunk) => {
+  expectType<unknown>(chunk);
+});
+
+if (nodeLike.pipe) {
+  const destination = { write: (_chunk: unknown) => undefined };
+  expectType<typeof destination>(nodeLike.pipe(destination));
+}
+
+declare const binary: BinaryDownload;
+expectError(binary.pipe({}));
+
+if ('pipe' in binary && typeof binary.pipe === 'function') {
+  const destination = { write: (_chunk: unknown) => undefined };
+  expectType<typeof destination>(binary.pipe(destination));
+}

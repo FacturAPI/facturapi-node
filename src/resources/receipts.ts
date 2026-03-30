@@ -1,4 +1,5 @@
 import {
+  BinaryDownload,
   GenericResponse,
   Invoice,
   Receipt,
@@ -86,7 +87,7 @@ export default class Receipts {
    * @param id Receipt Id
    * @returns PDF file in a stream (Node.js) or Blob (browser)
    */
-  downloadPdf(id: string): Promise<NodeJS.ReadableStream | Blob> {
+  downloadPdf(id: string): Promise<BinaryDownload> {
     return this.client.get('/receipts/' + id + '/pdf');
   }
 }

@@ -1,13 +1,31 @@
 {
   "name": "facturapi",
-  "version": "4.13.1",
+  "version": "4.14.0",
   "description": "Librería oficial de Facturapi. Crea CFDIs timbrados y enviados al SAT, XML y PDF",
   "main": "dist/index.cjs.js",
   "module": "dist/index.es.js",
   "types": "dist/index.d.ts",
+  "files": [
+    "dist",
+    "README.md",
+    "CHANGELOG.md",
+    "LICENSE"
+  ],
+  "packageManager": "npm@10.9.2",
   "scripts": {
     "precommit": "lint-staged",
-    "build": "vite build && tsc --emitDeclarationOnly"
+    "build": "vite build && tsc --emitDeclarationOnly",
+    "lint": "eslint .",
+    "lint:fix": "eslint . --fix",
+    "format": "prettier . --write",
+    "format:check": "prettier . --check",
+    "test:node": "vitest run --config vitest.node.config.ts",
+    "test:web": "vitest run --config vitest.web.config.ts",
+    "test:browser": "npm run build && playwright test",
+    "test:unit": "npm run test:node && npm run test:web",
+    "test:types": "tsd",
+    "test": "npm run build && npm run test:unit && npm run test:types",
+    "ci": "npm run test"
   },
   "engines": {
     "node": ">=18.0.0"
@@ -30,28 +48,32 @@
   },
   "homepage": "https://github.com/facturapi/facturapi-node#readme",
   "lint-staged": {
-    "*.{js,jsx,css}": [
-      "prettier-eslint --write",
-      "git add"
+    "*.{js,cjs,mjs,ts}": [
+      "prettier --write",
+      "eslint --fix"
+    ],
+    "*.{json,md,yml,yaml,css}": [
+      "prettier --write"
     ]
   },
-  "dependencies": {
-    "cross-fetch": "^4.1.0",
-    "formdata-node": "^6.0.3"
-  },
   "devDependencies": {
-    "@rollup/plugin-commonjs": "^28.0.6",
-    "@rollup/plugin-node-resolve": "^16.0.1",
-    "@rollup/plugin-replace": "^6.0.2",
-    "@types/node": "^22.14.1",
-    "eslint": "^9.31.0",
+    "@eslint/js": "^10.0.1",
+    "@playwright/test": "^1.58.2",
+    "@rollup/plugin-commonjs": "^29.0.2",
+    "@rollup/plugin-node-resolve": "^16.0.3",
+    "@rollup/plugin-replace": "^6.0.3",
+    "@types/node": "^25.5.0",
+    "eslint": "^10.1.0",
     "eslint-config-prettier": "^10.1.8",
+    "globals": "^17.4.0",
     "husky": "^9.1.7",
-    "lint-staged": "^16.1.2",
-    "prettier-eslint": "^16.4.2",
-    "prettier-eslint-cli": "^8.0.1",
-    "semistandard": "^17.0.0",
-    "typescript": "^5.8.3",
-    "vite": "^7.0.5"
+    "jsdom": "^29.0.1",
+    "lint-staged": "^16.4.0",
+    "prettier": "^3.8.1",
+    "tsd": "^0.33.0",
+    "typescript": "^5.9.3",
+    "typescript-eslint": "^8.57.2",
+    "vite": "^8.0.3",
+    "vitest": "^4.1.2"
   }
 }

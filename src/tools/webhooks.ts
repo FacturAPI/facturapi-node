@@ -1,6 +1,38 @@
-import { isNode, isReactNative } from '../constants';
-import { SearchResult, Webhook, ApiEvent, ApiEventType } from '../types';
+import {
+  SearchResult,
+  Webhook,
+  ApiEvent,
+  ApiEventType,
+} from '../types';
 import { WrapperClient } from '../wrapper';
+
+function hasBuffer(): boolean {
+  return typeof Buffer !== 'undefined';
+}
+
+function hasWebCryptoSubtle(): boolean {
+  return (
+    typeof globalThis.crypto !== 'undefined' &&
+    typeof globalThis.crypto.subtle !== 'undefined'
+  );
+}
+
+function signatureHexToBytes(signature: string): Uint8Array | null {
+  if (signature.length % 2 !== 0) return null;
+  if (!/^[0-9a-fA-F]+$/.test(signature)) return null;
+  const bytes = new Uint8Array(signature.length / 2);
+  for (let i = 0; i < signature.length; i += 2) {
+    bytes[i / 2] = parseInt(signature.slice(i, i + 2), 16);
+  }
+  return bytes;
+}
+
+function toArrayBuffer(bytes: Uint8Array): ArrayBuffer {
+  return bytes.buffer.slice(
+    bytes.byteOffset,
+    bytes.byteOffset + bytes.byteLength,
+  ) as ArrayBuffer;
+}
 
 export default class Webhooks {
   client: WrapperClient;
@@ -69,14 +101,21 @@ export default class Webhooks {
   async validateSignature<T extends ApiEventType = any>(data: {
     secret: string;
     signature: string;
-    payload: string | Buffer | ApiEvent<T>;
+    payload: string | Uint8Array | ArrayBuffer | ApiEvent<T>;
   }): Promise<ApiEvent<T>> {
     // Validated locally
     const { secret, signature, payload } = data;
     let payloadString: string;
     if (typeof payload === 'string') {
       payloadString = payload;
-    } else if (Buffer.isBuffer(payload)) {
+    } else if (payload instanceof Uint8Array) {
+      payloadString = new TextDecoder().decode(payload);
+    } else if (payload instanceof ArrayBuffer) {
+      payloadString = new TextDecoder().decode(new Uint8Array(payload));
+    } else if (
+      typeof Buffer !== 'undefined' &&
+      Buffer.isBuffer(payload)
+    ) {
       payloadString = payload.toString('utf8');
     } else if (typeof payload === 'object') {
       payloadString = JSON.stringify(payload);
@@ -84,55 +123,70 @@ export default class Webhooks {
       throw new Error('Invalid payload type');
     }
 
-    if (isReactNative) {
-      // Call the API to validate signature in React Native
-      return this.client.post('/webhooks/validate-signature', {
-        body: {
-          secret,
-          signature,
-          payload: payloadString,
-        },
-      });
-    } else if (isNode) {
-      const crypto = await import('crypto');
-      const hmac = crypto.createHmac('sha256', secret);
-      const digestBuffer = hmac
-        .update(payloadString)
-        .digest();
-      // Compare the digest with the signature and prevent timing attacks
-      // by using a constant-time comparison
-      const signatureBuffer = Buffer.from(signature, 'hex');
-      if (digestBuffer.length !== signatureBuffer.length) {
+    if (hasBuffer()) {
+      let nodeCrypto: typeof import('crypto') | null = null;
+      try {
+        nodeCrypto = await import('crypto');
+      } catch (e) {
+        // continue to other available validators
+      }
+
+      if (nodeCrypto) {
+        const hmac = nodeCrypto.createHmac('sha256', secret);
+        const digestBuffer = hmac
+          .update(payloadString)
+          .digest();
+        // Compare the digest with the signature and prevent timing attacks
+        // by using a constant-time comparison
+        const signatureBuffer = Buffer.from(signature, 'hex');
+        if (digestBuffer.length !== signatureBuffer.length) {
+          throw new Error('Invalid signature');
+        }
+        const isValid = nodeCrypto.timingSafeEqual(
+          digestBuffer,
+          signatureBuffer,
+        );
+        if (!isValid) {
+          throw new Error('Invalid signature');
+        }
+        return JSON.parse(payloadString) as ApiEvent<T>;
+      }
+    }
+
+    if (hasWebCryptoSubtle()) {
+      const encoder = new TextEncoder();
+      const encodedData = encoder.encode(payloadString);
+      const encodedSecret = encoder.encode(secret);
+      const signatureBytes = signatureHexToBytes(signature);
+      if (!signatureBytes) {
         throw new Error('Invalid signature');
       }
-      const isValid = crypto.timingSafeEqual(digestBuffer, signatureBuffer);
+      const key = await globalThis.crypto.subtle.importKey(
+        'raw',
+        encodedSecret,
+        { name: 'HMAC', hash: 'SHA-256' },
+        false,
+        ['verify'],
+      );
+      const isValid = await globalThis.crypto.subtle.verify(
+        'HMAC',
+        key,
+        toArrayBuffer(signatureBytes),
+        encodedData,
+      );
       if (!isValid) {
         throw new Error('Invalid signature');
       }
       return JSON.parse(payloadString) as ApiEvent<T>;
-    } else { // Web browsers
-      const encoder = new TextEncoder();
-      const encodedData = encoder.encode(payloadString);
-      const encodedSecret = encoder.encode(secret);
-      const digest = await crypto.subtle.sign(
-        'HMAC',
-        await crypto.subtle.importKey(
-          'raw',
-          encodedSecret,
-          { name: 'HMAC', hash: 'SHA-256' },
-          false,
-          ['sign'],
-        ),
-        encodedData,
-      );
-      const hexDigest = Array.from(new Uint8Array(digest))
-        .map((b) => b.toString(16).padStart(2, '0'))
-        .join('')
-        .toLowerCase();
-      if (signature !== hexDigest) {
-        throw new Error('Invalid signature');
-      }
     }
-    return JSON.parse(payloadString) as ApiEvent<T>;
+
+    // Fallback for runtimes without local crypto support (e.g. some RN setups)
+    return this.client.post('/webhooks/validate-signature', {
+      body: {
+        secret,
+        signature,
+        payload: payloadString,
+      },
+    });
   }
 }

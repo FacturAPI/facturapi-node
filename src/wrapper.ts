@@ -2,29 +2,51 @@ import {
   BASE_URL,
   BASE_URL_V1,
   DEFAULT_API_VERSION,
-  isNode,
-  isReactNative,
 } from './constants';
-import fetch from 'cross-fetch';
 
-let btoa: (data: string) => string;
+const getRuntimeFetch = () => {
+  const runtimeFetch = globalThis.fetch;
+  if (!runtimeFetch) {
+    throw new Error(
+      'Fetch API is not available in this runtime. Use Node.js 18+ or provide a global fetch implementation.',
+    );
+  }
+  return runtimeFetch.bind(globalThis);
+};
 
-if (isNode) {
-  btoa = (data: string) => Buffer.from(data).toString('base64');
-} else if (isReactNative) {
-  // React Native environment
-  btoa = (data: string) => globalThis.Buffer.from(data).toString('base64');
-} else {
-  // Browser environment
-  btoa = globalThis.btoa;
+function hasBuffer(): boolean {
+  return typeof Buffer !== 'undefined';
 }
 
-export type UniversalFormData = FormData | InstanceType<any>;
+type FormDataLike = {
+  append: (name: string, value: unknown, fileName?: string) => void;
+};
+
+export type UniversalFormData = FormData | FormDataLike;
 
 const responseInterceptor = async (response: Response) => {
   if (!response.ok) {
-    const errorData = await response.json();
-    throw new Error(errorData.message || response.statusText);
+    const contentType = response.headers.get('content-type') || '';
+    let bodyText: string | null = null;
+    try {
+      bodyText = await response.text();
+    } catch {
+      bodyText = null;
+    }
+
+    let jsonMessage: string | null = null;
+    if (contentType.includes('application/json') && bodyText) {
+      try {
+        const errorData = JSON.parse(bodyText) as { message?: unknown };
+        if (typeof errorData.message === 'string' && errorData.message.trim()) {
+          jsonMessage = errorData.message;
+        }
+      } catch {
+        // non-JSON body; fall through to body/status error
+      }
+    }
+
+    throw new Error(jsonMessage || bodyText || response.statusText);
   }
   const contentType = response.headers.get('content-type');
   if (contentType) {
@@ -34,28 +56,35 @@ const responseInterceptor = async (response: Response) => {
       contentType.includes('application/xml') ||
       contentType.includes('application/zip')
     ) {
-      if (isNode) {
+      if (hasBuffer()) {
         const reader = response.body?.getReader();
         if (!reader) {
-          return response.body;
+          return response.blob();
         }
         try {
           const { Readable } = await import('stream');
           return new Readable({
             read() {
-              reader.read().then(({ done, value }) => {
-                if (done) {
-                  this.push(null); // end stream
-                } else {
-                  this.push(Buffer.from(value)); // push data to stream
-                }
-              });
+              reader.read()
+                .then(({ done, value }) => {
+                  if (done) {
+                    this.push(null); // end stream
+                  } else {
+                    this.push(Buffer.from(value)); // push data to stream
+                  }
+                })
+                .catch((error: unknown) => {
+                  void reader.cancel(error).catch(() => undefined);
+                  this.destroy(
+                    error instanceof Error
+                      ? error
+                      : new Error('Failed to read binary response stream'),
+                  );
+                });
             },
           });
         } catch (e) {
-          throw new Error(
-            'Node.js streams are not available in this environment. Please install the "stream" package.',
-          );
+          return response.blob();
         }
       } else {
         return response.blob();
@@ -67,17 +96,13 @@ const responseInterceptor = async (response: Response) => {
   return response.text();
 };
 
-function encodeStringToBase64(text: string) {
-  return btoa(text);
-}
-
 export const createWrapper = (
   apiKey: string,
   apiVersion: 'v1' | 'v2' = DEFAULT_API_VERSION,
 ) => {
   let baseURL = apiVersion === 'v1' ? BASE_URL_V1 : BASE_URL;
   const defaultHeaders = {
-    Authorization: `Basic ${encodeStringToBase64(apiKey + ':')}`,
+    Authorization: `Bearer ${apiKey}`,
   };
 
   const client = {
@@ -92,7 +117,7 @@ export const createWrapper = (
       options?: {
         params?: Record<string, any> | null;
         body?: any;
-        formData?: FormData;
+        formData?: UniversalFormData;
         method?: string;
       },
     ) {
@@ -112,7 +137,10 @@ export const createWrapper = (
             ? JSON.stringify(body)
             : undefined,
       };
-      const response = await fetch(baseURL + url + queryString, fetchOptions);
+      const response = await getRuntimeFetch()(
+        baseURL + url + queryString,
+        fetchOptions,
+      );
       return responseInterceptor(response);
     },
     get(url: string, options?: { params?: Record<string, any> | null }) {

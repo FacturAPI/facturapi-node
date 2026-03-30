@@ -1,4 +1,3 @@
-import { FormData, Blob } from 'formdata-node';
 import { WrapperClient } from '../wrapper';
 import type {
   ApiKeys,
@@ -13,24 +12,65 @@ import type {
   OrganizationUserAccess,
   Series,
 } from '../types/organization';
+import type { BinaryInput, NodeLikeReadableStream } from '../types';
 import { SearchResult } from '../types/common';
-import { isNode } from '../constants';
-import { streamToBuffer } from '../utils/streamToBuffer'; // Import a utility function to convert streams to buffers
+import { streamToBytes } from '../utils/streamToBytes';
+
+function isNodeLikeReadableStream(value: unknown): value is NodeLikeReadableStream {
+  return (
+    typeof value === 'object' &&
+    value !== null &&
+    typeof (value as NodeLikeReadableStream).on === 'function'
+  );
+}
+
+function toArrayBufferUint8Array(bytes: Uint8Array): Uint8Array<ArrayBuffer> {
+  const arrayBuffer = bytes.buffer.slice(
+    bytes.byteOffset,
+    bytes.byteOffset + bytes.byteLength,
+  ) as ArrayBuffer;
+  return new Uint8Array(arrayBuffer);
+}
+
+function toBlobPartUint8Array(bytes: Uint8Array): Uint8Array<ArrayBuffer> {
+  return toArrayBufferUint8Array(bytes);
+}
 
 const prepareFile = async (
-  file: NodeJS.ReadableStream | Buffer | File | Blob,
+  file: BinaryInput,
   fileType: string,
 ): Promise<Blob | File> => {
-  if (isNode) {
-    const buffer =
-      file instanceof Buffer
-        ? file
-        : await streamToBuffer(file as NodeJS.ReadableStream);
-    return new Blob([buffer], {
+  if (typeof Blob === 'undefined') {
+    throw new Error(
+      'Blob is not available in this runtime. Use Node.js 18+ or provide a Blob implementation.',
+    );
+  }
+  if (file instanceof Blob) return file;
+  if (typeof File !== 'undefined' && file instanceof File) return file;
+  if (file instanceof ArrayBuffer) return new Blob([file], { type: fileType });
+  if (file instanceof Uint8Array) {
+    return new Blob([toArrayBufferUint8Array(new Uint8Array(file))], {
       type: fileType,
     });
   }
-  return file as Blob | File;
+
+  if (isNodeLikeReadableStream(file)) {
+    const buffer = await streamToBytes(file);
+    return new Blob([toBlobPartUint8Array(buffer)], {
+      type: fileType,
+    });
+  }
+
+  const type = file === null ? 'null' : typeof file;
+  const constructorName = (
+    file &&
+    typeof file === 'object' &&
+    'constructor' in file &&
+    (file as { constructor?: { name?: string } }).constructor?.name
+  )
+    ? ` (${(file as { constructor: { name: string } }).constructor.name})`
+    : '';
+  throw new Error(`Unsupported file input type: ${type}${constructorName}`);
 };
 export default class Organizations {
   client: WrapperClient;
@@ -139,8 +179,13 @@ export default class Organizations {
    */
   async uploadLogo(
     id: string,
-    file: NodeJS.ReadableStream | Buffer | File | Blob,
+    file: BinaryInput,
   ): Promise<Organization> {
+    if (typeof FormData === 'undefined') {
+      throw new Error(
+        'FormData is not available in this runtime. Use Node.js 18+ or provide a FormData implementation.',
+      );
+    }
     const preparedFile = await prepareFile(
       file,
       'application/octet-stream',
@@ -160,11 +205,16 @@ export default class Organizations {
    */
   async uploadCertificate(
     id: string,
-    cerFile: NodeJS.ReadableStream | Buffer | File | Blob,
-    keyFile: NodeJS.ReadableStream | Buffer | File | Blob,
+    cerFile: BinaryInput,
+    keyFile: BinaryInput,
     password: string,
   ): Promise<Organization> {
-    let formData = new FormData();
+    if (typeof FormData === 'undefined') {
+      throw new Error(
+        'FormData is not available in this runtime. Use Node.js 18+ or provide a FormData implementation.',
+      );
+    }
+    const formData = new FormData();
     const [cerFileOrBlob, keyFileOrBlob] = await Promise.all([
       prepareFile(cerFile, 'application/octet-stream'),
       prepareFile(keyFile, 'application/octet-stream'),
