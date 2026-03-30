@@ -13,6 +13,73 @@ export interface ApiKeys {
   created_at: string;
 }
 
+export interface OrganizationUserAccess {
+  id: string;
+  full_name: string;
+  email: string;
+  role: string | null;
+  role_name: string | null;
+  organization: string;
+  operations: string[];
+  created_at: string;
+  updated_at: string;
+}
+
+export interface OrganizationInvite {
+  id: string;
+  created_at: string;
+  email: string;
+  organization_name: string;
+  role: string | null;
+  role_name: string | null;
+  roles: string[];
+  expires_at: string | null;
+}
+
+export interface OrganizationInviteCreateInput {
+  email: string;
+  role?: string;
+}
+
+export interface OrganizationInviteResponseInput {
+  accept: boolean;
+}
+
+export interface OrganizationTeamRole {
+  id: string;
+  name: string;
+  template_code: string | null;
+  scope: string;
+  organization: string | null;
+  operations: string[];
+  used_by: number;
+  created_at: string;
+  updated_at: string;
+  created_by?: Record<string, any> | null;
+  updated_by?: Record<string, any> | null;
+}
+
+export interface OrganizationTeamRoleCreateInput {
+  name: string;
+  template_code?: string | null;
+  add?: string[];
+  remove?: string[];
+}
+
+export interface OrganizationTeamRoleUpdateInput {
+  name?: string;
+  template_code?: string | null;
+  add?: string[];
+  remove?: string[];
+}
+
+export interface OrganizationTeamRoleTemplate {
+  code: string;
+  name: string;
+  description: string;
+  operations: string[];
+}
+
 export interface Organization {
   id: string;
   created_at: Date;
