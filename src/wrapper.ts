@@ -18,10 +18,6 @@ function hasBuffer(): boolean {
   return typeof Buffer !== 'undefined';
 }
 
-function hasBtoa(): boolean {
-  return typeof globalThis.btoa === 'function';
-}
-
 export type UniversalFormData = FormData | InstanceType<any>;
 
 const responseInterceptor = async (response: Response) => {
@@ -80,25 +76,13 @@ const responseInterceptor = async (response: Response) => {
   return response.text();
 };
 
-function encodeStringToBase64(text: string) {
-  if (hasBuffer()) {
-    return Buffer.from(text, 'utf8').toString('base64');
-  }
-  if (hasBtoa()) {
-    return globalThis.btoa(text);
-  }
-  throw new Error(
-    'No base64 encoder available in this runtime. Provide Buffer or btoa.',
-  );
-}
-
 export const createWrapper = (
   apiKey: string,
   apiVersion: 'v1' | 'v2' = DEFAULT_API_VERSION,
 ) => {
   let baseURL = apiVersion === 'v1' ? BASE_URL_V1 : BASE_URL;
   const defaultHeaders = {
-    Authorization: `Basic ${encodeStringToBase64(apiKey + ':')}`,
+    Authorization: `Bearer ${apiKey}`,
   };
 
   const client = {

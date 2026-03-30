@@ -33,9 +33,9 @@ afterEach(() => {
 });
 
 describe('runtime compatibility (node)', () => {
-  it('encodes basic auth with Buffer in Node', async () => {
+  it('sends bearer auth header in Node', async () => {
     const client = createClient();
-    const expected = `Basic ${Buffer.from('sk_test_123:').toString('base64')}`;
+    const expected = 'Bearer sk_test_123';
 
     globalThis.fetch = vi.fn(async (_url, options) => {
       expect(getHeader(options?.headers, 'Authorization')).toBe(expected);
@@ -54,7 +54,9 @@ describe('runtime compatibility (node)', () => {
     globalThis.fetch = vi.fn(async (url, options) => {
       expect(url).toBe('https://api.test.local/v2/invoices/inv_123');
       expect(options?.method).toBe('GET');
-      expect(getHeader(options?.headers, 'Authorization')).toMatch(/^Basic\s+/);
+      expect(getHeader(options?.headers, 'Authorization')).toBe(
+        'Bearer sk_test_123',
+      );
       expect(getHeader(options?.headers, 'Content-Type')).toBe(
         'application/json',
       );

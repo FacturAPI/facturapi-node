@@ -4,7 +4,6 @@ import Facturapi from '../../src';
 
 const originalFetch = globalThis.fetch;
 const originalBuffer = (globalThis as any).Buffer;
-const originalBtoa = globalThis.btoa;
 
 function createClient() {
   const client = new Facturapi('sk_test_123');
@@ -31,24 +30,16 @@ function getHeader(
 afterEach(() => {
   globalThis.fetch = originalFetch;
   (globalThis as any).Buffer = originalBuffer;
-  globalThis.btoa = originalBtoa;
   vi.restoreAllMocks();
 });
 
 describe('runtime compatibility (web simulation)', () => {
-  it('encodes basic auth with btoa when Buffer is unavailable', async () => {
-    (globalThis as any).Buffer = undefined;
-    globalThis.btoa = vi.fn((text: string) => {
-      if (text === 'sk_test_123:') return 'c2tfdGVzdF8xMjM6';
-      throw new Error(`Unexpected btoa input: ${text}`);
-    });
-
+  it('sends bearer auth header in web-like runtime', async () => {
     const client = createClient();
 
     globalThis.fetch = vi.fn(async (_url, options) => {
-      expect(globalThis.btoa).toHaveBeenCalledWith('sk_test_123:');
       expect(getHeader(options?.headers, 'Authorization')).toBe(
-        'Basic c2tfdGVzdF8xMjM6',
+        'Bearer sk_test_123',
       );
       return {
         ok: true,
@@ -111,7 +102,9 @@ describe('runtime compatibility (web simulation)', () => {
       expect(options?.method).toBe('PUT');
       expect(options?.body instanceof FormData).toBe(true);
       expect(getHeader(options?.headers, 'Content-Type')).toBeUndefined();
-      expect(getHeader(options?.headers, 'Authorization')).toMatch(/^Basic\s+/);
+      expect(getHeader(options?.headers, 'Authorization')).toBe(
+        'Bearer sk_test_123',
+      );
 
       return new Response(
         JSON.stringify({
