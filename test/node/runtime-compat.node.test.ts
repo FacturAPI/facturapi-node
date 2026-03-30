@@ -225,8 +225,9 @@ describe('runtime compatibility (node)', () => {
     await expect(
       new Promise((resolve, reject) => {
         (zip as any).on('error', reject);
+        (zip as any).on('end', resolve);
+        (zip as any).on('close', resolve);
         (zip as any).on('data', () => undefined);
-        setTimeout(resolve, 50);
       }),
     ).rejects.toThrow('reader failed');
   });

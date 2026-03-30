@@ -12,7 +12,7 @@ function normalizeChunk(chunk: unknown): Uint8Array {
   throw new Error('Unsupported stream chunk type');
 }
 
-export function streamToBuffer(
+export function streamToBytes(
   stream: NodeLikeReadableStream,
 ): Promise<Uint8Array> {
   return new Promise((resolve, reject) => {

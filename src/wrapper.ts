@@ -18,7 +18,11 @@ function hasBuffer(): boolean {
   return typeof Buffer !== 'undefined';
 }
 
-export type UniversalFormData = FormData | InstanceType<any>;
+type FormDataLike = {
+  append: (name: string, value: unknown, fileName?: string) => void;
+};
+
+export type UniversalFormData = FormData | FormDataLike;
 
 const responseInterceptor = async (response: Response) => {
   if (!response.ok) {
@@ -113,7 +117,7 @@ export const createWrapper = (
       options?: {
         params?: Record<string, any> | null;
         body?: any;
-        formData?: FormData;
+        formData?: UniversalFormData;
         method?: string;
       },
     ) {

@@ -14,11 +14,7 @@ import type {
 } from '../types/organization';
 import type { BinaryInput, NodeLikeReadableStream } from '../types';
 import { SearchResult } from '../types/common';
-import { streamToBuffer } from '../utils/streamToBuffer';
-
-function isBuffer(value: unknown): value is Uint8Array {
-  return typeof Buffer !== 'undefined' && Buffer.isBuffer(value);
-}
+import { streamToBytes } from '../utils/streamToBytes';
 
 function isNodeLikeReadableStream(value: unknown): value is NodeLikeReadableStream {
   return (
@@ -52,14 +48,14 @@ const prepareFile = async (
   if (file instanceof Blob) return file;
   if (typeof File !== 'undefined' && file instanceof File) return file;
   if (file instanceof ArrayBuffer) return new Blob([file], { type: fileType });
-  if (file instanceof Uint8Array || isBuffer(file)) {
+  if (file instanceof Uint8Array) {
     return new Blob([toArrayBufferUint8Array(new Uint8Array(file))], {
       type: fileType,
     });
   }
 
   if (isNodeLikeReadableStream(file)) {
-    const buffer = await streamToBuffer(file);
+    const buffer = await streamToBytes(file);
     return new Blob([toBlobPartUint8Array(buffer)], {
       type: fileType,
     });
