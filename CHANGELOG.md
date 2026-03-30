@@ -26,6 +26,12 @@ and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.
 - Use `Authorization: Bearer <apiKey>` by default in SDK requests (API supports this scheme).
 - Improve cross-runtime compatibility through feature-detection based runtime handling and binary type normalization.
 
+### Fixed
+- Improve non-OK HTTP error handling fallback when JSON error bodies are malformed or missing, returning clearer text/status errors.
+- Handle `ReadableStream` read failures during binary download conversion to Node streams to avoid unhandled rejections.
+- Strengthen WebCrypto webhook signature validation by using `subtle.verify` and explicit hex signature validation.
+- Improve debugging for invalid upload inputs with clearer unsupported file type errors.
+
 ## [4.13.1] 2026-02-11
 
 ### Fixed
