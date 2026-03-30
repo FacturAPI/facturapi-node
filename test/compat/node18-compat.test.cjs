@@ -1,6 +1,7 @@
 const test = require('node:test');
 const assert = require('node:assert/strict');
 const { Writable } = require('node:stream');
+const crypto = require('node:crypto');
 
 const FacturapiModule = require('../../dist/index.cjs.js');
 const Facturapi = FacturapiModule.default || FacturapiModule;
@@ -61,4 +62,33 @@ test('node18: binary downloads remain pipeable', async () => {
   });
 
   assert.equal(Buffer.concat(chunks).toString('utf8'), 'zip-binary-content');
+});
+
+test('node18: validates webhook signatures locally with node crypto', async () => {
+  const client = createClient();
+  const payload = '{"id":"evt_123","type":"invoice.created"}';
+  const secret = 'whsec_test_fixed';
+  const precomputedSignature =
+    'cebe006de72ff7836e0a39b2dcb7c6304f27039441ae21b52fba413f24516d6e';
+
+  const event = await client.webhooks.validateSignature({
+    secret,
+    signature: precomputedSignature,
+    payload,
+  });
+
+  assert.equal(event.id, 'evt_123');
+  assert.equal(event.type, 'invoice.created');
+
+  await assert.rejects(
+    client.webhooks.validateSignature({
+      secret,
+      signature: crypto
+        .createHmac('sha256', 'different_secret')
+        .update(payload)
+        .digest('hex'),
+      payload,
+    }),
+    /Invalid signature/,
+  );
 });

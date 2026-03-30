@@ -33,7 +33,7 @@ jobs:
           path: dist
           if-no-files-found: error
 
-  node18-compat:
+  node18-runtime:
     runs-on: ubuntu-latest
     needs: build-dist
     steps:
@@ -51,8 +51,8 @@ jobs:
           name: dist-artifact
           path: dist
 
-      - name: Run Node 18 compatibility smoke test
-        run: node --test test/compat/node18-compat.test.cjs
+      - name: Run Node 18 runtime parity tests
+        run: node --test test/compat/node18-compat.test.cjs test/compat/node18-web-compat.test.cjs
 
   node-runtime:
     runs-on: ubuntu-latest
