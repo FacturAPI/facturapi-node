@@ -5,9 +5,6 @@ on:
   push:
     branches:
       - main
-      - 'update/**'
-      - 'feat/**'
-      - 'fix/**'
   workflow_dispatch:
 
 jobs:
