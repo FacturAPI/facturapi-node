@@ -186,6 +186,51 @@ describe('runtime compatibility (node)', () => {
     expect(Buffer.concat(written).toString('utf8')).toBe('zip-binary-content');
   });
 
+  it('propagates stream reader errors for binary downloads', async () => {
+    const client = createClient();
+
+    globalThis.fetch = vi.fn(async () => {
+      return {
+        ok: true,
+        headers: {
+          get(name: string) {
+            return name.toLowerCase() === 'content-type'
+              ? 'application/zip'
+              : null;
+          },
+        },
+        body: {
+          getReader() {
+            return {
+              read: async () => {
+                throw new Error('reader failed');
+              },
+              cancel: async () => undefined,
+            };
+          },
+        },
+        async blob() {
+          return new Blob(['fallback']);
+        },
+        async json() {
+          return {};
+        },
+        async text() {
+          return '';
+        },
+      } as unknown as Response;
+    }) as typeof fetch;
+
+    const zip = await client.invoices.downloadZip('inv_123');
+    await expect(
+      new Promise((resolve, reject) => {
+        (zip as any).on('error', reject);
+        (zip as any).on('data', () => undefined);
+        setTimeout(resolve, 50);
+      }),
+    ).rejects.toThrow('reader failed');
+  });
+
   it('validates webhook signatures locally in Node crypto', async () => {
     const client = createClient();
     const payload = '{"id":"evt_123","type":"invoice.created"}';
@@ -212,5 +257,92 @@ describe('runtime compatibility (node)', () => {
         payload,
       }),
     ).rejects.toThrow('Invalid signature');
+  });
+
+  it('falls back to API validation when local crypto is unavailable', async () => {
+    const client = createClient();
+    const originalBuffer = (globalThis as any).Buffer;
+    const cryptoDescriptor = Object.getOwnPropertyDescriptor(globalThis, 'crypto');
+
+    (globalThis as any).Buffer = undefined;
+    Object.defineProperty(globalThis, 'crypto', {
+      value: undefined,
+      configurable: true,
+      writable: true,
+    });
+
+    globalThis.fetch = vi.fn(async (url, options) => {
+      expect(url).toBe('https://api.test.local/v2/webhooks/validate-signature');
+      expect(options?.method).toBe('POST');
+      expect(getHeader(options?.headers, 'Authorization')).toBe('Bearer sk_test_123');
+      return {
+        ok: true,
+        headers: {
+          get(name: string) {
+            return name.toLowerCase() === 'content-type'
+              ? 'application/json'
+              : null;
+          },
+        },
+        async json() {
+          return {
+            id: 'evt_remote_123',
+            type: 'invoice.created',
+          };
+        },
+        async text() {
+          return '';
+        },
+      } as unknown as Response;
+    }) as typeof fetch;
+
+    try {
+      const event = await client.webhooks.validateSignature({
+        secret: 'whsec_test',
+        signature: 'deadbeef',
+        payload: '{"id":"evt_remote_123","type":"invoice.created"}',
+      });
+      expect(event.id).toBe('evt_remote_123');
+      expect(event.type).toBe('invoice.created');
+    } finally {
+      (globalThis as any).Buffer = originalBuffer;
+      if (cryptoDescriptor) {
+        Object.defineProperty(globalThis, 'crypto', cryptoDescriptor);
+      }
+    }
+  });
+
+  it('rejects unsupported upload inputs with a clear error', async () => {
+    const client = createClient();
+    await expect(
+      client.organizations.uploadLogo('org_123', { invalid: true } as any),
+    ).rejects.toThrow(/Unsupported file input type/);
+  });
+
+  it('serializes query params consistently with URLSearchParams semantics', async () => {
+    const client = createClient();
+
+    globalThis.fetch = vi.fn(async (url) => {
+      expect(url).toBe(
+        'https://api.test.local/v2/invoices?search=a+b&page=2&active=true&empty=&tags=x%2Cy',
+      );
+      return new Response(
+        JSON.stringify({
+          data: [],
+        }),
+        {
+          status: 200,
+          headers: { 'content-type': 'application/json' },
+        },
+      );
+    }) as typeof fetch;
+
+    await client.invoices.list({
+      search: 'a b',
+      page: 2,
+      active: true,
+      empty: '',
+      tags: ['x', 'y'] as unknown as string,
+    });
   });
 });

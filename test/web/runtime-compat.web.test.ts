@@ -62,6 +62,56 @@ describe('runtime compatibility (web simulation)', () => {
     await client.invoices.retrieve('inv_123');
   });
 
+  it('surfaces API message from non-OK JSON responses in web-sim', async () => {
+    const client = createClient();
+
+    globalThis.fetch = vi.fn(async () => {
+      return {
+        ok: false,
+        statusText: 'Not Found',
+        headers: {
+          get(name: string) {
+            return name.toLowerCase() === 'content-type'
+              ? 'application/json'
+              : null;
+          },
+        },
+        async text() {
+          return '{"message":"invoice not found"}';
+        },
+      } as unknown as Response;
+    }) as typeof fetch;
+
+    await expect(client.invoices.retrieve('inv_123')).rejects.toThrow(
+      'invoice not found',
+    );
+  });
+
+  it('falls back to raw text on malformed JSON error bodies in web-sim', async () => {
+    const client = createClient();
+
+    globalThis.fetch = vi.fn(async () => {
+      return {
+        ok: false,
+        statusText: 'Internal Server Error',
+        headers: {
+          get(name: string) {
+            return name.toLowerCase() === 'content-type'
+              ? 'application/json'
+              : null;
+          },
+        },
+        async text() {
+          return 'not-a-json-body';
+        },
+      } as unknown as Response;
+    }) as typeof fetch;
+
+    await expect(client.invoices.retrieve('inv_123')).rejects.toThrow(
+      'not-a-json-body',
+    );
+  });
+
   it('returns Blob for binary downloads when Buffer is unavailable', async () => {
     const client = createClient();
     (globalThis as any).Buffer = undefined;
