@@ -66,6 +66,7 @@ export interface Invoice {
     sat_cert_number: string;
     signature: string;
     complement_string: string;
+    rfc_provider_cert: string;
   } | null;
   addenda?: string | null;
   conditions: string | null;
