@@ -1,4 +1,5 @@
 import crypto from 'node:crypto';
+import { Writable } from 'node:stream';
 import { afterEach, describe, expect, it, vi } from 'vitest';
 
 import Facturapi from '../../src';
@@ -102,6 +103,36 @@ describe('runtime compatibility (node)', () => {
     });
 
     expect(Buffer.concat(chunks).toString('utf8')).toBe('zip-binary-content');
+  });
+
+  it('pipes binary downloads to a Node writable stream', async () => {
+    const client = createClient();
+
+    globalThis.fetch = vi.fn(async () => {
+      return new Response(new Blob([Buffer.from('zip-binary-content')]), {
+        status: 200,
+        headers: { 'content-type': 'application/zip' },
+      });
+    }) as typeof fetch;
+
+    const zip = await client.invoices.downloadZip('inv_123');
+
+    const written: Buffer[] = [];
+    const writable = new Writable({
+      write(chunk, _encoding, callback) {
+        written.push(Buffer.from(chunk));
+        callback();
+      },
+    });
+
+    await new Promise<void>((resolve, reject) => {
+      writable.on('finish', resolve);
+      writable.on('error', reject);
+      (zip as any).on('error', reject);
+      (zip as any).pipe(writable);
+    });
+
+    expect(Buffer.concat(written).toString('utf8')).toBe('zip-binary-content');
   });
 
   it('validates webhook signatures locally in Node crypto', async () => {
