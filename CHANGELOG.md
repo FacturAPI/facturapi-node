@@ -15,10 +15,16 @@ and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.
   `listTeamRoles`, `listTeamRoleTemplates`, `listTeamRoleOperations`,
   `retrieveTeamRole`, `createTeamRole`, `updateTeamRole`, and `deleteTeamRole`.
 - Add typed responses and inputs for organization access, invites, and roles.
+- Add automated test suites for Node runtime (`vitest`), web-simulated runtime (`vitest` + `jsdom`), and browser smoke tests (`playwright`).
+- Add TypeScript contract tests with `tsd` for public SDK types.
+- Add CI workflow to run runtime tests, type tests, and browser smoke tests in GitHub Actions.
+- Include `rfc_provider_cert` in stamp-related invoice typings and responses.
 
 ### Changed
 - Use `PUT` for role reassignment/update methods:
   `organizations.updateTeamAccessRole` and `organizations.updateTeamRole`.
+- Use `Authorization: Bearer <apiKey>` by default in SDK requests (API supports this scheme).
+- Improve cross-runtime compatibility through feature-detection based runtime handling and binary type normalization.
 
 ## [4.13.1] 2026-02-11
 
