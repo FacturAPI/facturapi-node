@@ -18,7 +18,7 @@ and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.
 - Add automated test suites for Node runtime (`vitest`), web-simulated runtime (`vitest` + `jsdom`), and browser smoke tests (`playwright`).
 - Add TypeScript contract tests with `tsd` for public SDK types.
 - Add CI workflow to run runtime tests, type tests, and browser smoke tests in GitHub Actions.
-- Include `rfc_provider_cert` in stamp-related invoice typings and responses.
+- Include `rfc_provider_cert` in stamp-related invoice typings and responses (thanks to @tetexxr).
 
 ### Changed
 - Use `PUT` for role reassignment/update methods:
