@@ -1,8 +1,0 @@
-{
-  "extends": ["semistandard", "prettier", "prettier/standard"],
-  "rules": {
-    "curly": ["error", "multi-line"],
-    "no-spaced-func": "off",
-    "space-before-function-paren": ["error", "always"]
-  }
-}

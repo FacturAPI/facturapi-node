@@ -218,7 +218,7 @@ export default class Organizations {
         'FormData is not available in this runtime. Use Node.js 18+ or provide a FormData implementation.',
       );
     }
-    let formData = new FormData();
+    const formData = new FormData();
     const [cerFileOrBlob, keyFileOrBlob] = await Promise.all([
       prepareFile(cerFile, 'application/octet-stream'),
       prepareFile(keyFile, 'application/octet-stream'),

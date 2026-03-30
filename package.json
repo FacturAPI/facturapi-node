@@ -8,6 +8,10 @@
   "scripts": {
     "precommit": "lint-staged",
     "build": "vite build && tsc --emitDeclarationOnly",
+    "lint": "eslint .",
+    "lint:fix": "eslint . --fix",
+    "format": "prettier . --write",
+    "format:check": "prettier . --check",
     "test:node": "vitest run --config vitest.node.config.ts",
     "test:web": "vitest run --config vitest.web.config.ts",
     "test:browser": "npm run build && playwright test",
@@ -37,12 +41,16 @@
   },
   "homepage": "https://github.com/facturapi/facturapi-node#readme",
   "lint-staged": {
-    "*.{js,jsx,css}": [
-      "prettier-eslint --write",
-      "git add"
+    "*.{js,cjs,mjs,ts}": [
+      "prettier --write",
+      "eslint --fix"
+    ],
+    "*.{json,md,yml,yaml,css}": [
+      "prettier --write"
     ]
   },
   "devDependencies": {
+    "@eslint/js": "^10.0.1",
     "@playwright/test": "^1.58.2",
     "@rollup/plugin-commonjs": "^29.0.2",
     "@rollup/plugin-node-resolve": "^16.0.3",
@@ -50,14 +58,14 @@
     "@types/node": "^25.5.0",
     "eslint": "^10.1.0",
     "eslint-config-prettier": "^10.1.8",
+    "globals": "^17.4.0",
     "husky": "^9.1.7",
     "jsdom": "^29.0.1",
     "lint-staged": "^16.4.0",
-    "prettier-eslint": "^16.4.2",
-    "prettier-eslint-cli": "^8.0.1",
-    "semistandard": "^17.0.0",
+    "prettier": "^3.8.1",
     "tsd": "^0.33.0",
-    "typescript": "^6.0.2",
+    "typescript": "^5.9.3",
+    "typescript-eslint": "^8.57.2",
     "vite": "^8.0.3",
     "vitest": "^4.1.2"
   }
