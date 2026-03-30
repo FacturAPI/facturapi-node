@@ -27,6 +27,13 @@ function signatureHexToBytes(signature: string): Uint8Array | null {
   return bytes;
 }
 
+function toArrayBuffer(bytes: Uint8Array): ArrayBuffer {
+  return bytes.buffer.slice(
+    bytes.byteOffset,
+    bytes.byteOffset + bytes.byteLength,
+  ) as ArrayBuffer;
+}
+
 export default class Webhooks {
   client: WrapperClient;
 
@@ -164,7 +171,7 @@ export default class Webhooks {
       const isValid = await globalThis.crypto.subtle.verify(
         'HMAC',
         key,
-        signatureBytes,
+        toArrayBuffer(signatureBytes),
         encodedData,
       );
       if (!isValid) {

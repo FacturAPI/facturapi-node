@@ -28,6 +28,18 @@ function isNodeLikeReadableStream(value: unknown): value is NodeLikeReadableStre
   );
 }
 
+function toArrayBufferUint8Array(bytes: Uint8Array): Uint8Array<ArrayBuffer> {
+  const arrayBuffer = bytes.buffer.slice(
+    bytes.byteOffset,
+    bytes.byteOffset + bytes.byteLength,
+  ) as ArrayBuffer;
+  return new Uint8Array(arrayBuffer);
+}
+
+function toBlobPartUint8Array(bytes: Uint8Array): Uint8Array<ArrayBuffer> {
+  return toArrayBufferUint8Array(bytes);
+}
+
 const prepareFile = async (
   file: BinaryInput,
   fileType: string,
@@ -41,12 +53,14 @@ const prepareFile = async (
   if (typeof File !== 'undefined' && file instanceof File) return file;
   if (file instanceof ArrayBuffer) return new Blob([file], { type: fileType });
   if (file instanceof Uint8Array || isBuffer(file)) {
-    return new Blob([new Uint8Array(file)], { type: fileType });
+    return new Blob([toArrayBufferUint8Array(new Uint8Array(file))], {
+      type: fileType,
+    });
   }
 
   if (isNodeLikeReadableStream(file)) {
     const buffer = await streamToBuffer(file);
-    return new Blob([buffer], {
+    return new Blob([toBlobPartUint8Array(buffer)], {
       type: fileType,
     });
   }
