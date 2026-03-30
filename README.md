@@ -1,6 +1,7 @@
 # FacturAPI
 
 [![npm version](https://badge.fury.io/js/facturapi.svg)](https://badge.fury.io/js/facturapi)
+[![CI](https://github.com/FacturAPI/facturapi-node/actions/workflows/ci.yml/badge.svg)](https://github.com/FacturAPI/facturapi-node/actions/workflows/ci.yml)
 ![TypeScript](https://img.shields.io/badge/TypeScript-Ready-3178C6?logo=typescript&logoColor=white)
 
 Official HTTP client for [FacturAPI](https://www.facturapi.io).
