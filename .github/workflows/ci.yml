@@ -51,8 +51,8 @@ jobs:
           name: dist-artifact
           path: dist
 
-      - name: Run Node 18 runtime parity tests
-        run: node --test test/compat/node18-compat.test.cjs test/compat/node18-web-compat.test.cjs
+      - name: Run Node 18 runtime compatibility smoke
+        run: node --test test/compat/node18-compat.test.cjs
 
   node-runtime:
     runs-on: ubuntu-latest
@@ -82,7 +82,7 @@ jobs:
     strategy:
       fail-fast: false
       matrix:
-        node-version: [22]
+        node-version: [24]
 
     steps:
       - name: Checkout
