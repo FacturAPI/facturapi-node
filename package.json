@@ -7,7 +7,10 @@
   "types": "dist/index.d.ts",
   "scripts": {
     "precommit": "lint-staged",
-    "build": "vite build && tsc --emitDeclarationOnly"
+    "build": "vite build && tsc --emitDeclarationOnly",
+    "test:unit": "node --test test/unit/**/*.test.cjs",
+    "test": "npm run build && npm run test:unit",
+    "ci": "npm run test"
   },
   "engines": {
     "node": ">=18.0.0"
