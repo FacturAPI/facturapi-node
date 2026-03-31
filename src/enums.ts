@@ -57,6 +57,7 @@ export enum TaxType {
 export enum TaxFactor {
   RATE = 'Tasa',
   QUOTA = 'Cuota',
+  EXENTO = 'Exento',
 }
 
 export enum IepsMode {
