@@ -168,7 +168,7 @@ export default class Organizations {
   checkDomainIsAvailable(
     data: Record<string, any>,
   ): Promise<{ available: boolean }> {
-    return this.client.put('/organizations/domain-check', { body: data });
+    return this.client.get('/organizations/domain-check', { params: data });
   }
 
   /**

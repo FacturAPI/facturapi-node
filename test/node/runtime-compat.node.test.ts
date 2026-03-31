@@ -78,6 +78,31 @@ describe('runtime compatibility (node)', () => {
     expect(invoice.id).toBe('inv_123');
   });
 
+  it('checks domain availability via GET query params', async () => {
+    const client = createClient();
+
+    globalThis.fetch = vi.fn(async (url, options) => {
+      expect(url).toBe(
+        'https://api.test.local/v2/organizations/domain-check?domain=empresa-demo',
+      );
+      expect(options?.method).toBe('GET');
+      expect(getHeader(options?.headers, 'Authorization')).toBe(
+        'Bearer sk_test_123',
+      );
+
+      return new Response(JSON.stringify({ available: true }), {
+        status: 200,
+        headers: { 'content-type': 'application/json' },
+      });
+    }) as typeof fetch;
+
+    const result = await client.organizations.checkDomainIsAvailable({
+      domain: 'empresa-demo',
+    });
+
+    expect(result.available).toBe(true);
+  });
+
   it('surfaces API message from non-OK JSON responses', async () => {
     const client = createClient();
 
