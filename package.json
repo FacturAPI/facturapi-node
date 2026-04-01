@@ -1,16 +1,21 @@
 {
   "name": "facturapi",
   "version": "4.14.2",
-  "description": "Librería oficial de Facturapi. Crea CFDIs timbrados y enviados al SAT, XML y PDF",
+  "description": "SDK oficial de Facturapi para Node.js y navegadores. Integra facturación electrónica en México (CFDI) de forma simple y obtén una perspectiva fiscal completa de tu operación, con búsquedas indexadas, envío de documentos y trazabilidad.",
   "main": "dist/index.cjs.js",
   "module": "dist/index.es.js",
   "types": "dist/index.d.ts",
+  "sideEffects": false,
   "files": [
     "dist",
     "README.md",
     "CHANGELOG.md",
     "LICENSE"
   ],
+  "publishConfig": {
+    "access": "public",
+    "provenance": true
+  },
   "packageManager": "npm@10.9.2",
   "scripts": {
     "precommit": "lint-staged",
@@ -28,7 +33,8 @@
     "ci": "npm run test"
   },
   "engines": {
-    "node": ">=18.0.0"
+    "node": ">=18.0.0",
+    "npm": ">=10.0.0"
   },
   "repository": {
     "type": "git",
@@ -37,6 +43,11 @@
   "keywords": [
     "cfdi",
     "factura",
+    "factura-electronica",
+    "facturacion-electronica",
+    "comprobante-fiscal-digital",
+    "sat-mexico",
+    "mexico",
     "sat",
     "facturación",
     "facturapi"
