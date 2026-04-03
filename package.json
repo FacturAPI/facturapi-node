@@ -53,6 +53,14 @@
     "facturapi"
   ],
   "author": "Facturación Espacial <contacto@facturapi.io>",
+  "contributors": [
+    {
+      "name": "Raúl Sánchez"
+    },
+    {
+      "name": "Javier Rosas"
+    }
+  ],
   "license": "MIT",
   "bugs": {
     "url": "https://github.com/facturapi/facturapi-node/issues"
