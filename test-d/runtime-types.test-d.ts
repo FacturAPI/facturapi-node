@@ -1,7 +1,8 @@
-import { expectType, expectError } from 'tsd';
+import { expectAssignable, expectType, expectError } from 'tsd';
 import Facturapi, {
   BinaryDownload,
   NodeLikeReadableStream,
+  TaxFactor,
 } from '../dist';
 
 const client = new Facturapi('sk_test_123');
@@ -26,3 +27,5 @@ if ('pipe' in binary && typeof binary.pipe === 'function') {
   const destination = { write: (_chunk: unknown) => undefined };
   expectType<typeof destination>(binary.pipe(destination));
 }
+
+expectAssignable<TaxFactor>(TaxFactor.EXENTO);

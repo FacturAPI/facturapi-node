@@ -5,6 +5,10 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](http://keepachangelog.com/en/1.0.0/)
 and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.html).
 
+## [4.14.2] 2026-03-31
+### Fixed
+- Add `TaxFactor.EXENTO` (`"Exento"`) to align SDK enums with the API/OpenAPI allowed tax factor values.
+
 ## [4.14.1] 2026-03-31
 ### Fixed
 - Fix `organizations.checkDomainIsAvailable` to call `GET /organizations/domain-check` with query params (instead of an unsupported `PUT` payload flow).
