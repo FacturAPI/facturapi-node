@@ -48,50 +48,55 @@ const responseInterceptor = async (response: Response) => {
 
     throw new Error(jsonMessage || bodyText || response.statusText);
   }
-  const contentType = response.headers.get('content-type');
-  if (contentType) {
-    if (
-      contentType.includes('image/') ||
-      contentType.includes('application/pdf') ||
-      contentType.includes('application/xml') ||
-      contentType.includes('application/zip')
-    ) {
-      if (hasBuffer()) {
-        const reader = response.body?.getReader();
-        if (!reader) {
-          return response.blob();
-        }
-        try {
-          const { Readable } = await import('stream');
-          return new Readable({
-            read() {
-              reader.read()
-                .then(({ done, value }) => {
-                  if (done) {
-                    this.push(null); // end stream
-                  } else {
-                    this.push(Buffer.from(value)); // push data to stream
-                  }
-                })
-                .catch((error: unknown) => {
-                  void reader.cancel(error).catch(() => undefined);
-                  this.destroy(
-                    error instanceof Error
-                      ? error
-                      : new Error('Failed to read binary response stream'),
-                  );
-                });
-            },
-          });
-        } catch (e) {
-          return response.blob();
-        }
-      } else {
+  const contentType = response.headers.get('content-type') || '';
+  const contentDisposition =
+    response.headers.get('content-disposition') || '';
+  const looksLikeZip = /filename=.*\.zip\b/i.test(contentDisposition);
+  const looksLikeDownload =
+    /attachment/i.test(contentDisposition) || looksLikeZip;
+  const isBinaryContentType =
+    contentType.includes('image/') ||
+    contentType.includes('application/pdf') ||
+    contentType.includes('application/xml') ||
+    contentType.includes('application/zip') ||
+    contentType.includes('application/octet-stream');
+
+  if (isBinaryContentType || !contentType || looksLikeDownload) {
+    if (hasBuffer()) {
+      const reader = response.body?.getReader();
+      if (!reader) {
         return response.blob();
       }
-    } else if (contentType.includes('application/json')) {
-      return response.json();
+      try {
+        const { Readable } = await import('stream');
+        return new Readable({
+          read() {
+            reader.read()
+              .then(({ done, value }) => {
+                if (done) {
+                  this.push(null); // end stream
+                } else {
+                  this.push(Buffer.from(value)); // push data to stream
+                }
+              })
+              .catch((error: unknown) => {
+                void reader.cancel(error).catch(() => undefined);
+                this.destroy(
+                  error instanceof Error
+                    ? error
+                    : new Error('Failed to read binary response stream'),
+                );
+              });
+          },
+        });
+      } catch (e) {
+        return response.blob();
+      }
+    } else {
+      return response.blob();
     }
+  } else if (contentType.includes('application/json')) {
+    return response.json();
   }
   return response.text();
 };
