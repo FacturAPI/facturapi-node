@@ -7,6 +7,11 @@ export interface Series {
   next_folio_test: number;
 }
 
+export interface OrganizationDefaultSeriesUpdateInput {
+  type: 'I' | 'E' | 'P' | 'N' | 'T';
+  series: string;
+}
+
 export interface ApiKeys {
   id: string;
   first_12: string;
