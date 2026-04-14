@@ -9,7 +9,6 @@ and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.
 ### Added
 - Add `organizations.updateDefaultSeries` to set an organization default series by type.
 
-## [4.14.3] 2026-04-13
 ### Fixed
 - Return blob if content-type is octet-stream. This is the coverage for zip files 
 
