@@ -10,6 +10,7 @@ import type {
   OrganizationTeamRoleTemplate,
   OrganizationTeamRoleUpdateInput,
   OrganizationUserAccess,
+  OrganizationDefaultSeriesUpdateInput,
   Series,
 } from '../types/organization';
 import type { BinaryInput, NodeLikeReadableStream } from '../types';
@@ -341,6 +342,24 @@ export default class Organizations {
   ): Promise<Series> {
     return this.client.put(
       `/organizations/${organization_id}/series-group/${seriesName}`,
+      {
+        body: data,
+      },
+    );
+  }
+
+  /**
+   * Sets default series for an organization
+   * @param organization_id Organization Id
+   * @param data Default series input
+   * @returns Organization object
+   */
+  updateDefaultSeries(
+    organization_id: string,
+    data: OrganizationDefaultSeriesUpdateInput,
+  ): Promise<Organization> {
+    return this.client.put(
+      `/organizations/${organization_id}/series-group/default-series`,
       {
         body: data,
       },
