@@ -101,6 +101,86 @@ export default class Facturapi {
     return enums.CancellationMotive;
   }
 
+  static get CustomsRegimes() {
+    return enums.CustomsRegimes;
+  }
+
+  static get CveTransporteEnum() {
+    return enums.CveTransporteEnum;
+  }
+
+  static get TipoEstacionEnum() {
+    return enums.TipoEstacionEnum;
+  }
+
+  static get PermisoSctEnum() {
+    return enums.PermisoSctEnum;
+  }
+
+  static get SectorCofeprisEnum() {
+    return enums.SectorCofeprisEnum;
+  }
+
+  static get PharmaceuticalFormsEnum() {
+    return enums.PharmaceuticalFormsEnum;
+  }
+
+  static get SpecialConditionsEnum() {
+    return enums.SpecialConditionsEnum;
+  }
+
+  static get MaterialTypeEnum() {
+    return enums.MaterialTypeEnum;
+  }
+
+  static get TypeOfCustomsDocumentEnum() {
+    return enums.TypeOfCustomsDocumentEnum;
+  }
+
+  static get TransportTypeEnum() {
+    return enums.TransportTypeEnum;
+  }
+
+  static get TransportFigureEnum() {
+    return enums.TransportFigureEnum;
+  }
+
+  static get RegistroIstmoEnum() {
+    return enums.RegistroIstmoEnum;
+  }
+
+  static get LoadingKey() {
+    return enums.LoadingKey;
+  }
+
+  static get ConfigMaritimaEnum() {
+    return enums.ConfigMaritimaEnum;
+  }
+
+  static get RailTrafficTypeEnum() {
+    return enums.RailTrafficTypeEnum;
+  }
+
+  static get ContainerTypeEnum() {
+    return enums.ContainerTypeEnum;
+  }
+
+  static get MaritimeContainerTypeEnum() {
+    return enums.MaritimeContainerTypeEnum;
+  }
+
+  static get RailCarTypeEnum() {
+    return enums.RailCarTypeEnum;
+  }
+
+  static get RailServiceTypeEnum() {
+    return enums.RailServiceTypeEnum;
+  }
+
+  static get MotivoTrasladoEnum() {
+    return enums.MotivoTrasladoEnum;
+  }
+
   constructor(apiKey: string, options: FacturapiOptions = {}) {
     if (options.apiVersion) {
       if (!VALID_API_VERSIONS.includes(options.apiVersion)) {
