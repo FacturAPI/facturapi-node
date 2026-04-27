@@ -5,6 +5,11 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](http://keepachangelog.com/en/1.0.0/)
 and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.html).
 
+## [4.17.0] 2026-04-27
+### Added
+- Add `receipts.toInvoice` to create customer invoices from multiple receipt keys.
+- Add `receipts.previewToInvoicePdf` to generate PDF previews for to-invoice payloads.
+
 ## [4.16.0] 2026-04-23
 ### Added
 - Add new export catalogs for customs regimes, transport keys, SCT permits, COFEPRIS sectors, pharmaceutical forms, special transport conditions, customs documents, transport types, transport figures, ISTMO registry, loading keys, maritime configurations, rail traffic, containers, rail cars, rail service types, transfer reasons, incoterms, and customs units.
