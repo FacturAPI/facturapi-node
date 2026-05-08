@@ -15,6 +15,7 @@ import ComercioExteriorCatalogs from './tools/comercioExteriorCatalogs';
 
 export * from './enums';
 export * from './types';
+export { buildIeduComplement, IEDU_NAMESPACE } from './utils/iedu';
 
 const VALID_API_VERSIONS = ['v1', 'v2'];
 

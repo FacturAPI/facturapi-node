@@ -76,3 +76,46 @@ export interface NominaComplementData {
   fecha_pago: string | Date;
   num_dias_pagados: number;
 }
+
+/**
+ * Education level for the IEDU (Instituciones Educativas) complement,
+ * as accepted by SAT.
+ *
+ * Reference: http://omawww.sat.gob.mx/informacion_fiscal/factura_electronica/Documents/Complementoscfdi/iedu.pdf
+ */
+export type IeduEducationLevel =
+  | 'Preescolar'
+  | 'Primaria'
+  | 'Secundaria'
+  | 'Profesional Técnico'
+  | 'Bachillerato o su equivalente';
+
+/**
+ * Input for the IEDU (Instituciones Educativas) complement, applied per
+ * line item on tuition CFDIs from accredited K-12 schools.
+ *
+ * When provided on `items[].iedu`, the SDK serializes this object into
+ * the SAT-required XML fragment, sets `items[].complement` to that XML,
+ * and registers the iedu namespace on the invoice automatically.
+ *
+ * The IEDU complement is what enables parents to claim the colegiaturas
+ * deduction on their annual ISR return (Decreto 26-Dic-2013). Applies to
+ * Preescolar, Primaria, Secundaria, Profesional Técnico, and Bachillerato.
+ * University tuition is excluded.
+ */
+export interface IeduComplementInput {
+  /** Full name of the student. */
+  nombreAlumno: string;
+  /** Student CURP (18-character SAT identifier). */
+  CURP: string;
+  /** Education level — must match the SAT-accepted enumeration. */
+  nivelEducativo: IeduEducationLevel;
+  /** RVOE authorization number issued by SEP for the school. */
+  autRVOE: string;
+  /**
+   * RFC of the actual payer when different from the receptor of the CFDI
+   * (for example, when a grandparent pays for a child whose parent is the
+   * factura receptor). Optional.
+   */
+  rfcPago?: string;
+}

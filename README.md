@@ -109,6 +109,42 @@ await facturapi.invoices.sendByEmail(invoice.id, {
 });
 ```
 
+### Educational services (IEDU complement)
+
+Schools issuing CFDIs to parents for tuition (colegiaturas) include the IEDU complement so that parents can claim the [Decreto de Deducción de Colegiaturas](https://www.sat.gob.mx/minisitio/DeduccionesPersonales/colegiaturas.html) on their annual ISR return. The SDK exports a typed `IeduComplementInput`, a `buildIeduComplement()` helper that returns the SAT-required XML, and an `IEDU_NAMESPACE` constant to register on the invoice.
+
+```ts
+import Facturapi, { buildIeduComplement, IEDU_NAMESPACE } from 'facturapi';
+
+const invoice = await facturapi.invoices.create({
+  customer: 'YOUR_CUSTOMER_ID',
+  use: Facturapi.InvoiceUse.SERVICIOS_EDUCATIVOS, // D10
+  payment_form: Facturapi.PaymentForm.TRANSFERENCIA_ELECTRONICA_DE_FONDOS,
+  items: [
+    {
+      quantity: 1,
+      product: {
+        description: 'Colegiatura Mayo 2026 - Primaria',
+        product_key: '86121503',
+        unit_key: 'E48',
+        price: 5000,
+        taxes: [],
+      },
+      complement: buildIeduComplement({
+        nombreAlumno: 'JUAN PEREZ GARCIA',
+        CURP: 'PEGJ100515HDFRRN09',
+        nivelEducativo: 'Primaria',
+        autRVOE: 'ABC-123456',
+        rfcPago: 'PEGM800101AB1', // optional, only when payer ≠ receptor
+      }),
+    },
+  ],
+  namespaces: [IEDU_NAMESPACE],
+});
+```
+
+`nivelEducativo` accepts: `Preescolar`, `Primaria`, `Secundaria`, `Profesional Técnico`, `Bachillerato o su equivalente` (university tuition is not deductible and therefore not part of IEDU).
+
 ## Documentation
 
 Visit [docs.facturapi.io](https://docs.facturapi.io).
