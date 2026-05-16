@@ -104,9 +104,11 @@ const responseInterceptor = async (response: Response) => {
 export const createWrapper = (
   apiKey: string,
   apiVersion: 'v1' | 'v2' = DEFAULT_API_VERSION,
+  headers: Record<string, string> = {},
 ) => {
   let baseURL = apiVersion === 'v1' ? BASE_URL_V1 : BASE_URL;
   const defaultHeaders = {
+    ...headers,
     Authorization: `Bearer ${apiKey}`,
   };
 

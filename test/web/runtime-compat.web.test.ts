@@ -62,6 +62,42 @@ describe('runtime compatibility (web simulation)', () => {
     await client.invoices.retrieve('inv_123')
   })
 
+  it('sends custom headers in web-like runtime', async () => {
+    const client = new Facturapi('sk_test_123', {
+      headers: {
+        'x-facturapi-client': 'MCP',
+        Authorization: 'Bearer ignored',
+      },
+    })
+    client.BASE_URL = 'https://api.test.local/v2'
+
+    globalThis.fetch = vi.fn(async (_url, options) => {
+      expect(getHeader(options?.headers, 'Authorization')).toBe(
+        'Bearer sk_test_123',
+      )
+      expect(getHeader(options?.headers, 'x-facturapi-client')).toBe('MCP')
+
+      return {
+        ok: true,
+        headers: {
+          get(name: string) {
+            return name.toLowerCase() === 'content-type'
+              ? 'application/json'
+              : null
+          },
+        },
+        async json() {
+          return { id: 'org_123' }
+        },
+        async text() {
+          return ''
+        },
+      } as unknown as Response
+    }) as typeof fetch
+
+    await client.organizations.me()
+  })
+
   it('surfaces API message from non-OK JSON responses in web-sim', async () => {
     const client = createClient()
 
@@ -222,7 +258,12 @@ describe('runtime compatibility (web simulation)', () => {
   })
 
   it('sends multipart FormData without forcing content-type header', async () => {
-    const client = createClient()
+    const client = new Facturapi('sk_test_123', {
+      headers: {
+        'x-facturapi-client': 'MCP',
+      },
+    })
+    client.BASE_URL = 'https://api.test.local/v2'
 
     globalThis.fetch = vi.fn(async (url, options) => {
       expect(url).toBe('https://api.test.local/v2/organizations/org_123/logo')
@@ -232,6 +273,7 @@ describe('runtime compatibility (web simulation)', () => {
       expect(getHeader(options?.headers, 'Authorization')).toBe(
         'Bearer sk_test_123',
       )
+      expect(getHeader(options?.headers, 'x-facturapi-client')).toBe('MCP')
 
       return new Response(
         JSON.stringify({

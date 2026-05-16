@@ -22,6 +22,7 @@ export type ApiVersion = 'v1' | 'v2';
 
 export interface FacturapiOptions {
   apiVersion?: ApiVersion;
+  headers?: Record<string, string>;
 }
 
 /**
@@ -193,7 +194,7 @@ export default class Facturapi {
     } else {
       this.apiVersion = DEFAULT_API_VERSION;
     }
-    this._wrapper = createWrapper(apiKey, this.apiVersion);
+    this._wrapper = createWrapper(apiKey, this.apiVersion, options.headers);
     this.customers = new Customers(this._wrapper);
     this.products = new Products(this._wrapper);
     this.invoices = new Invoices(this._wrapper);

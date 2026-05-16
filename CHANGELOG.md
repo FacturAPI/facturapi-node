@@ -7,6 +7,7 @@ and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.
 
 ## [4.17.0] 2026-04-27
 ### Added
+- Add support for custom request headers through the `Facturapi` constructor options.
 - Add `receipts.toInvoice` to create customer invoices from multiple receipt keys.
 - Add `receipts.previewToInvoicePdf` to generate PDF previews for to-invoice payloads.
 
