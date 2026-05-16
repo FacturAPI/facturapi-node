@@ -53,7 +53,8 @@ describe('runtime compatibility (node)', () => {
     const client = new Facturapi('sk_test_123', {
       headers: {
         'x-facturapi-client': 'MCP',
-        Authorization: 'Bearer ignored',
+        authorization: 'Bearer ignored',
+        'content-type': 'text/plain',
       },
     })
     client.BASE_URL = 'https://api.test.local/v2'
@@ -63,6 +64,9 @@ describe('runtime compatibility (node)', () => {
         'Bearer sk_test_123',
       )
       expect(getHeader(options?.headers, 'x-facturapi-client')).toBe('MCP')
+      expect(getHeader(options?.headers, 'Content-Type')).toBe(
+        'application/json',
+      )
 
       return new Response(JSON.stringify({ id: 'org_123' }), {
         status: 200,

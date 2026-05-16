@@ -107,10 +107,10 @@ export const createWrapper = (
   headers: Record<string, string> = {},
 ) => {
   let baseURL = apiVersion === 'v1' ? BASE_URL_V1 : BASE_URL;
-  const defaultHeaders = {
-    ...headers,
-    Authorization: `Bearer ${apiKey}`,
-  };
+  const defaultHeaders = new Headers(headers);
+  defaultHeaders.delete('Authorization');
+  defaultHeaders.delete('Content-Type');
+  defaultHeaders.set('Authorization', `Bearer ${apiKey}`);
 
   const client = {
     get baseURL(): string {
@@ -132,12 +132,13 @@ export const createWrapper = (
       const queryString = params
         ? '?' + new URLSearchParams(params).toString()
         : '';
+      const requestHeaders = new Headers(defaultHeaders);
+      if (!formData) {
+        requestHeaders.set('Content-Type', 'application/json');
+      }
       const fetchOptions: RequestInit = {
         ...restOptions,
-        headers: {
-          ...defaultHeaders,
-          ...(formData ? {} : { 'Content-Type': 'application/json' }),
-        },
+        headers: requestHeaders,
         body: formData
           ? (formData as BodyInit)
           : body
