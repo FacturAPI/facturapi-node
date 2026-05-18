@@ -49,6 +49,34 @@ describe('runtime compatibility (node)', () => {
     await client.invoices.retrieve('inv_123')
   })
 
+  it('sends custom headers in Node', async () => {
+    const client = new Facturapi('sk_test_123', {
+      headers: {
+        'x-facturapi-client': 'MCP',
+        authorization: 'Bearer ignored',
+        'content-type': 'text/plain',
+      },
+    })
+    client.BASE_URL = 'https://api.test.local/v2'
+
+    globalThis.fetch = vi.fn(async (_url, options) => {
+      expect(getHeader(options?.headers, 'Authorization')).toBe(
+        'Bearer sk_test_123',
+      )
+      expect(getHeader(options?.headers, 'x-facturapi-client')).toBe('MCP')
+      expect(getHeader(options?.headers, 'Content-Type')).toBe(
+        'application/json',
+      )
+
+      return new Response(JSON.stringify({ id: 'org_123' }), {
+        status: 200,
+        headers: { 'content-type': 'application/json' },
+      })
+    }) as typeof fetch
+
+    await client.organizations.me()
+  })
+
   it('parses JSON responses and sends auth header', async () => {
     const client = createClient()
 

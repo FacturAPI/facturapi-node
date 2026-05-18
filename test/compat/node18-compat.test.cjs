@@ -14,6 +14,18 @@ function createClient() {
   return client;
 }
 
+function getHeader(headers, name) {
+  if (!headers) return undefined;
+  if (headers instanceof Headers) return headers.get(name) || undefined;
+  if (Array.isArray(headers)) {
+    const match = headers.find(
+      ([key]) => key.toLowerCase() === name.toLowerCase(),
+    );
+    return match && match[1];
+  }
+  return headers[name] || headers[name.toLowerCase()];
+}
+
 test.afterEach(() => {
   globalThis.fetch = ORIGINAL_FETCH;
 });
@@ -22,7 +34,10 @@ test('node18: uses bearer auth and parses json', async () => {
   const client = createClient();
 
   globalThis.fetch = async (_url, options) => {
-    assert.equal(options.headers.Authorization, 'Bearer sk_test_123');
+    assert.equal(
+      getHeader(options.headers, 'Authorization'),
+      'Bearer sk_test_123',
+    );
     return new Response(JSON.stringify({ id: 'inv_123' }), {
       status: 200,
       headers: { 'content-type': 'application/json' },
