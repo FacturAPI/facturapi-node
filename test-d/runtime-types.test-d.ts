@@ -1,6 +1,7 @@
 import { expectAssignable, expectType, expectError } from 'tsd';
 import Facturapi, {
   BinaryDownload,
+  FacturapiError,
   NodeLikeReadableStream,
   TaxFactor,
 } from '../dist';
@@ -29,3 +30,11 @@ if ('pipe' in binary && typeof binary.pipe === 'function') {
 }
 
 expectAssignable<TaxFactor>(TaxFactor.EXENTO);
+
+declare const apiError: FacturapiError;
+expectType<number>(apiError.status);
+expectType<string | undefined>(apiError.code);
+expectType<string | undefined>(apiError.path);
+expectType<string | undefined>(apiError.location);
+expectType<string | undefined>(apiError.logId);
+expectType<Record<string, string>>(apiError.headers);

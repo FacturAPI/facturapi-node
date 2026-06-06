@@ -2,7 +2,7 @@ import crypto from 'node:crypto'
 import { Writable } from 'node:stream'
 import { afterEach, describe, expect, it, vi } from 'vitest'
 
-import Facturapi from '../../src'
+import Facturapi, { FacturapiError } from '../../src'
 
 const originalFetch = globalThis.fetch
 
@@ -221,6 +221,65 @@ describe('runtime compatibility (node)', () => {
     await expect(client.invoices.retrieve('inv_123')).rejects.toThrow(
       'invoice not found',
     )
+  })
+
+  it('surfaces structured API errors and response headers in Node', async () => {
+    const client = createClient()
+
+    globalThis.fetch = vi.fn(async () => {
+      return new Response(
+        JSON.stringify({
+          message: 'Se excedió el límite de solicitudes.',
+          status: 429,
+          code: 'RATE_LIMIT_EXCEEDED',
+          path: 'date',
+          location: 'query',
+          errors: [
+            {
+              code: 'required',
+              message: '"date" is required',
+              path: 'date',
+              location: 'query',
+            },
+          ],
+        }),
+        {
+          status: 429,
+          headers: {
+            'content-type': 'application/json',
+            'retry-after': '3',
+            'x-facturapi-log-id': 'log_123',
+          },
+        },
+      )
+    }) as typeof fetch
+
+    try {
+      await client.invoices.retrieve('inv_123')
+      throw new Error('Expected request to fail')
+    } catch (error) {
+      expect(error).toBeInstanceOf(FacturapiError)
+      expect((error as FacturapiError).message).toBe(
+        'Se excedió el límite de solicitudes.',
+      )
+      expect((error as FacturapiError).status).toBe(429)
+      expect((error as FacturapiError).code).toBe('RATE_LIMIT_EXCEEDED')
+      expect((error as FacturapiError).path).toBe('date')
+      expect((error as FacturapiError).location).toBe('query')
+      expect((error as FacturapiError).logId).toBe('log_123')
+      expect((error as FacturapiError).errors).toEqual([
+        {
+          code: 'required',
+          message: '"date" is required',
+          path: 'date',
+          location: 'query',
+        },
+      ])
+      expect((error as FacturapiError).headers['retry-after']).toBe('3')
+      expect((error as FacturapiError).headers['x-facturapi-log-id']).toBe(
+        'log_123',
+      )
+    }
   })
 
   it('falls back to raw text when non-OK JSON body is malformed', async () => {

@@ -15,6 +15,8 @@ import ComercioExteriorCatalogs from './tools/comercioExteriorCatalogs';
 
 export * from './enums';
 export * from './types';
+export { FacturapiError } from './wrapper';
+export type { FacturapiErrorDetail } from './wrapper';
 
 const VALID_API_VERSIONS = ['v1', 'v2'];
 

@@ -1,6 +1,6 @@
 import { afterEach, describe, expect, it, vi } from 'vitest'
 
-import Facturapi from '../../src'
+import Facturapi, { FacturapiError } from '../../src'
 
 const originalFetch = globalThis.fetch
 const originalBuffer = (globalThis as any).Buffer
@@ -125,6 +125,49 @@ describe('runtime compatibility (web simulation)', () => {
     await expect(client.invoices.retrieve('inv_123')).rejects.toThrow(
       'invoice not found',
     )
+  })
+
+  it('surfaces structured API errors and exposed headers in web-like runtime', async () => {
+    const client = createClient()
+
+    globalThis.fetch = vi.fn(async () => {
+      return {
+        ok: false,
+        status: 429,
+        statusText: 'Too Many Requests',
+        headers: {
+          get(name: string) {
+            const values: Record<string, string> = {
+              'content-type': 'application/json',
+              'retry-after': '3',
+              'x-facturapi-log-id': 'log_123',
+            }
+            return values[name.toLowerCase()] || null
+          },
+        },
+        async text() {
+          return JSON.stringify({
+            message: 'Se excedió el límite de solicitudes.',
+            status: 429,
+            code: 'RATE_LIMIT_EXCEEDED',
+          })
+        },
+      } as unknown as Response
+    }) as typeof fetch
+
+    try {
+      await client.invoices.retrieve('inv_123')
+      throw new Error('Expected request to fail')
+    } catch (error) {
+      expect(error).toBeInstanceOf(FacturapiError)
+      expect((error as FacturapiError).status).toBe(429)
+      expect((error as FacturapiError).code).toBe('RATE_LIMIT_EXCEEDED')
+      expect((error as FacturapiError).logId).toBe('log_123')
+      expect((error as FacturapiError).headers['retry-after']).toBe('3')
+      expect((error as FacturapiError).headers['x-facturapi-log-id']).toBe(
+        'log_123',
+      )
+    }
   })
 
   it('posts multiple receipts to invoice payload in web-like runtime', async () => {

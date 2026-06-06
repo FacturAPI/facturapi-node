@@ -24,6 +24,81 @@ type FormDataLike = {
 
 export type UniversalFormData = FormData | FormDataLike;
 
+export interface FacturapiErrorDetail {
+  code?: string;
+  message?: string;
+  path?: string;
+  location?: string;
+  source?: string;
+  [key: string]: unknown;
+}
+
+export interface FacturapiErrorOptions {
+  message: string;
+  status: number;
+  code?: string;
+  path?: string;
+  location?: string;
+  errors?: FacturapiErrorDetail[];
+  logId?: string;
+  headers?: Record<string, string>;
+}
+
+export class FacturapiError extends Error {
+  status: number;
+  code?: string;
+  path?: string;
+  location?: string;
+  errors?: FacturapiErrorDetail[];
+  logId?: string;
+  headers: Record<string, string>;
+
+  constructor(options: FacturapiErrorOptions) {
+    super(options.message);
+    this.name = 'FacturapiError';
+    this.status = options.status;
+    this.code = options.code;
+    this.path = options.path;
+    this.location = options.location;
+    this.errors = options.errors;
+    this.logId = options.logId;
+    this.headers = options.headers || {};
+  }
+}
+
+const responseHeadersToObject = (headers: Headers): Record<string, string> => {
+  const result: Record<string, string> = {};
+  if (typeof headers.forEach === 'function') {
+    headers.forEach((value, key) => {
+      result[key.toLowerCase()] = value;
+    });
+    return result;
+  }
+  for (const key of ['retry-after', 'x-facturapi-log-id']) {
+    const value = headers.get(key);
+    if (value) {
+      result[key] = value;
+    }
+  }
+  return result;
+};
+
+const stringFrom = (value: unknown): string | undefined =>
+  typeof value === 'string' ? value : undefined;
+
+const statusFrom = (value: unknown, fallback: number): number => {
+  if (typeof value === 'number') {
+    return value;
+  }
+  if (typeof value === 'string') {
+    const parsed = Number.parseInt(value, 10);
+    if (!Number.isNaN(parsed)) {
+      return parsed;
+    }
+  }
+  return fallback;
+};
+
 const responseInterceptor = async (response: Response) => {
   if (!response.ok) {
     const contentType = response.headers.get('content-type') || '';
@@ -34,10 +109,11 @@ const responseInterceptor = async (response: Response) => {
       bodyText = null;
     }
 
+    let errorData: Record<string, unknown> | null = null;
     let jsonMessage: string | null = null;
     if (contentType.includes('application/json') && bodyText) {
       try {
-        const errorData = JSON.parse(bodyText) as { message?: unknown };
+        errorData = JSON.parse(bodyText) as Record<string, unknown>;
         if (typeof errorData.message === 'string' && errorData.message.trim()) {
           jsonMessage = errorData.message;
         }
@@ -46,7 +122,19 @@ const responseInterceptor = async (response: Response) => {
       }
     }
 
-    throw new Error(jsonMessage || bodyText || response.statusText);
+    const headers = responseHeadersToObject(response.headers);
+    throw new FacturapiError({
+      message: jsonMessage || bodyText || response.statusText,
+      status: statusFrom(errorData?.status, response.status),
+      code: stringFrom(errorData?.code),
+      path: stringFrom(errorData?.path),
+      location: stringFrom(errorData?.location),
+      errors: Array.isArray(errorData?.errors)
+        ? (errorData.errors as FacturapiErrorDetail[])
+        : undefined,
+      logId: headers['x-facturapi-log-id'],
+      headers,
+    });
   }
   const contentType = response.headers.get('content-type') || '';
   const contentDisposition =
