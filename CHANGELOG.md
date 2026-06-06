@@ -8,7 +8,6 @@ and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.
 ## [4.18.0] 2026-06-06
 ### Added
 - Expose structured API error metadata through `FacturapiError`, including `status`, `code`, `path`, `location`, `errors`, `logId`, and response `headers`.
-- Notify Slack when npm publishing succeeds or fails, when `SLACK_DEPLOY_WEBHOOK_URL` is configured.
 
 ## [4.17.0] 2026-04-27
 ### Added
