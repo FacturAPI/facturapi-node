@@ -5,6 +5,11 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](http://keepachangelog.com/en/1.0.0/)
 and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.html).
 
+## [4.17.1] 2026-06-06
+### Added
+- Expose structured API error metadata through `FacturapiError`, including `status`, `code`, `path`, `location`, `errors`, `logId`, and response `headers`.
+- Notify Slack when npm publishing succeeds or fails, when `SLACK_DEPLOY_WEBHOOK_URL` is configured.
+
 ## [4.17.0] 2026-04-27
 ### Added
 - Add support for custom request headers through the `Facturapi` constructor options.
