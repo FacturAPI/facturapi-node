@@ -39,5 +39,125 @@ jobs:
           fi
 
       - name: Publish to npm
+        id: publish_step
         if: env.exists == 'false'
         run: npm publish --provenance --access public
+
+      - name: Notify Slack (success)
+        if: env.exists == 'false' && steps.publish_step.outcome == 'success'
+        env:
+          SLACK_DEPLOY_WEBHOOK_URL: ${{ secrets.SLACK_DEPLOY_WEBHOOK_URL }}
+        shell: bash
+        run: |
+          set -euo pipefail
+          if [ -z "${SLACK_DEPLOY_WEBHOOK_URL:-}" ]; then
+            echo "SLACK_DEPLOY_WEBHOOK_URL not set; skipping Slack notification"
+            exit 0
+          fi
+
+          node <<'JS'
+          const fs = require('node:fs');
+
+          const packageJson = JSON.parse(fs.readFileSync('package.json', 'utf8'));
+          const version = packageJson.version;
+          const packageName = packageJson.name;
+          let latestChanges = 'See CHANGELOG for details.';
+
+          if (fs.existsSync('CHANGELOG.md')) {
+            const lines = fs.readFileSync('CHANGELOG.md', 'utf8').split(/\r?\n/);
+            const bullets = [];
+            let inTargetSection = false;
+            for (const line of lines) {
+              if (line.startsWith(`## [${version}]`)) {
+                inTargetSection = true;
+                continue;
+              }
+              if (inTargetSection && line.startsWith('## [')) break;
+              if (inTargetSection && line.startsWith('- ')) {
+                bullets.push(line.slice(2).trim());
+              }
+            }
+            if (bullets.length) {
+              latestChanges = bullets.slice(0, 5).map((bullet) => `• ${bullet}`).join('\n');
+            }
+          }
+
+          fs.writeFileSync('/tmp/slack_payload.json', JSON.stringify({
+            text: `Facturapi Node SDK ${version} published to npm`,
+            blocks: [
+              {
+                type: 'header',
+                text: {
+                  type: 'plain_text',
+                  text: `Node SDK ${version} published to npm`,
+                },
+              },
+              {
+                type: 'section',
+                fields: [
+                  { type: 'mrkdwn', text: `*Package:* \`${packageName}@${version}\`` },
+                  { type: 'mrkdwn', text: `*Branch:* \`${process.env.GITHUB_REF_NAME}\`` },
+                  { type: 'mrkdwn', text: `*Commit:* \`${process.env.GITHUB_SHA}\`` },
+                  { type: 'mrkdwn', text: `*Actor:* \`${process.env.GITHUB_ACTOR}\`` },
+                ],
+              },
+              {
+                type: 'section',
+                text: {
+                  type: 'mrkdwn',
+                  text: [
+                    '*Useful links*',
+                    `• npm: <https://www.npmjs.com/package/${packageName}/v/${version}|View package>`,
+                    `• Workflow run: <${process.env.GITHUB_SERVER_URL}/${process.env.GITHUB_REPOSITORY}/actions/runs/${process.env.GITHUB_RUN_ID}|Open run>`,
+                    `• Changelog: <${process.env.GITHUB_SERVER_URL}/${process.env.GITHUB_REPOSITORY}/blob/${process.env.GITHUB_SHA}/CHANGELOG.md|Read changes>`,
+                  ].join('\n'),
+                },
+              },
+              {
+                type: 'section',
+                text: {
+                  type: 'mrkdwn',
+                  text: `*Latest changes*\n${latestChanges}`,
+                },
+              },
+            ],
+          }));
+          JS
+
+          curl -sS -X POST -H "Content-type: application/json" --data "@/tmp/slack_payload.json" "$SLACK_DEPLOY_WEBHOOK_URL" || true
+
+      - name: Notify Slack (failure)
+        if: failure() && env.exists == 'false' && steps.publish_step.outcome == 'failure'
+        env:
+          SLACK_DEPLOY_WEBHOOK_URL: ${{ secrets.SLACK_DEPLOY_WEBHOOK_URL }}
+        shell: bash
+        run: |
+          set -euo pipefail
+          if [ -z "${SLACK_DEPLOY_WEBHOOK_URL:-}" ]; then
+            echo "SLACK_DEPLOY_WEBHOOK_URL not set; skipping Slack notification"
+            exit 0
+          fi
+
+          node <<'JS'
+          const fs = require('node:fs');
+          const packageJson = JSON.parse(fs.readFileSync('package.json', 'utf8'));
+
+          fs.writeFileSync('/tmp/slack_payload_failure.json', JSON.stringify({
+            text: `Facturapi Node SDK ${packageJson.version} publish failed`,
+            blocks: [
+              {
+                type: 'section',
+                text: {
+                  type: 'mrkdwn',
+                  text: [
+                    `*Node SDK ${packageJson.version} publish failed*`,
+                    `• Workflow run: <${process.env.GITHUB_SERVER_URL}/${process.env.GITHUB_REPOSITORY}/actions/runs/${process.env.GITHUB_RUN_ID}|Open run>`,
+                    `• Commit: \`${process.env.GITHUB_SHA}\``,
+                  ].join('\n'),
+                },
+              },
+            ],
+          }));
+          JS
+
+          curl -sS -X POST -H "Content-type: application/json" --data "@/tmp/slack_payload_failure.json" "$SLACK_DEPLOY_WEBHOOK_URL" || true

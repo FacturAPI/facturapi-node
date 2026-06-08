@@ -5,6 +5,10 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](http://keepachangelog.com/en/1.0.0/)
 and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.html).
 
+## [4.18.0] 2026-06-06
+### Added
+- Expose structured API error metadata through `FacturapiError`, including `status`, `code`, `path`, `location`, `errors`, `logId`, and response `headers`.
+
 ## [4.17.0] 2026-04-27
 ### Added
 - Add support for custom request headers through the `Facturapi` constructor options.
