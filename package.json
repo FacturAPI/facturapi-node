@@ -16,7 +16,7 @@
     "access": "public",
     "provenance": true
   },
-  "packageManager": "npm@10.9.2",
+  "packageManager": "pnpm@11.9.0",
   "scripts": {
     "precommit": "lint-staged",
     "build": "vite build && tsc --emitDeclarationOnly",
@@ -26,15 +26,15 @@
     "format:check": "prettier . --check",
     "test:node": "vitest run --config vitest.node.config.ts",
     "test:web": "vitest run --config vitest.web.config.ts",
-    "test:browser": "npm run build && playwright test",
-    "test:unit": "npm run test:node && npm run test:web",
+    "test:browser": "pnpm run build && playwright test",
+    "test:unit": "pnpm run test:node && pnpm run test:web",
     "test:types": "tsd",
-    "test": "npm run build && npm run test:unit && npm run test:types",
-    "ci": "npm run test"
+    "test": "pnpm run build && pnpm run test:unit && pnpm run test:types",
+    "ci": "pnpm run test"
   },
   "engines": {
     "node": ">=18.0.0",
-    "npm": ">=10.0.0"
+    "pnpm": ">=11.9.0"
   },
   "repository": {
     "type": "git",
@@ -77,22 +77,22 @@
   },
   "devDependencies": {
     "@eslint/js": "^10.0.1",
-    "@playwright/test": "^1.58.2",
-    "@rollup/plugin-commonjs": "^29.0.2",
+    "@playwright/test": "1.61.0",
+    "@rollup/plugin-commonjs": "^29.0.3",
     "@rollup/plugin-node-resolve": "^16.0.3",
     "@rollup/plugin-replace": "^6.0.3",
-    "@types/node": "^25.5.0",
-    "eslint": "^10.1.0",
+    "@types/node": "^26.0.0",
+    "eslint": "^10.5.0",
     "eslint-config-prettier": "^10.1.8",
-    "globals": "^17.4.0",
+    "globals": "^17.7.0",
     "husky": "^9.1.7",
-    "jsdom": "^29.0.1",
-    "lint-staged": "^16.4.0",
-    "prettier": "^3.8.1",
+    "jsdom": "^29.1.1",
+    "lint-staged": "^17.0.8",
+    "prettier": "^3.8.4",
     "tsd": "^0.33.0",
-    "typescript": "^5.9.3",
-    "typescript-eslint": "^8.57.2",
-    "vite": "^8.0.3",
-    "vitest": "^4.1.2"
+    "typescript": "^6.0.3",
+    "typescript-eslint": "^8.62.0",
+    "vite": "8.0.16",
+    "vitest": "^4.1.9"
   }
 }
