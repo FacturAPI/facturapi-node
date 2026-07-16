@@ -14,6 +14,7 @@ import CartaPorteCatalogs from './tools/cartaPorteCatalogs';
 import ComercioExteriorCatalogs from './tools/comercioExteriorCatalogs';
 
 export * from './enums';
+export * from './errorCodes';
 export * from './types';
 export { FacturapiError } from './wrapper';
 export type { FacturapiErrorDetail } from './wrapper';

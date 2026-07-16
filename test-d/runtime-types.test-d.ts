@@ -1,6 +1,7 @@
 import { expectAssignable, expectType, expectError } from 'tsd';
 import Facturapi, {
   BinaryDownload,
+  CommonErrorCode,
   FacturapiError,
   NodeLikeReadableStream,
   TaxFactor,
@@ -33,7 +34,8 @@ expectAssignable<TaxFactor>(TaxFactor.EXENTO);
 
 declare const apiError: FacturapiError;
 expectType<number>(apiError.status);
-expectType<string | undefined>(apiError.code);
+expectAssignable<typeof apiError.code>(CommonErrorCode.NOT_FOUND);
+expectAssignable<typeof apiError.code>('future_error_code');
 expectType<string | undefined>(apiError.path);
 expectType<string | undefined>(apiError.location);
 expectType<string | undefined>(apiError.logId);

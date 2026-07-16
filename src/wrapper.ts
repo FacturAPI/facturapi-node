@@ -3,6 +3,7 @@ import {
   BASE_URL_V1,
   DEFAULT_API_VERSION,
 } from './constants';
+import type { ApiErrorCode } from './errorCodes';
 
 const getRuntimeFetch = () => {
   const runtimeFetch = globalThis.fetch;
@@ -36,7 +37,7 @@ export interface FacturapiErrorDetail {
 export interface FacturapiErrorOptions {
   message: string;
   status: number;
-  code?: string;
+  code?: ApiErrorCode | (string & {});
   path?: string;
   location?: string;
   errors?: FacturapiErrorDetail[];
@@ -46,7 +47,7 @@ export interface FacturapiErrorOptions {
 
 export class FacturapiError extends Error {
   status: number;
-  code?: string;
+  code?: ApiErrorCode | (string & {});
   path?: string;
   location?: string;
   errors?: FacturapiErrorDetail[];

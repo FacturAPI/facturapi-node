@@ -149,7 +149,7 @@ describe('runtime compatibility (web simulation)', () => {
           return JSON.stringify({
             message: 'Se excedió el límite de solicitudes.',
             status: 429,
-            code: 'RATE_LIMIT_EXCEEDED',
+            code: 'rate_limit_exceeded',
           })
         },
       } as unknown as Response
@@ -161,7 +161,7 @@ describe('runtime compatibility (web simulation)', () => {
     } catch (error) {
       expect(error).toBeInstanceOf(FacturapiError)
       expect((error as FacturapiError).status).toBe(429)
-      expect((error as FacturapiError).code).toBe('RATE_LIMIT_EXCEEDED')
+      expect((error as FacturapiError).code).toBe('rate_limit_exceeded')
       expect((error as FacturapiError).logId).toBe('log_123')
       expect((error as FacturapiError).headers['retry-after']).toBe('3')
       expect((error as FacturapiError).headers['x-facturapi-log-id']).toBe(

@@ -231,7 +231,7 @@ describe('runtime compatibility (node)', () => {
         JSON.stringify({
           message: 'Se excedió el límite de solicitudes.',
           status: 429,
-          code: 'RATE_LIMIT_EXCEEDED',
+          code: 'rate_limit_exceeded',
           path: 'date',
           location: 'query',
           errors: [
@@ -263,7 +263,7 @@ describe('runtime compatibility (node)', () => {
         'Se excedió el límite de solicitudes.',
       )
       expect((error as FacturapiError).status).toBe(429)
-      expect((error as FacturapiError).code).toBe('RATE_LIMIT_EXCEEDED')
+      expect((error as FacturapiError).code).toBe('rate_limit_exceeded')
       expect((error as FacturapiError).path).toBe('date')
       expect((error as FacturapiError).location).toBe('query')
       expect((error as FacturapiError).logId).toBe('log_123')
