@@ -86,7 +86,7 @@ export interface InvoiceItem {
   third_party: InvoiceItemThirdParty;
   complement: string;
   parts: InvoiceItemPart[];
-  property_tax_account: string;
+  property_tax_account: string[];
 }
 
 export interface XmlNamespace {
