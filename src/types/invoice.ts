@@ -92,3 +92,30 @@ export interface CancelInvoiceOptions {
   motive: CancellationMotive;
   substitution?: string;
 }
+
+export interface CreateZipRequestData {
+  year: number;
+  month: number;
+  issuer_type: IssuingType;
+  invoice_types?: InvoiceType[];
+}
+
+export interface ListZipRequestsParams {
+  year?: number;
+  month?: number;
+  status?: string;
+  limit?: number;
+  page?: number;
+}
+
+export interface ZipRequest {
+  id: string;
+  year: number;
+  month: number;
+  issuer_type: IssuingType;
+  invoice_types: InvoiceType[];
+  status: string;
+  created_at?: Date;
+  updated_at?: Date;
+  [key: string]: unknown;
+}

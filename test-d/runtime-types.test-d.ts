@@ -2,14 +2,42 @@ import { expectAssignable, expectType, expectError } from 'tsd';
 import Facturapi, {
   BinaryDownload,
   FacturapiError,
+  InvoiceType,
+  IssuingType,
   NodeLikeReadableStream,
+  SearchResult,
   TaxFactor,
+  ZipRequest,
 } from '../dist';
 
 const client = new Facturapi('sk_test_123');
 
 const zipPromise = client.invoices.downloadZip('inv_123');
 expectType<Promise<BinaryDownload>>(zipPromise);
+
+expectType<Promise<ZipRequest>>(
+  client.invoices.createZipRequest({
+    year: 2025,
+    month: 3,
+    issuer_type: IssuingType.ISSUING,
+    invoice_types: [InvoiceType.INGRESO, InvoiceType.EGRESO],
+  }),
+);
+expectType<Promise<SearchResult<ZipRequest>>>(
+  client.invoices.listZipRequests({
+    year: 2025,
+    month: 3,
+    status: 'finished',
+    limit: 20,
+    page: 1,
+  }),
+);
+expectType<Promise<ZipRequest>>(
+  client.invoices.retrieveZipRequest('zip_request_123'),
+);
+expectType<Promise<BinaryDownload>>(
+  client.invoices.downloadZipRequest('zip_request_123'),
+);
 
 declare const nodeLike: NodeLikeReadableStream;
 nodeLike.on('data', (chunk) => {

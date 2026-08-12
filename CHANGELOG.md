@@ -5,6 +5,12 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](http://keepachangelog.com/en/1.0.0/)
 and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.html).
 
+## [4.20.0] 2026-08-12
+
+### Added
+
+- Add invoice ZIP request methods: `invoices.createZipRequest`, `invoices.listZipRequests`, `invoices.retrieveZipRequest`, and `invoices.downloadZipRequest`.
+
 ## [4.19.0] 2026-07-01
 
 ### Added
