@@ -11,14 +11,14 @@ import {
   SendEmailBody,
   SignedDownloadUrl,
   ZipRequest,
-} from '../types';
-import { WrapperClient } from '../wrapper';
+} from '../types'
+import { WrapperClient } from '../wrapper'
 
 export default class Invoices {
-  client: WrapperClient;
+  client: WrapperClient
 
   constructor(client: WrapperClient) {
-    this.client = client;
+    this.client = client
   }
 
   /**
@@ -31,7 +31,7 @@ export default class Invoices {
     body: Record<string, any>,
     params?: Record<string, any> | null,
   ): Promise<Invoice> {
-    return this.client.post('/invoices', { body, params });
+    return this.client.post('/invoices', { body, params })
   }
 
   /**
@@ -40,8 +40,8 @@ export default class Invoices {
    * @returns Search results object. The object contains a `data` property with the list of invoices.
    */
   list(params?: Record<string, any> | null): Promise<SearchResult<Invoice>> {
-    if (!params) params = {};
-    return this.client.get('/invoices', { params });
+    if (!params) params = {}
+    return this.client.get('/invoices', { params })
   }
 
   /**
@@ -50,8 +50,8 @@ export default class Invoices {
    * @returns Invoice object
    */
   retrieve(id: string): Promise<Invoice> {
-    if (!id) return Promise.reject(new Error('id is required'));
-    return this.client.get('/invoices/' + id);
+    if (!id) return Promise.reject(new Error('id is required'))
+    return this.client.get('/invoices/' + id)
   }
 
   /**
@@ -67,8 +67,8 @@ export default class Invoices {
     id: string,
     params: PaymentSummaryParams,
   ): Promise<PaymentSummary> {
-    if (!id) return Promise.reject(new Error('id is required'));
-    return this.client.get('/invoices/' + id + '/payment-summary', { params });
+    if (!id) return Promise.reject(new Error('id is required'))
+    return this.client.get('/invoices/' + id + '/payment-summary', { params })
   }
 
   /**
@@ -78,7 +78,7 @@ export default class Invoices {
    * @returns Canceled invoice
    */
   cancel(id: string, params: CancelInvoiceOptions): Promise<Invoice> {
-    return this.client.delete('/invoices/' + id, { params });
+    return this.client.delete('/invoices/' + id, { params })
   }
 
   /**
@@ -89,7 +89,7 @@ export default class Invoices {
    * @returns Object with 'ok' property set to true if the email was sent successfully
    */
   sendByEmail(id: string, options?: SendEmailBody): Promise<GenericResponse> {
-    return this.client.post('/invoices/' + id + '/email', { body: options });
+    return this.client.post('/invoices/' + id + '/email', { body: options })
   }
 
   /**
@@ -98,7 +98,7 @@ export default class Invoices {
    * @returns PDF file in a stream (Node.js) or Blob (browser)
    */
   async downloadPdf(id: string): Promise<BinaryDownload> {
-    return this.client.get('/invoices/' + id + '/pdf');
+    return this.client.get('/invoices/' + id + '/pdf')
   }
 
   /**
@@ -107,7 +107,7 @@ export default class Invoices {
    * @returns XML file in a stream (Node.js) or Blob (browser)
    */
   async downloadXml(id: string): Promise<BinaryDownload> {
-    return this.client.get('/invoices/' + id + '/xml');
+    return this.client.get('/invoices/' + id + '/xml')
   }
 
   /**
@@ -116,7 +116,7 @@ export default class Invoices {
    * @returns ZIP file in a stream (Node.js) or Blob (browser)
    */
   downloadZip(id: string): Promise<BinaryDownload> {
-    return this.client.get('/invoices/' + id + '/zip');
+    return this.client.get('/invoices/' + id + '/zip')
   }
 
   /**
@@ -125,20 +125,20 @@ export default class Invoices {
    * @returns Signed download URL and its metadata
    */
   downloadPdfUrl(id: string): Promise<SignedDownloadUrl> {
-    if (!id) return Promise.reject(new Error('id is required'));
-    return this.client.get('/invoices/' + id + '/download-url/pdf');
+    if (!id) return Promise.reject(new Error('id is required'))
+    return this.client.get('/invoices/' + id + '/download-url/pdf')
   }
 
   /** Gets a short-lived URL for downloading an invoice XML file. */
   downloadXmlUrl(id: string): Promise<SignedDownloadUrl> {
-    if (!id) return Promise.reject(new Error('id is required'));
-    return this.client.get('/invoices/' + id + '/download-url/xml');
+    if (!id) return Promise.reject(new Error('id is required'))
+    return this.client.get('/invoices/' + id + '/download-url/xml')
   }
 
   /** Gets a short-lived URL for downloading an invoice ZIP file. */
   downloadZipUrl(id: string): Promise<SignedDownloadUrl> {
-    if (!id) return Promise.reject(new Error('id is required'));
-    return this.client.get('/invoices/' + id + '/download-url/zip');
+    if (!id) return Promise.reject(new Error('id is required'))
+    return this.client.get('/invoices/' + id + '/download-url/zip')
   }
 
   /**
@@ -147,7 +147,7 @@ export default class Invoices {
    * @returns ZIP request object
    */
   createZipRequest(data: CreateZipRequestData): Promise<ZipRequest> {
-    return this.client.post('/invoices/zip-requests', { body: data });
+    return this.client.post('/invoices/zip-requests', { body: data })
   }
 
   /**
@@ -160,7 +160,7 @@ export default class Invoices {
   ): Promise<SearchResult<ZipRequest>> {
     return this.client.get('/invoices/zip-requests', {
       params: params || {},
-    });
+    })
   }
 
   /**
@@ -169,8 +169,8 @@ export default class Invoices {
    * @returns ZIP request object
    */
   retrieveZipRequest(id: string): Promise<ZipRequest> {
-    if (!id) return Promise.reject(new Error('id is required'));
-    return this.client.get('/invoices/zip-requests/' + id);
+    if (!id) return Promise.reject(new Error('id is required'))
+    return this.client.get('/invoices/zip-requests/' + id)
   }
 
   /**
@@ -179,14 +179,14 @@ export default class Invoices {
    * @returns ZIP file in a stream (Node.js) or Blob (browser)
    */
   downloadZipRequest(id: string): Promise<BinaryDownload> {
-    if (!id) return Promise.reject(new Error('id is required'));
-    return this.client.get('/invoices/zip-requests/' + id + '/zip');
+    if (!id) return Promise.reject(new Error('id is required'))
+    return this.client.get('/invoices/zip-requests/' + id + '/zip')
   }
 
   /** Gets a short-lived URL for downloading a generated invoice ZIP request. */
   downloadZipRequestUrl(id: string): Promise<SignedDownloadUrl> {
-    if (!id) return Promise.reject(new Error('id is required'));
-    return this.client.get('/invoices/zip-requests/' + id + '/download-url');
+    if (!id) return Promise.reject(new Error('id is required'))
+    return this.client.get('/invoices/zip-requests/' + id + '/download-url')
   }
 
   /**
@@ -194,10 +194,8 @@ export default class Invoices {
    * @param id Invoice Id
    * @returns XML file in a stream (Node.js) or Blob (browser)
    */
-  downloadCancellationReceiptXml(
-    id: string,
-  ): Promise<BinaryDownload> {
-    return this.client.get('/invoices/' + id + '/cancellation_receipt/xml');
+  downloadCancellationReceiptXml(id: string): Promise<BinaryDownload> {
+    return this.client.get('/invoices/' + id + '/cancellation_receipt/xml')
   }
 
   /**
@@ -205,10 +203,8 @@ export default class Invoices {
    * @param id Invoice Id
    * @returns PDF file in a stream (Node.js) or Blob (browser)
    */
-  downloadCancellationReceiptPdf(
-    id: string,
-  ): Promise<BinaryDownload> {
-    return this.client.get('/invoices/' + id + '/cancellation_receipt/pdf');
+  downloadCancellationReceiptPdf(id: string): Promise<BinaryDownload> {
+    return this.client.get('/invoices/' + id + '/cancellation_receipt/pdf')
   }
 
   /**
@@ -217,18 +213,18 @@ export default class Invoices {
    * @returns Signed download URL and its metadata
    */
   downloadCancellationReceiptPdfUrl(id: string): Promise<SignedDownloadUrl> {
-    if (!id) return Promise.reject(new Error('id is required'));
+    if (!id) return Promise.reject(new Error('id is required'))
     return this.client.get(
       '/invoices/' + id + '/cancellation_receipt/download-url/pdf',
-    );
+    )
   }
 
   /** Gets a short-lived URL for downloading a cancellation receipt XML file. */
   downloadCancellationReceiptXmlUrl(id: string): Promise<SignedDownloadUrl> {
-    if (!id) return Promise.reject(new Error('id is required'));
+    if (!id) return Promise.reject(new Error('id is required'))
     return this.client.get(
       '/invoices/' + id + '/cancellation_receipt/download-url/xml',
-    );
+    )
   }
 
   /**
@@ -238,7 +234,7 @@ export default class Invoices {
    * @returns Edited invoice
    */
   updateDraft(id: string, data: Record<string, any>): Promise<Invoice> {
-    return this.client.put('/invoices/' + id, { body: data });
+    return this.client.put('/invoices/' + id, { body: data })
   }
 
   /**
@@ -251,7 +247,7 @@ export default class Invoices {
     id: string,
     params?: Record<string, any> | null,
   ): Promise<Invoice> {
-    return this.client.post('/invoices/' + id + '/stamp', { params });
+    return this.client.post('/invoices/' + id + '/stamp', { params })
   }
 
   /**
@@ -260,7 +256,7 @@ export default class Invoices {
    * @returns Updated invoice
    */
   updateStatus(id: string): Promise<Invoice> {
-    return this.client.put('/invoices/' + id + '/status');
+    return this.client.put('/invoices/' + id + '/status')
   }
 
   /**
@@ -269,7 +265,7 @@ export default class Invoices {
    * @returns Draft invoice
    */
   copyToDraft(id: string): Promise<Invoice> {
-    return this.client.post('/invoices/' + id + '/copy');
+    return this.client.post('/invoices/' + id + '/copy')
   }
 
   /**
@@ -278,11 +274,11 @@ export default class Invoices {
    * @returns PDF file in a stream (Node.js) or Blob (browser)
    */
   previewPdf(body: Record<string, any>): Promise<BinaryDownload> {
-    return this.client.post('/invoices/preview/pdf', { body });
+    return this.client.post('/invoices/preview/pdf', { body })
   }
 
   /** Gets a short-lived URL for an invoice PDF preview. */
   previewPdfUrl(body: Record<string, any>): Promise<SignedDownloadUrl> {
-    return this.client.post('/invoices/preview/pdf/download-url', { body });
+    return this.client.post('/invoices/preview/pdf/download-url', { body })
   }
 }

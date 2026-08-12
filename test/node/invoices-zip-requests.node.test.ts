@@ -115,9 +115,8 @@ describe('invoice ZIP requests', () => {
       })
     }) as typeof fetch
 
-    const result = await client.invoices.downloadZipRequestUrl(
-      'zip_request_123',
-    )
+    const result =
+      await client.invoices.downloadZipRequestUrl('zip_request_123')
     expect(result.filename).toBe('2025-03.zip')
   })
 
