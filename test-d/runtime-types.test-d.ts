@@ -2,6 +2,7 @@ import { expectAssignable, expectType, expectError } from 'tsd';
 import Facturapi, {
   BinaryDownload,
   FacturapiError,
+  InvoiceItem,
   InvoiceType,
   IssuingType,
   NodeLikeReadableStream,
@@ -58,6 +59,9 @@ if ('pipe' in binary && typeof binary.pipe === 'function') {
 }
 
 expectAssignable<TaxFactor>(TaxFactor.EXENTO);
+
+declare const invoiceItem: InvoiceItem;
+expectType<string[]>(invoiceItem.property_tax_account);
 
 declare const apiError: FacturapiError;
 expectType<number>(apiError.status);
