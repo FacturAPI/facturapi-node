@@ -27,7 +27,7 @@ export interface Receipt {
 
 export interface ReceiptsToInvoiceInput {
   keys: string[]
-  customer?: Record<string, any>
+  customer?: string | Record<string, any>
   use?: string
   dry_run?: boolean
   payment_form?: string | null
@@ -35,6 +35,6 @@ export interface ReceiptsToInvoiceInput {
 
 export interface PreviewReceiptsToInvoicePdfInput {
   keys: string[]
-  customer?: Record<string, any> | null
+  customer?: string | Record<string, any> | null
   use?: string
 }
