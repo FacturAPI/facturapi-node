@@ -5,6 +5,8 @@ import {
   GenericResponse,
   Invoice,
   ListZipRequestsParams,
+  PaymentSummary,
+  PaymentSummaryParams,
   SearchResult,
   SendEmailBody,
   ZipRequest,
@@ -49,6 +51,23 @@ export default class Invoices {
   retrieve(id: string): Promise<Invoice> {
     if (!id) return Promise.reject(new Error('id is required'));
     return this.client.get('/invoices/' + id);
+  }
+
+  /**
+   * Gets the information needed to add this invoice as a related document in a
+   * payment complement (complemento de pago): the installment number according
+   * to the payment history, the previous balance, and the invoice tax breakdown
+   * prorated to the amount being paid.
+   * @param id Invoice Id
+   * @param params.amount Amount being paid, expressed in the invoice currency. Cannot exceed the outstanding balance.
+   * @returns Payment summary ready to be used as a related document
+   */
+  paymentSummary(
+    id: string,
+    params: PaymentSummaryParams,
+  ): Promise<PaymentSummary> {
+    if (!id) return Promise.reject(new Error('id is required'));
+    return this.client.get('/invoices/' + id + '/payment-summary', { params });
   }
 
   /**

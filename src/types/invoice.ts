@@ -119,3 +119,43 @@ export interface ZipRequest {
   updated_at?: Date;
   [key: string]: unknown;
 }
+
+export interface PaymentSummaryParams {
+  /**
+   * Amount being paid on the invoice, expressed in the invoice currency.
+   * Cannot exceed the outstanding balance.
+   */
+  amount: number;
+}
+
+export interface PaymentSummaryTax {
+  /** Tax base prorated to the paid amount */
+  base: number;
+  /** Tax rate or quota */
+  rate: number;
+  /** Tax type (VAT, income tax, etc.) */
+  type: string;
+  /** Factor type (Rate, Exempt, etc.) */
+  factor: string;
+  /** Whether this tax is a withholding */
+  withholding: boolean;
+}
+
+export interface PaymentSummary {
+  /** Invoice UUID */
+  uuid: string;
+  folio_number?: number | null;
+  series?: string | null;
+  /** Installment number corresponding to this payment */
+  installment: number;
+  /** Invoice outstanding balance before this payment */
+  last_balance: number;
+  /** Invoice total */
+  total: number;
+  /** Invoice currency */
+  currency: string;
+  /** Amount paid in this installment */
+  amount: number;
+  /** Invoice taxes prorated to the paid amount */
+  taxes: PaymentSummaryTax[];
+}
