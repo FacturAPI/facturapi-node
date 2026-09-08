@@ -109,6 +109,20 @@ await facturapi.invoices.sendByEmail(invoice.id, {
 });
 ```
 
+## API error language
+
+For API V2, request English error messages with `Accept-Language` using the existing client configuration (Node SDK 4.17.0 or later):
+
+```javascript
+import Facturapi from 'facturapi'
+
+const facturapi = new Facturapi('YOUR_API_KEY', {
+  headers: { 'Accept-Language': 'en' },
+})
+```
+
+Use `es` for Spanish. Regional variants such as `en-US` and preferences such as `en;q=0.9, es;q=0.5` are also supported. Missing or unsupported language preferences fall back to Spanish. The setting applies to all requests from this instance; use separate instances for different languages. Codes remain unchanged, and external SAT/PAC messages and uncataloged legacy messages retain their original language. Localization requires server-side API V2 support; it does not translate local SDK errors.
+
 ## Documentation
 
 Visit [docs.facturapi.io](https://docs.facturapi.io).

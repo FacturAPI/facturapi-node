@@ -66,6 +66,7 @@ describe('runtime compatibility (web simulation)', () => {
     const client = new Facturapi('sk_test_123', {
       headers: {
         'x-facturapi-client': 'MCP',
+        'Accept-Language': 'en-US',
         authorization: 'Bearer ignored',
         'content-type': 'text/plain',
       },
@@ -77,6 +78,7 @@ describe('runtime compatibility (web simulation)', () => {
         'Bearer sk_test_123',
       )
       expect(getHeader(options?.headers, 'x-facturapi-client')).toBe('MCP')
+      expect(getHeader(options?.headers, 'Accept-Language')).toBe('en-US')
       expect(getHeader(options?.headers, 'Content-Type')).toBe(
         'application/json',
       )
@@ -308,6 +310,7 @@ describe('runtime compatibility (web simulation)', () => {
     const client = new Facturapi('sk_test_123', {
       headers: {
         'x-facturapi-client': 'MCP',
+        'Accept-Language': 'en-US',
         'content-type': 'text/plain',
       },
     })
@@ -322,6 +325,7 @@ describe('runtime compatibility (web simulation)', () => {
         'Bearer sk_test_123',
       )
       expect(getHeader(options?.headers, 'x-facturapi-client')).toBe('MCP')
+      expect(getHeader(options?.headers, 'Accept-Language')).toBe('en-US')
 
       return new Response(
         JSON.stringify({
