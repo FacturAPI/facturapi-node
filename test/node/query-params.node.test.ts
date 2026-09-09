@@ -107,4 +107,32 @@ describe('query param serialization', () => {
       domain: 'empresa-demo',
     })
   })
+
+  it('does not append a query delimiter when every value is omitted', async () => {
+    const client = createClient()
+
+    globalThis.fetch = vi.fn(async (url) => {
+      expect(url).toBe('https://api.test.local/v2/invoices')
+      return new Response(JSON.stringify({ data: [] }), {
+        status: 200,
+        headers: { 'content-type': 'application/json' },
+      })
+    }) as typeof fetch
+
+    await client.invoices.list({ status: [], q: null, date: undefined })
+  })
+
+  it('keeps string conversion for non-plain object values', async () => {
+    const client = createClient()
+
+    globalThis.fetch = vi.fn(async (url) => {
+      expect(new URLSearchParams(url.split('?')[1]).get('q')).toBe('/walmart/i')
+      return new Response(JSON.stringify({ data: [] }), {
+        status: 200,
+        headers: { 'content-type': 'application/json' },
+      })
+    }) as typeof fetch
+
+    await client.invoices.list({ q: /walmart/i as unknown as string })
+  })
 })

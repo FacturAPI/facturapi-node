@@ -83,12 +83,18 @@ const responseHeadersToObject = (headers: Headers): Record<string, string> => {
   return result;
 };
 
+const isPlainRecord = (value: object): boolean => {
+  const prototype = Object.getPrototypeOf(value);
+  return prototype === Object.prototype || prototype === null;
+};
+
 /**
  * Flattens a params object into `[key, value]` pairs suitable for
- * `URLSearchParams`, expanding nested objects and arrays into the bracket
+ * `URLSearchParams`, expanding plain objects and arrays into the bracket
  * notation the API expects (`date[gte]=...`, `status[]=...`). `null` and
  * `undefined` values and empty collections are skipped, mirroring how query
- * params were serialized before the Fetch API migration.
+ * params were serialized before the Fetch API migration. Other object values
+ * (`URL`, `RegExp`, custom instances) keep their previous string conversion.
  */
 const buildQueryString = (params: Record<string, unknown>): string => {
   const pairs: Array<[string, string]> = [];
@@ -110,21 +116,23 @@ const buildQueryString = (params: Record<string, unknown>): string => {
         pairs.push([key, value.toISOString()]);
         return;
       }
-      const entries = Object.entries(value);
-      if (entries.length === 0) {
+      if (isPlainRecord(value)) {
+        const entries = Object.entries(value);
+        if (entries.length === 0) {
+          return;
+        }
+        for (const [subKey, subValue] of entries) {
+          append(subValue, `${key}[${subKey}]`);
+        }
         return;
       }
-      for (const [subKey, subValue] of entries) {
-        append(subValue, `${key}[${subKey}]`);
-      }
-      return;
     }
     pairs.push([key, String(value)]);
   };
   for (const [key, value] of Object.entries(params)) {
     append(value, key);
   }
-  return new URLSearchParams(pairs).toString();
+  return pairs.length ? new URLSearchParams(pairs).toString() : '';
 };
 
 
@@ -262,9 +270,8 @@ export const createWrapper = (
       },
     ) {
       const { params, body, formData, ...restOptions } = options || {};
-      const queryString = params
-        ? '?' + buildQueryString(params)
-        : '';
+      const serializedQuery = params ? buildQueryString(params) : '';
+      const queryString = serializedQuery ? `?${serializedQuery}` : '';
       const requestHeaders = new Headers(defaultHeaders);
       if (!formData) {
         requestHeaders.set('Content-Type', 'application/json');
