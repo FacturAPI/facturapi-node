@@ -83,6 +83,51 @@ const responseHeadersToObject = (headers: Headers): Record<string, string> => {
   return result;
 };
 
+/**
+ * Flattens a params object into `[key, value]` pairs suitable for
+ * `URLSearchParams`, expanding nested objects and arrays into the bracket
+ * notation the API expects (`date[gte]=...`, `status[]=...`). `null` and
+ * `undefined` values and empty collections are skipped, mirroring how query
+ * params were serialized before the Fetch API migration.
+ */
+const buildQueryString = (params: Record<string, unknown>): string => {
+  const pairs: Array<[string, string]> = [];
+  const append = (value: unknown, key: string) => {
+    if (value === undefined || value === null) {
+      return;
+    }
+    if (Array.isArray(value)) {
+      if (value.length === 0) {
+        return;
+      }
+      for (const item of value) {
+        append(item, `${key}[]`);
+      }
+      return;
+    }
+    if (typeof value === 'object') {
+      if (value instanceof Date) {
+        pairs.push([key, value.toISOString()]);
+        return;
+      }
+      const entries = Object.entries(value);
+      if (entries.length === 0) {
+        return;
+      }
+      for (const [subKey, subValue] of entries) {
+        append(subValue, `${key}[${subKey}]`);
+      }
+      return;
+    }
+    pairs.push([key, String(value)]);
+  };
+  for (const [key, value] of Object.entries(params)) {
+    append(value, key);
+  }
+  return new URLSearchParams(pairs).toString();
+};
+
+
 const stringFrom = (value: unknown): string | undefined =>
   typeof value === 'string' ? value : undefined;
 
@@ -218,7 +263,7 @@ export const createWrapper = (
     ) {
       const { params, body, formData, ...restOptions } = options || {};
       const queryString = params
-        ? '?' + new URLSearchParams(params).toString()
+        ? '?' + buildQueryString(params)
         : '';
       const requestHeaders = new Headers(defaultHeaders);
       if (!formData) {

@@ -5,6 +5,12 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](http://keepachangelog.com/en/1.0.0/)
 and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.html).
 
+## [4.22.0] 2026-09-09
+
+### Fixed
+
+- Serialize nested query params with the bracket notation the API expects. List/search calls passing an object value (for example `date: { gte, lt }` on `invoices.list`, `receipts.list`, `customers.list`, etc.) used to send `date=[object Object]` and fail; they now send `date[gte]=...&date[lt]=...`. Array values now expand to repeated keys (`status[]=a&status[]=b`) instead of being comma-joined, matching the API contract.
+
 ## [4.21.0] 2026-09-04
 
 ### Added
