@@ -13,9 +13,18 @@ export interface Address {
 }
 
 export interface SearchResult<T> {
-  page: number;
-  total_pages: number;
-  total_results: number;
+  /** Page number (page mode only). */
+  page?: number;
+  /** Total pages derived from the (possibly capped) total (page mode only). */
+  total_pages?: number;
+  /** Total matching results; capped (approximate) when totals_are_capped is true. */
+  total_results?: number;
+  /** True when total_results is capped at the maximum search count. */
+  totals_are_capped?: boolean;
+  /** Cursor to fetch the next page of a cursor search (cursor mode only). */
+  next_cursor?: string | null;
+  /** Cursor to fetch the previous page of a cursor search (cursor mode only). */
+  previous_cursor?: string | null;
   data: T[];
 }
 

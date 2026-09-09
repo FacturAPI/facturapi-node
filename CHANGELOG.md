@@ -10,6 +10,7 @@ and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.
 ### Fixed
 
 - Serialize nested query params with the bracket notation the API expects. List/search calls passing an object value (for example `date: { gte, lt }` on `invoices.list`, `receipts.list`, `customers.list`, etc.) used to send `date=[object Object]` and fail; they now send `date[gte]=...&date[lt]=...`. Array values now expand to repeated keys (`status[]=a&status[]=b`) instead of being comma-joined, matching the API contract.
+- Type search responses with the pagination envelope the API returns: `page`, `total_pages`, and `total_results` are optional (omitted on later cursor pages), and new optional `totals_are_capped`, `next_cursor`, and `previous_cursor` fields support cursor pagination and capped totals.
 
 ## [4.21.0] 2026-09-04
 
