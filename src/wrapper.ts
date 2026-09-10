@@ -90,11 +90,13 @@ const isPlainRecord = (value: object): boolean => {
 
 /**
  * Flattens a params object into `[key, value]` pairs suitable for
- * `URLSearchParams`, expanding plain objects and arrays into the bracket
- * notation the API expects (`date[gte]=...`, `status[]=...`). `null` and
- * `undefined` values and empty collections are skipped, mirroring how query
- * params were serialized before the Fetch API migration. Other object values
- * (`URL`, `RegExp`, custom instances) keep their previous string conversion.
+ * `URLSearchParams`. Plain objects expand to the bracket notation the API
+ * documents (`date[gte]=...`, the `deepObject` style) and arrays expand to
+ * repeated keys (`status=a&status=b`, the OpenAPI default `form` + `explode`),
+ * so every official SDK sends the same encoding. `null` and `undefined` values
+ * and empty collections are skipped, mirroring how query params were
+ * serialized before the Fetch API migration. Other object values (`URL`,
+ * `RegExp`, custom instances) keep their previous string conversion.
  */
 const buildQueryString = (params: Record<string, unknown>): string => {
   const pairs: Array<[string, string]> = [];
@@ -107,7 +109,7 @@ const buildQueryString = (params: Record<string, unknown>): string => {
         return;
       }
       for (const item of value) {
-        append(item, `${key}[]`);
+        append(item, key);
       }
       return;
     }

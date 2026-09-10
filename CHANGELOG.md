@@ -14,7 +14,7 @@ and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.
 
 ### Fixed
 
-- Serialize nested query params with the bracket notation the API expects. List/search calls passing an object value (for example `date: { gte, lt }` on `invoices.list`, `receipts.list`, `customers.list`, etc.) used to send `date=[object Object]` and fail; they now send `date[gte]=...&date[lt]=...`. Array values now expand to repeated keys (`status[]=a&status[]=b`) instead of being comma-joined, matching the API contract.
+- Serialize nested query params with the bracket notation the API expects. List/search calls passing an object value (for example `date: { gte, lt }` on `invoices.list`, `receipts.list`, `customers.list`, etc.) used to send `date=[object Object]` and fail; they now send `date[gte]=...&date[lt]=...`. Array values now expand to repeated keys (`status=a&status=b`) instead of being comma-joined or sent as `status[]=a`, matching the API contract and the other official SDKs.
 
 ## [4.21.0] 2026-09-04
 

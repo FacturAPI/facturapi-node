@@ -36,12 +36,12 @@ describe('query param serialization', () => {
     })
   })
 
-  it('serializes arrays with repeated empty-bracket keys', async () => {
+  it('serializes arrays as repeated keys', async () => {
     const client = createClient()
 
     globalThis.fetch = vi.fn(async (url) => {
       expect(url).toBe(
-        'https://api.test.local/v2/invoices?status%5B%5D=valid&status%5B%5D=canceled',
+        'https://api.test.local/v2/invoices?status=valid&status=canceled',
       )
       return new Response(JSON.stringify({ data: [] }), {
         status: 200,
