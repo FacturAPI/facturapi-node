@@ -5,17 +5,12 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](http://keepachangelog.com/en/1.0.0/)
 and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.html).
 
-## [5.0.0] 2026-09-09
+## [4.22.0] 2026-09-09
 
 ### Added
 
-### Breaking
-
-- `SearchResult.page`, `total_pages`, and `total_results` are now optional: the API reports totals only in page mode and on the first request of a cursor search, so later cursor pages omit them. Strict TypeScript consumers that dereferenced these fields must handle their absence (or use `next_cursor`).
-
-### Added
-
-- Optional `totals_are_capped`, `next_cursor`, and `previous_cursor` on search responses for cursor pagination and capped totals.
+- `CursorSearchResult<T>` and `CursorSearchParams` for cursor searches: totals are only reported on the first request of a cursor sequence, so cursor responses type `total_results` as optional and expose `previous_cursor`/`next_cursor`. Page-mode `SearchResult<T>` keeps its existing contract and its new optional `totals_are_capped`.
+- Cursor-aware overloads on `list()` for invoices, receipts, customers, products, and retentions: passing `pagination: 'cursor'` (or `after`/`before`) types the result as `CursorSearchResult<T>`.
 
 ### Fixed
 

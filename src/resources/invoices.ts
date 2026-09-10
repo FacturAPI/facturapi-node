@@ -10,6 +10,8 @@ import {
   SearchResult,
   SendEmailBody,
   ZipRequest,
+  CursorSearchParams,
+  CursorSearchResult,
 } from '../types';
 import { WrapperClient } from '../wrapper';
 
@@ -38,7 +40,11 @@ export default class Invoices {
    * @param params - Search parameters
    * @returns Search results object. The object contains a `data` property with the list of invoices.
    */
-  list(params?: Record<string, any> | null): Promise<SearchResult<Invoice>> {
+  list(params: CursorSearchParams): Promise<CursorSearchResult<Invoice>>;
+  list(params?: Record<string, any> | null): Promise<SearchResult<Invoice>>;
+  list(
+    params?: Record<string, any> | null,
+  ): Promise<SearchResult<Invoice> | CursorSearchResult<Invoice>> {
     if (!params) params = {};
     return this.client.get('/invoices', { params });
   }

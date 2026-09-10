@@ -13,20 +13,32 @@ export interface Address {
 }
 
 export interface SearchResult<T> {
-  /** Page number. Absent on cursor pages after the first request. */
-  page?: number;
-  /** Total pages. Absent on cursor pages after the first request. */
-  total_pages?: number;
-  /** Total matching results (capped/approximate when totals_are_capped). Absent on cursor pages after the first request. */
-  total_results?: number;
+  /** Page number (page mode). */
+  page: number;
+  /** Total pages derived from the (possibly capped) total (page mode). */
+  total_pages: number;
+  /** Total matching results; capped (approximate) when totals_are_capped is true (page mode). */
+  total_results: number;
   /** True when total_results is capped at the maximum search count. */
   totals_are_capped?: boolean;
-  /** Cursor to fetch the next page of a cursor search (cursor mode only). */
-  next_cursor?: string | null;
-  /** Cursor to fetch the previous page of a cursor search (cursor mode only). */
-  previous_cursor?: string | null;
   data: T[];
 }
+
+/**
+ * Response of a cursor search. Totals are only reported on the first request
+ * of a cursor sequence, so they are optional here; navigate with the cursors.
+ */
+export interface CursorSearchResult<T> {
+  total_results?: number;
+  totals_are_capped?: boolean;
+  previous_cursor: string | null;
+  next_cursor: string | null;
+  data: T[];
+}
+
+/** Params that select cursor pagination (page mode is the default). */
+export type CursorSearchParams = ({ pagination: 'cursor' } | { after: string } | { before: string }) &
+  Record<string, any>;
 
 export interface InvoiceItemPart {
   quantity: number;

@@ -1,4 +1,9 @@
-import { Product, SearchResult } from '../types';
+import {
+  CursorSearchParams,
+  CursorSearchResult,
+  Product,
+  SearchResult
+} from '../types';
 import { WrapperClient } from '../wrapper';
 
 export default class Products {
@@ -21,7 +26,11 @@ export default class Products {
    * @param params - Search parameters
    * @returns Search results object. The object contains a `data` property with the list of products.
    */
-  list(params?: Record<string, any> | null): Promise<SearchResult<Product>> {
+  list(params: CursorSearchParams): Promise<CursorSearchResult<Product>>;
+  list(params?: Record<string, any> | null): Promise<SearchResult<Product>>;
+  list(
+    params?: Record<string, any> | null,
+  ): Promise<SearchResult<Product> | CursorSearchResult<Product>> {
     return this.client.get('/products', { params: params });
   }
 

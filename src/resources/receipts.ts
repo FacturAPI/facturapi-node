@@ -5,6 +5,8 @@ import {
   ReceiptsToInvoiceInput,
   Receipt,
   SearchResult,
+  CursorSearchResult,
+  CursorSearchParams,
   SendEmailBody,
   PreviewReceiptsToInvoicePdfInput,
 } from '../types'
@@ -30,7 +32,11 @@ export default class Receipts {
    * @param params Search parameters
    * @returns Search results object. The object contains a `data` property with the list of receipts.
    */
-  list(params?: Record<string, any> | null): Promise<SearchResult<Receipt>> {
+  list(params: CursorSearchParams): Promise<CursorSearchResult<Receipt>>;
+  list(params?: Record<string, any> | null): Promise<SearchResult<Receipt>>;
+  list(
+    params?: Record<string, any> | null,
+  ): Promise<SearchResult<Receipt> | CursorSearchResult<Receipt>> {
     if (!params) params = {}
     return this.client.get('/receipts', { params })
   }
