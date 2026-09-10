@@ -1,7 +1,4 @@
 import {
-  CursorSearchParams,
-  PageSearchParams,
-  CursorSearchResult,
   Product,
   SearchResult
 } from '../types';
@@ -27,12 +24,7 @@ export default class Products {
    * @param params - Search parameters
    * @returns Search results object. The object contains a `data` property with the list of products.
    */
-  list(params: CursorSearchParams): Promise<CursorSearchResult<Product>>;
-  list(params: PageSearchParams): Promise<SearchResult<Product>>;
-  list(params?: Record<string, any> | null): Promise<SearchResult<Product>>;
-  list(
-    params?: Record<string, any> | null,
-  ): Promise<SearchResult<Product> | CursorSearchResult<Product>> {
+  list(params?: Record<string, any> | null): Promise<SearchResult<Product>> {
     return this.client.get('/products', { params: params });
   }
 

@@ -3,9 +3,6 @@ import {
   GenericResponse,
   Retention,
   SearchResult,
-  CursorSearchResult,
-  CursorSearchParams,
-  PageSearchParams,
   SendEmailBody,
 } from '../types'
 import { WrapperClient } from '../wrapper'
@@ -30,12 +27,7 @@ export default class Retentions {
    * @param params - Search parameters
    * @returns
    */
-  list(params: CursorSearchParams): Promise<CursorSearchResult<Retention>>;
-  list(params: PageSearchParams): Promise<SearchResult<Retention>>;
-  list(params?: Record<string, any> | null): Promise<SearchResult<Retention>>;
-  list(
-    params?: Record<string, any> | null,
-  ): Promise<SearchResult<Retention> | CursorSearchResult<Retention>> {
+  list(params?: Record<string, any> | null): Promise<SearchResult<Retention>> {
     if (!params) params = {}
     return this.client.get('/retentions', { params })
   }

@@ -5,12 +5,16 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](http://keepachangelog.com/en/1.0.0/)
 and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.html).
 
-## [4.22.0] 2026-09-09
+## [5.0.0] 2026-09-10
+
+### Breaking
+
+- `SearchResult<T>` now describes the whole search envelope, so `page`, `total_pages`, and `total_results` are optional. Cursor pages only report the totals on the first request of the sequence, and a search with no matches reports `page: 0`, so the fields can be absent and dereferencing them requires narrowing.
+- `CursorSearchResult<T>` was removed: cursor responses are `SearchResult<T>` too, with `previous_cursor` and `next_cursor` as optional fields. The `list()` overloads that selected the result type are gone with it.
 
 ### Added
 
-- `CursorSearchResult<T>` and `CursorSearchParams` for cursor searches: totals are only reported on the first request of a cursor sequence, so cursor responses type `total_results` as optional and expose `previous_cursor`/`next_cursor`. Page-mode `SearchResult<T>` keeps its existing contract and its new optional `totals_are_capped`.
-- Cursor-aware overloads on `list()` for invoices, receipts, customers, products, and retentions: passing `pagination: 'cursor'` (or `after`/`before`) types the result as `CursorSearchResult<T>`.
+- `CursorSearchParams` and `PageSearchParams` to type search params, and `totals_are_capped`, `previous_cursor`, and `next_cursor` on `SearchResult<T>`.
 
 ### Fixed
 

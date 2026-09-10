@@ -13,26 +13,21 @@ export interface Address {
 }
 
 export interface SearchResult<T> {
-  /** Page number (page mode). */
-  page: number;
-  /** Total pages derived from the (possibly capped) total (page mode). */
-  total_pages: number;
-  /** Total matching results; capped (approximate) when totals_are_capped is true (page mode). */
-  total_results: number;
+  /** Page number. Absent in cursor searches and when the search has no matches. */
+  page?: number;
+  /** Total pages derived from the (possibly capped) total. Absent in cursor searches. */
+  total_pages?: number;
+  /**
+   * Total matching results. Capped (approximate) when `totals_are_capped` is
+   * true, and only reported on the first request of a cursor sequence.
+   */
+  total_results?: number;
   /** True when total_results is capped at the maximum search count. */
   totals_are_capped?: boolean;
-  data: T[];
-}
-
-/**
- * Response of a cursor search. Totals are only reported on the first request
- * of a cursor sequence, so they are optional here; navigate with the cursors.
- */
-export interface CursorSearchResult<T> {
-  total_results?: number;
-  totals_are_capped?: boolean;
-  previous_cursor: string | null;
-  next_cursor: string | null;
+  /** Cursor to the previous slice (cursor searches only). */
+  previous_cursor?: string | null;
+  /** Cursor to the next slice (cursor searches only). */
+  next_cursor?: string | null;
   data: T[];
 }
 

@@ -1,8 +1,5 @@
 import {
   Customer,
-  CursorSearchParams,
-  PageSearchParams,
-  CursorSearchResult,
   GenericResponse,
   SearchResult,
   TaxInfoValidation,
@@ -33,12 +30,7 @@ export default class Customers {
    * @param params Search parameters
    * @returns List of customers
    */
-  list(params: CursorSearchParams): Promise<CursorSearchResult<Customer>>;
-  list(params: PageSearchParams): Promise<SearchResult<Customer>>;
-  list(params?: Record<string, any> | null): Promise<SearchResult<Customer>>;
-  list(
-    params?: Record<string, any> | null,
-  ): Promise<SearchResult<Customer> | CursorSearchResult<Customer>> {
+  list(params?: Record<string, any> | null): Promise<SearchResult<Customer>> {
     if (!params) params = {};
     return this.client.get('/customers', { params: params });
   }
