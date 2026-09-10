@@ -13,16 +13,12 @@ export interface Address {
 }
 
 export interface SearchResult<T> {
-  /**
-   * Page number. Present in page mode and on the first page of a cursor
-   * search; later cursor pages may omit it at runtime (the API only reports
-   * totals on the first request of a cursor sequence).
-   */
-  page: number;
-  /** Total pages (same presence caveats as `page`). */
-  total_pages: number;
-  /** Total matching results (same presence caveats as `page`). */
-  total_results: number;
+  /** Page number. Absent on cursor pages after the first request. */
+  page?: number;
+  /** Total pages. Absent on cursor pages after the first request. */
+  total_pages?: number;
+  /** Total matching results (capped/approximate when totals_are_capped). Absent on cursor pages after the first request. */
+  total_results?: number;
   /** True when total_results is capped at the maximum search count. */
   totals_are_capped?: boolean;
   /** Cursor to fetch the next page of a cursor search (cursor mode only). */

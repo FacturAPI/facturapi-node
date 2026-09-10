@@ -5,11 +5,17 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](http://keepachangelog.com/en/1.0.0/)
 and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.html).
 
-## [4.22.0] 2026-09-09
+## [5.0.0] 2026-09-09
 
 ### Added
 
-- Add the pagination envelope fields to search responses without changing the existing type contract: new optional `totals_are_capped`, `next_cursor`, and `previous_cursor` support cursor pagination and capped totals. (`page`/`total_pages`/`total_results` keep their existing signatures; the API only reports totals on page-mode responses and on the first request of a cursor search, so consumers draining cursors should rely on `next_cursor`.)
+### Breaking
+
+- `SearchResult.page`, `total_pages`, and `total_results` are now optional: the API reports totals only in page mode and on the first request of a cursor search, so later cursor pages omit them. Strict TypeScript consumers that dereferenced these fields must handle their absence (or use `next_cursor`).
+
+### Added
+
+- Optional `totals_are_capped`, `next_cursor`, and `previous_cursor` on search responses for cursor pagination and capped totals.
 
 ### Fixed
 
