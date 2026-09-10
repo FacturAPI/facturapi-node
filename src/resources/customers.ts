@@ -1,6 +1,7 @@
 import {
   Customer,
   CursorSearchParams,
+  PageSearchParams,
   CursorSearchResult,
   GenericResponse,
   SearchResult,
@@ -33,6 +34,7 @@ export default class Customers {
    * @returns List of customers
    */
   list(params: CursorSearchParams): Promise<CursorSearchResult<Customer>>;
+  list(params: PageSearchParams): Promise<SearchResult<Customer>>;
   list(params?: Record<string, any> | null): Promise<SearchResult<Customer>>;
   list(
     params?: Record<string, any> | null,

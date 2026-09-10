@@ -36,6 +36,10 @@ export interface CursorSearchResult<T> {
   data: T[];
 }
 
+/** Params that select page pagination (the default). */
+export type PageSearchParams = ({ pagination?: 'page' } | { page: number }) &
+  Record<string, any>;
+
 /** Params that select cursor pagination (page mode is the default). */
 export type CursorSearchParams = ({ pagination: 'cursor' } | { after: string } | { before: string }) &
   Record<string, any>;

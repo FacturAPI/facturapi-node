@@ -1,5 +1,6 @@
 import {
   CursorSearchParams,
+  PageSearchParams,
   CursorSearchResult,
   Product,
   SearchResult
@@ -27,6 +28,7 @@ export default class Products {
    * @returns Search results object. The object contains a `data` property with the list of products.
    */
   list(params: CursorSearchParams): Promise<CursorSearchResult<Product>>;
+  list(params: PageSearchParams): Promise<SearchResult<Product>>;
   list(params?: Record<string, any> | null): Promise<SearchResult<Product>>;
   list(
     params?: Record<string, any> | null,

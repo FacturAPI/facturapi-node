@@ -1,7 +1,10 @@
 import { expectAssignable, expectType, expectError } from 'tsd';
 import Facturapi, {
   BinaryDownload,
+  CursorSearchResult,
+  PageSearchParams,
   FacturapiError,
+  Invoice,
   InvoiceItem,
   InvoiceType,
   IssuingType,
@@ -70,3 +73,21 @@ expectType<string | undefined>(apiError.path);
 expectType<string | undefined>(apiError.location);
 expectType<string | undefined>(apiError.logId);
 expectType<Record<string, string>>(apiError.headers);
+
+// Pagination params keep the page-mode contract; cursor params select the cursor result.
+expectAssignable<PageSearchParams>({ page: 2 });
+expectType<Promise<SearchResult<Invoice>>>(
+  client.invoices.list({ page: 2, limit: 50 }),
+);
+expectType<Promise<CursorSearchResult<Invoice>>>(
+  client.invoices.list({ pagination: 'cursor', limit: 50 }),
+);
+expectType<Promise<CursorSearchResult<Invoice>>>(
+  client.invoices.list({ after: 'cursor-token' }),
+);
+const looseParams: Record<string, any> = { page: 2 };
+expectType<Promise<SearchResult<Invoice>>>(client.invoices.list(looseParams));
+expectType<Promise<SearchResult<Invoice>>>(client.invoices.list());
+// Page-mode fields stay required, so existing dereferences keep compiling.
+const pagePromise = client.invoices.list({ page: 1 });
+expectType<Promise<number>>(pagePromise.then((result) => result.total_results));
