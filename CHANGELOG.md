@@ -9,7 +9,7 @@ and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.
 
 ### Added
 
-- Type search responses with the pagination envelope the API returns: `page`, `total_pages`, and `total_results` are optional (omitted on later cursor pages), and new optional `totals_are_capped`, `next_cursor`, and `previous_cursor` fields support cursor pagination and capped totals.
+- Add the pagination envelope fields to search responses without changing the existing type contract: new optional `totals_are_capped`, `next_cursor`, and `previous_cursor` support cursor pagination and capped totals. (`page`/`total_pages`/`total_results` keep their existing signatures; the API only reports totals on page-mode responses and on the first request of a cursor search, so consumers draining cursors should rely on `next_cursor`.)
 
 ### Fixed
 
