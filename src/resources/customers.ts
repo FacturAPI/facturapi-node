@@ -30,7 +30,7 @@ export default class Customers {
    * @param params Search parameters
    * @returns List of customers
    */
-  list(params: Record<string, any>): Promise<SearchResult<Customer>> {
+  list(params?: Record<string, any> | null): Promise<SearchResult<Customer>> {
     if (!params) params = {};
     return this.client.get('/customers', { params: params });
   }

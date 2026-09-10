@@ -13,11 +13,31 @@ export interface Address {
 }
 
 export interface SearchResult<T> {
-  page: number;
-  total_pages: number;
-  total_results: number;
+  /** Page number. Absent in cursor searches and when the search has no matches. */
+  page?: number;
+  /** Total pages derived from the (possibly capped) total. Absent in cursor searches. */
+  total_pages?: number;
+  /**
+   * Total matching results. Capped (approximate) when `totals_are_capped` is
+   * true, and only reported on the first request of a cursor sequence.
+   */
+  total_results?: number;
+  /** True when total_results is capped at the maximum search count. */
+  totals_are_capped?: boolean;
+  /** Cursor to the previous slice (cursor searches only). */
+  previous_cursor?: string | null;
+  /** Cursor to the next slice (cursor searches only). */
+  next_cursor?: string | null;
   data: T[];
 }
+
+/** Params that select page pagination (the default). */
+export type PageSearchParams = ({ pagination?: 'page' } | { page: number }) &
+  Record<string, any>;
+
+/** Params that select cursor pagination (page mode is the default). */
+export type CursorSearchParams = ({ pagination: 'cursor' } | { after: string } | { before: string }) &
+  Record<string, any>;
 
 export interface InvoiceItemPart {
   quantity: number;

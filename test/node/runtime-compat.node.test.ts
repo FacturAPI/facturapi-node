@@ -509,12 +509,12 @@ describe('runtime compatibility (node)', () => {
     ).rejects.toThrow(/Unsupported file input type/)
   })
 
-  it('serializes query params consistently with URLSearchParams semantics', async () => {
+  it('serializes flat params with URLSearchParams encoding and arrays with repeated keys', async () => {
     const client = createClient()
 
     globalThis.fetch = vi.fn(async (url) => {
       expect(url).toBe(
-        'https://api.test.local/v2/invoices?search=a+b&page=2&active=true&empty=&tags=x%2Cy',
+        'https://api.test.local/v2/invoices?search=a+b&page=2&active=true&empty=&tags=x&tags=y',
       )
       return new Response(
         JSON.stringify({

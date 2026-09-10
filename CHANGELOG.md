@@ -5,6 +5,21 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](http://keepachangelog.com/en/1.0.0/)
 and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.html).
 
+## [5.0.0] 2026-09-10
+
+### Breaking
+
+- `SearchResult<T>` now describes the whole search envelope, so `page`, `total_pages`, and `total_results` are optional. Cursor pages only report the totals on the first request of the sequence, and a search with no matches reports `page: 0`, so the fields can be absent and dereferencing them requires narrowing.
+- `CursorSearchResult<T>` was removed: cursor responses are `SearchResult<T>` too, with `previous_cursor` and `next_cursor` as optional fields. The `list()` overloads that selected the result type are gone with it.
+
+### Added
+
+- `CursorSearchParams` and `PageSearchParams` to type search params, and `totals_are_capped`, `previous_cursor`, and `next_cursor` on `SearchResult<T>`.
+
+### Fixed
+
+- Serialize nested query params with the bracket notation the API expects. List/search calls passing an object value (for example `date: { gte, lt }` on `invoices.list`, `receipts.list`, `customers.list`, etc.) used to send `date=[object Object]` and fail; they now send `date[gte]=...&date[lt]=...`. Array values now expand to repeated keys (`status=a&status=b`) instead of being comma-joined or sent as `status[]=a`, matching the API contract and the other official SDKs.
+
 ## [4.21.0] 2026-09-04
 
 ### Added

@@ -1,4 +1,7 @@
-import { Product, SearchResult } from '../types';
+import {
+  Product,
+  SearchResult
+} from '../types';
 import { WrapperClient } from '../wrapper';
 
 export default class Products {
