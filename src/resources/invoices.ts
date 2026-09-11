@@ -4,11 +4,14 @@ import {
   CreateZipRequestData,
   GenericResponse,
   Invoice,
+  InvoiceCancellationReceiptDownloadFormat,
+  InvoiceDownloadFormat,
   ListZipRequestsParams,
   PaymentSummary,
   PaymentSummaryParams,
   SearchResult,
   SendEmailBody,
+  SignedDownloadUrl,
   ZipRequest,
 } from '../types';
 import { WrapperClient } from '../wrapper';
@@ -119,6 +122,21 @@ export default class Invoices {
   }
 
   /**
+   * Gets a short-lived URL for downloading a canonical invoice file directly.
+   * The API generates and stores the file first if needed.
+   * @param id Invoice Id
+   * @param format File format
+   * @returns Signed download URL and its metadata
+   */
+  getDownloadUrl(
+    id: string,
+    format: InvoiceDownloadFormat,
+  ): Promise<SignedDownloadUrl> {
+    if (!id) return Promise.reject(new Error('id is required'));
+    return this.client.get('/invoices/' + id + '/download-url/' + format);
+  }
+
+  /**
    * Creates or retrieves a ZIP request for invoices matching the specified criteria.
    * @param data ZIP request criteria
    * @returns ZIP request object
@@ -180,6 +198,23 @@ export default class Invoices {
     id: string,
   ): Promise<BinaryDownload> {
     return this.client.get('/invoices/' + id + '/cancellation_receipt/pdf');
+  }
+
+  /**
+   * Gets a short-lived URL for downloading a canonical cancellation receipt directly.
+   * The API generates and stores the file first if needed.
+   * @param id Invoice Id
+   * @param format File format
+   * @returns Signed download URL and its metadata
+   */
+  getCancellationReceiptDownloadUrl(
+    id: string,
+    format: InvoiceCancellationReceiptDownloadFormat,
+  ): Promise<SignedDownloadUrl> {
+    if (!id) return Promise.reject(new Error('id is required'));
+    return this.client.get(
+      '/invoices/' + id + '/cancellation_receipt/download-url/' + format,
+    );
   }
 
   /**
