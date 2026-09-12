@@ -183,6 +183,12 @@ export default class Invoices {
     return this.client.get('/invoices/zip-requests/' + id + '/zip');
   }
 
+  /** Gets a short-lived URL for downloading a generated invoice ZIP request. */
+  downloadZipRequestUrl(id: string): Promise<SignedDownloadUrl> {
+    if (!id) return Promise.reject(new Error('id is required'));
+    return this.client.get('/invoices/zip-requests/' + id + '/download-url');
+  }
+
   /**
    * Downloads the cancellation receipt of a canceled invoice in XML format
    * @param id Invoice Id

@@ -110,7 +110,9 @@ const { url, filename } = await facturapi.invoices.downloadZipUrl(invoice.id);
 ```
 
 The URL variants follow the existing download methods: `downloadPdfUrl`,
-`downloadXmlUrl`, and `downloadZipUrl`, where each format is available.
+`downloadXmlUrl`, and `downloadZipUrl`, where each format is available. ZIP
+requests similarly provide `downloadZipRequestUrl` alongside
+`downloadZipRequest`.
 
 #### Send your invoice by email
 
