@@ -280,4 +280,9 @@ export default class Invoices {
   previewPdf(body: Record<string, any>): Promise<BinaryDownload> {
     return this.client.post('/invoices/preview/pdf', { body });
   }
+
+  /** Gets a short-lived URL for an invoice PDF preview. */
+  previewPdfUrl(body: Record<string, any>): Promise<SignedDownloadUrl> {
+    return this.client.post('/invoices/preview/pdf/download-url', { body });
+  }
 }

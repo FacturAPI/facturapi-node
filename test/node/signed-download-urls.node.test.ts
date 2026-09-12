@@ -90,6 +90,25 @@ describe('signed download URLs', () => {
     expect(result.content_type).toBe('application/xml')
   })
 
+  it('requests signed URLs for PDF previews', async () => {
+    const client = new Facturapi('sk_test_123')
+    client.BASE_URL = 'https://api.test.local/v2'
+    const requests: string[] = []
+    globalThis.fetch = vi.fn(async (url, options) => {
+      requests.push(String(url))
+      expect(options?.method).toBe('POST')
+      return signedUrlResponse('application/pdf', 'invoice-preview.pdf')
+    }) as typeof fetch
+
+    await client.invoices.previewPdfUrl({ customer: 'cus_123', items: [] })
+    await client.receipts.previewToInvoicePdfUrl({ keys: ['receipt-key'] })
+
+    expect(requests).toEqual([
+      'https://api.test.local/v2/invoices/preview/pdf/download-url',
+      'https://api.test.local/v2/receipts/to-invoice/preview/download-url',
+    ])
+  })
+
   it('rejects missing ids before making a request', async () => {
     const fetchMock = vi.fn()
     globalThis.fetch = fetchMock

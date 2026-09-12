@@ -83,7 +83,16 @@ export default class Receipts {
   previewToInvoicePdf(
     data: PreviewReceiptsToInvoicePdfInput,
   ): Promise<BinaryDownload> {
-    return this.client.post('/receipts/to-invoice/preview/pdf', {
+    return this.client.post('/receipts/to-invoice/preview', {
+      body: data,
+    })
+  }
+
+  /** Gets a short-lived URL for a receipts-to-invoice PDF preview. */
+  previewToInvoicePdfUrl(
+    data: PreviewReceiptsToInvoicePdfInput,
+  ): Promise<SignedDownloadUrl> {
+    return this.client.post('/receipts/to-invoice/preview/download-url', {
       body: data,
     })
   }
