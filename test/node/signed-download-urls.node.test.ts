@@ -35,7 +35,7 @@ describe('signed download URLs', () => {
       return signedUrlResponse('application/zip', 'invoice.zip')
     }) as typeof fetch
 
-    const result = await client.invoices.getDownloadUrl('inv_123', 'zip')
+    const result = await client.invoices.downloadZipUrl('inv_123')
 
     expect(result.filename).toBe('invoice.zip')
   })
@@ -53,9 +53,8 @@ describe('signed download URLs', () => {
       )
     }) as typeof fetch
 
-    const result = await client.invoices.getCancellationReceiptDownloadUrl(
+    const result = await client.invoices.downloadCancellationReceiptPdfUrl(
       'inv_123',
-      'pdf',
     )
 
     expect(result.content_type).toBe('application/pdf')
@@ -71,7 +70,7 @@ describe('signed download URLs', () => {
       return signedUrlResponse('application/pdf', 'receipt.pdf')
     }) as typeof fetch
 
-    const result = await client.receipts.getDownloadUrl('rec_123')
+    const result = await client.receipts.downloadPdfUrl('rec_123')
 
     expect(result.filename).toBe('receipt.pdf')
   })
@@ -86,7 +85,7 @@ describe('signed download URLs', () => {
       return signedUrlResponse('application/xml', 'retention.xml')
     }) as typeof fetch
 
-    const result = await client.retentions.getDownloadUrl('ret_123', 'xml')
+    const result = await client.retentions.downloadXmlUrl('ret_123')
 
     expect(result.content_type).toBe('application/xml')
   })
@@ -96,16 +95,16 @@ describe('signed download URLs', () => {
     globalThis.fetch = fetchMock
     const client = new Facturapi('sk_test_123')
 
-    await expect(client.invoices.getDownloadUrl('', 'pdf')).rejects.toThrow(
+    await expect(client.invoices.downloadPdfUrl('')).rejects.toThrow(
       'id is required',
     )
     await expect(
-      client.invoices.getCancellationReceiptDownloadUrl('', 'xml'),
+      client.invoices.downloadCancellationReceiptXmlUrl(''),
     ).rejects.toThrow('id is required')
-    await expect(client.receipts.getDownloadUrl('')).rejects.toThrow(
+    await expect(client.receipts.downloadPdfUrl('')).rejects.toThrow(
       'id is required',
     )
-    await expect(client.retentions.getDownloadUrl('', 'zip')).rejects.toThrow(
+    await expect(client.retentions.downloadZipUrl('')).rejects.toThrow(
       'id is required',
     )
     expect(fetchMock).not.toHaveBeenCalled()

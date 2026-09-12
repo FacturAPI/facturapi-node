@@ -126,7 +126,7 @@ export default class Receipts {
    * @param id Receipt Id
    * @returns Signed download URL and its metadata
    */
-  getDownloadUrl(id: string): Promise<SignedDownloadUrl> {
+  downloadPdfUrl(id: string): Promise<SignedDownloadUrl> {
     if (!id) return Promise.reject(new Error('id is required'))
     return this.client.get('/receipts/' + id + '/download-url/pdf')
   }

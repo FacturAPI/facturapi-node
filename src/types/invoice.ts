@@ -93,9 +93,6 @@ export interface CancelInvoiceOptions {
   substitution?: string;
 }
 
-export type InvoiceDownloadFormat = 'pdf' | 'xml' | 'zip';
-export type InvoiceCancellationReceiptDownloadFormat = 'pdf' | 'xml';
-
 export interface CreateZipRequestData {
   year: number;
   month: number;

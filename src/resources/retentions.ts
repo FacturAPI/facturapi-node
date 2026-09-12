@@ -2,7 +2,6 @@ import {
   BinaryDownload,
   GenericResponse,
   Retention,
-  RetentionDownloadFormat,
   SearchResult,
   SendEmailBody,
   SignedDownloadUrl,
@@ -121,17 +120,25 @@ export default class Retentions {
   }
 
   /**
-   * Gets a short-lived URL for downloading the retention directly, instead of
+   * Gets a short-lived URL for downloading the retention PDF, instead of
    * streaming the file through the SDK.
    * @param id Retention Id
-   * @param format File format
    * @returns Signed download URL and its metadata
    */
-  getDownloadUrl(
-    id: string,
-    format: RetentionDownloadFormat,
-  ): Promise<SignedDownloadUrl> {
+  downloadPdfUrl(id: string): Promise<SignedDownloadUrl> {
     if (!id) return Promise.reject(new Error('id is required'))
-    return this.client.get('/retentions/' + id + '/download-url/' + format)
+    return this.client.get('/retentions/' + id + '/download-url/pdf')
+  }
+
+  /** Gets a short-lived URL for downloading a retention XML file. */
+  downloadXmlUrl(id: string): Promise<SignedDownloadUrl> {
+    if (!id) return Promise.reject(new Error('id is required'))
+    return this.client.get('/retentions/' + id + '/download-url/xml')
+  }
+
+  /** Gets a short-lived URL for downloading a retention ZIP file. */
+  downloadZipUrl(id: string): Promise<SignedDownloadUrl> {
+    if (!id) return Promise.reject(new Error('id is required'))
+    return this.client.get('/retentions/' + id + '/download-url/zip')
   }
 }

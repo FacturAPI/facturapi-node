@@ -4,8 +4,6 @@ import {
   CreateZipRequestData,
   GenericResponse,
   Invoice,
-  InvoiceCancellationReceiptDownloadFormat,
-  InvoiceDownloadFormat,
   ListZipRequestsParams,
   PaymentSummary,
   PaymentSummaryParams,
@@ -122,17 +120,25 @@ export default class Invoices {
   }
 
   /**
-   * Gets a short-lived URL for downloading an invoice file directly.
+   * Gets a short-lived URL for downloading an invoice PDF directly.
    * @param id Invoice Id
-   * @param format File format
    * @returns Signed download URL and its metadata
    */
-  getDownloadUrl(
-    id: string,
-    format: InvoiceDownloadFormat,
-  ): Promise<SignedDownloadUrl> {
+  downloadPdfUrl(id: string): Promise<SignedDownloadUrl> {
     if (!id) return Promise.reject(new Error('id is required'));
-    return this.client.get('/invoices/' + id + '/download-url/' + format);
+    return this.client.get('/invoices/' + id + '/download-url/pdf');
+  }
+
+  /** Gets a short-lived URL for downloading an invoice XML file. */
+  downloadXmlUrl(id: string): Promise<SignedDownloadUrl> {
+    if (!id) return Promise.reject(new Error('id is required'));
+    return this.client.get('/invoices/' + id + '/download-url/xml');
+  }
+
+  /** Gets a short-lived URL for downloading an invoice ZIP file. */
+  downloadZipUrl(id: string): Promise<SignedDownloadUrl> {
+    if (!id) return Promise.reject(new Error('id is required'));
+    return this.client.get('/invoices/' + id + '/download-url/zip');
   }
 
   /**
@@ -200,18 +206,22 @@ export default class Invoices {
   }
 
   /**
-   * Gets a short-lived URL for downloading a cancellation receipt directly.
+   * Gets a short-lived URL for downloading a cancellation receipt PDF directly.
    * @param id Invoice Id
-   * @param format File format
    * @returns Signed download URL and its metadata
    */
-  getCancellationReceiptDownloadUrl(
-    id: string,
-    format: InvoiceCancellationReceiptDownloadFormat,
-  ): Promise<SignedDownloadUrl> {
+  downloadCancellationReceiptPdfUrl(id: string): Promise<SignedDownloadUrl> {
     if (!id) return Promise.reject(new Error('id is required'));
     return this.client.get(
-      '/invoices/' + id + '/cancellation_receipt/download-url/' + format,
+      '/invoices/' + id + '/cancellation_receipt/download-url/pdf',
+    );
+  }
+
+  /** Gets a short-lived URL for downloading a cancellation receipt XML file. */
+  downloadCancellationReceiptXmlUrl(id: string): Promise<SignedDownloadUrl> {
+    if (!id) return Promise.reject(new Error('id is required'));
+    return this.client.get(
+      '/invoices/' + id + '/cancellation_receipt/download-url/xml',
     );
   }
 

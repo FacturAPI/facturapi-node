@@ -106,14 +106,11 @@ same representations are available as a short-lived URL. The URL is a bearer
 credential for that one file and stops working when it expires:
 
 ```ts
-const { url, filename } = await facturapi.invoices.getDownloadUrl(
-  invoice.id,
-  'zip'
-);
+const { url, filename } = await facturapi.invoices.downloadZipUrl(invoice.id);
 ```
 
-`receipts.getDownloadUrl(id)` and `retentions.getDownloadUrl(id, format)`
-return the same shape.
+The URL variants follow the existing download methods: `downloadPdfUrl`,
+`downloadXmlUrl`, and `downloadZipUrl`, where each format is available.
 
 #### Send your invoice by email
 
