@@ -2,8 +2,10 @@ import {
   BinaryDownload,
   GenericResponse,
   Retention,
+  RetentionDownloadFormat,
   SearchResult,
   SendEmailBody,
+  SignedDownloadUrl,
 } from '../types'
 import { WrapperClient } from '../wrapper'
 
@@ -116,5 +118,20 @@ export default class Retentions {
    */
   downloadZip(id: string): Promise<BinaryDownload> {
     return this.client.get('/retentions/' + id + '/zip')
+  }
+
+  /**
+   * Gets a short-lived URL for downloading the retention directly, instead of
+   * streaming the file through the SDK.
+   * @param id Retention Id
+   * @param format File format
+   * @returns Signed download URL and its metadata
+   */
+  getDownloadUrl(
+    id: string,
+    format: RetentionDownloadFormat,
+  ): Promise<SignedDownloadUrl> {
+    if (!id) return Promise.reject(new Error('id is required'))
+    return this.client.get('/retentions/' + id + '/download-url/' + format)
   }
 }

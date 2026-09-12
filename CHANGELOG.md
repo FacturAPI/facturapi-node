@@ -9,7 +9,7 @@ and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.
 
 ### Added
 
-- `invoices.getDownloadUrl(id, format)` and `invoices.getCancellationReceiptDownloadUrl(id, format)` to obtain a short-lived signed URL for a PDF, XML, or ZIP. A caller can hand the URL to the client instead of streaming the file through the SDK, which keeps whole files out of the caller's memory. The response carries `url`, `expires_at`, `content_type`, and `filename`.
+- `invoices.getDownloadUrl(id, format)`, `invoices.getCancellationReceiptDownloadUrl(id, format)`, `receipts.getDownloadUrl(id)`, and `retentions.getDownloadUrl(id, format)` to obtain a short-lived signed URL for a file. A caller can hand the URL to its own user or client instead of streaming the file through the SDK, which keeps whole files out of the caller's memory. The response carries `url`, `expires_at`, `content_type`, and `filename`.
 
 ## [5.0.0] 2026-09-10
 

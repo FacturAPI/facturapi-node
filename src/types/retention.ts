@@ -1,6 +1,8 @@
 import { InvoiceStatus } from '../enums';
 import { CustomerInfo, RelatedDocument, XmlNamespace } from './common';
 
+export type RetentionDownloadFormat = 'pdf' | 'xml' | 'zip';
+
 export interface Retention {
   created_at: Date;
   customer: CustomerInfo;
