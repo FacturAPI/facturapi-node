@@ -1,7 +1,7 @@
 {
   "name": "facturapi",
   "version": "5.1.0",
-  "description": "SDK oficial de Facturapi para Node.js y navegadores. Integra facturaci\u00f3n electr\u00f3nica en M\u00e9xico (CFDI) de forma simple y obt\u00e9n una perspectiva fiscal completa de tu operaci\u00f3n, con b\u00fasquedas indexadas, env\u00edo de documentos y trazabilidad.",
+  "description": "SDK oficial de Facturapi para Node.js y navegadores. Integra facturación electrónica en México (CFDI) de forma simple y obtén una perspectiva fiscal completa de tu operación, con búsquedas indexadas, envío de documentos y trazabilidad.",
   "main": "dist/index.cjs.js",
   "module": "dist/index.es.js",
   "types": "dist/index.d.ts",
@@ -49,13 +49,13 @@
     "sat-mexico",
     "mexico",
     "sat",
-    "facturaci\u00f3n",
+    "facturación",
     "facturapi"
   ],
-  "author": "Facturaci\u00f3n Espacial <contacto@facturapi.io>",
+  "author": "Facturación Espacial <contacto@facturapi.io>",
   "contributors": [
     {
-      "name": "Ra\u00fal S\u00e1nchez"
+      "name": "Raúl Sánchez"
     },
     {
       "name": "Javier Rosas"
