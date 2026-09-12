@@ -123,7 +123,6 @@ export default class Invoices {
 
   /**
    * Gets a short-lived URL for downloading an invoice file directly.
-   * The API prepares a temporary copy of the requested representation.
    * @param id Invoice Id
    * @param format File format
    * @returns Signed download URL and its metadata
@@ -202,7 +201,6 @@ export default class Invoices {
 
   /**
    * Gets a short-lived URL for downloading a cancellation receipt directly.
-   * The API prepares a temporary copy of the requested representation.
    * @param id Invoice Id
    * @param format File format
    * @returns Signed download URL and its metadata
