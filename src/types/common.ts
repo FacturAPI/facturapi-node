@@ -142,3 +142,17 @@ export type BinaryInput =
   | ArrayBuffer
   | Uint8Array
   | NodeLikeReadableStream;
+
+/**
+ * A short-lived URL that downloads one representation of a document.
+ *
+ * The URL is a bearer credential for that file: whoever holds it can download
+ * it until `expires_at`. It belongs in the hands of the caller's own user, not
+ * in storage or logs.
+ */
+export interface SignedDownloadUrl {
+  url: string;
+  expires_at: string;
+  content_type: string;
+  filename: string;
+}

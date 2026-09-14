@@ -9,6 +9,7 @@ import {
   PaymentSummaryParams,
   SearchResult,
   SendEmailBody,
+  SignedDownloadUrl,
   ZipRequest,
 } from '../types';
 import { WrapperClient } from '../wrapper';
@@ -119,6 +120,28 @@ export default class Invoices {
   }
 
   /**
+   * Gets a short-lived URL for downloading an invoice PDF directly.
+   * @param id Invoice Id
+   * @returns Signed download URL and its metadata
+   */
+  downloadPdfUrl(id: string): Promise<SignedDownloadUrl> {
+    if (!id) return Promise.reject(new Error('id is required'));
+    return this.client.get('/invoices/' + id + '/download-url/pdf');
+  }
+
+  /** Gets a short-lived URL for downloading an invoice XML file. */
+  downloadXmlUrl(id: string): Promise<SignedDownloadUrl> {
+    if (!id) return Promise.reject(new Error('id is required'));
+    return this.client.get('/invoices/' + id + '/download-url/xml');
+  }
+
+  /** Gets a short-lived URL for downloading an invoice ZIP file. */
+  downloadZipUrl(id: string): Promise<SignedDownloadUrl> {
+    if (!id) return Promise.reject(new Error('id is required'));
+    return this.client.get('/invoices/' + id + '/download-url/zip');
+  }
+
+  /**
    * Creates or retrieves a ZIP request for invoices matching the specified criteria.
    * @param data ZIP request criteria
    * @returns ZIP request object
@@ -160,6 +183,12 @@ export default class Invoices {
     return this.client.get('/invoices/zip-requests/' + id + '/zip');
   }
 
+  /** Gets a short-lived URL for downloading a generated invoice ZIP request. */
+  downloadZipRequestUrl(id: string): Promise<SignedDownloadUrl> {
+    if (!id) return Promise.reject(new Error('id is required'));
+    return this.client.get('/invoices/zip-requests/' + id + '/download-url');
+  }
+
   /**
    * Downloads the cancellation receipt of a canceled invoice in XML format
    * @param id Invoice Id
@@ -180,6 +209,26 @@ export default class Invoices {
     id: string,
   ): Promise<BinaryDownload> {
     return this.client.get('/invoices/' + id + '/cancellation_receipt/pdf');
+  }
+
+  /**
+   * Gets a short-lived URL for downloading a cancellation receipt PDF directly.
+   * @param id Invoice Id
+   * @returns Signed download URL and its metadata
+   */
+  downloadCancellationReceiptPdfUrl(id: string): Promise<SignedDownloadUrl> {
+    if (!id) return Promise.reject(new Error('id is required'));
+    return this.client.get(
+      '/invoices/' + id + '/cancellation_receipt/download-url/pdf',
+    );
+  }
+
+  /** Gets a short-lived URL for downloading a cancellation receipt XML file. */
+  downloadCancellationReceiptXmlUrl(id: string): Promise<SignedDownloadUrl> {
+    if (!id) return Promise.reject(new Error('id is required'));
+    return this.client.get(
+      '/invoices/' + id + '/cancellation_receipt/download-url/xml',
+    );
   }
 
   /**
@@ -230,5 +279,10 @@ export default class Invoices {
    */
   previewPdf(body: Record<string, any>): Promise<BinaryDownload> {
     return this.client.post('/invoices/preview/pdf', { body });
+  }
+
+  /** Gets a short-lived URL for an invoice PDF preview. */
+  previewPdfUrl(body: Record<string, any>): Promise<SignedDownloadUrl> {
+    return this.client.post('/invoices/preview/pdf/download-url', { body });
   }
 }
