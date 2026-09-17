@@ -44,6 +44,13 @@ CommonJS:
 const Facturapi = require('facturapi').default;
 ```
 
+### Payroll catalogs
+
+```ts
+const deductions = await facturapi.nominaCatalogs.searchDeductions({ q: '001' });
+const perceptions = await facturapi.nominaCatalogs.searchPerceptions({ q: '001' });
+```
+
 ### Create a customer
 
 ```ts

@@ -12,6 +12,7 @@ import { createWrapper, WrapperClient } from './wrapper';
 import { DEFAULT_API_VERSION } from './constants';
 import CartaPorteCatalogs from './tools/cartaPorteCatalogs';
 import ComercioExteriorCatalogs from './tools/comercioExteriorCatalogs';
+import NominaCatalogs from './tools/nominaCatalogs';
 
 export * from './enums';
 export * from './types';
@@ -43,6 +44,7 @@ export default class Facturapi {
   catalogs: Catalogs;
   cartaPorteCatalogs: CartaPorteCatalogs;
   comercioExteriorCatalogs: ComercioExteriorCatalogs;
+  nominaCatalogs: NominaCatalogs;
   receipts: Receipts;
   retentions: Retentions;
   tools: Tools;
@@ -204,6 +206,7 @@ export default class Facturapi {
     this.catalogs = new Catalogs(this._wrapper);
     this.cartaPorteCatalogs = new CartaPorteCatalogs(this._wrapper);
     this.comercioExteriorCatalogs = new ComercioExteriorCatalogs(this._wrapper);
+    this.nominaCatalogs = new NominaCatalogs(this._wrapper);
     this.receipts = new Receipts(this._wrapper);
     this.retentions = new Retentions(this._wrapper);
     this.tools = new Tools(this._wrapper);
