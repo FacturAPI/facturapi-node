@@ -209,7 +209,7 @@ describe('runtime compatibility (web simulation)', () => {
 
     globalThis.fetch = vi.fn(async (url, options) => {
       expect(url).toBe(
-        'https://api.test.local/v2/receipts/to-invoice/preview/pdf',
+        'https://api.test.local/v2/receipts/to-invoice/preview',
       )
       expect(options?.method).toBe('POST')
       expect(getHeader(options?.headers, 'Authorization')).toBe(

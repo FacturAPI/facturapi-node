@@ -101,6 +101,19 @@ if ('pipe' in file && typeof file.pipe === 'function') {
 }
 ```
 
+If you would rather hand the file to someone else than receive it yourself, the
+same representations are available as a short-lived URL. The URL is a bearer
+credential for that one file and stops working when it expires:
+
+```ts
+const { url, filename } = await facturapi.invoices.downloadZipUrl(invoice.id);
+```
+
+The URL variants follow the existing download methods: `downloadPdfUrl`,
+`downloadXmlUrl`, and `downloadZipUrl`, where each format is available. ZIP
+requests similarly provide `downloadZipRequestUrl` alongside
+`downloadZipRequest`.
+
 #### Send your invoice by email
 
 ```ts

@@ -6,6 +6,7 @@ import {
   Receipt,
   SearchResult,
   SendEmailBody,
+  SignedDownloadUrl,
   PreviewReceiptsToInvoicePdfInput,
 } from '../types'
 import { WrapperClient } from '../wrapper'
@@ -82,7 +83,16 @@ export default class Receipts {
   previewToInvoicePdf(
     data: PreviewReceiptsToInvoicePdfInput,
   ): Promise<BinaryDownload> {
-    return this.client.post('/receipts/to-invoice/preview/pdf', {
+    return this.client.post('/receipts/to-invoice/preview', {
+      body: data,
+    })
+  }
+
+  /** Gets a short-lived URL for a receipts-to-invoice PDF preview. */
+  previewToInvoicePdfUrl(
+    data: PreviewReceiptsToInvoicePdfInput,
+  ): Promise<SignedDownloadUrl> {
+    return this.client.post('/receipts/to-invoice/preview/download-url', {
       body: data,
     })
   }
@@ -114,5 +124,19 @@ export default class Receipts {
    */
   downloadPdf(id: string): Promise<BinaryDownload> {
     return this.client.get('/receipts/' + id + '/pdf')
+  }
+
+  /**
+   * Gets a short-lived URL for downloading the receipt PDF directly, instead of
+   * streaming the file through the SDK.
+   *
+   * A receipt is a nota de venta and is not stamped, so the PDF is the only
+   * representation there is to download.
+   * @param id Receipt Id
+   * @returns Signed download URL and its metadata
+   */
+  downloadPdfUrl(id: string): Promise<SignedDownloadUrl> {
+    if (!id) return Promise.reject(new Error('id is required'))
+    return this.client.get('/receipts/' + id + '/download-url/pdf')
   }
 }

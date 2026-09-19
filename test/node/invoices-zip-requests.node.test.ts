@@ -99,6 +99,28 @@ describe('invoice ZIP requests', () => {
     expect(typeof (zip as { pipe?: unknown }).pipe).toBe('function')
   })
 
+  it('gets a URL for downloading the generated ZIP', async () => {
+    const client = createClient()
+
+    globalThis.fetch = vi.fn(async (url, options) => {
+      expect(url).toBe(
+        'https://api.test.local/v2/invoices/zip-requests/zip_request_123/download-url',
+      )
+      expect(options?.method).toBe('GET')
+      return Response.json({
+        url: 'https://storage.googleapis.com/signed-download',
+        expires_at: '2030-01-01T00:00:00.000Z',
+        content_type: 'application/zip',
+        filename: '2025-03.zip',
+      })
+    }) as typeof fetch
+
+    const result = await client.invoices.downloadZipRequestUrl(
+      'zip_request_123',
+    )
+    expect(result.filename).toBe('2025-03.zip')
+  })
+
   it('requires an id to retrieve or download a ZIP request', async () => {
     const client = createClient()
 
@@ -106,6 +128,9 @@ describe('invoice ZIP requests', () => {
       'id is required',
     )
     await expect(client.invoices.downloadZipRequest('')).rejects.toThrow(
+      'id is required',
+    )
+    await expect(client.invoices.downloadZipRequestUrl('')).rejects.toThrow(
       'id is required',
     )
   })
