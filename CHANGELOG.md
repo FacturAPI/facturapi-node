@@ -5,11 +5,15 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](http://keepachangelog.com/en/1.0.0/)
 and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.html).
 
-## [5.1.1] 2026-09-22
+## [6.0.0] 2026-09-22
+
+### Breaking
+
+- Deserialize ISO response timestamps into `Date` objects across SDK resources, including timestamps previously typed as strings (organization access and signed download URLs). Calls relying on string methods must use `date.toISOString()` or other `Date` APIs.
 
 ### Fixed
 
-- Deserialize API response timestamps already typed as `Date`, while preserving string-valued SAT stamp dates, signed URL expirations, and organization access timestamps.
+- Match nullable invoice and retention dates to the API response, and hydrate signed webhook events validated locally. SAT `stamp.date` remains a string because it is local wall-clock time without a timezone offset.
 
 ## [5.1.0] 2026-09-12
 

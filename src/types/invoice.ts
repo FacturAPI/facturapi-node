@@ -35,7 +35,7 @@ export interface Invoice {
   organization: string;
   livemode: boolean;
   created_at: Date;
-  date: Date;
+  date: Date | null;
   issuer_type: IssuingType;
   type: InvoiceType;
   status: InvoiceStatus;
@@ -58,6 +58,7 @@ export interface Invoice {
   verification_url?: string | null;
   verification_carta_porte?: string | null;
   cancellation_status: CancellationStatus;
+  canceled_at?: Date | null;
   external_id?: string | null;
   idempotency_key?: string | null;
   stamp?: {
@@ -76,7 +77,7 @@ export interface Invoice {
   export?: string | null;
   global?: GlobalInfo | null;
   cancellation?: {
-    requested_at: Date;
+    requested_at?: Date | null;
     status: CancellationStatus;
     last_checked: Date;
     motive: string;

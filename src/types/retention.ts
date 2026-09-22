@@ -9,7 +9,7 @@ export interface Retention {
   status: InvoiceStatus;
   uuid: string;
   external_id?: string;
-  fecha_exp: Date;
+  fecha_exp: Date | null;
   cve_retenc: string;
   folio_int?: string;
   desc_retenc?: string;

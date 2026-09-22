@@ -154,7 +154,10 @@ const statusFrom = (value: unknown, fallback: number): number => {
   return fallback;
 };
 
+// Keep this list aligned with date-valued response fields in src/types.
+// Input-only payroll fields and SAT wall-clock strings are intentionally absent.
 const responseDateFields = new Set([
+  'canceled_at',
   'created_at',
   'date',
   'edit_link_expires_at',
@@ -170,7 +173,7 @@ const responseDateFields = new Set([
 // Only hydrate ISO dates; unrelated free-form strings may share these keys.
 const isoDatePattern = /^\d{4}-\d{2}-\d{2}(?:T\d{2}:\d{2}:\d{2}(?:\.\d+)?(?:Z|[+-]\d{2}:\d{2}))?$/;
 
-const deserializeResponseDates = (value: any): any => {
+export const deserializeResponseDates = (value: any): any => {
   if (Array.isArray(value)) {
     return value.map(deserializeResponseDates);
   }
@@ -198,7 +201,7 @@ const deserializeResponseDates = (value: any): any => {
   );
 };
 
-const responseInterceptor = async (response: Response, url: string) => {
+const responseInterceptor = async (response: Response) => {
   if (!response.ok) {
     const contentType = response.headers.get('content-type') || '';
     let bodyText: string | null = null;
@@ -283,14 +286,7 @@ const responseInterceptor = async (response: Response, url: string) => {
       return response.blob();
     }
   } else if (contentType.includes('application/json')) {
-    const data = await response.json();
-    // These endpoints explicitly type their timestamps as strings.
-    return url.includes('/download-url/') ||
-      url.includes('/apikeys/') ||
-      url.includes('/team') ||
-      url.startsWith('/organizations/invites/')
-      ? data
-      : deserializeResponseDates(data);
+    return deserializeResponseDates(await response.json());
   }
   return response.text();
 };
@@ -342,7 +338,7 @@ export const createWrapper = (
         baseURL + url + queryString,
         fetchOptions,
       );
-      return responseInterceptor(response, url);
+      return responseInterceptor(response);
     },
     get(url: string, options?: { params?: Record<string, any> | null }) {
       return this.request(url, { method: 'GET', ...options });

@@ -1,7 +1,10 @@
 import { expectAssignable, expectType, expectError } from 'tsd'
 import Facturapi, {
   BinaryDownload,
+  ApiKeys,
+  ApiEvent,
   CursorSearchParams,
+  Customer,
   PageSearchParams,
   FacturapiError,
   Invoice,
@@ -9,9 +12,18 @@ import Facturapi, {
   InvoiceType,
   IssuingType,
   NodeLikeReadableStream,
+  Organization,
+  OrganizationInvite,
+  OrganizationTeamRole,
+  OrganizationUserAccess,
+  PagoComplementData,
+  Product,
+  Receipt,
+  Retention,
   SearchResult,
   SignedDownloadUrl,
   TaxFactor,
+  Webhook,
   ZipRequest,
 } from '../dist'
 
@@ -46,7 +58,7 @@ expectType<Promise<BinaryDownload>>(
 
 declare const signedDownloadUrl: SignedDownloadUrl
 expectType<string>(signedDownloadUrl.url)
-expectType<string>(signedDownloadUrl.expires_at)
+expectType<Date>(signedDownloadUrl.expires_at)
 expectType<string>(signedDownloadUrl.content_type)
 expectType<string>(signedDownloadUrl.filename)
 expectType<Promise<SignedDownloadUrl>>(
@@ -111,9 +123,51 @@ expectType<string[]>(invoiceItem.property_tax_account)
 
 declare const invoice: Invoice
 expectType<Date>(invoice.created_at)
-expectType<Date>(invoice.date)
-expectType<Date | undefined>(invoice.cancellation?.requested_at)
+expectType<Date | null>(invoice.date)
+expectType<Date | null | undefined>(invoice.canceled_at)
+expectType<Date | null | undefined>(invoice.cancellation?.requested_at)
 expectType<string | undefined>(invoice.stamp?.date)
+
+declare const receipt: Receipt
+expectType<Date>(receipt.created_at)
+expectType<Date>(receipt.date)
+expectType<Date>(receipt.expires_at)
+
+declare const customer: Customer
+expectType<Date>(customer.created_at)
+expectType<Date | undefined>(customer.sat_validated_at)
+expectType<Date | undefined>(customer.edit_link_expires_at)
+declare const product: Product
+expectType<Date>(product.created_at)
+declare const organization: Organization
+expectType<Date>(organization.created_at)
+expectType<Date | null | undefined>(organization.certificate.expires_at)
+expectType<Date | undefined>(organization.pending_add_ons_update?.scheduled_for)
+declare const webhook: Webhook
+expectType<Date>(webhook.created_at)
+declare const event: ApiEvent
+expectType<Date>(event.created_at)
+declare const payment: PagoComplementData
+expectType<Date>(payment.date)
+declare const zipRequest: ZipRequest
+expectType<Date | undefined>(zipRequest.created_at)
+expectType<Date | undefined>(zipRequest.updated_at)
+
+declare const retention: Retention
+expectType<Date | null>(retention.fecha_exp)
+expectType<string | undefined>(retention.stamp?.date)
+
+declare const apiKey: ApiKeys
+expectType<Date>(apiKey.created_at)
+declare const access: OrganizationUserAccess
+expectType<Date>(access.created_at)
+expectType<Date>(access.updated_at)
+declare const invite: OrganizationInvite
+expectType<Date>(invite.created_at)
+expectType<Date | null>(invite.expires_at)
+declare const role: OrganizationTeamRole
+expectType<Date>(role.created_at)
+expectType<Date>(role.updated_at)
 
 declare const apiError: FacturapiError
 expectType<number>(apiError.status)
