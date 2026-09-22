@@ -99,6 +99,9 @@ describe('runtime compatibility (node)', () => {
           cancellation: {
             requested_at: '2026-09-17T12:59:16.000Z',
           },
+          stamp: {
+            date: '2026-09-17T06:59:16',
+          },
           metadata: {
             date: '2026-09-17T12:00:00.000Z',
           },
@@ -117,6 +120,7 @@ describe('runtime compatibility (node)', () => {
     expect(invoice.cancellation?.requested_at).toEqual(
       new Date('2026-09-17T12:59:16.000Z'),
     )
+    expect(invoice.stamp?.date).toBe('2026-09-17T06:59:16')
     expect((invoice as any).metadata.date).toBe('2026-09-17T12:00:00.000Z')
   })
 
@@ -143,6 +147,26 @@ describe('runtime compatibility (node)', () => {
     })
 
     expect(result.available).toBe(true)
+  })
+
+  it('keeps organization access timestamps as strings', async () => {
+    const client = createClient()
+    globalThis.fetch = vi.fn(async () =>
+      new Response(
+        JSON.stringify([
+          {
+            id: 'access_123',
+            created_at: '2026-09-17T12:00:00.000Z',
+            updated_at: '2026-09-17T12:59:16.000Z',
+          },
+        ]),
+        { headers: { 'content-type': 'application/json' } },
+      ),
+    ) as typeof fetch
+
+    const access = await client.organizations.listTeamAccess('org_123')
+    expect(access[0].created_at).toBe('2026-09-17T12:00:00.000Z')
+    expect(access[0].updated_at).toBe('2026-09-17T12:59:16.000Z')
   })
 
   it('posts multiple receipts to invoice payload to receipts endpoint', async () => {

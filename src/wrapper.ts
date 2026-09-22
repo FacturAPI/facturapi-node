@@ -179,7 +179,8 @@ const deserializeResponseDates = (value: any): any => {
   }
   return Object.fromEntries(
     Object.entries(value).map(([key, nestedValue]) => {
-      if (key === 'metadata') {
+      // These contain caller-owned values or SAT wall-clock text, not instants.
+      if (key === 'metadata' || key === 'stamp') {
         return [key, nestedValue];
       }
       if (
@@ -197,7 +198,7 @@ const deserializeResponseDates = (value: any): any => {
   );
 };
 
-const responseInterceptor = async (response: Response) => {
+const responseInterceptor = async (response: Response, url: string) => {
   if (!response.ok) {
     const contentType = response.headers.get('content-type') || '';
     let bodyText: string | null = null;
@@ -282,7 +283,14 @@ const responseInterceptor = async (response: Response) => {
       return response.blob();
     }
   } else if (contentType.includes('application/json')) {
-    return deserializeResponseDates(await response.json());
+    const data = await response.json();
+    // These endpoints explicitly type their timestamps as strings.
+    return url.includes('/download-url/') ||
+      url.includes('/apikeys/') ||
+      url.includes('/team') ||
+      url.startsWith('/organizations/invites/')
+      ? data
+      : deserializeResponseDates(data);
   }
   return response.text();
 };
@@ -334,7 +342,7 @@ export const createWrapper = (
         baseURL + url + queryString,
         fetchOptions,
       );
-      return responseInterceptor(response);
+      return responseInterceptor(response, url);
     },
     get(url: string, options?: { params?: Record<string, any> | null }) {
       return this.request(url, { method: 'GET', ...options });

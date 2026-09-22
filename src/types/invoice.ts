@@ -61,7 +61,8 @@ export interface Invoice {
   external_id?: string | null;
   idempotency_key?: string | null;
   stamp?: {
-    date: Date;
+    /** SAT FechaTimbrado: Mexico City local time without a timezone offset, not a UTC instant. */
+    date: string;
     sat_signature: string;
     sat_cert_number: string;
     signature: string;

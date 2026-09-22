@@ -37,7 +37,8 @@ export interface Retention {
   addenda?: string[];
   cancellation_receipt?: string;
   stamp?: {
-    date: Date;
+    /** SAT FechaTimbrado: Mexico City local time without a timezone offset, not a UTC instant. */
+    date: string;
     sat_signature: string;
     sat_cert_number: string;
     signature: string;

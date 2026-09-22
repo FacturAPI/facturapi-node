@@ -15,7 +15,7 @@ export interface OrganizationDefaultSeriesUpdateInput {
 export interface ApiKeys {
   id: string;
   first_12: string;
-  created_at: Date;
+  created_at: string;
 }
 
 export interface OrganizationUserAccess {
@@ -26,19 +26,19 @@ export interface OrganizationUserAccess {
   role_name: string | null;
   organization: string;
   operations: string[];
-  created_at: Date;
-  updated_at: Date;
+  created_at: string;
+  updated_at: string;
 }
 
 export interface OrganizationInvite {
   id: string;
-  created_at: Date;
+  created_at: string;
   email: string;
   organization_name: string;
   role: string | null;
   role_name: string | null;
   roles: string[];
-  expires_at: Date | null;
+  expires_at: string | null;
 }
 
 export interface OrganizationInviteCreateInput {
@@ -58,8 +58,8 @@ export interface OrganizationTeamRole {
   organization: string | null;
   operations: string[];
   used_by: number;
-  created_at: Date;
-  updated_at: Date;
+  created_at: string;
+  updated_at: string;
   created_by?: Record<string, any> | null;
   updated_by?: Record<string, any> | null;
 }

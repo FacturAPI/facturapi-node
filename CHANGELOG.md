@@ -9,7 +9,7 @@ and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.
 
 ### Fixed
 
-- Deserialize API response dates into `Date` objects, matching the SDK's public types.
+- Deserialize API response timestamps already typed as `Date`, while preserving string-valued SAT stamp dates, signed URL expirations, and organization access timestamps.
 
 ## [5.1.0] 2026-09-12
 
