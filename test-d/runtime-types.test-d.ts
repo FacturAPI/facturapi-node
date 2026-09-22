@@ -46,7 +46,7 @@ expectType<Promise<BinaryDownload>>(
 
 declare const signedDownloadUrl: SignedDownloadUrl
 expectType<string>(signedDownloadUrl.url)
-expectType<string>(signedDownloadUrl.expires_at)
+expectType<Date>(signedDownloadUrl.expires_at)
 expectType<string>(signedDownloadUrl.content_type)
 expectType<string>(signedDownloadUrl.filename)
 expectType<Promise<SignedDownloadUrl>>(
@@ -108,6 +108,11 @@ expectAssignable<TaxFactor>(TaxFactor.EXENTO)
 
 declare const invoiceItem: InvoiceItem
 expectType<string[]>(invoiceItem.property_tax_account)
+
+declare const invoice: Invoice
+expectType<Date>(invoice.created_at)
+expectType<Date>(invoice.date)
+expectType<Date | undefined>(invoice.cancellation?.requested_at)
 
 declare const apiError: FacturapiError
 expectType<number>(apiError.status)

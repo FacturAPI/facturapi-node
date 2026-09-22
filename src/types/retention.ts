@@ -37,7 +37,7 @@ export interface Retention {
   addenda?: string[];
   cancellation_receipt?: string;
   stamp?: {
-    date: string;
+    date: Date;
     sat_signature: string;
     sat_cert_number: string;
     signature: string;

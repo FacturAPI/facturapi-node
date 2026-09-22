@@ -94,6 +94,14 @@ describe('runtime compatibility (node)', () => {
         JSON.stringify({
           id: 'inv_123',
           object: 'invoice',
+          created_at: '2026-09-17T12:00:00.000Z',
+          date: '2026-09-17T11:00:00.000Z',
+          cancellation: {
+            requested_at: '2026-09-17T12:59:16.000Z',
+          },
+          metadata: {
+            date: '2026-09-17T12:00:00.000Z',
+          },
         }),
         {
           status: 200,
@@ -104,6 +112,12 @@ describe('runtime compatibility (node)', () => {
 
     const invoice = await client.invoices.retrieve('inv_123')
     expect(invoice.id).toBe('inv_123')
+    expect(invoice.created_at).toEqual(new Date('2026-09-17T12:00:00.000Z'))
+    expect(invoice.date).toEqual(new Date('2026-09-17T11:00:00.000Z'))
+    expect(invoice.cancellation?.requested_at).toEqual(
+      new Date('2026-09-17T12:59:16.000Z'),
+    )
+    expect((invoice as any).metadata.date).toBe('2026-09-17T12:00:00.000Z')
   })
 
   it('checks domain availability via GET query params', async () => {

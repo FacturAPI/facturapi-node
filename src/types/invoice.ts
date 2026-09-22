@@ -61,7 +61,7 @@ export interface Invoice {
   external_id?: string | null;
   idempotency_key?: string | null;
   stamp?: {
-    date: string;
+    date: Date;
     sat_signature: string;
     sat_cert_number: string;
     signature: string;
