@@ -9,7 +9,7 @@ export interface Retention {
   status: InvoiceStatus;
   uuid: string;
   external_id?: string;
-  fecha_exp: Date;
+  fecha_exp: Date | null;
   cve_retenc: string;
   folio_int?: string;
   desc_retenc?: string;
@@ -37,6 +37,7 @@ export interface Retention {
   addenda?: string[];
   cancellation_receipt?: string;
   stamp?: {
+    /** SAT FechaTimbrado: Mexico City local time without a timezone offset, not a UTC instant. */
     date: string;
     sat_signature: string;
     sat_cert_number: string;

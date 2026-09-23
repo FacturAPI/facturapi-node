@@ -94,6 +94,19 @@ describe('runtime compatibility (node)', () => {
         JSON.stringify({
           id: 'inv_123',
           object: 'invoice',
+          created_at: '2026-09-17T12:00:00.000Z',
+          date: '2026-09-17T11:00:00.000Z',
+          canceled_at: '2026-09-17T12:59:16.000Z',
+          cancellation: {
+            requested_at: '2026-09-17T12:59:16.000Z',
+            last_checked: '2026-09-17T13:00:00.000Z',
+          },
+          stamp: {
+            date: '2026-09-17T06:59:16',
+          },
+          metadata: {
+            date: '2026-09-17T12:00:00.000Z',
+          },
         }),
         {
           status: 200,
@@ -104,6 +117,17 @@ describe('runtime compatibility (node)', () => {
 
     const invoice = await client.invoices.retrieve('inv_123')
     expect(invoice.id).toBe('inv_123')
+    expect(invoice.created_at).toEqual(new Date('2026-09-17T12:00:00.000Z'))
+    expect(invoice.date).toEqual(new Date('2026-09-17T11:00:00.000Z'))
+    expect(invoice.canceled_at).toEqual(new Date('2026-09-17T12:59:16.000Z'))
+    expect(invoice.cancellation?.requested_at).toEqual(
+      new Date('2026-09-17T12:59:16.000Z'),
+    )
+    expect(invoice.cancellation?.last_checked).toEqual(
+      new Date('2026-09-17T13:00:00.000Z'),
+    )
+    expect(invoice.stamp?.date).toBe('2026-09-17T06:59:16')
+    expect((invoice as any).metadata.date).toBe('2026-09-17T12:00:00.000Z')
   })
 
   it('checks domain availability via GET query params', async () => {
@@ -129,6 +153,99 @@ describe('runtime compatibility (node)', () => {
     })
 
     expect(result.available).toBe(true)
+  })
+
+  it('hydrates organization access, invite, role, and API key timestamps', async () => {
+    const client = createClient()
+    const timestamp = '2026-09-17T12:00:00.000Z'
+    globalThis.fetch = vi.fn(async (url) =>
+      Response.json(
+        String(url).endsWith('/team')
+          ? [{ id: 'access_123', created_at: timestamp, updated_at: timestamp }]
+          : String(url).endsWith('/team/invites')
+            ? [{ id: 'invite_123', created_at: timestamp, expires_at: timestamp }]
+            : String(url).endsWith('/team/roles')
+              ? [{ id: 'role_123', created_at: timestamp, updated_at: timestamp }]
+              : [{ id: 'key_123', created_at: timestamp }],
+      ),
+    ) as typeof fetch
+
+    const access = await client.organizations.listTeamAccess('org_123')
+    expect(access[0].created_at).toEqual(new Date(timestamp))
+    expect(access[0].updated_at).toEqual(new Date(timestamp))
+    const invites = await client.organizations.listSentTeamInvites('org_123')
+    expect(invites[0].created_at).toEqual(new Date(timestamp))
+    expect(invites[0].expires_at).toEqual(new Date(timestamp))
+    const roles = await client.organizations.listTeamRoles('org_123')
+    expect(roles[0].created_at).toEqual(new Date(timestamp))
+    expect(roles[0].updated_at).toEqual(new Date(timestamp))
+    expect((await client.organizations.listLiveApiKeys('org_123'))[0].created_at)
+      .toEqual(new Date(timestamp))
+  })
+
+  it('hydrates dates across resource responses without changing SAT stamp text', async () => {
+    const client = createClient()
+    const timestamp = '2026-09-17T12:00:00.000Z'
+    const responses: Record<string, unknown> = {
+      '/v2/customers/cus_123': {
+        created_at: timestamp,
+        sat_validated_at: timestamp,
+        edit_link_expires_at: timestamp,
+      },
+      '/v2/products/prod_123': { created_at: timestamp },
+      '/v2/receipts/rec_123': {
+        created_at: timestamp,
+        date: timestamp,
+        expires_at: timestamp,
+      },
+      '/v2/retentions/ret_123': {
+        created_at: timestamp,
+        fecha_exp: timestamp,
+        stamp: { date: '2026-09-17T06:00:00' },
+      },
+      '/v2/organizations/me': {
+        created_at: timestamp,
+        certificate: { updated_at: timestamp, expires_at: timestamp },
+        pending_add_ons_update: { add_ons: [], scheduled_for: timestamp },
+      },
+      '/v2/webhooks/wh_123': { created_at: timestamp },
+      '/v2/invoices/zip-requests/zip_123': {
+        created_at: timestamp,
+        updated_at: timestamp,
+      },
+    }
+    globalThis.fetch = vi.fn(async (url) =>
+      Response.json(responses[new URL(String(url)).pathname]),
+    ) as typeof fetch
+
+    const customer = await client.customers.retrieve('cus_123')
+    expect(customer.created_at).toEqual(new Date(timestamp))
+    expect(customer.sat_validated_at).toEqual(new Date(timestamp))
+    expect(customer.edit_link_expires_at).toEqual(new Date(timestamp))
+    expect((await client.products.retrieve('prod_123')).created_at).toEqual(
+      new Date(timestamp),
+    )
+    const receipt = await client.receipts.retrieve('rec_123')
+    expect(receipt.created_at).toEqual(new Date(timestamp))
+    expect(receipt.date).toEqual(new Date(timestamp))
+    expect(receipt.expires_at).toEqual(new Date(timestamp))
+    const retention = await client.retentions.retrieve('ret_123')
+    expect(retention.created_at).toEqual(new Date(timestamp))
+    expect(retention.fecha_exp).toEqual(new Date(timestamp))
+    expect(retention.stamp?.date).toBe('2026-09-17T06:00:00')
+    const organization = await client.organizations.me()
+    expect(organization.created_at).toEqual(new Date(timestamp))
+    expect(organization.certificate.updated_at).toEqual(new Date(timestamp))
+    expect(organization.certificate.expires_at).toEqual(new Date(timestamp))
+    expect(organization.pending_add_ons_update?.scheduled_for).toEqual(
+      new Date(timestamp),
+    )
+    expect((await client.webhooks.retrieve('wh_123')).created_at).toEqual(
+      new Date(timestamp),
+    )
+    const zipRequest = await client.invoices.retrieveZipRequest('zip_123')
+    expect(zipRequest.created_at).toEqual(new Date(timestamp))
+    expect(zipRequest.updated_at).toEqual(new Date(timestamp))
   })
 
   it('posts multiple receipts to invoice payload to receipts endpoint', async () => {
@@ -442,6 +559,37 @@ describe('runtime compatibility (node)', () => {
         payload,
       }),
     ).rejects.toThrow('Invalid signature')
+  })
+
+  it('hydrates dates in locally validated webhook events', async () => {
+    const client = createClient()
+    const secret = 'whsec_test_dates'
+    const payload = JSON.stringify({
+      created_at: '2026-09-17T12:00:00.000Z',
+      data: {
+        type: 'invoice',
+        object: {
+          created_at: '2026-09-17T11:00:00.000Z',
+          cancellation: { requested_at: '2026-09-17T12:59:16.000Z' },
+          stamp: { date: '2026-09-17T06:59:16' },
+        },
+      },
+    })
+
+    const event = await client.webhooks.validateSignature({
+      secret,
+      signature: crypto.createHmac('sha256', secret).update(payload).digest('hex'),
+      payload,
+    })
+
+    expect(event.created_at).toEqual(new Date('2026-09-17T12:00:00.000Z'))
+    expect(event.data.object.created_at).toEqual(
+      new Date('2026-09-17T11:00:00.000Z'),
+    )
+    expect(event.data.object.cancellation?.requested_at).toEqual(
+      new Date('2026-09-17T12:59:16.000Z'),
+    )
+    expect(event.data.object.stamp?.date).toBe('2026-09-17T06:59:16')
   })
 
   it('falls back to API validation when local crypto is unavailable', async () => {

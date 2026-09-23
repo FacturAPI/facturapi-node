@@ -152,7 +152,7 @@ export type BinaryInput =
  */
 export interface SignedDownloadUrl {
   url: string;
-  expires_at: string;
+  expires_at: Date;
   content_type: string;
   filename: string;
 }

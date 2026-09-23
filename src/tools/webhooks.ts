@@ -4,7 +4,7 @@ import {
   ApiEvent,
   ApiEventType,
 } from '../types';
-import { WrapperClient } from '../wrapper';
+import { deserializeResponseDates, WrapperClient } from '../wrapper';
 
 function hasBuffer(): boolean {
   return typeof Buffer !== 'undefined';
@@ -149,7 +149,7 @@ export default class Webhooks {
         if (!isValid) {
           throw new Error('Invalid signature');
         }
-        return JSON.parse(payloadString) as ApiEvent<T>;
+        return deserializeResponseDates(JSON.parse(payloadString)) as ApiEvent<T>;
       }
     }
 
@@ -177,7 +177,7 @@ export default class Webhooks {
       if (!isValid) {
         throw new Error('Invalid signature');
       }
-      return JSON.parse(payloadString) as ApiEvent<T>;
+      return deserializeResponseDates(JSON.parse(payloadString)) as ApiEvent<T>;
     }
 
     // Fallback for runtimes without local crypto support (e.g. some RN setups)

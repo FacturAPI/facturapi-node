@@ -154,6 +154,53 @@ const statusFrom = (value: unknown, fallback: number): number => {
   return fallback;
 };
 
+// Keep this list aligned with date-valued response fields in src/types.
+// Input-only payroll fields and SAT wall-clock strings are intentionally absent.
+const responseDateFields = new Set([
+  'canceled_at',
+  'created_at',
+  'date',
+  'edit_link_expires_at',
+  'expires_at',
+  'fecha_exp',
+  'last_checked',
+  'requested_at',
+  'sat_validated_at',
+  'scheduled_for',
+  'updated_at',
+]);
+
+// Only hydrate ISO dates; unrelated free-form strings may share these keys.
+const isoDatePattern = /^\d{4}-\d{2}-\d{2}(?:T\d{2}:\d{2}:\d{2}(?:\.\d+)?(?:Z|[+-]\d{2}:\d{2}))?$/;
+
+export const deserializeResponseDates = (value: any): any => {
+  if (Array.isArray(value)) {
+    return value.map(deserializeResponseDates);
+  }
+  if (!value || typeof value !== 'object' || !isPlainRecord(value)) {
+    return value;
+  }
+  return Object.fromEntries(
+    Object.entries(value).map(([key, nestedValue]) => {
+      // These contain caller-owned values or SAT wall-clock text, not instants.
+      if (key === 'metadata' || key === 'stamp') {
+        return [key, nestedValue];
+      }
+      if (
+        responseDateFields.has(key) &&
+        typeof nestedValue === 'string' &&
+        isoDatePattern.test(nestedValue)
+      ) {
+        const date = new Date(nestedValue);
+        if (!Number.isNaN(date.getTime())) {
+          return [key, date];
+        }
+      }
+      return [key, deserializeResponseDates(nestedValue)];
+    }),
+  );
+};
+
 const responseInterceptor = async (response: Response) => {
   if (!response.ok) {
     const contentType = response.headers.get('content-type') || '';
@@ -239,7 +286,7 @@ const responseInterceptor = async (response: Response) => {
       return response.blob();
     }
   } else if (contentType.includes('application/json')) {
-    return response.json();
+    return deserializeResponseDates(await response.json());
   }
   return response.text();
 };
