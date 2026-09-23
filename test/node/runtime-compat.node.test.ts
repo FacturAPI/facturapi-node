@@ -99,6 +99,7 @@ describe('runtime compatibility (node)', () => {
           canceled_at: '2026-09-17T12:59:16.000Z',
           cancellation: {
             requested_at: '2026-09-17T12:59:16.000Z',
+            last_checked: '2026-09-17T13:00:00.000Z',
           },
           stamp: {
             date: '2026-09-17T06:59:16',
@@ -121,6 +122,9 @@ describe('runtime compatibility (node)', () => {
     expect(invoice.canceled_at).toEqual(new Date('2026-09-17T12:59:16.000Z'))
     expect(invoice.cancellation?.requested_at).toEqual(
       new Date('2026-09-17T12:59:16.000Z'),
+    )
+    expect(invoice.cancellation?.last_checked).toEqual(
+      new Date('2026-09-17T13:00:00.000Z'),
     )
     expect(invoice.stamp?.date).toBe('2026-09-17T06:59:16')
     expect((invoice as any).metadata.date).toBe('2026-09-17T12:00:00.000Z')
