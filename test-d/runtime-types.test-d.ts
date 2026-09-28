@@ -135,8 +135,8 @@ expectType<Date>(receipt.expires_at)
 
 declare const customer: Customer
 expectType<Date>(customer.created_at)
-expectType<Date | undefined>(customer.sat_validated_at)
-expectType<Date | undefined>(customer.edit_link_expires_at)
+expectType<Date | null | undefined>(customer.sat_validated_at)
+expectType<Date | null | undefined>(customer.edit_link_expires_at)
 declare const product: Product
 expectType<Date>(product.created_at)
 declare const organization: Organization
