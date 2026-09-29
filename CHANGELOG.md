@@ -10,6 +10,7 @@ and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.
 ### Breaking
 
 - Deserialize ISO response timestamps into `Date` objects across SDK resources, including timestamps previously typed as strings (organization access and signed download URLs). Calls relying on string methods must use `date.toISOString()` or other `Date` APIs.
+- Publish explicit CommonJS (`.cjs`) and ESM (`.mjs`) entry points with conditional exports and matching TypeScript declarations. Import from `facturapi`; direct imports into internal package files are no longer supported. CommonJS continues to use `require('facturapi').default`.
 
 ### Fixed
 

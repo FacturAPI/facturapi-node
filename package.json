@@ -2,8 +2,8 @@
   "name": "facturapi",
   "version": "6.0.0",
   "description": "SDK oficial de Facturapi para Node.js y navegadores. Integra facturaci\u00f3n electr\u00f3nica en M\u00e9xico (CFDI) de forma simple y obt\u00e9n una perspectiva fiscal completa de tu operaci\u00f3n, con b\u00fasquedas indexadas, env\u00edo de documentos y trazabilidad.",
-  "main": "dist/index.cjs.js",
-  "module": "dist/index.es.js",
+  "main": "dist/index.cjs",
+  "module": "dist/index.mjs",
   "types": "dist/index.d.ts",
   "sideEffects": false,
   "files": [
@@ -19,7 +19,7 @@
   "packageManager": "pnpm@12.6.0",
   "scripts": {
     "precommit": "lint-staged",
-    "build": "vite build && tsc --emitDeclarationOnly",
+    "build": "vite build && tsc --noEmit && rollup -c",
     "lint": "eslint .",
     "lint:fix": "eslint . --fix",
     "format": "prettier . --write",
@@ -28,9 +28,10 @@
     "test:web": "vitest run --config vitest.web.config.mts",
     "test:browser": "pnpm run build && playwright test",
     "test:unit": "pnpm run test:node && pnpm run test:web",
-    "test:types": "tsd",
-    "test": "pnpm run build && pnpm run test:unit && pnpm run test:types",
-    "ci": "pnpm run test"
+    "test:types": "tsd && tsc --ignoreConfig --noEmit --module NodeNext --moduleResolution NodeNext --target ES2022 test-d/package-exports.mts test-d/package-exports.cts",
+    "test": "pnpm run build && pnpm run test:unit && pnpm run test:types && pnpm run test:compat",
+    "ci": "pnpm run test",
+    "test:compat": "node --test test/compat/*.test.cjs test/compat/*.test.mjs"
   },
   "engines": {
     "node": ">=18.0.0",
@@ -67,12 +68,12 @@
   },
   "homepage": "https://github.com/facturapi/facturapi-node#readme",
   "lint-staged": {
-    "*.{js,cjs,mjs,ts}": [
-      "prettier --write",
-      "eslint --fix"
-    ],
     "*.{json,md,yml,yaml,css}": [
       "prettier --write"
+    ],
+    "*.{js,cjs,mjs,ts,cts,mts}": [
+      "prettier --write",
+      "eslint --fix"
     ]
   },
   "devDependencies": {
@@ -86,10 +87,26 @@
     "jsdom": "^30.1.1",
     "lint-staged": "^17.6.0",
     "prettier": "^3.9.9",
+    "rollup": "^4.63.5",
+    "rollup-plugin-dts": "^6.5.1",
     "tsd": "^0.33.0",
     "typescript": "^6.0.3",
     "typescript-eslint": "^8.70.1",
     "vite": "8.3.1",
     "vitest": "^5.0.2"
+  },
+  "exports": {
+    ".": {
+      "import": {
+        "types": "./dist/index.d.mts",
+        "default": "./dist/index.mjs"
+      },
+      "require": {
+        "types": "./dist/index.d.cts",
+        "default": "./dist/index.cjs"
+      },
+      "default": "./dist/index.mjs"
+    },
+    "./package.json": "./package.json"
   }
 }

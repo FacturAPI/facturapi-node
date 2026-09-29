@@ -28,6 +28,8 @@ npm i facturapi
 
 This SDK is TypeScript-first and exports its public types.
 
+The package provides native ESM and CommonJS entry points, with matching TypeScript declarations for each format. Import public APIs from `facturapi`; internal file paths are not part of the supported API.
+
 ## Getting started
 
 Make sure you have a FacturAPI account and your API key.
