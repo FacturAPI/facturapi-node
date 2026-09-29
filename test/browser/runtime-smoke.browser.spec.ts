@@ -11,7 +11,7 @@ test.describe('browser smoke (real chromium)', () => {
   let latestUploadContentType: string | undefined;
 
   test.beforeAll(async () => {
-    const distPath = join(process.cwd(), 'dist', 'index.mjs');
+    const distPath = join(process.cwd(), 'dist', 'index.es.js');
     const bundle = await readFile(distPath, 'utf8');
 
     server = createServer(async (req: IncomingMessage, res: ServerResponse) => {
@@ -25,7 +25,7 @@ test.describe('browser smoke (real chromium)', () => {
   <head><meta charset="utf-8" /></head>
   <body>
     <script type="module">
-      import Facturapi from '/dist/index.mjs';
+      import Facturapi from '/dist/index.es.js';
       window.__createFacturapiClient = () => {
         const client = new Facturapi('sk_test_123');
         client.BASE_URL = window.location.origin + '/api/v2';
@@ -37,7 +37,7 @@ test.describe('browser smoke (real chromium)', () => {
         return;
       }
 
-      if (url === '/dist/index.mjs') {
+      if (url === '/dist/index.es.js') {
         res.statusCode = 200;
         res.setHeader('content-type', 'application/javascript; charset=utf-8');
         res.end(bundle);

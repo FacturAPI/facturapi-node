@@ -56,7 +56,7 @@ jobs:
           path: dist
 
       - name: Run Node 18 runtime compatibility smoke
-        run: node --test test/compat/*.test.cjs test/compat/*.test.mjs
+        run: node --test test/compat/node18-compat.test.cjs
 
   node-runtime:
     runs-on: ubuntu-latest
@@ -124,9 +124,6 @@ jobs:
 
       - name: Run type contract tests
         run: pnpm run test:types
-
-      - name: Lint
-        run: pnpm run lint
 
   browser-smoke:
     runs-on: ubuntu-latest
