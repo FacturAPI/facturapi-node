@@ -8,9 +8,11 @@ Integra facturación electrónica en México desde JavaScript o TypeScript. Crea
 
 [Documentación](https://docs.facturapi.io) · [Referencia de la API](https://docs.facturapi.io/api/) · [Crear una cuenta](https://www.facturapi.io/register) · [Changelog](CHANGELOG.md)
 
-## Tu primera factura de prueba
+## Tu primera factura de prueba 🚀
 
-Necesitas Node.js 18 o superior y la **Test Secret Key de una organización**. Obtén la llave en tu cuenta de Facturapi y guárdala en la variable de entorno `FACTURAPI_KEY`. El ambiente Test no requiere suscripción; sus facturas no se envían al SAT ni tienen validez fiscal.
+Vamos a crear una factura de prueba. Necesitas Node.js 18 o superior y la **Test Secret Key de una organización**, que encontrarás en tu cuenta de Facturapi. Guárdala en la variable de entorno `FACTURAPI_KEY`.
+
+Puedes empezar sin una suscripción: las facturas del ambiente Test no se envían al SAT ni tienen validez fiscal. Primero, instala el SDK:
 
 ```sh
 npm install facturapi
@@ -56,13 +58,13 @@ const invoice = await facturapi.invoices.create({
 console.log({ id: invoice.id, status: invoice.status, total: invoice.total })
 ```
 
-Ejecuta `node primera-factura.mjs` con la variable de entorno configurada. Conserva `invoice.id` para consultar, descargar o enviar la factura.
+Ejecuta `node primera-factura.mjs` con la variable de entorno configurada. Si todo salió bien, verás el ID, el estado y el total de tu primera factura. Guarda `invoice.id`: lo usaremos en los siguientes ejemplos.
 
 Para emitir en producción, configura los datos fiscales y el CSD de la organización y utiliza su Live Secret Key. Consulta la [guía de configuración de organizaciones](https://docs.facturapi.io/docs/getting-started/organization-onboarding).
 
 ## ESM, CommonJS y TypeScript
 
-Con ESM o TypeScript:
+Elige la forma de importar que ya usas en tu proyecto. Con ESM o TypeScript:
 
 ```ts
 import Facturapi, { InvoiceType, type Invoice } from 'facturapi'
@@ -79,7 +81,7 @@ Los tipos y enums públicos se importan desde `facturapi`. El paquete incluye de
 
 ## Operaciones frecuentes
 
-Los siguientes ejemplos continúan con las variables `facturapi` e `invoice` del primer ejemplo; usa `await` dentro de una función `async` si tu proyecto es CommonJS.
+Ya tienes una factura. Ahora puedes consultarla, descargarla o enviarla por correo. Estos ejemplos usan las variables `facturapi` e `invoice` que creaste arriba. Si usas CommonJS, coloca las llamadas con `await` dentro de una función `async`.
 
 ### Consultar y buscar facturas
 
@@ -148,7 +150,7 @@ Usa `error.code` y los detalles de validación para decidir cómo responder; evi
 | Consultar catálogos del SAT               | `facturapi.catalogs`, `facturapi.cartaPorteCatalogs` y `facturapi.comercioExteriorCatalogs`                         |
 | Recibir eventos y validar firmas          | `facturapi.webhooks` · [Referencia de la API](https://docs.facturapi.io/api/)                                       |
 
-## Compatibilidad y migración a v6
+## Compatibilidad
 
 | Entorno      | Soporte                                                                         |
 | ------------ | ------------------------------------------------------------------------------- |
@@ -158,14 +160,72 @@ Usa `error.code` y los detalles de validación para decidir cómo responder; evi
 
 Mantén las llaves secretas en tu servidor. La compatibilidad de runtime con navegadores no convierte una llave secreta en pública.
 
-Al migrar de v5 a v6:
+## Actualizar desde v3, v4 o v5
 
-- Las fechas de respuesta documentadas como instantes se entregan como `Date`. Para obtener un string, usa `toISOString()`. `stamp.date` conserva el texto de fecha y hora del SAT.
-- Algunos campos de fecha pueden ser `null`; consulta los tipos antes de usarlos.
-- Importa desde `facturapi`. Los paths internos como `facturapi/dist/...` ya no forman parte del contrato público.
-- CommonJS acepta el constructor directamente. La forma anterior con `.default` sigue funcionando como alias de compatibilidad.
+Puedes pasar directamente a v6; no necesitas instalar las versiones intermedias. En Node.js, comprueba primero que uses la versión 18 o superior. Busca tu versión actual y revisa los apartados que le corresponden:
 
-Consulta los detalles en el [changelog](CHANGELOG.md).
+| Tu versión | Qué revisar                                                     |
+| ---------- | --------------------------------------------------------------- |
+| 5.x        | Fechas e imports                                                |
+| 4.x        | Fechas e imports, y tipos de respuesta                          |
+| 3.x        | Los tres apartados, incluidos los métodos renombrados y Node.js |
+
+### ✅ Cuándo puedes actualizar sin cambiar tu código
+
+Si tu integración usa los métodos vigentes, importa desde `facturapi`, corre en Node.js 18+ y no depende de fechas como strings ni de los tipos anteriores que se describen abajo, puedes conservar tus llamadas al SDK. Por ejemplo, crear una factura, leer su `id` y descargar su PDF con los métodos actuales no requiere reescribir ese flujo.
+
+También puedes conservar:
+
+- **Tus imports públicos:** `import Facturapi from 'facturapi'` y el `require('facturapi')` de v3 funcionan en v6. Si usabas `.default` en v4/v5, ese alias sigue disponible.
+- **La inicialización y los enums:** `new Facturapi(apiKey)` y accesos como `Facturapi.PaymentForm.EFECTIVO` siguen funcionando. No necesitas cambiar tus llaves por actualizar el SDK.
+- **Las descargas en Node.js:** los métodos `downloadPdf`, `downloadXml` y `downloadZip` siguen devolviendo streams que puedes guardar con `.pipe()`.
+- **El manejo básico de errores:** puedes seguir usando `catch` y `error.message`. Los campos de `FacturapiError` son información adicional que puedes adoptar cuando la necesites.
+
+Actualiza la dependencia con `npm install facturapi@^6` (o el equivalente de tu gestor) y ejecuta las pruebas de tu integración. Si usas TypeScript, comprueba también la compilación: sus tipos ahora describen más casos reales de la respuesta.
+
+### Desde v5: fechas e imports
+
+**Fechas de respuesta.** Los campos de fecha como `created_at`, `date` y `expires_at` ahora son objetos `Date` en ejecución, incluso donde versiones anteriores ya los declaraban como `Date` en TypeScript. Esto también aplica al evento que devuelve `webhooks.validateSignature`.
+
+Si usabas métodos de string como `.slice()` o `.split()`, convierte primero la fecha. Comprueba `null` cuando el campo lo permita:
+
+```js
+const invoiceDate = invoice.date?.toISOString() ?? null
+```
+
+Si ya usabas métodos de `Date`, o no leías esos campos, no necesitas adaptarlos. `JSON.stringify()` convierte los objetos `Date` a strings ISO automáticamente, aunque su formato puede normalizarse (por ejemplo, incluir milisegundos); no dependas de conservar el texto exacto de la respuesta anterior.
+
+`stamp.date` conserva el string de fecha y hora del SAT. El SDK tampoco convierte los valores de `metadata`. Los filtros de entrada, como `date: { gte, lt }`, siguen siendo objetos de rango; no necesitas convertirlos en una sola fecha.
+
+**Valores ausentes.** Los tipos ahora permiten `null` donde la API puede devolverlo: por ejemplo, en `invoice.date`, `retention.fecha_exp` y `organization.pending_plan_update`. Conserva tus comprobaciones si ya contemplabas ese caso; de lo contrario, agrégalas antes de acceder al valor. Revisa también tus fixtures de TypeScript.
+
+**Imports.** Si importas desde `facturapi`, puedes seguir haciéndolo. Si importabas desde `facturapi/dist/...` u otra ruta interna, usa la raíz del paquete: los tipos, enums y el constructor públicos están disponibles allí.
+
+### Desde v4: tipos de respuesta
+
+Además de lo anterior, revisa el código que depende de la forma de las respuestas:
+
+- En `SearchResult<T>`, `page`, `total_pages` y `total_results` pueden faltar. Comprueba que existan antes de hacer cálculos; un total ausente no significa cero. Si solo recorres `result.data`, no necesitas cambiar ese código.
+- Si importabas `CursorSearchResult<T>`, usa `SearchResult<T>`. Los campos `previous_cursor` y `next_cursor` son opcionales.
+- Si vienes de una versión anterior a 4.20, `property_tax_account` se declara como un arreglo de strings. Si tus datos ya reflejan la respuesta de la API, no necesitas transformarlos.
+
+### Desde v3: métodos renombrados y Node.js
+
+Revisa también los dos apartados anteriores. Necesitas **Node.js 18 o superior**; si ya lo usas, no tienes que cambiar de runtime para instalar v6.
+
+Estos son los reemplazos de los métodos retirados en v4. Solo necesitas cambiar las llamadas que uses:
+
+| Antes                                    | En v6                                              |
+| ---------------------------------------- | -------------------------------------------------- |
+| `facturapi.products.keys('café')`        | `facturapi.catalogs.searchProducts({ q: 'café' })` |
+| `facturapi.products.units('pieza')`      | `facturapi.catalogs.searchUnits({ q: 'pieza' })`   |
+| `facturapi.invoices.editDraft(id, data)` | `facturapi.invoices.updateDraft(id, data)`         |
+
+Si sigues en **3.0 o 3.1** y usabas `organizations.getApiKeys`, ese método se retiró en 3.2. Para consultar la llave de prueba, usa `organizations.getTestApiKey(id)`. Para producción, conserva tu llave existente; `listLiveApiKeys(id)` devuelve información de las llaves, no sus secretos completos. Los métodos `renewTestApiKey` y `renewLiveApiKey` rotan credenciales: no los uses como sustituto de una consulta.
+
+Si usas TypeScript, el SDK ya incluye sus propios tipos. Revisa tus declaraciones locales y fixtures: las respuestas antes sin tipar ahora incluyen enums, campos opcionales y valores nullable. Una integración en JavaScript no necesita convertirse a TypeScript.
+
+Para ver las novedades de cada versión, consulta el [changelog](CHANGELOG.md).
 
 ## Ayuda y contribuciones
 
