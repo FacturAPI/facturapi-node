@@ -5,6 +5,21 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](http://keepachangelog.com/en/1.0.0/)
 and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.html).
 
+## [6.0.0] 2026-09-22
+
+### Breaking
+
+- Deserialize ISO response timestamps into `Date` objects across SDK resources, including timestamps previously typed as strings (organization access and signed download URLs). Calls relying on string methods must use `date.toISOString()` or other `Date` APIs.
+- Publish explicit CommonJS (`.cjs`) and ESM (`.mjs`) entry points with conditional exports and matching TypeScript declarations. Import from `facturapi`; direct imports into internal package files are no longer supported. CommonJS now supports `require('facturapi')` directly; `.default` remains a compatibility alias.
+
+### Fixed
+
+- Match nullable invoice and retention dates to the API response, and hydrate signed webhook events validated locally. SAT `stamp.date` remains a string because it is local wall-clock time without a timezone offset.
+
+### Maintenance
+
+- Update development dependencies and pnpm, including patched transitive dependencies for Undici, PostCSS, and brace-expansion. Upgrade Vitest and jsdom, use ESM build/test configuration files, and remove unused Rollup plugins. TypeScript remains on 6.0 until typescript-eslint supports 7.0.
+
 ## [5.1.0] 2026-09-12
 
 ### Added

@@ -3,8 +3,9 @@ const assert = require('node:assert/strict');
 const { Writable } = require('node:stream');
 const crypto = require('node:crypto');
 
-const FacturapiModule = require('../../dist/index.cjs.js');
-const Facturapi = FacturapiModule.default || FacturapiModule;
+const Facturapi = require('facturapi');
+assert.equal(typeof Facturapi, 'function');
+assert.equal(Facturapi.default, Facturapi);
 
 const ORIGINAL_FETCH = globalThis.fetch;
 

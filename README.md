@@ -28,6 +28,8 @@ npm i facturapi
 
 This SDK is TypeScript-first and exports its public types.
 
+The package provides native ESM and CommonJS entry points, with matching TypeScript declarations for each format. Import public APIs from `facturapi`; internal file paths are not part of the supported API.
+
 ## Getting started
 
 Make sure you have a FacturAPI account and your API key.
@@ -41,8 +43,10 @@ const facturapi = new Facturapi(process.env.FACTURAPI_KEY!);
 CommonJS:
 
 ```javascript
-const Facturapi = require('facturapi').default;
+const Facturapi = require('facturapi');
 ```
+
+CommonJS also retains `require('facturapi').default` as a compatibility alias. Named exports such as `FacturapiError` and `InvoiceType` remain available as properties of the exported constructor.
 
 ### Create a customer
 
