@@ -19,6 +19,7 @@ and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.
 ### Maintenance
 
 - Update development dependencies and pnpm, including patched transitive dependencies for Undici, PostCSS, and brace-expansion. Upgrade Vitest and jsdom, use ESM build/test configuration files, and remove unused Rollup plugins. TypeScript remains on 6.0 until typescript-eslint supports 7.0.
+- Use Rolldown for JavaScript and declaration bundling, and remove unused Husky/lint-staged configuration. Exclude generated artifacts from formatting.
 
 ## [5.1.0] 2026-09-12
 

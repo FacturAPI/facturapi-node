@@ -7,7 +7,7 @@ export default defineConfig({
       formats: ['es', 'cjs'],
       fileName: (format) => (format === 'es' ? 'index.mjs' : 'index.cjs'),
     },
-    rollupOptions: {
+    rolldownOptions: {
       external: ['stream', 'crypto'],
       output: {
         exports: 'named', // Use named exports to avoid the warning
