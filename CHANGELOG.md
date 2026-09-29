@@ -15,6 +15,10 @@ and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.
 
 - Match nullable invoice and retention dates to the API response, and hydrate signed webhook events validated locally. SAT `stamp.date` remains a string because it is local wall-clock time without a timezone offset.
 
+### Maintenance
+
+- Update development dependencies and pnpm, including patched transitive dependencies for Undici, PostCSS, and brace-expansion. Upgrade Vitest and jsdom, use ESM build/test configuration files, and remove unused Rollup plugins. TypeScript remains on 6.0 until typescript-eslint supports 7.0.
+
 ## [5.1.0] 2026-09-12
 
 ### Added
