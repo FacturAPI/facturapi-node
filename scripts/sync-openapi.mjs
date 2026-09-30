@@ -1,6 +1,6 @@
 import assert from 'node:assert/strict'
 import { readFile, writeFile } from 'node:fs/promises'
-import yaml from 'js-yaml'
+import * as yaml from 'js-yaml'
 
 const root = new URL('../', import.meta.url)
 const source = JSON.parse(
