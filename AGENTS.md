@@ -19,3 +19,5 @@
 - Preserve the real HTTP transport, binary behavior, and local cryptography. Test external HTTP boundaries with fixtures; do not replace these implementations with mocks.
 - Run `pnpm generate:sdk:check`, `pnpm test`, `pnpm lint`, and browser tests for generation changes. Cover input strings/Date values, nullable dates, complement discriminants, opaque metadata/XML, and additions to the contract.
 - This repository is public. Never copy private implementation sources, paths, identifiers, diagnostics, or planning context into snapshots, generated files, tests, commits, PR descriptions, or review replies.
+
+- Keep the OpenAPI snapshot and generated sources tracked. Mark generated artifacts with `linguist-generated` in `.gitattributes` so reviews focus on the generator, bindings, runtime, and tests; keep handwritten configuration visible. Update the attributes when adding generated output files.
