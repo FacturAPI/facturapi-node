@@ -1,6 +1,6 @@
 # Changelog
 
-Changes that affect SDK users are documented in this file.
+All notable changes to this project will be documented in this file.
 
 The format is based on [Keep a Changelog](http://keepachangelog.com/en/1.0.0/)
 and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.html).
@@ -72,53 +72,38 @@ and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.
 - Add draft support methods for retentions: `retentions.updateDraft`, `retentions.copyToDraft`, and `retentions.stampDraft`.
 
 ## [4.18.0] 2026-06-06
-
 ### Added
-
 - Expose structured API error metadata through `FacturapiError`, including `status`, `code`, `path`, `location`, `errors`, `logId`, and response `headers`.
 
 ## [4.17.0] 2026-04-27
-
 ### Added
-
 - Add support for custom request headers through the `Facturapi` constructor options.
 - Add `receipts.toInvoice` to create customer invoices from multiple receipt keys.
 - Add `receipts.previewToInvoicePdf` to generate PDF previews for to-invoice payloads.
 
 ## [4.16.0] 2026-04-23
-
 ### Added
-
 - Add new export catalogs for customs regimes, transport keys, SCT permits, COFEPRIS sectors, pharmaceutical forms, special transport conditions, customs documents, transport types, transport figures, ISTMO registry, loading keys, maritime configurations, rail traffic, containers, rail cars, rail service types, transfer reasons, incoterms, and customs units.
 - Expose the new enums on the `Facturapi` class as static getters for namespace-style access.
 
 ## [4.15.0] 2026-04-13
-
 ### Added
-
 - Add `organizations.updateDefaultSeries` to set an organization default series by type.
 
 ### Fixed
-
-- Return blob if content-type is octet-stream. This is the coverage for zip files
+- Return blob if content-type is octet-stream. This is the coverage for zip files 
 
 ## [4.14.2] 2026-03-31
-
 ### Fixed
-
 - Add `TaxFactor.EXENTO` (`"Exento"`) to align SDK enums with the API/OpenAPI allowed tax factor values.
 
 ## [4.14.1] 2026-03-31
-
 ### Fixed
-
 - Fix `organizations.checkDomainIsAvailable` to call `GET /organizations/domain-check` with query params (instead of an unsupported `PUT` payload flow).
 - Align method input naming to query semantics for clearer usage (`query`).
 
 ## [4.14.0] 2026-03-04
-
 ### Added
-
 - Add `facturapi.comercioExteriorCatalogs.searchTariffFractions` method for Fracción Arancelaria SAT catalog
 - Add organization team/access management methods under `organizations`:
   `listTeamAccess`, `retrieveTeamAccess`, `removeTeamAccess`,
@@ -127,21 +112,23 @@ and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.
   `listTeamRoles`, `listTeamRoleTemplates`, `listTeamRoleOperations`,
   `retrieveTeamRole`, `createTeamRole`, `updateTeamRole`, and `deleteTeamRole`.
 - Add typed responses and inputs for organization access, invites, and roles.
+- Add automated test suites for Node runtime (`vitest`), web-simulated runtime (`vitest` + `jsdom`), and browser smoke tests (`playwright`).
+- Add TypeScript contract tests with `tsd` for public SDK types.
+- Add CI workflow to run runtime tests, type tests, and browser smoke tests in GitHub Actions.
 - Include `rfc_provider_cert` in stamp-related invoice typings and responses (thanks to @tetexxr).
 
 ### Changed
-
 - Use `PUT` for role reassignment/update methods:
   `organizations.updateTeamAccessRole` and `organizations.updateTeamRole`.
 - Use `Authorization: Bearer <apiKey>` by default in SDK requests (API supports this scheme).
-- Improve compatibility of uploads and downloads across Node.js and browsers.
-- Reduce the installed package size by excluding development files.
+- Improve cross-runtime compatibility through feature-detection based runtime handling and binary type normalization.
+- Restrict npm published contents to runtime artifacts/docs (`dist`, `README`, `CHANGELOG`, `LICENSE`) using a package `files` whitelist.
+- Pin `npm` to `10.9.2` in CI/deploy workflows for deterministic lockfile validation across Node versions.
 
 ### Fixed
-
 - Improve non-OK HTTP error handling fallback when JSON error bodies are malformed or missing, returning clearer text/status errors.
 - Handle `ReadableStream` read failures during binary download conversion to Node streams to avoid unhandled rejections.
-- Reject malformed webhook signatures consistently in browsers.
+- Strengthen WebCrypto webhook signature validation by using `subtle.verify` and explicit hex signature validation.
 - Improve debugging for invalid upload inputs with clearer unsupported file type errors.
 
 ## [4.13.1] 2026-02-11
@@ -170,7 +157,7 @@ and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.
 
 ### Added
 
-- Add new catalogs for cartaporte
+- Add new catalogs for cartaporte 
 - `searchAirTransportCodes`, `searchTransportConfigs`,`searchRightsOfPassage`,`searchCustomsDocuments`,`searchPackagingTypes`,`searchTrailerTypes`, `searchHazardousMaterials`, `searchNavalAuthorizations`, `searchPortStations`, `searchMarineContainers`
 
 ## [4.10.0] 2025-09-04
@@ -245,13 +232,13 @@ and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.
 
 ### Fixed
 
-- Fix compatibility of file downloads across Node.js and browser environments.
+- Added try/catch to conditional import and define "stream" as external.
 
 ## [4.4.3] 2024-12-13
 
 ### Fixed
 
-- Fix loading the SDK in browser environments.
+- Fix conditional import on web environments.
 
 ## [4.4.2] 2024-11-28
 
@@ -320,10 +307,11 @@ and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.
 - Remove deprecated method `products.keys` in favor of `catalogs.searchProducts`.
 - Remove deprecated method `products.units` in favor of `catalogs.searchUnits`.
 - Corrected the name of the method `invoices.editDraft` to `invoices.updateDraft`.
+- The rest of the changes are internal and should not affect the public API.
 
 ### Added
 
-- Include TypeScript definitions for the SDK. Most request parameters and responses are not yet typed in this version.
+- We rewrote the the library in TypeScript and now it's partially typed. Most request parameters and responses are not typed yet, but we plan to add more types in future releases.
 - We export all type definitions, so you can use them in your TypeScript projects.
 - New method to copy invoices to a new draft: `invoices.copyToDraft`.
 
@@ -460,14 +448,14 @@ Note: Although this update includes a breaking change, only the minor version wi
 
 ```javascript
 // This was allowed
-const facturapi = Facturapi('YOUR_API_KEY')
+const facturapi = Facturapi('YOUR_API_KEY');
 ```
 
 **Now:**
 
 ```javascript
 // Now you must always use new
-const facturapi = new Facturapi('YOUR_API_KEY')
+const facturapi = new Facturapi('YOUR_API_KEY');
 ```
 
 ## [1.2.0] 2018-08-04
@@ -497,14 +485,14 @@ const facturapi = new Facturapi('YOUR_API_KEY')
 **Before:**
 
 ```javascript
-const facturapi = new Facturapi('YOUR_API_KEY')
-console.log(facturapi.TaxType.IVA) // > IVA
+const facturapi = new Facturapi('YOUR_API_KEY');
+console.log(facturapi.TaxType.IVA); // > IVA
 ```
 
 **Now:**
 
 ```javascript
-console.log(Facturapi.TaxType.IVA) // > IVA
+console.log(Facturapi.TaxType.IVA); // > IVA
 ```
 
 ## [0.1.3] - 2017-06-20
