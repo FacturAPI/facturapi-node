@@ -3431,7 +3431,9 @@ export interface components {
      * PagoComplementData
      * @description Pagos a incluir en este comprobante. Lo más común es incluir un sólo pago. Un caso en el que se debe de agregar más de uno es cuando el pago se realiza con 2 formas de pago distintas; por ejemplo, cuando se paga una parte con tarjeta y otra en efectivo.
      */
-    PagoComplementDataInput: components['schemas']['PaymentInput'][]
+    PagoComplementDataInput:
+      | components['schemas']['PaymentInput']
+      | components['schemas']['PaymentInput'][]
     /** Complement */
     NominaOrCustomComplementProperties: {
       /**
@@ -5117,9 +5119,10 @@ export interface components {
         }
       }
     }
+    /** @description Cliente receptor de la factura. */
+    InvoiceCustomerInput: components['schemas']['CustomerCreateInput'] | string
     InvoiceCommonInputProperties: {
-      /** @description Cliente receptor de la factura. */
-      customer?: components['schemas']['CustomerCreateInput'] | string
+      customer?: components['schemas']['InvoiceCustomerInput']
       /**
        * @description Estado inicial de la factura. Si se envía `draft`, la factura se guardará como borrador y no se timbrará ni se
        *     enviará al SAT. También al enviar `draft`, todos los campos requeridos se vuelven
@@ -5148,8 +5151,6 @@ export interface components {
       idempotency_key?: string
     } & components['schemas']['InvoiceableCommonInput']
     InvoiceCommonEditInputProperties: {
-      /** @description Cliente receptor de la factura. */
-      customer?: components['schemas']['CustomerCreateInput'] | string
       /**
        * @description Estado inicial de la factura. Sólo es posible editar una factura con status `draft`,
        *     y no es posible cambiar el status al editar, por lo que el único valor permitido es `draft`.
@@ -5173,6 +5174,10 @@ export interface components {
        */
       idempotency_key?: string
     } & components['schemas']['InvoiceableCommonEditInput']
+    InvoiceDraftInputProperties: components['schemas']['InvoiceCommonEditInputProperties'] & {
+      /** @description Cliente receptor de la factura. */
+      customer?: null | components['schemas']['CustomerCreateInput'] | string
+    }
     /** @description Datos de la factura según su tipo y estado inicial. Omite status para timbrar; usa draft para guardar un borrador. */
     InvoiceCreateInput:
       | (components['schemas']['InvoiceIngresoInput'] & {
@@ -5277,14 +5282,15 @@ export interface components {
        */
       payment_method?: 'PUE' | 'PPD'
       /**
-       * @description Código de Uso CFDI según el catálogo del SAT. Puedes ver los códigos
+       * @description Si se omite o es null, se utiliza el uso configurado en el cliente; si no tiene uno, se utiliza G03. Para clientes extranjeros o público en general se utiliza S01.
+       *
+       *     Código de Uso CFDI según el catálogo del SAT. Puedes ver los códigos
        *     en [esta tabla](#uso-cfdi), o utilizar las constantes incluidas en
        *     nuestras librerías.
        *
        *     Para factura global debe ingresarse la clave `S01`.
-       * @default G01
        */
-      use: string
+      use?: string | null
       /**
        * @description Código de la moneda, acorde al estándar [ISO 4217](https://es.wikipedia.org/wiki/ISO_4217).
        * @default MXN
@@ -5371,7 +5377,7 @@ export interface components {
       items: components['schemas']['LineItemEgresoInput'][]
       /**
        * @description Código de Uso CFDI según el catálogo del SAT. Puedes ver los códigos en [esta tabla](#uso-cfdi), o utilizar las constantes incluidas en nuestras librerías.
-       * @default G01
+       * @default G02
        */
       use?: string
       /**
@@ -5441,12 +5447,12 @@ export interface components {
       /**
        * @description Código de Uso CFDI según el catálogo del SAT. Puedes ver los códigos en
        *     [esta tabla](#uso-cfdi), o utilizar las constantes incluidas en nuestras librerías.
-       * @default G01
+       * @default S01
        */
       use?: string
       /**
        * @description Código de la moneda, acorde al estándar [ISO 4217](https://es.wikipedia.org/wiki/ISO_4217).
-       * @default MXN
+       * @default XXX
        */
       currency?: string
       /**
@@ -5476,7 +5482,7 @@ export interface components {
        */
       items?: components['schemas']['LineItemInput'][]
       /** @description Código que representa la forma de pago, de acuerdo al [catálogo del SAT](#forma-de-pago). */
-      payment_form?: string
+      payment_form?: string | null
       /**
        * @description Código del método de pago según el catálogo del SAT.
        *
@@ -5492,7 +5498,7 @@ export interface components {
        *
        *     Para factura global debe ingresarse la clave `S01`.
        */
-      use?: string
+      use?: string | null
       /** @description Código de la moneda, acorde al estándar [ISO 4217](https://es.wikipedia.org/wiki/ISO_4217). */
       currency?: string
       /**
@@ -5542,7 +5548,7 @@ export interface components {
        *     parámetro `pdf_custom_section`.
        */
       complements?: components['schemas']['InvoiceComplementInput'][]
-    } & components['schemas']['InvoiceCommonEditInputProperties']
+    } & components['schemas']['InvoiceDraftInputProperties']
     /** Egreso */
     InvoiceEgresoEditInput: {
       /**
@@ -5580,7 +5586,7 @@ export interface components {
        *     del complemento al PDF por separado usando el parámetro `pdf_custom_section`.
        */
       complements?: components['schemas']['InvoiceComplementInput'][]
-    } & components['schemas']['InvoiceCommonInputProperties']
+    } & components['schemas']['InvoiceDraftInputProperties']
     /** Pago */
     InvoicePagoEditInput: {
       /**
@@ -5594,9 +5600,10 @@ export interface components {
         components['schemas']['ThirdParty']
       /** @description Complementos a incluir en la factura. */
       complements?: components['schemas']['InvoiceComplementInput'][]
-    } & components['schemas']['InvoiceCommonEditInputProperties']
+    } & components['schemas']['InvoiceDraftInputProperties']
     /** Nómina */
     InvoiceNominaEditInput: {
+      customer?: components['schemas']['InvoiceCustomerInput']
       /**
        * @description Tipo de comprobante de esta variante de entrada.
        * @constant
@@ -5609,6 +5616,7 @@ export interface components {
     } & components['schemas']['InvoiceCommonEditInputProperties']
     /** Traslado */
     InvoiceTrasladoEditInput: {
+      customer?: components['schemas']['InvoiceCustomerInput']
       /**
        * @description Tipo de comprobante de esta variante de entrada.
        * @constant

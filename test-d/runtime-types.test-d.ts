@@ -114,6 +114,45 @@ expectAssignable<InvoiceCreateInput>({
   status: 'draft',
   date: '2026-09-30T12:00:00Z',
 })
+expectAssignable<InvoiceCreateInput>({
+  customer: 'cus',
+  payment_form: '28',
+  items: [
+    {
+      quantity: 1,
+      product: { description: 'Ejemplo', product_key: '60131324', price: 1 },
+    },
+  ],
+})
+expectAssignable<InvoiceCreateInput>({
+  status: 'draft',
+  customer: null,
+  payment_form: null,
+  use: null,
+})
+client.invoices.updateDraft('draft', { type: 'E', customer: null })
+expectError<InvoiceNominaEditInput>({ type: 'N', customer: null })
+client.invoices.create({
+  type: 'P',
+  customer: 'cus',
+  complements: [
+    {
+      type: 'pago',
+      data: {
+        payment_form: '28',
+        related_documents: [
+          {
+            uuid: '39c85a3f-275b-4341-b259-e8971d9f8a94',
+            amount: 1,
+            installment: 1,
+            last_balance: 1,
+            taxes: [],
+          },
+        ],
+      },
+    },
+  ],
+})
 expectError(
   client.webhooks.create({
     url: 'https://example.com/webhook',

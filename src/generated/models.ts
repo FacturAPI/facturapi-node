@@ -248,10 +248,13 @@ export type InvoiceDraftProperties = Output['schemas']['InvoiceDraftProperties']
 export type InvoiceableCommonInput = Input['schemas']['InvoiceableCommonInput']
 export type InvoiceableCommonEditInput =
   Input['schemas']['InvoiceableCommonEditInput']
+export type InvoiceCustomerInput = Input['schemas']['InvoiceCustomerInput']
 export type InvoiceCommonInputProperties =
   Output['schemas']['InvoiceCommonInputProperties']
 export type InvoiceCommonEditInputProperties =
   Output['schemas']['InvoiceCommonEditInputProperties']
+export type InvoiceDraftInputProperties =
+  Output['schemas']['InvoiceDraftInputProperties']
 export type InvoiceCreateInput = Input['schemas']['InvoiceCreateInput']
 export type InvoiceIngresoInput = Input['schemas']['InvoiceIngresoInput']
 export type InvoiceEgresoInput = Input['schemas']['InvoiceEgresoInput']

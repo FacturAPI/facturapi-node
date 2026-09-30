@@ -5,27 +5,23 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](http://keepachangelog.com/en/1.0.0/)
 and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.html).
 
-## [6.0.0] 2026-09-22
+## [6.0.0] Unreleased
 
 ### Breaking
 
-- Deserialize ISO response timestamps into `Date` objects across SDK resources, including timestamps previously typed as strings (organization access and signed download URLs). Calls relying on string methods must use `date.toISOString()` or other `Date` APIs.
+- Response timestamps are consistently returned as `Date` objects. SAT stamp timestamps and calendar dates remain strings.
+- Request and response types now follow the API contract, with more precise CFDI and complement inputs. TypeScript integrations may need adjustments; see the [migration guide from v3, v4, and v5](README.md#actualizar-desde-v3-v4-o-v5).
 - Import from `facturapi`; direct imports into internal package files such as `facturapi/dist/...` are no longer supported.
-- Type request fields against the API contract instead of accepting arbitrary objects. ISO strings and `Date` values remain supported for date inputs. Response types now reflect optional property tax accounts, nullable role dates, and the documented invoice/ZIP fields; use `cancellation_status` and `canceled_at` instead of `invoice.cancellation`.
-- Preserve required fields in composed input types. CFDI editing types identify their document variant; payroll perception inputs use the published catalog and require hours-extra data for code `019`. Mixed funding requires its own-resource amount, and Carta Porte road transport requires vehicle and liability insurance data.
 
 ### Fixed
 
-- Return parsed webhook events with hydrated dates when signature validation uses the API fallback, matching local validation.
-
-- Match nullable invoice and retention dates to the API response, and hydrate signed webhook events validated locally. SAT `stamp.date` remains a string because it is local wall-clock time without a timezone offset.
-- Allow `null` in customer validation/edit-link dates and `organization.pending_plan_update`, and expose `pending_add_ons_update` and `invoice.canceled_at` in response types.
+- Webhook signature validation consistently returns parsed events with converted dates in Node.js and browsers.
 
 ### Added
 
-- CommonJS supports `const Facturapi = require('facturapi')` directly. The previous `.default` access remains supported. Both CommonJS and ESM imports include matching TypeScript definitions.
-- A [migration guide from v3, v4, and v5](README.md#actualizar-desde-v3-v4-o-v5), including cases that require no code changes.
-- Typed complement variants and public input models; receipt customer assignment, FIEL upload, and API health-check methods. Receipt invoicing distinguishes invoice creation from `dry_run` summaries.
+- Typed inputs for SDK operations, including CFDI variants and structured complements. Receipt invoicing distinguishes invoice creation from `dry_run` summaries.
+- Methods to assign receipt customers, upload FIEL certificates, and check API health.
+- CommonJS supports `const Facturapi = require('facturapi')` directly, while retaining `.default` compatibility. CommonJS and ESM include matching TypeScript definitions.
 
 ## [5.1.0] 2026-09-12
 

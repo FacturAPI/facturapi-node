@@ -11011,12 +11011,20 @@
         ]
       },
       "PagoComplementDataInput": {
-        "type": "array",
         "title": "PagoComplementData",
         "description": "Pagos a incluir en este comprobante. Lo más común es incluir un sólo pago. Un caso en el que se debe de agregar más de uno es cuando el pago se realiza con 2 formas de pago distintas; por ejemplo, cuando se paga una parte con tarjeta y otra en efectivo.",
-        "items": {
-          "$ref": "#/components/schemas/PaymentInput"
-        }
+        "oneOf": [
+          {
+            "$ref": "#/components/schemas/PaymentInput"
+          },
+          {
+            "type": "array",
+            "minItems": 1,
+            "items": {
+              "$ref": "#/components/schemas/PaymentInput"
+            }
+          }
+        ]
       },
       "NominaOrCustomComplementProperties": {
         "title": "Complement",
@@ -14606,23 +14614,26 @@
           }
         }
       },
+      "InvoiceCustomerInput": {
+        "description": "Cliente receptor de la factura.",
+        "oneOf": [
+          {
+            "$ref": "#/components/schemas/CustomerCreateInput"
+          },
+          {
+            "type": "string",
+            "title": "customer_id",
+            "description": "ID del objeto 'customer' previamente registrado en Facturapi."
+          }
+        ]
+      },
       "InvoiceCommonInputProperties": {
         "allOf": [
           {
             "type": "object",
             "properties": {
               "customer": {
-                "description": "Cliente receptor de la factura.",
-                "oneOf": [
-                  {
-                    "$ref": "#/components/schemas/CustomerCreateInput"
-                  },
-                  {
-                    "type": "string",
-                    "title": "customer_id",
-                    "description": "ID del objeto 'customer' previamente registrado en Facturapi."
-                  }
-                ]
+                "$ref": "#/components/schemas/InvoiceCustomerInput"
               },
               "status": {
                 "type": "string",
@@ -14678,19 +14689,6 @@
           {
             "type": "object",
             "properties": {
-              "customer": {
-                "description": "Cliente receptor de la factura.",
-                "oneOf": [
-                  {
-                    "$ref": "#/components/schemas/CustomerCreateInput"
-                  },
-                  {
-                    "type": "string",
-                    "title": "customer_id",
-                    "description": "ID del objeto 'customer' previamente registrado en Facturapi."
-                  }
-                ]
-              },
               "status": {
                 "type": "string",
                 "enum": [
@@ -14735,6 +14733,34 @@
           },
           {
             "$ref": "#/components/schemas/InvoiceableCommonEditInput"
+          }
+        ]
+      },
+      "InvoiceDraftInputProperties": {
+        "allOf": [
+          {
+            "$ref": "#/components/schemas/InvoiceCommonEditInputProperties"
+          },
+          {
+            "type": "object",
+            "properties": {
+              "customer": {
+                "description": "Cliente receptor de la factura.",
+                "oneOf": [
+                  {
+                    "type": "null"
+                  },
+                  {
+                    "$ref": "#/components/schemas/CustomerCreateInput"
+                  },
+                  {
+                    "type": "string",
+                    "title": "customer_id",
+                    "description": "ID del objeto 'customer' previamente registrado en Facturapi."
+                  }
+                ]
+              }
+            }
           }
         ]
       },
@@ -14985,8 +15011,7 @@
         "required": [
           "customer",
           "items",
-          "payment_form",
-          "use"
+          "payment_form"
         ],
         "allOf": [
           {
@@ -15024,9 +15049,11 @@
                 "description": "Código del método de pago según el catálogo del SAT.\n\n- `PUE`: Pago en Una sola Exhibición\n- `PPD`: Pago en Parcialidades o Diferido\n"
               },
               "use": {
-                "type": "string",
-                "default": "G01",
-                "description": "Código de Uso CFDI según el catálogo del SAT. Puedes ver los códigos\nen [esta tabla](#uso-cfdi), o utilizar las constantes incluidas en\nnuestras librerías.\n\nPara factura global debe ingresarse la clave `S01`.\n"
+                "type": [
+                  "string",
+                  "null"
+                ],
+                "description": "Si se omite o es null, se utiliza el uso configurado en el cliente; si no tiene uno, se utiliza G03. Para clientes extranjeros o público en general se utiliza S01.\n\nCódigo de Uso CFDI según el catálogo del SAT. Puedes ver los códigos\nen [esta tabla](#uso-cfdi), o utilizar las constantes incluidas en\nnuestras librerías.\n\nPara factura global debe ingresarse la clave `S01`.\n"
               },
               "currency": {
                 "type": "string",
@@ -15158,7 +15185,7 @@
               },
               "use": {
                 "type": "string",
-                "default": "G01",
+                "default": "G02",
                 "description": "Código de Uso CFDI según el catálogo del SAT. Puedes ver los códigos en [esta tabla](#uso-cfdi), o utilizar las constantes incluidas en nuestras librerías."
               },
               "currency": {
@@ -15341,12 +15368,12 @@
               },
               "use": {
                 "type": "string",
-                "default": "G01",
+                "default": "S01",
                 "description": "Código de Uso CFDI según el catálogo del SAT. Puedes ver los códigos en\n[esta tabla](#uso-cfdi), o utilizar las constantes incluidas en nuestras librerías.\n"
               },
               "currency": {
                 "type": "string",
-                "default": "MXN",
+                "default": "XXX",
                 "description": "Código de la moneda, acorde al estándar [ISO 4217](https://es.wikipedia.org/wiki/ISO_4217)."
               },
               "exchange": {
@@ -15389,7 +15416,10 @@
                 }
               },
               "payment_form": {
-                "type": "string",
+                "type": [
+                  "string",
+                  "null"
+                ],
                 "minLength": 2,
                 "maxLength": 2,
                 "description": "Código que representa la forma de pago, de acuerdo al [catálogo del SAT](#forma-de-pago)."
@@ -15403,7 +15433,10 @@
                 "description": "Código del método de pago según el catálogo del SAT.\n\n- `PUE`: Pago en Una sola Exhibición\n- `PPD`: Pago en Parcialidades o Diferido\n"
               },
               "use": {
-                "type": "string",
+                "type": [
+                  "string",
+                  "null"
+                ],
                 "description": "Código de Uso CFDI según el catálogo del SAT. Puedes ver los códigos\nen [esta tabla](#uso-cfdi), o utilizar las constantes incluidas en\nnuestras librerías.\n\nPara factura global debe ingresarse la clave `S01`.\n"
               },
               "currency": {
@@ -15477,7 +15510,7 @@
             }
           },
           {
-            "$ref": "#/components/schemas/InvoiceCommonEditInputProperties"
+            "$ref": "#/components/schemas/InvoiceDraftInputProperties"
           }
         ]
       },
@@ -15542,7 +15575,7 @@
             }
           },
           {
-            "$ref": "#/components/schemas/InvoiceCommonInputProperties"
+            "$ref": "#/components/schemas/InvoiceDraftInputProperties"
           }
         ]
       },
@@ -15590,7 +15623,7 @@
             }
           },
           {
-            "$ref": "#/components/schemas/InvoiceCommonEditInputProperties"
+            "$ref": "#/components/schemas/InvoiceDraftInputProperties"
           }
         ]
       },
@@ -15600,6 +15633,9 @@
           {
             "type": "object",
             "properties": {
+              "customer": {
+                "$ref": "#/components/schemas/InvoiceCustomerInput"
+              },
               "type": {
                 "type": "string",
                 "const": "N",
@@ -15632,6 +15668,9 @@
           {
             "type": "object",
             "properties": {
+              "customer": {
+                "$ref": "#/components/schemas/InvoiceCustomerInput"
+              },
               "type": {
                 "type": "string",
                 "const": "T",
