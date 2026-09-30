@@ -5,6 +5,7 @@ import openapiTS, { astToString } from 'openapi-typescript'
 import ts from 'typescript'
 import prettier from 'prettier'
 import { compileDatePlans } from './sdk/date-plans.mjs'
+import { resolveOperationBinding } from './sdk/operation-bindings.mjs'
 
 const root = new URL('../', import.meta.url)
 const spec = JSON.parse(
@@ -165,8 +166,8 @@ for (const [name, resource] of Object.entries(resources)) {
     `import { operationDatePlans } from '../generated/dates';`,
   ]
   const methods = []
-  for (const entry of resource.methods) {
-    if (entry.extension === 'validateSignature') {
+  for (const [methodName, binding] of Object.entries(resource.methods)) {
+    if (binding.extension === 'validateSignature') {
       imports.push(
         `import type { ApiEvent, ApiEventPayload, ApiEventType } from '../types';`,
         `import { validateSignature } from '../runtime/webhooks';`,
@@ -176,22 +177,23 @@ for (const [name, resource] of Object.entries(resources)) {
       )
       continue
     }
-    const operation = operations.get(entry.operation)
+    const operationId =
+      typeof binding === 'string' ? binding : binding.operation
+    const operation = operations.get(operationId)
     assert(
       operation,
-      `Missing operation for ${name}.${entry.name}: ${entry.operation}`,
+      `Missing operation for ${name}.${methodName}: ${operationId}`,
     )
+    const entry = {
+      ...resolveOperationBinding(
+        spec,
+        operation,
+        typeof binding === 'string' ? {} : binding,
+      ),
+      name: methodName,
+      operation: operationId,
+    }
     used.add(entry.operation)
-    const query = [
-      ...(spec.paths[operation.path].parameters || []),
-      ...(operation.parameters || []),
-    ].some(
-      (parameter) =>
-        (parameter.$ref
-          ? spec.components.parameters[parameter.$ref.split('/').at(-1)]
-          : parameter
-        ).in === 'query',
-    )
     const argumentsList = entry.arguments.map((argument) => {
       let type = argument.type
       const source =
@@ -204,7 +206,7 @@ for (const [name, resource] of Object.entries(resources)) {
         type =
           source === 'body' && operation.requestBody
             ? `OperationBody<'${entry.operation}'>`
-            : source === 'params' && query
+            : source === 'params' && entry.hasQuery
               ? `OperationQuery<'${entry.operation}'>${argument.nullable ? ' | null' : ''}`
               : 'Record<string, unknown> | null'
       for (const [property, binding] of Object.entries(entry.body || {}))

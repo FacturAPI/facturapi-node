@@ -2,813 +2,147 @@
   "customers": {
     "className": "Customers",
     "directory": "resources",
-    "methods": [
-      {
-        "name": "create",
-        "operation": "createCustomer",
-        "path": {},
-        "arguments": [
-          {
-            "name": "data",
-            "optional": false
-          },
-          {
-            "name": "params",
-            "optional": true,
-            "nullable": true
-          }
-        ],
-        "body": {
-          "argument": "data"
-        },
-        "params": {
-          "argument": "params"
-        }
-      },
-      {
-        "name": "list",
-        "operation": "listCustomers",
-        "path": {},
-        "arguments": [
-          {
-            "name": "params",
-            "optional": true,
-            "nullable": true
-          }
-        ],
-        "params": {
-          "argument": "params"
-        }
-      },
-      {
-        "name": "retrieve",
-        "operation": "getCustomer",
-        "path": {
-          "customer_id": {
-            "argument": "id"
-          }
-        },
-        "arguments": [
-          {
-            "name": "id",
-            "optional": false,
-            "type": "string"
-          }
-        ]
-      },
-      {
-        "name": "update",
-        "operation": "editCustomer",
-        "path": {
-          "customer_id": {
-            "argument": "id"
-          }
-        },
-        "arguments": [
-          {
-            "name": "id",
-            "optional": false,
-            "type": "string"
-          },
-          {
-            "name": "data",
-            "optional": false
-          },
-          {
-            "name": "params",
-            "optional": true,
-            "nullable": true
-          }
-        ],
-        "body": {
-          "argument": "data"
-        },
-        "params": {
-          "argument": "params"
-        }
-      },
-      {
-        "name": "del",
-        "operation": "deleteCustomer",
-        "path": {
-          "customer_id": {
-            "argument": "id"
-          }
-        },
-        "arguments": [
-          {
-            "name": "id",
-            "optional": false,
-            "type": "string"
-          }
-        ]
-      },
-      {
-        "name": "validateTaxInfo",
-        "operation": "validateCustomerTaxInfo",
-        "path": {
-          "customer_id": {
-            "argument": "id"
-          }
-        },
-        "arguments": [
-          {
-            "name": "id",
-            "optional": false,
-            "type": "string"
-          }
-        ]
-      },
-      {
-        "name": "sendEditLinkByEmail",
+    "methods": {
+      "create": "createCustomer",
+      "list": "listCustomers",
+      "retrieve": "getCustomer",
+      "update": "editCustomer",
+      "del": "deleteCustomer",
+      "validateTaxInfo": "validateCustomerTaxInfo",
+      "sendEditLinkByEmail": {
         "operation": "sendEditLinkByEmail",
-        "path": {
-          "customer_id": {
-            "argument": "id"
-          }
+        "argumentNames": {
+          "body": "options"
         },
-        "arguments": [
-          {
-            "name": "id",
-            "optional": false,
-            "type": "string"
-          },
-          {
-            "name": "options",
-            "optional": false
-          }
-        ],
-        "body": {
-          "argument": "options"
+        "optional": {
+          "options": false
         }
       }
-    ]
+    }
   },
   "invoices": {
     "className": "Invoices",
     "directory": "resources",
-    "methods": [
-      {
-        "name": "create",
+    "methods": {
+      "create": {
         "operation": "createInvoice",
-        "path": {},
-        "arguments": [
-          {
-            "name": "body",
-            "optional": false
-          },
-          {
-            "name": "params",
-            "optional": true,
-            "nullable": true
-          }
-        ],
-        "body": {
-          "argument": "body"
-        },
-        "params": {
-          "argument": "params"
+        "argumentNames": {
+          "body": "body"
         }
       },
-      {
-        "name": "list",
-        "operation": "listInvoices",
-        "path": {},
-        "arguments": [
-          {
-            "name": "params",
-            "optional": true,
-            "nullable": true
-          }
-        ],
-        "params": {
-          "argument": "params"
-        }
-      },
-      {
-        "name": "retrieve",
-        "operation": "getInvoice",
-        "path": {
-          "invoice_id": {
-            "argument": "id"
-          }
-        },
-        "arguments": [
-          {
-            "name": "id",
-            "optional": false,
-            "type": "string"
-          }
-        ]
-      },
-      {
-        "name": "paymentSummary",
-        "operation": "getInvoicePaymentSummary",
-        "path": {
-          "invoice_id": {
-            "argument": "id"
-          }
-        },
-        "arguments": [
-          {
-            "name": "id",
-            "optional": false,
-            "type": "string"
-          },
-          {
-            "name": "params",
-            "optional": false
-          }
-        ],
-        "params": {
-          "argument": "params"
-        }
-      },
-      {
-        "name": "cancel",
-        "operation": "cancelInvoice",
-        "path": {
-          "invoice_id": {
-            "argument": "id"
-          }
-        },
-        "arguments": [
-          {
-            "name": "id",
-            "optional": false,
-            "type": "string"
-          },
-          {
-            "name": "params",
-            "optional": false
-          }
-        ],
-        "params": {
-          "argument": "params"
-        }
-      },
-      {
-        "name": "sendByEmail",
+      "list": "listInvoices",
+      "retrieve": "getInvoice",
+      "paymentSummary": "getInvoicePaymentSummary",
+      "cancel": "cancelInvoice",
+      "sendByEmail": {
         "operation": "sendInvoiceByEmail",
-        "path": {
-          "invoice_id": {
-            "argument": "id"
-          }
-        },
-        "arguments": [
-          {
-            "name": "id",
-            "optional": false,
-            "type": "string"
-          },
-          {
-            "name": "options",
-            "optional": true
-          }
-        ],
-        "body": {
-          "argument": "options"
+        "argumentNames": {
+          "body": "options"
         }
       },
-      {
-        "name": "downloadPdf",
+      "downloadPdf": {
         "operation": "downloadInvoice",
         "path": {
-          "invoice_id": {
-            "argument": "id"
-          },
-          "format": {
-            "value": "pdf"
-          }
-        },
-        "arguments": [
-          {
-            "name": "id",
-            "optional": false,
-            "type": "string"
-          }
-        ]
-      },
-      {
-        "name": "downloadXml",
-        "operation": "downloadInvoice",
-        "path": {
-          "invoice_id": {
-            "argument": "id"
-          },
-          "format": {
-            "value": "xml"
-          }
-        },
-        "arguments": [
-          {
-            "name": "id",
-            "optional": false,
-            "type": "string"
-          }
-        ]
-      },
-      {
-        "name": "downloadZip",
-        "operation": "downloadInvoice",
-        "path": {
-          "invoice_id": {
-            "argument": "id"
-          },
-          "format": {
-            "value": "zip"
-          }
-        },
-        "arguments": [
-          {
-            "name": "id",
-            "optional": false,
-            "type": "string"
-          }
-        ]
-      },
-      {
-        "name": "downloadPdfUrl",
-        "operation": "getInvoiceDownloadUrl",
-        "path": {
-          "invoice_id": {
-            "argument": "id"
-          },
-          "format": {
-            "value": "pdf"
-          }
-        },
-        "arguments": [
-          {
-            "name": "id",
-            "optional": false,
-            "type": "string"
-          }
-        ]
-      },
-      {
-        "name": "downloadXmlUrl",
-        "operation": "getInvoiceDownloadUrl",
-        "path": {
-          "invoice_id": {
-            "argument": "id"
-          },
-          "format": {
-            "value": "xml"
-          }
-        },
-        "arguments": [
-          {
-            "name": "id",
-            "optional": false,
-            "type": "string"
-          }
-        ]
-      },
-      {
-        "name": "downloadZipUrl",
-        "operation": "getInvoiceDownloadUrl",
-        "path": {
-          "invoice_id": {
-            "argument": "id"
-          },
-          "format": {
-            "value": "zip"
-          }
-        },
-        "arguments": [
-          {
-            "name": "id",
-            "optional": false,
-            "type": "string"
-          }
-        ]
-      },
-      {
-        "name": "createZipRequest",
-        "operation": "createInvoiceZipRequest",
-        "path": {},
-        "arguments": [
-          {
-            "name": "data",
-            "optional": false
-          }
-        ],
-        "body": {
-          "argument": "data"
+          "format": "pdf"
         }
       },
-      {
-        "name": "listZipRequests",
-        "operation": "listInvoiceZipRequests",
-        "path": {},
-        "arguments": [
-          {
-            "name": "params",
-            "optional": true,
-            "nullable": true
-          }
-        ],
-        "params": {
-          "argument": "params"
+      "downloadXml": {
+        "operation": "downloadInvoice",
+        "path": {
+          "format": "xml"
         }
       },
-      {
-        "name": "retrieveZipRequest",
-        "operation": "retrieveInvoiceZipRequest",
+      "downloadZip": {
+        "operation": "downloadInvoice",
         "path": {
-          "id": {
-            "argument": "id"
-          }
-        },
-        "arguments": [
-          {
-            "name": "id",
-            "optional": false,
-            "type": "string"
-          }
-        ]
+          "format": "zip"
+        }
       },
-      {
-        "name": "downloadZipRequest",
-        "operation": "downloadInvoiceZipRequest",
+      "downloadPdfUrl": {
+        "operation": "getInvoiceDownloadUrl",
         "path": {
-          "id": {
-            "argument": "id"
-          }
-        },
-        "arguments": [
-          {
-            "name": "id",
-            "optional": false,
-            "type": "string"
-          }
-        ]
+          "format": "pdf"
+        }
       },
-      {
-        "name": "downloadZipRequestUrl",
-        "operation": "getInvoiceZipRequestDownloadUrl",
+      "downloadXmlUrl": {
+        "operation": "getInvoiceDownloadUrl",
         "path": {
-          "id": {
-            "argument": "id"
-          }
-        },
-        "arguments": [
-          {
-            "name": "id",
-            "optional": false,
-            "type": "string"
-          }
-        ]
+          "format": "xml"
+        }
       },
-      {
-        "name": "downloadCancellationReceiptXml",
+      "downloadZipUrl": {
+        "operation": "getInvoiceDownloadUrl",
+        "path": {
+          "format": "zip"
+        }
+      },
+      "createZipRequest": "createInvoiceZipRequest",
+      "listZipRequests": "listInvoiceZipRequests",
+      "retrieveZipRequest": "retrieveInvoiceZipRequest",
+      "downloadZipRequest": "downloadInvoiceZipRequest",
+      "downloadZipRequestUrl": "getInvoiceZipRequestDownloadUrl",
+      "downloadCancellationReceiptXml": {
         "operation": "downloadCancellationReceiptXml",
         "path": {
-          "invoice_id": {
-            "argument": "id"
-          },
-          "format": {
-            "value": "xml"
-          }
-        },
-        "arguments": [
-          {
-            "name": "id",
-            "optional": false,
-            "type": "string"
-          }
-        ]
+          "format": "xml"
+        }
       },
-      {
-        "name": "downloadCancellationReceiptPdf",
+      "downloadCancellationReceiptPdf": {
         "operation": "downloadCancellationReceiptXml",
         "path": {
-          "invoice_id": {
-            "argument": "id"
-          },
-          "format": {
-            "value": "pdf"
-          }
-        },
-        "arguments": [
-          {
-            "name": "id",
-            "optional": false,
-            "type": "string"
-          }
-        ]
-      },
-      {
-        "name": "downloadCancellationReceiptPdfUrl",
-        "operation": "getCancellationReceiptDownloadUrl",
-        "path": {
-          "invoice_id": {
-            "argument": "id"
-          },
-          "format": {
-            "value": "pdf"
-          }
-        },
-        "arguments": [
-          {
-            "name": "id",
-            "optional": false,
-            "type": "string"
-          }
-        ]
-      },
-      {
-        "name": "downloadCancellationReceiptXmlUrl",
-        "operation": "getCancellationReceiptDownloadUrl",
-        "path": {
-          "invoice_id": {
-            "argument": "id"
-          },
-          "format": {
-            "value": "xml"
-          }
-        },
-        "arguments": [
-          {
-            "name": "id",
-            "optional": false,
-            "type": "string"
-          }
-        ]
-      },
-      {
-        "name": "updateDraft",
-        "operation": "updateDraftInvoice",
-        "path": {
-          "invoice_id": {
-            "argument": "id"
-          }
-        },
-        "arguments": [
-          {
-            "name": "id",
-            "optional": false,
-            "type": "string"
-          },
-          {
-            "name": "data",
-            "optional": false
-          }
-        ],
-        "body": {
-          "argument": "data"
+          "format": "pdf"
         }
       },
-      {
-        "name": "stampDraft",
-        "operation": "stampDraftInvoice",
+      "downloadCancellationReceiptPdfUrl": {
+        "operation": "getCancellationReceiptDownloadUrl",
         "path": {
-          "invoice_id": {
-            "argument": "id"
-          }
-        },
-        "arguments": [
-          {
-            "name": "id",
-            "optional": false,
-            "type": "string"
-          },
-          {
-            "name": "params",
-            "optional": true,
-            "nullable": true
-          }
-        ],
-        "params": {
-          "argument": "params"
+          "format": "pdf"
         }
       },
-      {
-        "name": "updateStatus",
-        "operation": "updateInvoiceStatus",
+      "downloadCancellationReceiptXmlUrl": {
+        "operation": "getCancellationReceiptDownloadUrl",
         "path": {
-          "invoice_id": {
-            "argument": "id"
-          }
-        },
-        "arguments": [
-          {
-            "name": "id",
-            "optional": false,
-            "type": "string"
-          }
-        ]
+          "format": "xml"
+        }
       },
-      {
-        "name": "copyToDraft",
-        "operation": "copyToDraftInvoice",
-        "path": {
-          "invoice_id": {
-            "argument": "id"
-          }
-        },
-        "arguments": [
-          {
-            "name": "id",
-            "optional": false,
-            "type": "string"
-          }
-        ]
-      },
-      {
-        "name": "previewPdf",
+      "updateDraft": "updateDraftInvoice",
+      "stampDraft": "stampDraftInvoice",
+      "updateStatus": "updateInvoiceStatus",
+      "copyToDraft": "copyToDraftInvoice",
+      "previewPdf": {
         "operation": "previewInvoicePdf",
-        "path": {},
-        "arguments": [
-          {
-            "name": "body",
-            "optional": false
-          }
-        ],
-        "body": {
-          "argument": "body"
+        "argumentNames": {
+          "body": "body"
         }
       },
-      {
-        "name": "previewPdfUrl",
+      "previewPdfUrl": {
         "operation": "previewInvoicePdfUrl",
-        "path": {},
-        "arguments": [
-          {
-            "name": "body",
-            "optional": false
-          }
-        ],
-        "body": {
-          "argument": "body"
+        "argumentNames": {
+          "body": "body"
         }
       }
-    ]
+    }
   },
   "organizations": {
     "className": "Organizations",
     "directory": "resources",
-    "methods": [
-      {
-        "name": "create",
-        "operation": "createOrganization",
-        "path": {},
-        "arguments": [
-          {
-            "name": "data",
-            "optional": false
-          }
-        ],
-        "body": {
-          "argument": "data"
-        }
-      },
-      {
-        "name": "list",
-        "operation": "listOrganizations",
-        "path": {},
-        "arguments": [
-          {
-            "name": "params",
-            "optional": true,
-            "nullable": true
-          }
-        ],
-        "params": {
-          "argument": "params"
-        }
-      },
-      {
-        "name": "retrieve",
-        "operation": "getOrganization",
-        "path": {
-          "organization_id": {
-            "argument": "id"
-          }
-        },
-        "arguments": [
-          {
-            "name": "id",
-            "optional": false,
-            "type": "string"
-          }
-        ]
-      },
-      {
-        "name": "updateLegal",
-        "operation": "editOrganizationLegal",
-        "path": {
-          "organization_id": {
-            "argument": "id"
-          }
-        },
-        "arguments": [
-          {
-            "name": "id",
-            "optional": false,
-            "type": "string"
-          },
-          {
-            "name": "data",
-            "optional": false
-          }
-        ],
-        "body": {
-          "argument": "data"
-        }
-      },
-      {
-        "name": "updateCustomization",
-        "operation": "editOrganizationCustomization",
-        "path": {
-          "organization_id": {
-            "argument": "id"
-          }
-        },
-        "arguments": [
-          {
-            "name": "id",
-            "optional": false,
-            "type": "string"
-          },
-          {
-            "name": "data",
-            "optional": false
-          }
-        ],
-        "body": {
-          "argument": "data"
-        }
-      },
-      {
-        "name": "updateReceiptSettings",
-        "operation": "editOrganizationReceiptsSettings",
-        "path": {
-          "organization_id": {
-            "argument": "id"
-          }
-        },
-        "arguments": [
-          {
-            "name": "id",
-            "optional": false,
-            "type": "string"
-          },
-          {
-            "name": "data",
-            "optional": false
-          }
-        ],
-        "body": {
-          "argument": "data"
-        }
-      },
-      {
-        "name": "updateDomain",
-        "operation": "editOrganizationDomain",
-        "path": {
-          "organization_id": {
-            "argument": "id"
-          }
-        },
-        "arguments": [
-          {
-            "name": "id",
-            "optional": false,
-            "type": "string"
-          },
-          {
-            "name": "data",
-            "optional": false
-          }
-        ],
-        "body": {
-          "argument": "data"
-        }
-      },
-      {
-        "name": "checkDomainIsAvailable",
+    "methods": {
+      "create": "createOrganization",
+      "list": "listOrganizations",
+      "retrieve": "getOrganization",
+      "updateLegal": "editOrganizationLegal",
+      "updateCustomization": "editOrganizationCustomization",
+      "updateReceiptSettings": "editOrganizationReceiptsSettings",
+      "updateDomain": "editOrganizationDomain",
+      "checkDomainIsAvailable": {
         "operation": "checkDomainAvailability",
-        "path": {},
-        "arguments": [
-          {
-            "name": "data",
-            "optional": false
-          }
-        ],
-        "params": {
-          "argument": "data"
+        "argumentNames": {
+          "query": "data"
         }
       },
-      {
-        "name": "uploadLogo",
+      "uploadLogo": {
         "operation": "uploadOrganizationLogo",
-        "path": {
-          "organization_id": {
-            "argument": "id"
-          }
-        },
+        "extension": "uploadLogo",
         "arguments": [
           {
             "name": "id",
@@ -820,18 +154,11 @@
             "optional": false,
             "type": "BinaryInput"
           }
-        ],
-        "formData": true,
-        "extension": "uploadLogo"
+        ]
       },
-      {
-        "name": "uploadCertificate",
+      "uploadCertificate": {
         "operation": "uploadOrganizationCertificate",
-        "path": {
-          "organization_id": {
-            "argument": "id"
-          }
-        },
+        "extension": "uploadCertificate",
         "arguments": [
           {
             "name": "id",
@@ -853,325 +180,65 @@
             "optional": false,
             "type": "string"
           }
-        ],
-        "formData": true,
-        "extension": "uploadCertificate"
-      },
-      {
-        "name": "deleteCertificate",
-        "operation": "deleteOrganizationCertificate",
-        "path": {
-          "organization_id": {
-            "argument": "id"
-          }
-        },
-        "arguments": [
-          {
-            "name": "id",
-            "optional": false,
-            "type": "string"
-          }
         ]
       },
-      {
-        "name": "del",
-        "operation": "deleteOrganization",
-        "path": {
-          "organization_id": {
-            "argument": "id"
-          }
-        },
-        "arguments": [
-          {
-            "name": "id",
-            "optional": false,
-            "type": "string"
-          }
-        ]
-      },
-      {
-        "name": "getTestApiKey",
-        "operation": "getTestApiKey",
-        "path": {
-          "organization_id": {
-            "argument": "id"
-          }
-        },
-        "arguments": [
-          {
-            "name": "id",
-            "optional": false,
-            "type": "string"
-          }
-        ]
-      },
-      {
-        "name": "renewTestApiKey",
-        "operation": "renewTestApiKey",
-        "path": {
-          "organization_id": {
-            "argument": "id"
-          }
-        },
-        "arguments": [
-          {
-            "name": "id",
-            "optional": false,
-            "type": "string"
-          }
-        ]
-      },
-      {
-        "name": "listLiveApiKeys",
-        "operation": "listLiveApiKeys",
-        "path": {
-          "organization_id": {
-            "argument": "id"
-          }
-        },
-        "arguments": [
-          {
-            "name": "id",
-            "optional": false,
-            "type": "string"
-          }
-        ]
-      },
-      {
-        "name": "renewLiveApiKey",
-        "operation": "renewLiveApiKey",
-        "path": {
-          "organization_id": {
-            "argument": "id"
-          }
-        },
-        "arguments": [
-          {
-            "name": "id",
-            "optional": false,
-            "type": "string"
-          }
-        ]
-      },
-      {
-        "name": "deleteLiveApiKey",
+      "deleteCertificate": "deleteOrganizationCertificate",
+      "del": "deleteOrganization",
+      "getTestApiKey": "getTestApiKey",
+      "renewTestApiKey": "renewTestApiKey",
+      "listLiveApiKeys": "listLiveApiKeys",
+      "renewLiveApiKey": "renewLiveApiKey",
+      "deleteLiveApiKey": {
         "operation": "deleteLiveApiKey",
-        "path": {
-          "organization_id": {
-            "argument": "organizationId"
-          },
-          "id": {
-            "argument": "apiKeyId"
-          }
-        },
-        "arguments": [
-          {
-            "name": "organizationId",
-            "optional": false,
-            "type": "string"
-          },
-          {
-            "name": "apiKeyId",
-            "optional": false,
-            "type": "string"
-          }
-        ]
+        "argumentNames": {
+          "id": "apiKeyId"
+        }
       },
-      {
-        "name": "listSeriesGroup",
+      "listSeriesGroup": {
         "operation": "getSeriesGroup",
-        "path": {
-          "organization_id": {
-            "argument": "organization_id"
-          }
-        },
-        "arguments": [
-          {
-            "name": "organization_id",
-            "optional": false,
-            "type": "string"
-          }
-        ]
+        "argumentNames": {
+          "organization_id": "organization_id"
+        }
       },
-      {
-        "name": "createSeriesGroup",
+      "createSeriesGroup": {
         "operation": "createSeriesGroup",
-        "path": {
-          "organization_id": {
-            "argument": "organization_id"
-          }
-        },
-        "arguments": [
-          {
-            "name": "organization_id",
-            "optional": false,
-            "type": "string"
-          },
-          {
-            "name": "seriesData",
-            "optional": false
-          }
-        ],
-        "body": {
-          "argument": "seriesData"
+        "argumentNames": {
+          "organization_id": "organization_id",
+          "body": "seriesData"
         }
       },
-      {
-        "name": "updateSeriesGroup",
+      "updateSeriesGroup": {
         "operation": "updateSeriesGroup",
-        "path": {
-          "organization_id": {
-            "argument": "organization_id"
-          },
-          "series_name": {
-            "argument": "seriesName"
-          }
-        },
-        "arguments": [
-          {
-            "name": "organization_id",
-            "optional": false,
-            "type": "string"
-          },
-          {
-            "name": "seriesName",
-            "optional": false,
-            "type": "string"
-          },
-          {
-            "name": "data",
-            "optional": false
-          }
-        ],
-        "body": {
-          "argument": "data"
+        "argumentNames": {
+          "organization_id": "organization_id"
         }
       },
-      {
-        "name": "updateDefaultSeries",
+      "updateDefaultSeries": {
         "operation": "updateDefaultSeries",
-        "path": {
-          "organization_id": {
-            "argument": "organization_id"
-          }
-        },
-        "arguments": [
-          {
-            "name": "organization_id",
-            "optional": false,
-            "type": "string"
-          },
-          {
-            "name": "data",
-            "optional": false
-          }
-        ],
-        "body": {
-          "argument": "data"
+        "argumentNames": {
+          "organization_id": "organization_id"
         }
       },
-      {
-        "name": "deleteSeriesGroup",
+      "deleteSeriesGroup": {
         "operation": "deleteSeriesGroup",
-        "path": {
-          "organization_id": {
-            "argument": "organization_id"
-          },
-          "series_name": {
-            "argument": "seriesName"
-          }
-        },
-        "arguments": [
-          {
-            "name": "organization_id",
-            "optional": false,
-            "type": "string"
-          },
-          {
-            "name": "seriesName",
-            "optional": false,
-            "type": "string"
-          }
-        ]
-      },
-      {
-        "name": "me",
-        "operation": "meOrganization",
-        "path": {},
-        "arguments": []
-      },
-      {
-        "name": "updateSelfInvoiceSettings",
-        "operation": "editOrganizationSelfInvoiceSettings",
-        "path": {
-          "organization_id": {
-            "argument": "id"
-          }
-        },
-        "arguments": [
-          {
-            "name": "id",
-            "optional": false,
-            "type": "string"
-          },
-          {
-            "name": "data",
-            "optional": false
-          }
-        ],
-        "body": {
-          "argument": "data"
+        "argumentNames": {
+          "organization_id": "organization_id"
         }
       },
-      {
-        "name": "listTeamAccess",
+      "me": "meOrganization",
+      "updateSelfInvoiceSettings": "editOrganizationSelfInvoiceSettings",
+      "listTeamAccess": {
         "operation": "getOrganizationTeam",
-        "path": {
-          "organization_id": {
-            "argument": "organizationId"
-          }
-        },
-        "arguments": [
-          {
-            "name": "organizationId",
-            "optional": false,
-            "type": "string"
-          }
-        ]
+        "argumentNames": {
+          "organization_id": "organizationId"
+        }
       },
-      {
-        "name": "retrieveTeamAccess",
-        "operation": "getOrganizationTeamUser",
-        "path": {
-          "organization_id": {
-            "argument": "organizationId"
-          },
-          "access_id": {
-            "argument": "accessId"
-          }
-        },
-        "arguments": [
-          {
-            "name": "organizationId",
-            "optional": false,
-            "type": "string"
-          },
-          {
-            "name": "accessId",
-            "optional": false,
-            "type": "string"
-          }
-        ]
-      },
-      {
-        "name": "updateTeamAccessRole",
+      "retrieveTeamAccess": "getOrganizationTeamUser",
+      "updateTeamAccessRole": {
         "operation": "updateOrganizationTeamUserRole",
-        "path": {
-          "organization_id": {
-            "argument": "organizationId"
-          },
-          "access_id": {
-            "argument": "accessId"
+        "body": {
+          "role": {
+            "argument": "role"
           }
         },
         "arguments": [
@@ -1190,287 +257,59 @@
             "optional": false,
             "type": "string"
           }
-        ],
-        "body": {
-          "role": {
-            "argument": "role"
-          }
-        }
-      },
-      {
-        "name": "removeTeamAccess",
-        "operation": "removeOrganizationUserAccess",
-        "path": {
-          "organization_id": {
-            "argument": "organizationId"
-          },
-          "access_id": {
-            "argument": "accessId"
-          }
-        },
-        "arguments": [
-          {
-            "name": "organizationId",
-            "optional": false,
-            "type": "string"
-          },
-          {
-            "name": "accessId",
-            "optional": false,
-            "type": "string"
-          }
         ]
       },
-      {
-        "name": "listSentTeamInvites",
+      "removeTeamAccess": "removeOrganizationUserAccess",
+      "listSentTeamInvites": {
         "operation": "listOrganizationTeamInvites",
-        "path": {
-          "organization_id": {
-            "argument": "organizationId"
-          }
-        },
-        "arguments": [
-          {
-            "name": "organizationId",
-            "optional": false,
-            "type": "string"
-          }
-        ]
+        "argumentNames": {
+          "organization_id": "organizationId"
+        }
       },
-      {
-        "name": "inviteUserToTeam",
+      "inviteUserToTeam": {
         "operation": "createOrganizationTeamInvite",
-        "path": {
-          "organization_id": {
-            "argument": "organizationId"
-          }
-        },
-        "arguments": [
-          {
-            "name": "organizationId",
-            "optional": false,
-            "type": "string"
-          },
-          {
-            "name": "data",
-            "optional": false
-          }
-        ],
-        "body": {
-          "argument": "data"
+        "argumentNames": {
+          "organization_id": "organizationId"
         }
       },
-      {
-        "name": "cancelTeamInvite",
-        "operation": "deleteOrganizationTeamInvite",
-        "path": {
-          "organization_id": {
-            "argument": "organizationId"
-          },
-          "invite_key": {
-            "argument": "inviteKey"
-          }
-        },
-        "arguments": [
-          {
-            "name": "organizationId",
-            "optional": false,
-            "type": "string"
-          },
-          {
-            "name": "inviteKey",
-            "optional": false,
-            "type": "string"
-          }
-        ]
-      },
-      {
-        "name": "listReceivedTeamInvites",
-        "operation": "listPendingOrganizationInvites",
-        "path": {},
-        "arguments": []
-      },
-      {
-        "name": "respondTeamInvite",
+      "cancelTeamInvite": "deleteOrganizationTeamInvite",
+      "listReceivedTeamInvites": "listPendingOrganizationInvites",
+      "respondTeamInvite": {
         "operation": "respondOrganizationInvite",
-        "path": {
-          "invite_key": {
-            "argument": "inviteKey"
-          }
-        },
-        "arguments": [
-          {
-            "name": "inviteKey",
-            "optional": false,
-            "type": "string"
-          },
-          {
-            "name": "data",
-            "optional": false
-          }
-        ],
-        "body": {
-          "argument": "data"
+        "argumentNames": {
+          "invite_key": "inviteKey"
         }
       },
-      {
-        "name": "listTeamRoles",
+      "listTeamRoles": {
         "operation": "listOrganizationPermissionRoles",
-        "path": {
-          "organization_id": {
-            "argument": "organizationId"
-          }
-        },
-        "arguments": [
-          {
-            "name": "organizationId",
-            "optional": false,
-            "type": "string"
-          }
-        ]
+        "argumentNames": {
+          "organization_id": "organizationId"
+        }
       },
-      {
-        "name": "listTeamRoleTemplates",
+      "listTeamRoleTemplates": {
         "operation": "listOrganizationPermissionRoleTemplates",
-        "path": {
-          "organization_id": {
-            "argument": "organizationId"
-          }
-        },
-        "arguments": [
-          {
-            "name": "organizationId",
-            "optional": false,
-            "type": "string"
-          }
-        ]
+        "argumentNames": {
+          "organization_id": "organizationId"
+        }
       },
-      {
-        "name": "listTeamRoleOperations",
+      "listTeamRoleOperations": {
         "operation": "listOrganizationPermissionOperations",
-        "path": {
-          "organization_id": {
-            "argument": "organizationId"
-          }
-        },
-        "arguments": [
-          {
-            "name": "organizationId",
-            "optional": false,
-            "type": "string"
-          }
-        ]
+        "argumentNames": {
+          "organization_id": "organizationId"
+        }
       },
-      {
-        "name": "retrieveTeamRole",
-        "operation": "getOrganizationPermissionRole",
-        "path": {
-          "organization_id": {
-            "argument": "organizationId"
-          },
-          "role_id": {
-            "argument": "roleId"
-          }
-        },
-        "arguments": [
-          {
-            "name": "organizationId",
-            "optional": false,
-            "type": "string"
-          },
-          {
-            "name": "roleId",
-            "optional": false,
-            "type": "string"
-          }
-        ]
-      },
-      {
-        "name": "createTeamRole",
+      "retrieveTeamRole": "getOrganizationPermissionRole",
+      "createTeamRole": {
         "operation": "createOrganizationPermissionRole",
-        "path": {
-          "organization_id": {
-            "argument": "organizationId"
-          }
-        },
-        "arguments": [
-          {
-            "name": "organizationId",
-            "optional": false,
-            "type": "string"
-          },
-          {
-            "name": "data",
-            "optional": false
-          }
-        ],
-        "body": {
-          "argument": "data"
+        "argumentNames": {
+          "organization_id": "organizationId"
         }
       },
-      {
-        "name": "updateTeamRole",
-        "operation": "updateOrganizationPermissionRole",
-        "path": {
-          "organization_id": {
-            "argument": "organizationId"
-          },
-          "role_id": {
-            "argument": "roleId"
-          }
-        },
-        "arguments": [
-          {
-            "name": "organizationId",
-            "optional": false,
-            "type": "string"
-          },
-          {
-            "name": "roleId",
-            "optional": false,
-            "type": "string"
-          },
-          {
-            "name": "data",
-            "optional": false
-          }
-        ],
-        "body": {
-          "argument": "data"
-        }
-      },
-      {
-        "name": "deleteTeamRole",
-        "operation": "deleteOrganizationPermissionRole",
-        "path": {
-          "organization_id": {
-            "argument": "organizationId"
-          },
-          "role_id": {
-            "argument": "roleId"
-          }
-        },
-        "arguments": [
-          {
-            "name": "organizationId",
-            "optional": false,
-            "type": "string"
-          },
-          {
-            "name": "roleId",
-            "optional": false,
-            "type": "string"
-          }
-        ]
-      },
-      {
-        "name": "uploadFiel",
+      "updateTeamRole": "updateOrganizationPermissionRole",
+      "deleteTeamRole": "deleteOrganizationPermissionRole",
+      "uploadFiel": {
         "operation": "uploadOrganizationFiel",
-        "path": {
-          "organization_id": {
-            "argument": "id"
-          }
-        },
+        "extension": "uploadCertificate",
         "arguments": [
           {
             "name": "id",
@@ -1492,201 +331,32 @@
             "optional": false,
             "type": "string"
           }
-        ],
-        "formData": true,
-        "extension": "uploadCertificate"
+        ]
       }
-    ]
+    }
   },
   "products": {
     "className": "Products",
     "directory": "resources",
-    "methods": [
-      {
-        "name": "create",
-        "operation": "createProduct",
-        "path": {},
-        "arguments": [
-          {
-            "name": "data",
-            "optional": false
-          }
-        ],
-        "body": {
-          "argument": "data"
-        }
-      },
-      {
-        "name": "list",
-        "operation": "listProducts",
-        "path": {},
-        "arguments": [
-          {
-            "name": "params",
-            "optional": true,
-            "nullable": true
-          }
-        ],
-        "params": {
-          "argument": "params"
-        }
-      },
-      {
-        "name": "retrieve",
-        "operation": "getProduct",
-        "path": {
-          "product_id": {
-            "argument": "id"
-          }
-        },
-        "arguments": [
-          {
-            "name": "id",
-            "optional": false,
-            "type": "string"
-          }
-        ]
-      },
-      {
-        "name": "update",
-        "operation": "editProduct",
-        "path": {
-          "product_id": {
-            "argument": "id"
-          }
-        },
-        "arguments": [
-          {
-            "name": "id",
-            "optional": false,
-            "type": "string"
-          },
-          {
-            "name": "data",
-            "optional": false
-          }
-        ],
-        "body": {
-          "argument": "data"
-        }
-      },
-      {
-        "name": "del",
-        "operation": "deleteProduct",
-        "path": {
-          "product_id": {
-            "argument": "id"
-          }
-        },
-        "arguments": [
-          {
-            "name": "id",
-            "optional": false,
-            "type": "string"
-          }
-        ]
-      }
-    ]
+    "methods": {
+      "create": "createProduct",
+      "list": "listProducts",
+      "retrieve": "getProduct",
+      "update": "editProduct",
+      "del": "deleteProduct"
+    }
   },
   "receipts": {
     "className": "Receipts",
     "directory": "resources",
-    "methods": [
-      {
-        "name": "create",
-        "operation": "createReceipt",
-        "path": {},
-        "arguments": [
-          {
-            "name": "data",
-            "optional": false
-          }
-        ],
-        "body": {
-          "argument": "data"
-        }
-      },
-      {
-        "name": "list",
-        "operation": "listReceipts",
-        "path": {},
-        "arguments": [
-          {
-            "name": "params",
-            "optional": true,
-            "nullable": true
-          }
-        ],
-        "params": {
-          "argument": "params"
-        }
-      },
-      {
-        "name": "retrieve",
-        "operation": "getReceipt",
-        "path": {
-          "receipt_id": {
-            "argument": "id"
-          }
-        },
-        "arguments": [
-          {
-            "name": "id",
-            "optional": false,
-            "type": "string"
-          }
-        ]
-      },
-      {
-        "name": "invoice",
-        "operation": "invoiceReceipt",
-        "path": {
-          "receipt_id": {
-            "argument": "id"
-          }
-        },
-        "arguments": [
-          {
-            "name": "id",
-            "optional": false,
-            "type": "string"
-          },
-          {
-            "name": "data",
-            "optional": false
-          }
-        ],
-        "body": {
-          "argument": "data"
-        }
-      },
-      {
-        "name": "createGlobalInvoice",
-        "operation": "createGlobalInvoice",
-        "path": {},
-        "arguments": [
-          {
-            "name": "data",
-            "optional": false
-          }
-        ],
-        "body": {
-          "argument": "data"
-        }
-      },
-      {
-        "name": "toInvoice",
+    "methods": {
+      "create": "createReceipt",
+      "list": "listReceipts",
+      "retrieve": "getReceipt",
+      "invoice": "invoiceReceipt",
+      "createGlobalInvoice": "createGlobalInvoice",
+      "toInvoice": {
         "operation": "createToInvoiceFromReceipts",
-        "path": {},
-        "arguments": [
-          {
-            "name": "data",
-            "optional": false
-          }
-        ],
-        "body": {
-          "argument": "data"
-        },
         "responseByFlag": {
           "argument": "data",
           "property": "dry_run",
@@ -1694,728 +364,203 @@
           "false": "Invoice"
         }
       },
-      {
-        "name": "previewToInvoicePdf",
-        "operation": "previewToInvoiceFromReceipts",
-        "path": {},
-        "arguments": [
-          {
-            "name": "data",
-            "optional": false
-          }
-        ],
-        "body": {
-          "argument": "data"
-        }
-      },
-      {
-        "name": "previewToInvoicePdfUrl",
-        "operation": "previewToInvoiceFromReceiptsUrl",
-        "path": {},
-        "arguments": [
-          {
-            "name": "data",
-            "optional": false
-          }
-        ],
-        "body": {
-          "argument": "data"
-        }
-      },
-      {
-        "name": "cancel",
-        "operation": "cancelReceipt",
-        "path": {
-          "receipt_id": {
-            "argument": "id"
-          }
-        },
-        "arguments": [
-          {
-            "name": "id",
-            "optional": false,
-            "type": "string"
-          }
-        ]
-      },
-      {
-        "name": "sendByEmail",
-        "operation": "sendReceiptByEmail",
-        "path": {
-          "receipt_id": {
-            "argument": "id"
-          }
-        },
-        "arguments": [
-          {
-            "name": "id",
-            "optional": false,
-            "type": "string"
-          },
-          {
-            "name": "data",
-            "optional": true
-          }
-        ],
-        "body": {
-          "argument": "data"
-        }
-      },
-      {
-        "name": "downloadPdf",
-        "operation": "downloadReceiptPdf",
-        "path": {
-          "receipt_id": {
-            "argument": "id"
-          }
-        },
-        "arguments": [
-          {
-            "name": "id",
-            "optional": false,
-            "type": "string"
-          }
-        ]
-      },
-      {
-        "name": "downloadPdfUrl",
-        "operation": "getReceiptDownloadUrl",
-        "path": {
-          "receipt_id": {
-            "argument": "id"
-          }
-        },
-        "arguments": [
-          {
-            "name": "id",
-            "optional": false,
-            "type": "string"
-          }
-        ]
-      },
-      {
-        "name": "updateCustomer",
-        "operation": "assignReceiptCustomer",
-        "path": {
-          "receipt_id": {
-            "argument": "id"
-          }
-        },
-        "arguments": [
-          {
-            "name": "id",
-            "optional": false,
-            "type": "string"
-          },
-          {
-            "name": "data",
-            "optional": false
-          }
-        ],
-        "body": {
-          "argument": "data"
-        }
-      }
-    ]
+      "previewToInvoicePdf": "previewToInvoiceFromReceipts",
+      "previewToInvoicePdfUrl": "previewToInvoiceFromReceiptsUrl",
+      "cancel": "cancelReceipt",
+      "sendByEmail": "sendReceiptByEmail",
+      "downloadPdf": "downloadReceiptPdf",
+      "downloadPdfUrl": "getReceiptDownloadUrl",
+      "updateCustomer": "assignReceiptCustomer"
+    }
   },
   "retentions": {
     "className": "Retentions",
     "directory": "resources",
-    "methods": [
-      {
-        "name": "create",
-        "operation": "createRetention",
-        "path": {},
-        "arguments": [
-          {
-            "name": "data",
-            "optional": false
-          }
-        ],
-        "body": {
-          "argument": "data"
-        }
-      },
-      {
-        "name": "list",
-        "operation": "listRetentions",
-        "path": {},
-        "arguments": [
-          {
-            "name": "params",
-            "optional": true,
-            "nullable": true
-          }
-        ],
-        "params": {
-          "argument": "params"
-        }
-      },
-      {
-        "name": "retrieve",
-        "operation": "getRetention",
-        "path": {
-          "retention_id": {
-            "argument": "id"
-          }
-        },
-        "arguments": [
-          {
-            "name": "id",
-            "optional": false,
-            "type": "string"
-          }
-        ]
-      },
-      {
-        "name": "cancel",
+    "methods": {
+      "create": "createRetention",
+      "list": "listRetentions",
+      "retrieve": "getRetention",
+      "cancel": {
         "operation": "cancelRetention",
-        "path": {
-          "retention_id": {
-            "argument": "id"
-          }
-        },
-        "arguments": [
-          {
-            "name": "id",
-            "optional": false,
-            "type": "string"
-          },
-          {
-            "name": "params",
-            "optional": true
-          }
-        ],
-        "params": {
-          "argument": "params"
+        "nullable": {
+          "params": false
         }
       },
-      {
-        "name": "updateDraft",
-        "operation": "updateDraftRetention",
+      "updateDraft": "updateDraftRetention",
+      "stampDraft": "stampDraftRetention",
+      "copyToDraft": "copyToDraftRetention",
+      "sendByEmail": "sendRetentionByEmail",
+      "downloadPdf": {
+        "operation": "downloadRetention",
         "path": {
-          "retention_id": {
-            "argument": "id"
-          }
-        },
-        "arguments": [
-          {
-            "name": "id",
-            "optional": false,
-            "type": "string"
-          },
-          {
-            "name": "data",
-            "optional": false
-          }
-        ],
-        "body": {
-          "argument": "data"
+          "format": "pdf"
         }
       },
-      {
-        "name": "stampDraft",
-        "operation": "stampDraftRetention",
+      "downloadXml": {
+        "operation": "downloadRetention",
         "path": {
-          "retention_id": {
-            "argument": "id"
-          }
-        },
-        "arguments": [
-          {
-            "name": "id",
-            "optional": false,
-            "type": "string"
-          }
-        ]
-      },
-      {
-        "name": "copyToDraft",
-        "operation": "copyToDraftRetention",
-        "path": {
-          "retention_id": {
-            "argument": "id"
-          }
-        },
-        "arguments": [
-          {
-            "name": "id",
-            "optional": false,
-            "type": "string"
-          }
-        ]
-      },
-      {
-        "name": "sendByEmail",
-        "operation": "sendRetentionByEmail",
-        "path": {
-          "retention_id": {
-            "argument": "id"
-          }
-        },
-        "arguments": [
-          {
-            "name": "id",
-            "optional": false,
-            "type": "string"
-          },
-          {
-            "name": "data",
-            "optional": true
-          }
-        ],
-        "body": {
-          "argument": "data"
+          "format": "xml"
         }
       },
-      {
-        "name": "downloadPdf",
+      "downloadZip": {
         "operation": "downloadRetention",
         "path": {
-          "retention_id": {
-            "argument": "id"
-          },
-          "format": {
-            "value": "pdf"
-          }
-        },
-        "arguments": [
-          {
-            "name": "id",
-            "optional": false,
-            "type": "string"
-          }
-        ]
+          "format": "zip"
+        }
       },
-      {
-        "name": "downloadXml",
-        "operation": "downloadRetention",
-        "path": {
-          "retention_id": {
-            "argument": "id"
-          },
-          "format": {
-            "value": "xml"
-          }
-        },
-        "arguments": [
-          {
-            "name": "id",
-            "optional": false,
-            "type": "string"
-          }
-        ]
-      },
-      {
-        "name": "downloadZip",
-        "operation": "downloadRetention",
-        "path": {
-          "retention_id": {
-            "argument": "id"
-          },
-          "format": {
-            "value": "zip"
-          }
-        },
-        "arguments": [
-          {
-            "name": "id",
-            "optional": false,
-            "type": "string"
-          }
-        ]
-      },
-      {
-        "name": "downloadPdfUrl",
+      "downloadPdfUrl": {
         "operation": "getRetentionDownloadUrl",
         "path": {
-          "retention_id": {
-            "argument": "id"
-          },
-          "format": {
-            "value": "pdf"
-          }
-        },
-        "arguments": [
-          {
-            "name": "id",
-            "optional": false,
-            "type": "string"
-          }
-        ]
+          "format": "pdf"
+        }
       },
-      {
-        "name": "downloadXmlUrl",
+      "downloadXmlUrl": {
         "operation": "getRetentionDownloadUrl",
         "path": {
-          "retention_id": {
-            "argument": "id"
-          },
-          "format": {
-            "value": "xml"
-          }
-        },
-        "arguments": [
-          {
-            "name": "id",
-            "optional": false,
-            "type": "string"
-          }
-        ]
+          "format": "xml"
+        }
       },
-      {
-        "name": "downloadZipUrl",
+      "downloadZipUrl": {
         "operation": "getRetentionDownloadUrl",
         "path": {
-          "retention_id": {
-            "argument": "id"
-          },
-          "format": {
-            "value": "zip"
-          }
-        },
-        "arguments": [
-          {
-            "name": "id",
-            "optional": false,
-            "type": "string"
-          }
-        ]
+          "format": "zip"
+        }
       }
-    ]
+    }
   },
   "cartaPorteCatalogs": {
     "className": "CartaPorteCatalogs",
     "directory": "tools",
-    "methods": [
-      {
-        "name": "searchAirTransportCodes",
+    "methods": {
+      "searchAirTransportCodes": {
         "operation": "searchCartaPorteAirTransportCodes",
-        "path": {},
-        "arguments": [
-          {
-            "name": "params",
-            "optional": false,
-            "nullable": true
-          }
-        ],
-        "params": {
-          "argument": "params"
+        "nullable": {
+          "params": true
         }
       },
-      {
-        "name": "searchTransportConfigs",
+      "searchTransportConfigs": {
         "operation": "searchCartaPorteTransportConfigs",
-        "path": {},
-        "arguments": [
-          {
-            "name": "params",
-            "optional": false,
-            "nullable": true
-          }
-        ],
-        "params": {
-          "argument": "params"
+        "nullable": {
+          "params": true
         }
       },
-      {
-        "name": "searchRightsOfPassage",
+      "searchRightsOfPassage": {
         "operation": "searchCartaPorteRightsOfPassage",
-        "path": {},
-        "arguments": [
-          {
-            "name": "params",
-            "optional": false,
-            "nullable": true
-          }
-        ],
-        "params": {
-          "argument": "params"
+        "nullable": {
+          "params": true
         }
       },
-      {
-        "name": "searchCustomsDocuments",
+      "searchCustomsDocuments": {
         "operation": "searchCartaPorteCustomsDocuments",
-        "path": {},
-        "arguments": [
-          {
-            "name": "params",
-            "optional": false,
-            "nullable": true
-          }
-        ],
-        "params": {
-          "argument": "params"
+        "nullable": {
+          "params": true
         }
       },
-      {
-        "name": "searchPackagingTypes",
+      "searchPackagingTypes": {
         "operation": "searchCartaPortePackagingTypes",
-        "path": {},
-        "arguments": [
-          {
-            "name": "params",
-            "optional": false,
-            "nullable": true
-          }
-        ],
-        "params": {
-          "argument": "params"
+        "nullable": {
+          "params": true
         }
       },
-      {
-        "name": "searchTrailerTypes",
+      "searchTrailerTypes": {
         "operation": "searchCartaPorteTrailerTypes",
-        "path": {},
-        "arguments": [
-          {
-            "name": "params",
-            "optional": false,
-            "nullable": true
-          }
-        ],
-        "params": {
-          "argument": "params"
+        "nullable": {
+          "params": true
         }
       },
-      {
-        "name": "searchHazardousMaterials",
+      "searchHazardousMaterials": {
         "operation": "searchCartaPorteHazardousMaterials",
-        "path": {},
-        "arguments": [
-          {
-            "name": "params",
-            "optional": false,
-            "nullable": true
-          }
-        ],
-        "params": {
-          "argument": "params"
+        "nullable": {
+          "params": true
         }
       },
-      {
-        "name": "searchNavalAuthorizations",
+      "searchNavalAuthorizations": {
         "operation": "searchCartaPorteNavalAuthorizations",
-        "path": {},
-        "arguments": [
-          {
-            "name": "params",
-            "optional": false,
-            "nullable": true
-          }
-        ],
-        "params": {
-          "argument": "params"
+        "nullable": {
+          "params": true
         }
       },
-      {
-        "name": "searchPortStations",
+      "searchPortStations": {
         "operation": "searchCartaPortePortStations",
-        "path": {},
-        "arguments": [
-          {
-            "name": "params",
-            "optional": false,
-            "nullable": true
-          }
-        ],
-        "params": {
-          "argument": "params"
+        "nullable": {
+          "params": true
         }
       },
-      {
-        "name": "searchMarineContainers",
+      "searchMarineContainers": {
         "operation": "searchCartaPorteMarineContainers",
-        "path": {},
-        "arguments": [
-          {
-            "name": "params",
-            "optional": false,
-            "nullable": true
-          }
-        ],
-        "params": {
-          "argument": "params"
+        "nullable": {
+          "params": true
         }
       }
-    ]
+    }
   },
   "catalogs": {
     "className": "Catalogs",
     "directory": "tools",
-    "methods": [
-      {
-        "name": "searchProducts",
+    "methods": {
+      "searchProducts": {
         "operation": "searchProducts",
-        "path": {},
-        "arguments": [
-          {
-            "name": "params",
-            "optional": false,
-            "nullable": true
-          }
-        ],
-        "params": {
-          "argument": "params"
+        "optional": {
+          "params": false
         }
       },
-      {
-        "name": "searchUnits",
+      "searchUnits": {
         "operation": "searchUnits",
-        "path": {},
-        "arguments": [
-          {
-            "name": "params",
-            "optional": false,
-            "nullable": true
-          }
-        ],
-        "params": {
-          "argument": "params"
+        "optional": {
+          "params": false
         }
       }
-    ]
+    }
   },
   "comercioExteriorCatalogs": {
     "className": "ComercioExteriorCatalogs",
     "directory": "tools",
-    "methods": [
-      {
-        "name": "searchTariffFractions",
-        "operation": "searchComercioExteriorTariffFractions",
-        "path": {},
-        "arguments": [
-          {
-            "name": "params",
-            "optional": false
-          }
-        ],
-        "params": {
-          "argument": "params"
-        }
-      }
-    ]
+    "methods": {
+      "searchTariffFractions": "searchComercioExteriorTariffFractions"
+    }
   },
   "tools": {
     "className": "Tools",
     "directory": "tools",
-    "methods": [
-      {
-        "name": "validateTaxId",
+    "methods": {
+      "validateTaxId": {
         "operation": "validateTaxId",
-        "path": {},
+        "params": {
+          "tax_id": {
+            "argument": "taxId"
+          }
+        },
         "arguments": [
           {
             "name": "taxId",
             "optional": false,
             "type": "string"
           }
-        ],
-        "params": {
-          "tax_id": {
-            "argument": "taxId"
-          }
-        }
+        ]
       },
-      {
-        "name": "checkApiHealth",
-        "operation": "checkApiHealth",
-        "path": {},
-        "arguments": []
-      }
-    ]
+      "checkApiHealth": "checkApiHealth"
+    }
   },
   "webhooks": {
     "className": "Webhooks",
     "directory": "tools",
-    "methods": [
-      {
-        "name": "create",
-        "operation": "createWebhook",
-        "path": {},
-        "arguments": [
-          {
-            "name": "data",
-            "optional": false
-          }
-        ],
-        "body": {
-          "argument": "data"
-        }
-      },
-      {
-        "name": "list",
+    "methods": {
+      "create": "createWebhook",
+      "list": {
         "operation": "listWebhooks",
-        "path": {},
-        "arguments": [
-          {
-            "name": "params",
-            "optional": false
-          }
-        ],
-        "params": {
-          "argument": "params"
+        "optional": {
+          "params": false
+        },
+        "nullable": {
+          "params": false
         }
       },
-      {
-        "name": "retrieve",
-        "operation": "getWebhook",
-        "path": {
-          "webhook_id": {
-            "argument": "id"
-          }
-        },
-        "arguments": [
-          {
-            "name": "id",
-            "optional": false,
-            "type": "string"
-          }
-        ]
-      },
-      {
-        "name": "update",
-        "operation": "editWebhook",
-        "path": {
-          "webhook_id": {
-            "argument": "id"
-          }
-        },
-        "arguments": [
-          {
-            "name": "id",
-            "optional": false,
-            "type": "string"
-          },
-          {
-            "name": "data",
-            "optional": false
-          }
-        ],
-        "body": {
-          "argument": "data"
-        }
-      },
-      {
-        "name": "del",
-        "operation": "deleteWebhook",
-        "path": {
-          "webhook_id": {
-            "argument": "id"
-          }
-        },
-        "arguments": [
-          {
-            "name": "id",
-            "optional": false,
-            "type": "string"
-          }
-        ]
-      },
-      {
-        "name": "validateSignature",
+      "retrieve": "getWebhook",
+      "update": "editWebhook",
+      "del": "deleteWebhook",
+      "validateSignature": {
         "extension": "validateSignature"
       }
-    ]
+    }
   }
 }
