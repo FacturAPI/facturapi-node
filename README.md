@@ -189,11 +189,15 @@ const invoiceDate = invoice.date?.toISOString() ?? null
 
 Si ya usabas métodos de `Date`, o no leías esos campos, no necesitas adaptarlos. `JSON.stringify()` convierte los objetos `Date` a strings ISO automáticamente, aunque su formato puede normalizarse (por ejemplo, incluir milisegundos); no dependas de conservar el texto exacto de la respuesta anterior.
 
-`stamp.date` conserva el string de fecha y hora del SAT. El SDK tampoco convierte los valores de `metadata`. Los filtros de entrada, como `date: { gte, lt }`, siguen siendo objetos de rango; no necesitas convertirlos en una sola fecha.
+`stamp.date` conserva el string de fecha y hora del SAT. Las fechas de calendario declaradas como `date` en la API también conservan su texto, por ejemplo las fechas de nómina en formato `YYYY-MM-DD`. El SDK tampoco convierte los valores de `metadata`. Los filtros de entrada, como `date: { gte, lt }`, siguen siendo objetos de rango; no necesitas convertirlos en una sola fecha.
 
 **Valores ausentes.** Los tipos ahora permiten `null` donde la API puede devolverlo: por ejemplo, en `invoice.date`, `retention.fecha_exp` y `organization.pending_plan_update`. Conserva tus comprobaciones si ya contemplabas ese caso; de lo contrario, agrégalas antes de acceder al valor. Revisa también tus fixtures de TypeScript.
 
 **Imports.** Si importas desde `facturapi`, puedes seguir haciéndolo. Si importabas desde `facturapi/dist/...` u otra ruta interna, usa la raíz del paquete: los tipos, enums y el constructor públicos están disponibles allí.
+
+**TypeScript.** Las entradas ahora describen los campos que acepta la API. Si tus objetos ya cumplen ese contrato, no necesitas cambiar las llamadas. Corrige los campos desconocidos o de otro tipo que antes pasaban por `Record<string, any>`; las fechas de entrada siguen aceptando strings ISO y objetos `Date`. Los tipos de respuesta también reflejan campos opcionales: por ejemplo, `property_tax_account` puede faltar y las fechas de un rol pueden ser `null`.
+
+Si consultabas `invoice.cancellation`, usa `invoice.cancellation_status` para el estado y `invoice.canceled_at` para la fecha de cancelación. En solicitudes de ZIP, utiliza las fechas documentadas como `created_at` y `scheduled_at`; `updated_at` no forma parte de esa respuesta.
 
 ### Desde v4: tipos de respuesta
 

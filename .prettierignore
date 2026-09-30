@@ -2,3 +2,4 @@ dist/
 coverage/
 test-results/
 playwright-report/
+openapi/facturapi.json

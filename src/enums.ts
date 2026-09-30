@@ -46,7 +46,7 @@ export const PaymentFormList = [
   { value: '30', label: 'Aplicación de anticipos' },
   { value: '31', label: 'Intermediario de pagos' },
   { value: '99', label: 'Por definir' },
-] as const;
+] as const
 
 export enum CustomsRegimes {
   DEFINITIVE_IMPORT = 'IMD',
@@ -77,7 +77,7 @@ export const CUSTOMS_REGIMES_DESCRIPTION = {
     'Recinto fiscalizado estratégico',
   [CustomsRegimes.FISCAL_ENCLOSURE]: 'Recinto fiscalizado',
   [CustomsRegimes.CUSTOMS_TRANSIT]: 'Tránsito aduanero',
-};
+}
 
 export enum CveTransporteEnum {
   AUTOTRANSPORT = '01',
@@ -93,7 +93,7 @@ export const CVE_TRANSPORT_DESCRIPTION = {
   [CveTransporteEnum.AIRLINE_TRANSPORT]: 'Transporte Aéreo',
   [CveTransporteEnum.RAIL_TRANSPORT]: 'Transporte Ferroviario',
   [CveTransporteEnum.OTHER]: 'Otro',
-};
+}
 
 export enum TipoEstacionEnum {
   NATIONAL_ORIGIN = '01',
@@ -105,7 +105,7 @@ export const TIPO_ESTACION_DESCRIPTION = {
   [TipoEstacionEnum.NATIONAL_ORIGIN]: 'Origen Nacional',
   [TipoEstacionEnum.INTERMEDIATE]: 'Intermedia',
   [TipoEstacionEnum.FINAL_DESTINATION]: 'Destino Final Nacional',
-};
+}
 
 export enum PermisoSctEnum {
   FEDERAL_TRANSPORT_OF_LOAD = 'TPAF01',
@@ -187,7 +187,7 @@ export const PERMISO_SCT_DESCRIPTIONS = {
   [PermisoSctEnum.NATIONAL_INTERNATIONAL_AIR_TAXI_SERVICE]:
     'Permiso para el servicio nacional e internacional no regular de taxi aéreo',
   [PermisoSctEnum.NOT_IN_CATALOG]: 'Permiso no contemplado en el catálogo.',
-};
+}
 
 export enum SectorCofeprisEnum {
   MEDICINE = '01',
@@ -206,7 +206,7 @@ export const SECTOR_COFEPRIS_DESCRIPTIONS = {
   [SectorCofeprisEnum.TOXIC_SUBSTANCES]: 'Sustancias tóxicas',
   [SectorCofeprisEnum.PESTICIDES_AND_FERTILIZERS]:
     'Plaguicidas y fertilizantes',
-};
+}
 
 export enum PharmaceuticalFormsEnum {
   TABLET = '01',
@@ -252,7 +252,7 @@ export const PHARMACEUTICAL_FORM_DESCRIPTIONS = {
   [PharmaceuticalFormsEnum.PASTE]: 'Pasta',
   [PharmaceuticalFormsEnum.POWDER]: 'Polvo',
   [PharmaceuticalFormsEnum.SUPPOSITORY]: 'Supositorio',
-};
+}
 
 export enum SpecialConditionsEnum {
   FROZEN = '01',
@@ -266,7 +266,7 @@ export const SPECIAL_CONDITION_DESCRIPTIONS = {
   [SpecialConditionsEnum.REFRIGERATED]: 'Refrigerados',
   [SpecialConditionsEnum.CONTROLLED_TEMPERATURE]: 'Temperatura controlada',
   [SpecialConditionsEnum.ROOM_TEMPERATURE]: 'Temperatura ambiente',
-};
+}
 
 export enum MaterialTypeEnum {
   RAW_MATERIAL = '01',
@@ -284,7 +284,7 @@ export const MATERIAL_TYPE_DESCRIPTIONS = {
   [MaterialTypeEnum.MANUFACTURING_INDUSTRY_MATERIAL]:
     'Materia para la industria manufacturera',
   [MaterialTypeEnum.OTHER]: 'Otra',
-};
+}
 
 export enum TypeOfCustomsDocumentEnum {
   PEDIMENT = '01',
@@ -345,7 +345,7 @@ export const TYPE_OF_CUSTOMS_DOCUMENT_DESCRIPTIONS = {
   [TypeOfCustomsDocumentEnum.CROSSING_NOTICE_MERCHANDISE]:
     'Aviso de cruce de mercancias',
   [TypeOfCustomsDocumentEnum.OTHER]: 'Otro',
-};
+}
 
 export enum TransportTypeEnum {
   UNIT_TRUCK = 'PT01',
@@ -375,7 +375,7 @@ export const TRANSPORT_TYPE_DESCRIPTIONS = {
   [TransportTypeEnum.CAR_OR_WAGON]: 'Carro o vagón',
   [TransportTypeEnum.CONTAINER]: 'Contenedor',
   [TransportTypeEnum.LOCOMOTIVE]: 'Locomotora',
-};
+}
 
 export enum TransportFigureEnum {
   OPERATOR = '01',
@@ -391,7 +391,7 @@ export const TRANSPORT_FIGURE_DESCRIPTIONS = {
   [TransportFigureEnum.LESSOR]: 'Arrendador',
   [TransportFigureEnum.NOTIFIED]: 'Notificado',
   [TransportFigureEnum.COORDINATED_MEMBER]: 'Integrante de Coordinados',
-};
+}
 
 export enum RegistroIstmoEnum {
   COATZACOALCOS_I = '01',
@@ -409,7 +409,7 @@ export const REGISTRO_ISTMO_DESCRIPTIONS = {
   [RegistroIstmoEnum.SAN_JUAN_EVANGELISTA]: 'San Juan Evangelista',
   [RegistroIstmoEnum.SALINA_CRUZ]: 'Salina Cruz',
   [RegistroIstmoEnum.SAN_BLAS_ATEMPA]: 'San Blas Atempa',
-};
+}
 
 export enum LoadingKey {
   GENERAL_LOOSE_CARGO = 'CGS',
@@ -427,7 +427,7 @@ export const LOADING_KEY_DESCRIPTIONS = {
   [LoadingKey.AGRICULTURAL_BULK]: 'Granel Agrícola',
   [LoadingKey.OTHER_FLUIDS]: 'Otros Fluidos',
   [LoadingKey.OIL_AND_DERIVATIVES]: 'Petróleo y Derivados',
-};
+}
 
 export enum ConfigMaritimaEnum {
   SUPPLIER = 'B01',
@@ -464,7 +464,7 @@ export const CONFIG_MARITIMA_DESCRIPTIONS = {
   [ConfigMaritimaEnum.TUG]: 'Remolcador',
   [ConfigMaritimaEnum.EXTRAORDINARY_SPECIALIZATION]:
     'Extraordinaria especialización',
-};
+}
 
 export enum RailTrafficTypeEnum {
   LOCAL_TRAFFIC = 'TT01',
@@ -481,7 +481,7 @@ export const RAIL_TRAFFIC_TYPE_DESCRIPTIONS = {
     'Tráfico interlineal recibido',
   [RailTrafficTypeEnum.INTERLINE_TRANSIT_TRAFFIC]:
     'Tráfico interlineal en tránsito',
-};
+}
 
 export enum ContainerTypeEnum {
   CONTAINER_20FT = 'TC01',
@@ -497,7 +497,7 @@ export const CONTAINER_TYPE_DESCRIPTIONS = {
   [ContainerTypeEnum.CONTAINER_45FT]: 'Contenedor de 13.7 Mts de longitud',
   [ContainerTypeEnum.CONTAINER_48FT]: 'Contenedor de 14.6 Mts de longitud',
   [ContainerTypeEnum.CONTAINER_53FT]: 'Contenedor de 16.1 Mts de longitud',
-};
+}
 
 export enum MaritimeContainerTypeEnum {
   REFRIGERATED_20FT = 'CM001',
@@ -529,7 +529,7 @@ export const MARITIME_CONTAINER_TYPE_DESCRIPTIONS = {
   [MaritimeContainerTypeEnum.TANKER_SHIP]: 'Buque tanque',
   [MaritimeContainerTypeEnum.FERRY]: 'Ferri',
   [MaritimeContainerTypeEnum.TOURIST_FERRY]: 'Ferri – Turístico y vacíos',
-};
+}
 
 export enum RailCarTypeEnum {
   BOXCAR = 'TC01',
@@ -557,7 +557,7 @@ export const RAIL_CAR_TYPE_DESCRIPTIONS = {
   [RailCarTypeEnum.SPECIAL_CAR]: 'Carro Especial',
   [RailCarTypeEnum.PASSENGER]: 'Pasajeros',
   [RailCarTypeEnum.TRACK_MAINTENANCE]: 'Mantenimiento de Vía',
-};
+}
 
 export enum RailServiceTypeEnum {
   RAILWAY_CARS = 'TS01',
@@ -587,7 +587,7 @@ export const MOTIVO_TRASLADO_DESCRIPTION = {
   [MotivoTrasladoEnum.THIRD_PARTY_OWNED_GOODS_SHIPMENT]:
     'Envío de mercancías propiedad de terceros',
   [MotivoTrasladoEnum.OTHER]: 'Otros',
-};
+}
 
 export enum TaxType {
   IVA = 'IVA',
@@ -731,6 +731,9 @@ export enum InvoiceComplementType {
   CUSTOM = 'custom',
   PAGO = 'pago',
   NOMINA = 'nomina',
+  CARTA_PORTE = 'carta_porte',
+  COMERCIO_EXTERIOR = 'comercio_exterior',
+  LEYENDAS_FISCALES = 'leyendas_fiscales',
 }
 
 export enum CancellationMotive {

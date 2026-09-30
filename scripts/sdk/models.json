@@ -1,0 +1,66 @@
+{
+  "common": {
+    "Address": "Output['CommonAddressProperties']",
+    "InvoiceItemPart": "Output['Parts']",
+    "InvoiceItemThirdParty": "Output['ThirdParty']",
+    "Tax": "Output['BaseTax'] | Output['IepsTax']",
+    "LocalTax": "Output['LocalTax']",
+    "ProductInfo": "Output['LineItemProduct']",
+    "CustomerInfo": "Output['CustomerInfo']",
+    "InvoiceItem": "Output['LineItem']",
+    "XmlNamespace": "Output['NamespaceProperties']",
+    "RelatedDocument": "Output['RelatedDocument']",
+    "GenericResponse": "Output['OkResponse']",
+    "SendEmailBody": "OperationBody<'sendInvoiceByEmail'>",
+    "SignedDownloadUrl": "Output['SignedDownloadUrl']"
+  },
+  "customer": {
+    "TaxInfoValidation": "OperationResponse<'validateCustomerTaxInfo'>",
+    "TaxInfoValidationError": "TaxInfoValidation['errors'][number]",
+    "Customer": "Output['Customer']"
+  },
+  "product": {
+    "Product": "Output['Product']"
+  },
+  "invoice": {
+    "GlobalInfo": "NonNullable<Output['InvoiceProperties']['global']>",
+    "InvoiceComplement": "NonNullable<Output['InvoiceProperties']['complements']>[number]",
+    "Invoice": "Output['Invoice']",
+    "CancelInvoiceOptions": "OperationQuery<'cancelInvoice'>",
+    "CreateZipRequestData": "OperationBody<'createInvoiceZipRequest'>",
+    "ListZipRequestsParams": "OperationQuery<'listInvoiceZipRequests'>",
+    "ZipRequest": "Output['InvoiceZipRequest']",
+    "PaymentSummaryParams": "OperationQuery<'getInvoicePaymentSummary'>",
+    "PaymentSummary": "OperationResponse<'getInvoicePaymentSummary'>",
+    "PaymentSummaryTax": "NonNullable<PaymentSummary['taxes']>[number]"
+  },
+  "organization": {
+    "Series": "Output['OrganizationSeriesGroup']",
+    "OrganizationDefaultSeriesUpdateInput": "Input['OrganizationSeriesDefaultInput']",
+    "ApiKeys": "OperationResponse<'listLiveApiKeys'>[number]",
+    "OrganizationUserAccess": "Output['OrganizationUserAccess']",
+    "OrganizationInvite": "Output['OrganizationInvite']",
+    "OrganizationInviteCreateInput": "Input['OrganizationInviteCreateInput']",
+    "OrganizationInviteResponseInput": "Input['OrganizationInviteRespondInput']",
+    "OrganizationTeamRole": "Output['OrganizationPermissionRole']",
+    "OrganizationTeamRoleCreateInput": "Input['OrganizationPermissionRoleCreateInput']",
+    "OrganizationTeamRoleUpdateInput": "Input['OrganizationPermissionRoleUpdateInput']",
+    "OrganizationTeamRoleTemplate": "Output['OrganizationPermissionRoleTemplate']",
+    "Organization": "Output['Organization']"
+  },
+  "receipt": {
+    "Receipt": "Output['Receipt']",
+    "ReceiptsToInvoiceInput": "Input['ToInvoiceInput']",
+    "PreviewReceiptsToInvoicePdfInput": "Input['ToInvoicePreviewInput']"
+  },
+  "retention": {
+    "Retention": "Output['Retention']"
+  },
+  "complements": {
+    "PagoComplementData": "Output['PaymentProperties']",
+    "PaymentRelatedDocument": "NonNullable<PagoComplementData['related_documents']>[number]",
+    "PaymentRelatedDocumentTax": "NonNullable<PaymentRelatedDocument['taxes']>[number]",
+    "NominaReceptor": "Output['NominaReceptorProperties']",
+    "NominaComplementData": "Output['NominaComplementDataProperties']"
+  }
+}

@@ -30,7 +30,10 @@
     "test:types": "tsd && tsc --ignoreConfig --noEmit --module NodeNext --moduleResolution NodeNext --target ES2022 test-d/package-exports.mts test-d/package-exports.cts",
     "test": "pnpm run build && pnpm run test:unit && pnpm run test:types && pnpm run test:compat",
     "ci": "pnpm run test",
-    "test:compat": "node --test test/compat/*.test.cjs test/compat/*.test.mjs"
+    "test:compat": "node --test test/compat/*.test.cjs test/compat/*.test.mjs",
+    "generate:sdk": "node scripts/generate-sdk.mjs",
+    "generate:sdk:check": "node scripts/generate-sdk.mjs --check",
+    "sync:openapi": "node scripts/sync-openapi.mjs"
   },
   "engines": {
     "node": ">=18.0.0",
@@ -73,7 +76,9 @@
     "eslint": "^10.11.0",
     "eslint-config-prettier": "^10.1.8",
     "globals": "^17.12.0",
+    "js-yaml": "4.2.0",
     "jsdom": "^30.1.1",
+    "openapi-typescript": "7.13.0",
     "prettier": "^3.9.9",
     "rolldown": "^1.2.11",
     "rolldown-plugin-dts": "^0.28.6",

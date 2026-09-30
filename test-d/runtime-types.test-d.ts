@@ -8,6 +8,7 @@ import Facturapi, {
   PageSearchParams,
   FacturapiError,
   Invoice,
+  InvoiceCreateInput,
   InvoiceItem,
   InvoiceType,
   IssuingType,
@@ -23,11 +24,35 @@ import Facturapi, {
   SearchResult,
   SignedDownloadUrl,
   TaxFactor,
+  ToInvoiceSummary,
   Webhook,
   ZipRequest,
 } from '../dist'
 
 const client = new Facturapi('sk_test_123')
+
+expectAssignable<InvoiceCreateInput>({ status: 'draft', date: new Date() })
+expectAssignable<InvoiceCreateInput>({
+  status: 'draft',
+  date: '2026-09-30T12:00:00Z',
+})
+expectError(
+  client.webhooks.create({
+    url: 'https://example.com/webhook',
+    enabled_events: ['*'],
+    secret: 'caller-secret',
+  }),
+)
+expectType<Promise<Invoice>>(
+  client.receipts.toInvoice({ keys: ['receipt-key'] }),
+)
+expectType<Promise<ToInvoiceSummary>>(
+  client.receipts.toInvoice({ keys: ['receipt-key'], dry_run: true }),
+)
+declare const dryRun: boolean
+expectType<Promise<Invoice | ToInvoiceSummary>>(
+  client.receipts.toInvoice({ keys: ['receipt-key'], dry_run: dryRun }),
+)
 
 const zipPromise = client.invoices.downloadZip('inv_123')
 expectType<Promise<BinaryDownload>>(zipPromise)
@@ -119,13 +144,13 @@ if ('pipe' in binary && typeof binary.pipe === 'function') {
 expectAssignable<TaxFactor>(TaxFactor.EXENTO)
 
 declare const invoiceItem: InvoiceItem
-expectType<string[]>(invoiceItem.property_tax_account)
+expectType<string[] | undefined>(invoiceItem.property_tax_account)
 
 declare const invoice: Invoice
 expectType<Date>(invoice.created_at)
 expectType<Date | null>(invoice.date)
 expectType<Date | null | undefined>(invoice.canceled_at)
-expectType<Date | null | undefined>(invoice.cancellation?.requested_at)
+expectError(invoice.cancellation)
 expectType<string | undefined>(invoice.stamp?.date)
 
 declare const receipt: Receipt
@@ -141,7 +166,7 @@ declare const product: Product
 expectType<Date>(product.created_at)
 declare const organization: Organization
 expectType<Date>(organization.created_at)
-expectType<Date | null | undefined>(organization.certificate.expires_at)
+expectType<Date | undefined>(organization.certificate.expires_at)
 expectType<Date | undefined>(organization.pending_add_ons_update?.scheduled_for)
 declare const webhook: Webhook
 expectType<Date>(webhook.created_at)
@@ -149,9 +174,13 @@ declare const event: ApiEvent
 expectType<Date>(event.created_at)
 declare const payment: PagoComplementData
 expectType<Date>(payment.date)
+expectType<'01' | '02' | '03' | '04' | '05' | '06' | '07' | '08' | undefined>(
+  payment.related_documents[0].taxability,
+)
 declare const zipRequest: ZipRequest
-expectType<Date | undefined>(zipRequest.created_at)
-expectType<Date | undefined>(zipRequest.updated_at)
+expectType<Date>(zipRequest.created_at)
+expectType<Date | undefined>(zipRequest.scheduled_at)
+expectError(zipRequest.updated_at)
 
 declare const retention: Retention
 expectType<Date | null>(retention.fecha_exp)
@@ -166,8 +195,8 @@ declare const invite: OrganizationInvite
 expectType<Date>(invite.created_at)
 expectType<Date | null>(invite.expires_at)
 declare const role: OrganizationTeamRole
-expectType<Date>(role.created_at)
-expectType<Date>(role.updated_at)
+expectType<Date | null>(role.created_at)
+expectType<Date | null>(role.updated_at)
 
 declare const apiError: FacturapiError
 expectType<number>(apiError.status)

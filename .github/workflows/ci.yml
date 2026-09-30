@@ -29,6 +29,9 @@ jobs:
       - name: Build package
         run: pnpm run build
 
+      - name: Verify generated SDK
+        run: pnpm run generate:sdk:check
+
       - name: Upload dist artifact
         uses: actions/upload-artifact@v7
         with:

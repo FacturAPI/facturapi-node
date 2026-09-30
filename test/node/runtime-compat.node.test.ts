@@ -97,16 +97,21 @@ describe('runtime compatibility (node)', () => {
           created_at: '2026-09-17T12:00:00.000Z',
           date: '2026-09-17T11:00:00.000Z',
           canceled_at: '2026-09-17T12:59:16.000Z',
-          cancellation: {
-            requested_at: '2026-09-17T12:59:16.000Z',
-            last_checked: '2026-09-17T13:00:00.000Z',
-          },
           stamp: {
             date: '2026-09-17T06:59:16',
           },
           metadata: {
             date: '2026-09-17T12:00:00.000Z',
+            expires_at: '2026-09-18T12:00:00.000Z',
           },
+          complements: [
+            { type: 'pago', data: [{ date: '2026-09-17T12:00:00.000Z' }] },
+            { type: 'nomina', data: { fecha_pago: '2026-09-17' } },
+            {
+              type: 'custom',
+              data: '<Example date="2026-09-17T12:00:00.000Z"/>',
+            },
+          ],
         }),
         {
           status: 200,
@@ -120,14 +125,23 @@ describe('runtime compatibility (node)', () => {
     expect(invoice.created_at).toEqual(new Date('2026-09-17T12:00:00.000Z'))
     expect(invoice.date).toEqual(new Date('2026-09-17T11:00:00.000Z'))
     expect(invoice.canceled_at).toEqual(new Date('2026-09-17T12:59:16.000Z'))
-    expect(invoice.cancellation?.requested_at).toEqual(
-      new Date('2026-09-17T12:59:16.000Z'),
-    )
-    expect(invoice.cancellation?.last_checked).toEqual(
-      new Date('2026-09-17T13:00:00.000Z'),
-    )
     expect(invoice.stamp?.date).toBe('2026-09-17T06:59:16')
     expect((invoice as any).metadata.date).toBe('2026-09-17T12:00:00.000Z')
+    expect((invoice as any).metadata.expires_at).toBe(
+      '2026-09-18T12:00:00.000Z',
+    )
+    expect(
+      invoice.complements?.find((complement) => complement.type === 'pago')
+        ?.data[0].date,
+    ).toEqual(new Date('2026-09-17T12:00:00.000Z'))
+    expect(
+      invoice.complements?.find((complement) => complement.type === 'nomina')
+        ?.data.fecha_pago,
+    ).toBe('2026-09-17')
+    expect(
+      invoice.complements?.find((complement) => complement.type === 'custom')
+        ?.data,
+    ).toBe('<Example date="2026-09-17T12:00:00.000Z"/>')
   })
 
   it('checks domain availability via GET query params', async () => {
@@ -163,9 +177,21 @@ describe('runtime compatibility (node)', () => {
         String(url).endsWith('/team')
           ? [{ id: 'access_123', created_at: timestamp, updated_at: timestamp }]
           : String(url).endsWith('/team/invites')
-            ? [{ id: 'invite_123', created_at: timestamp, expires_at: timestamp }]
+            ? [
+                {
+                  id: 'invite_123',
+                  created_at: timestamp,
+                  expires_at: timestamp,
+                },
+              ]
             : String(url).endsWith('/team/roles')
-              ? [{ id: 'role_123', created_at: timestamp, updated_at: timestamp }]
+              ? [
+                  {
+                    id: 'role_123',
+                    created_at: timestamp,
+                    updated_at: timestamp,
+                  },
+                ]
               : [{ id: 'key_123', created_at: timestamp }],
       ),
     ) as typeof fetch
@@ -179,8 +205,9 @@ describe('runtime compatibility (node)', () => {
     const roles = await client.organizations.listTeamRoles('org_123')
     expect(roles[0].created_at).toEqual(new Date(timestamp))
     expect(roles[0].updated_at).toEqual(new Date(timestamp))
-    expect((await client.organizations.listLiveApiKeys('org_123'))[0].created_at)
-      .toEqual(new Date(timestamp))
+    expect(
+      (await client.organizations.listLiveApiKeys('org_123'))[0].created_at,
+    ).toEqual(new Date(timestamp))
   })
 
   it('hydrates dates across resource responses without changing SAT stamp text', async () => {
@@ -211,7 +238,7 @@ describe('runtime compatibility (node)', () => {
       '/v2/webhooks/wh_123': { created_at: timestamp },
       '/v2/invoices/zip-requests/zip_123': {
         created_at: timestamp,
-        updated_at: timestamp,
+        scheduled_at: timestamp,
       },
     }
     globalThis.fetch = vi.fn(async (url) =>
@@ -245,7 +272,7 @@ describe('runtime compatibility (node)', () => {
     )
     const zipRequest = await client.invoices.retrieveZipRequest('zip_123')
     expect(zipRequest.created_at).toEqual(new Date(timestamp))
-    expect(zipRequest.updated_at).toEqual(new Date(timestamp))
+    expect(zipRequest.scheduled_at).toEqual(new Date(timestamp))
   })
 
   it('posts multiple receipts to invoice payload to receipts endpoint', async () => {
@@ -285,9 +312,7 @@ describe('runtime compatibility (node)', () => {
     }
 
     globalThis.fetch = vi.fn(async (url, options) => {
-      expect(url).toBe(
-        'https://api.test.local/v2/receipts/to-invoice/preview',
-      )
+      expect(url).toBe('https://api.test.local/v2/receipts/to-invoice/preview')
       expect(options?.method).toBe('POST')
       expect(getHeader(options?.headers, 'Authorization')).toBe(
         'Bearer sk_test_123',
@@ -565,12 +590,13 @@ describe('runtime compatibility (node)', () => {
     const client = createClient()
     const secret = 'whsec_test_dates'
     const payload = JSON.stringify({
+      type: 'invoice.status_updated',
       created_at: '2026-09-17T12:00:00.000Z',
       data: {
         type: 'invoice',
         object: {
           created_at: '2026-09-17T11:00:00.000Z',
-          cancellation: { requested_at: '2026-09-17T12:59:16.000Z' },
+          canceled_at: '2026-09-17T12:59:16.000Z',
           stamp: { date: '2026-09-17T06:59:16' },
         },
       },
@@ -578,7 +604,10 @@ describe('runtime compatibility (node)', () => {
 
     const event = await client.webhooks.validateSignature({
       secret,
-      signature: crypto.createHmac('sha256', secret).update(payload).digest('hex'),
+      signature: crypto
+        .createHmac('sha256', secret)
+        .update(payload)
+        .digest('hex'),
       payload,
     })
 
@@ -586,7 +615,7 @@ describe('runtime compatibility (node)', () => {
     expect(event.data.object.created_at).toEqual(
       new Date('2026-09-17T11:00:00.000Z'),
     )
-    expect(event.data.object.cancellation?.requested_at).toEqual(
+    expect(event.data.object.canceled_at).toEqual(
       new Date('2026-09-17T12:59:16.000Z'),
     )
     expect(event.data.object.stamp?.date).toBe('2026-09-17T06:59:16')
