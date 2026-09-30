@@ -25,12 +25,6 @@ Guarda lo siguiente en `primera-factura.mjs`. Los datos del receptor son fictici
 ```js
 import Facturapi, { PaymentForm } from 'facturapi'
 
-if (!process.env.FACTURAPI_KEY) {
-  throw new Error(
-    'Configura FACTURAPI_KEY con la Test Secret Key de tu organización',
-  )
-}
-
 const facturapi = new Facturapi(process.env.FACTURAPI_KEY)
 
 const invoice = await facturapi.invoices.create({
