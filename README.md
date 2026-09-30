@@ -197,6 +197,8 @@ Si ya usabas métodos de `Date`, o no leías esos campos, no necesitas adaptarlo
 
 **TypeScript.** Las entradas ahora describen los campos que acepta la API. Si tus objetos ya cumplen ese contrato, no necesitas cambiar las llamadas. Corrige los campos desconocidos o de otro tipo que antes pasaban por `Record<string, any>`; las fechas de entrada siguen aceptando strings ISO y objetos `Date`. Los tipos de respuesta también reflejan campos opcionales: por ejemplo, `property_tax_account` puede faltar y las fechas de un rol pueden ser `null`.
 
+Los tipos de CFDI distinguen emisión, borrador y edición; cada complemento relaciona su `type` con la estructura de `data`. En nómina, las entradas usan las claves del catálogo de percepciones publicado: `019` requiere `horas_extra`, y el origen de recursos `IM` requiere `monto_recurso_propio`. Si incluyes autotransporte de Carta Porte, completa su vehículo y seguro de responsabilidad civil. Estas relaciones ayudan a detectar errores al compilar; la API sigue siendo responsable de validar los datos.
+
 Si consultabas `invoice.cancellation`, usa `invoice.cancellation_status` para el estado y `invoice.canceled_at` para la fecha de cancelación. En solicitudes de ZIP, utiliza las fechas documentadas como `created_at` y `scheduled_at`; `updated_at` no forma parte de esa respuesta.
 
 ### Desde v4: tipos de respuesta

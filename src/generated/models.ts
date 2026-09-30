@@ -107,6 +107,8 @@ export type NominaSubContratacionRequiredProperties =
   Output['schemas']['NominaSubContratacionRequiredProperties']
 export type NominaSubContratacionProperties =
   Output['schemas']['NominaSubContratacionProperties']
+export type NominaEntidadSncfInput = Input['schemas']['NominaEntidadSncfInput']
+export type NominaEmisorInput = Input['schemas']['NominaEmisorInput']
 export type NominaEmisorProperties = Output['schemas']['NominaEmisorProperties']
 export type PagoOrCustomComplementProperties =
   Output['schemas']['PagoOrCustomComplementProperties']
@@ -115,6 +117,7 @@ export type PagoOrCustomComplementInput =
 export type PagoComplementProperties =
   Output['schemas']['PagoComplementProperties']
 export type PagoComplementInput = Input['schemas']['PagoComplementInput']
+export type InvoiceComplementInput = Input['schemas']['InvoiceComplementInput']
 export type InvoiceComplementProperties =
   Output['schemas']['InvoiceComplementProperties']
 export type PagoComplementDataProperties =

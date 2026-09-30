@@ -8084,7 +8084,7 @@
         "content": {
           "application/json": {
             "schema": {
-              "oneOf": [
+              "anyOf": [
                 {
                   "$ref": "#/components/schemas/InvoiceIngresoEditInput"
                 },
@@ -9337,6 +9337,9 @@
               "IEPS"
             ]
           },
+          "ieps_mode": {
+            "$ref": "#/components/schemas/IepsMode"
+          },
           "factor": {
             "type": "string",
             "default": "Tasa",
@@ -9354,6 +9357,17 @@
           }
         }
       },
+      "IepsMode": {
+        "type": "string",
+        "default": "sum_before_taxes",
+        "enum": [
+          "sum_before_taxes",
+          "break_down",
+          "unit",
+          "subtract_before_break_down"
+        ],
+        "description": "Indica la manera de cobrar el impuesto, y puede tener los valores:\n\n`\"sum_before_taxes\"`: Aplica primero el IEPS al subtotal y usa el resultado como base del resto de impuestos en el producto.\n\n`\"break_down\"`: Cobra y desglosa el IEPS al mismo nivel que el resto de los impuestos en el producto.\n\n`\"unit\"`: Aplica el IEPS antes del precio unitario, y usa el precio unitario original como base para el resto de impuestos.\n\n`\"subtract_before_break_down\"`: Aplica el IEPS solo para calcular impuestos como IVA de traslado y retenciones, y usa el precio unitario original como base para el resto de impuestos.\n\nConsulta con tu contador qué caso aplica para tu giro de empresa y producto.\n"
+      },
       "IepsTax": {
         "type": "object",
         "allOf": [
@@ -9362,17 +9376,16 @@
           },
           {
             "type": "object",
+            "required": [
+              "type"
+            ],
             "properties": {
-              "ieps_mode": {
+              "type": {
                 "type": "string",
-                "default": "sum_before_taxes",
-                "enum": [
-                  "sum_before_taxes",
-                  "break_down",
-                  "unit",
-                  "subtract_before_break_down"
-                ],
-                "description": "Indica la manera de cobrar el impuesto, y puede tener los valores:\n\n`\"sum_before_taxes\"`: Aplica primero el IEPS al subtotal y usa el resultado como base del resto de impuestos en el producto.\n\n`\"break_down\"`: Cobra y desglosa el IEPS al mismo nivel que el resto de los impuestos en el producto.\n\n`\"unit\"`: Aplica el IEPS antes del precio unitario, y usa el precio unitario original como base para el resto de impuestos.\n\n`\"subtract_before_break_down\"`: Aplica el IEPS solo para calcular impuestos como IVA de traslado y retenciones, y usa el precio unitario original como base para el resto de impuestos.\n\nConsulta con tu contador qué caso aplica para tu giro de empresa y producto.\n"
+                "const": "IEPS"
+              },
+              "ieps_mode": {
+                "$ref": "#/components/schemas/IepsMode"
               }
             }
           }
@@ -9852,34 +9865,28 @@
         }
       },
       "CustomComplementInput": {
+        "required": [
+          "type",
+          "data"
+        ],
         "title": "CustomComplement",
         "allOf": [
-          {
-            "type": "object",
-            "required": [
-              "type",
-              "data"
-            ]
-          },
           {
             "$ref": "#/components/schemas/CustomComplementProperties"
           }
         ]
       },
       "NominaComplementDataInput": {
+        "required": [
+          "fecha_inicial_pago",
+          "fecha_final_pago",
+          "num_dias_pagados",
+          "receptor",
+          "percepciones"
+        ],
         "title": "NominaComplementData",
         "description": "Objeto con la información del complemento de nómina.",
         "allOf": [
-          {
-            "type": "object",
-            "required": [
-              "fecha_inicial_pago",
-              "fecha_final_pago",
-              "num_dias_pagados",
-              "receptor",
-              "percepciones"
-            ]
-          },
           {
             "$ref": "#/components/schemas/NominaComplementDataDirectProperties"
           },
@@ -9937,7 +9944,7 @@
         "type": "object",
         "properties": {
           "emisor": {
-            "$ref": "#/components/schemas/NominaEmisorProperties"
+            "$ref": "#/components/schemas/NominaEmisorInput"
           },
           "receptor": {
             "$ref": "#/components/schemas/NominaReceptorInput"
@@ -10029,15 +10036,12 @@
         }
       },
       "NominaIncapacidadInput": {
+        "required": [
+          "dias_incapacidad",
+          "tipo_incapacidad"
+        ],
         "title": "Incapacidad",
         "allOf": [
-          {
-            "type": "object",
-            "required": [
-              "dias_incapacidad",
-              "tipo_incapacidad"
-            ]
-          },
           {
             "$ref": "#/components/schemas/NominaIncapacidadProperties"
           }
@@ -10061,16 +10065,13 @@
         }
       },
       "NominaOtroPagoInput": {
+        "required": [
+          "tipo_otro_pago",
+          "clave",
+          "importe"
+        ],
         "title": "OtroPago",
         "allOf": [
-          {
-            "type": "object",
-            "required": [
-              "tipo_otro_pago",
-              "clave",
-              "importe"
-            ]
-          },
           {
             "$ref": "#/components/schemas/NominaOtroPagoDirectProperties"
           },
@@ -10112,15 +10113,12 @@
         }
       },
       "NominaCompensacionInput": {
+        "required": [
+          "saldo_a_favor",
+          "ano",
+          "remanente_sal_fav"
+        ],
         "allOf": [
-          {
-            "type": "object",
-            "required": [
-              "saldo_a_favor",
-              "ano",
-              "remanente_sal_fav"
-            ]
-          },
           {
             "$ref": "#/components/schemas/NominaCompensacionProperties"
           }
@@ -10145,16 +10143,13 @@
         }
       },
       "NominaDeduccionInput": {
+        "required": [
+          "tipo_deduccion",
+          "clave",
+          "importe"
+        ],
         "title": "Deduccion",
         "allOf": [
-          {
-            "type": "object",
-            "required": [
-              "tipo_deduccion",
-              "clave",
-              "importe"
-            ]
-          },
           {
             "$ref": "#/components/schemas/NominaDeduccionProperties"
           }
@@ -10227,18 +10222,15 @@
         }
       },
       "NominaSeparacionInput": {
+        "required": [
+          "total_pagado",
+          "num_anos_servicio",
+          "ultimo_sueldo_mens_ord",
+          "ingreso_acumulable",
+          "ingreso_no_acumulable"
+        ],
         "title": "Separacion",
         "allOf": [
-          {
-            "type": "object",
-            "required": [
-              "total_pagado",
-              "num_anos_servicio",
-              "ultimo_sueldo_mens_ord",
-              "ingreso_acumulable",
-              "ingreso_no_acumulable"
-            ]
-          },
           {
             "$ref": "#/components/schemas/NominaSeparacionProperties"
           }
@@ -10272,15 +10264,12 @@
         }
       },
       "NominaJubilacionInput": {
+        "required": [
+          "ingreso_acumulable",
+          "ingreso_no_acumulable"
+        ],
         "title": "Jubilacion",
         "allOf": [
-          {
-            "type": "object",
-            "required": [
-              "ingreso_acumulable",
-              "ingreso_no_acumulable"
-            ]
-          },
           {
             "$ref": "#/components/schemas/NominaJubilacionProperties"
           }
@@ -10324,22 +10313,96 @@
         ]
       },
       "NominaPercepcionInput": {
+        "required": [
+          "tipo_percepcion",
+          "clave",
+          "importe_gravado",
+          "importe_exento"
+        ],
+        "description": "La entrada utiliza las claves de percepción del catálogo publicado. La clave 019 requiere horas_extra.",
         "title": "Percepcion",
         "allOf": [
-          {
-            "type": "object",
-            "required": [
-              "tipo_percepcion",
-              "clave",
-              "importe_gravado",
-              "importe_exento"
-            ]
-          },
           {
             "$ref": "#/components/schemas/NominaPercepcionDirectProperties"
           },
           {
             "$ref": "#/components/schemas/NominaPercepcionNestedInput"
+          }
+        ],
+        "oneOf": [
+          {
+            "type": "object",
+            "properties": {
+              "tipo_percepcion": {
+                "type": "string",
+                "const": "019"
+              },
+              "horas_extra": {
+                "type": "array",
+                "items": {
+                  "$ref": "#/components/schemas/NominaHorasExtraInput"
+                }
+              }
+            },
+            "required": [
+              "horas_extra"
+            ]
+          },
+          {
+            "type": "object",
+            "properties": {
+              "tipo_percepcion": {
+                "type": "string",
+                "enum": [
+                  "001",
+                  "002",
+                  "003",
+                  "004",
+                  "005",
+                  "006",
+                  "009",
+                  "010",
+                  "011",
+                  "012",
+                  "013",
+                  "014",
+                  "015",
+                  "020",
+                  "021",
+                  "022",
+                  "023",
+                  "024",
+                  "025",
+                  "026",
+                  "027",
+                  "028",
+                  "029",
+                  "030",
+                  "031",
+                  "032",
+                  "033",
+                  "034",
+                  "035",
+                  "036",
+                  "037",
+                  "038",
+                  "039",
+                  "044",
+                  "045",
+                  "046",
+                  "047",
+                  "048",
+                  "049",
+                  "050",
+                  "051",
+                  "052",
+                  "053",
+                  "054",
+                  "055",
+                  "056"
+                ]
+              }
+            }
           }
         ]
       },
@@ -10401,17 +10464,14 @@
         }
       },
       "NominaHorasExtraInput": {
+        "required": [
+          "dias",
+          "tipo_horas",
+          "horas_extra",
+          "importe_pagado"
+        ],
         "title": "HorasExtra",
         "allOf": [
-          {
-            "type": "object",
-            "required": [
-              "dias",
-              "tipo_horas",
-              "horas_extra",
-              "importe_pagado"
-            ]
-          },
           {
             "$ref": "#/components/schemas/NominaHorasExtraProperties"
           }
@@ -10440,15 +10500,12 @@
         }
       },
       "NominaAccionesInput": {
+        "required": [
+          "valor_mercado",
+          "precio_al_otorgarse"
+        ],
         "title": "Accion",
         "allOf": [
-          {
-            "type": "object",
-            "required": [
-              "valor_mercado",
-              "precio_al_otorgarse"
-            ]
-          },
           {
             "$ref": "#/components/schemas/NominaAccionesProperties"
           }
@@ -10483,21 +10540,18 @@
         ]
       },
       "NominaReceptorInput": {
+        "required": [
+          "curp",
+          "tipo_contrato",
+          "tipo_regimen",
+          "num_empleado",
+          "periodicidad_pago",
+          "clave_ent_fed"
+        ],
         "type": "object",
         "title": "Receptor",
         "description": "Información del trabajador.",
         "allOf": [
-          {
-            "type": "object",
-            "required": [
-              "curp",
-              "tipo_contrato",
-              "tipo_regimen",
-              "num_empleado",
-              "periodicidad_pago",
-              "clave_ent_fed"
-            ]
-          },
           {
             "$ref": "#/components/schemas/NominaReceptorDirectProperties"
           },
@@ -10647,6 +10701,69 @@
             "description": "Porcentaje de tiempo en que el trabajador prestó sus servicios a la persona o empresa que lo subcontrató."
           }
         }
+      },
+      "NominaEntidadSncfInput": {
+        "type": "object",
+        "required": [
+          "origen_recurso"
+        ],
+        "properties": {
+          "origen_recurso": {
+            "type": "string",
+            "enum": [
+              "IP",
+              "IF",
+              "IM"
+            ]
+          },
+          "monto_recurso_propio": {
+            "type": "number"
+          }
+        },
+        "oneOf": [
+          {
+            "type": "object",
+            "properties": {
+              "origen_recurso": {
+                "type": "string",
+                "const": "IM"
+              },
+              "monto_recurso_propio": {
+                "type": "number"
+              }
+            },
+            "required": [
+              "monto_recurso_propio"
+            ]
+          },
+          {
+            "type": "object",
+            "properties": {
+              "origen_recurso": {
+                "type": "string",
+                "enum": [
+                  "IP",
+                  "IF"
+                ]
+              }
+            }
+          }
+        ]
+      },
+      "NominaEmisorInput": {
+        "allOf": [
+          {
+            "$ref": "#/components/schemas/NominaEmisorProperties"
+          },
+          {
+            "type": "object",
+            "properties": {
+              "entidad_sncf": {
+                "$ref": "#/components/schemas/NominaEntidadSncfInput"
+              }
+            }
+          }
+        ]
       },
       "NominaEmisorProperties": {
         "type": "object",
@@ -10801,6 +10918,39 @@
             }
           }
         ]
+      },
+      "InvoiceComplementInput": {
+        "oneOf": [
+          {
+            "$ref": "#/components/schemas/PagoComplementInput"
+          },
+          {
+            "$ref": "#/components/schemas/NominaComplementInput"
+          },
+          {
+            "$ref": "#/components/schemas/CartaPorteInput"
+          },
+          {
+            "$ref": "#/components/schemas/ComercioExteriorInput"
+          },
+          {
+            "$ref": "#/components/schemas/LeyendasFiscalesInput"
+          },
+          {
+            "$ref": "#/components/schemas/CustomComplementInput"
+          }
+        ],
+        "discriminator": {
+          "propertyName": "type",
+          "mapping": {
+            "pago": "#/components/schemas/PagoComplementInput",
+            "nomina": "#/components/schemas/NominaComplementInput",
+            "carta_porte": "#/components/schemas/CartaPorteInput",
+            "comercio_exterior": "#/components/schemas/ComercioExteriorInput",
+            "leyendas_fiscales": "#/components/schemas/LeyendasFiscalesInput",
+            "custom": "#/components/schemas/CustomComplementInput"
+          }
+        }
       },
       "InvoiceComplementProperties": {
         "oneOf": [
@@ -12055,6 +12205,12 @@
       },
       "CartaPorteIdentificacionVehicular": {
         "type": "object",
+        "required": [
+          "ConfigVehicular",
+          "PesoBrutoVehicular",
+          "PlacaVM",
+          "AnioModeloVM"
+        ],
         "properties": {
           "ConfigVehicular": {
             "type": "string",
@@ -12076,6 +12232,10 @@
       },
       "CartaPorteSeguros": {
         "type": "object",
+        "required": [
+          "AseguraRespCivil",
+          "PolizaRespCivil"
+        ],
         "properties": {
           "AseguraRespCivil": {
             "type": "string",
@@ -12122,6 +12282,12 @@
       },
       "CartaPorteAutotransporte": {
         "type": "object",
+        "required": [
+          "PermSCT",
+          "NumPermisoSCT",
+          "IdentificacionVehicular",
+          "Seguros"
+        ],
         "properties": {
           "PermSCT": {
             "type": "string",
@@ -13059,14 +13225,11 @@
         }
       },
       "PartInput": {
+        "required": [
+          "description",
+          "product_key"
+        ],
         "allOf": [
-          {
-            "type": "object",
-            "required": [
-              "description",
-              "product_key"
-            ]
-          },
           {
             "$ref": "#/components/schemas/Parts"
           }
@@ -13503,14 +13666,11 @@
         }
       },
       "RelatedDocumentInput": {
+        "required": [
+          "relationship",
+          "related"
+        ],
         "allOf": [
-          {
-            "type": "object",
-            "required": [
-              "relationship",
-              "related"
-            ]
-          },
           {
             "$ref": "#/components/schemas/RelatedDocument"
           }
@@ -14937,7 +15097,7 @@
                 "type": "array",
                 "default": [],
                 "items": {
-                  "$ref": "#/components/schemas/CartaPorteOrCustomComplementInput"
+                  "$ref": "#/components/schemas/InvoiceComplementInput"
                 },
                 "description": "Complementos a incluir en la factura. Puedes incluir cualquier complemento en la\nfactura si tú mismo construyes el nodo XML del complemento y usas el tipo `custom`.\nEs necesario agregar la información del complemento al PDF por separado usando el\nparámetro `pdf_custom_section`.\n"
               }
@@ -15015,7 +15175,7 @@
                 "type": "array",
                 "default": [],
                 "items": {
-                  "$ref": "#/components/schemas/CustomComplementInput"
+                  "$ref": "#/components/schemas/InvoiceComplementInput"
                 },
                 "description": "Complementos a incluir en el comprobante. Puedes incluir cualquier\ncomplemento en el comprobante si tú mismo construyes el nodo XML del\ncomplemento y usas el tipo `custom`. Es necesario agregar la información\ndel complemento al PDF por separado usando el parámetro `pdf_custom_section`.\n"
               }
@@ -15069,9 +15229,21 @@
               },
               "complements": {
                 "type": "array",
-                "default": [],
+                "minItems": 1,
+                "contains": {
+                  "type": "object",
+                  "required": [
+                    "type"
+                  ],
+                  "properties": {
+                    "type": {
+                      "type": "string",
+                      "const": "pago"
+                    }
+                  }
+                },
                 "items": {
-                  "$ref": "#/components/schemas/PagoOrCustomComplementInput"
+                  "$ref": "#/components/schemas/InvoiceComplementInput"
                 },
                 "description": "Complementos a incluir en la factura."
               }
@@ -15101,9 +15273,21 @@
               },
               "complements": {
                 "type": "array",
-                "default": [],
+                "minItems": 1,
+                "contains": {
+                  "type": "object",
+                  "required": [
+                    "type"
+                  ],
+                  "properties": {
+                    "type": {
+                      "type": "string",
+                      "const": "nomina"
+                    }
+                  }
+                },
                 "items": {
-                  "$ref": "#/components/schemas/NominaOrCustomComplementInput"
+                  "$ref": "#/components/schemas/InvoiceComplementInput"
                 },
                 "description": "Complementos a incluir en la factura."
               },
@@ -15151,7 +15335,7 @@
                 "type": "array",
                 "default": [],
                 "items": {
-                  "$ref": "#/components/schemas/CartaPorteOrCustomComplementInput"
+                  "$ref": "#/components/schemas/InvoiceComplementInput"
                 },
                 "description": "Complementos a incluir en el comprobante. Puedes incluir cualquier complemento en\nel comprobante si tú mismo construyes el nodo XML del complemento y usas el tipo\n`custom`. Es necesario agregar la información del complemento al PDF por separado\nusando el parámetro `pdf_custom_section`.\n"
               },
@@ -15193,14 +15377,8 @@
             "properties": {
               "type": {
                 "type": "string",
-                "enum": [
-                  "I",
-                  "E",
-                  "P",
-                  "N",
-                  "T"
-                ],
-                "description": "Tipo de comprobante. Puede tener los valores `\"I\"`: Ingreso, `\"P\"`: Pago, `\"E\"`: Egreso, `\"N\"`: Nómina, `\"T\"`: Traslado.\n"
+                "const": "I",
+                "description": "Tipo de comprobante de esta variante de entrada."
               },
               "items": {
                 "type": "array",
@@ -15292,7 +15470,7 @@
               "complements": {
                 "type": "array",
                 "items": {
-                  "$ref": "#/components/schemas/CustomComplementInput"
+                  "$ref": "#/components/schemas/InvoiceComplementInput"
                 },
                 "description": "Complementos a incluir en la factura. Puedes incluir cualquier complemento en la\nfactura si tú mismo construyes el nodo XML del complemento y usas el tipo `custom`.\nEs necesario agregar la información del complemento al PDF por separado usando el\nparámetro `pdf_custom_section`.\n"
               }
@@ -15311,14 +15489,8 @@
             "properties": {
               "type": {
                 "type": "string",
-                "enum": [
-                  "I",
-                  "E",
-                  "P",
-                  "N",
-                  "T"
-                ],
-                "description": "Tipo de comprobante. Puede tener los valores `\"I\"`: Ingreso, `\"P\"`: Pago, `\"E\"`: Egreso, `\"N\"`: Nómina, `\"T\"`: Traslado.\n"
+                "const": "E",
+                "description": "Tipo de comprobante de esta variante de entrada."
               },
               "payment_form": {
                 "type": "string",
@@ -15363,7 +15535,7 @@
               "complements": {
                 "type": "array",
                 "items": {
-                  "$ref": "#/components/schemas/CustomComplementInput"
+                  "$ref": "#/components/schemas/InvoiceComplementInput"
                 },
                 "description": "Complementos a incluir en el comprobante. Puedes incluir cualquier\ncomplemento en el comprobante si tú mismo construyes el nodo XML del\ncomplemento y usas el tipo `custom`. Es necesario agregar la información\ndel complemento al PDF por separado usando el parámetro `pdf_custom_section`.\n"
               }
@@ -15382,14 +15554,8 @@
             "properties": {
               "type": {
                 "type": "string",
-                "enum": [
-                  "I",
-                  "E",
-                  "P",
-                  "N",
-                  "T"
-                ],
-                "description": "Tipo de comprobante. Puede tener los valores `\"I\"`: Ingreso, `\"P\"`: Pago, `\"E\"`: Egreso, `\"N\"`: Nómina, `\"T\"`: Traslado.\n"
+                "const": "P",
+                "description": "Tipo de comprobante de esta variante de entrada."
               },
               "related_documents": {
                 "type": "array",
@@ -15417,7 +15583,7 @@
               "complements": {
                 "type": "array",
                 "items": {
-                  "$ref": "#/components/schemas/PagoOrCustomComplementInput"
+                  "$ref": "#/components/schemas/InvoiceComplementInput"
                 },
                 "description": "Complementos a incluir en la factura."
               }
@@ -15436,19 +15602,13 @@
             "properties": {
               "type": {
                 "type": "string",
-                "enum": [
-                  "I",
-                  "E",
-                  "P",
-                  "N",
-                  "T"
-                ],
-                "description": "Tipo de comprobante. Puede tener los valores `\"I\"`: Ingreso, `\"P\"`: Pago, `\"E\"`: Egreso, `\"N\"`: Nómina, `\"T\"`: Traslado.\n"
+                "const": "N",
+                "description": "Tipo de comprobante de esta variante de entrada."
               },
               "complements": {
                 "type": "array",
                 "items": {
-                  "$ref": "#/components/schemas/NominaOrCustomComplementInput"
+                  "$ref": "#/components/schemas/InvoiceComplementInput"
                 },
                 "description": "Complementos a incluir en la factura."
               },
@@ -15474,14 +15634,8 @@
             "properties": {
               "type": {
                 "type": "string",
-                "enum": [
-                  "I",
-                  "E",
-                  "P",
-                  "N",
-                  "T"
-                ],
-                "description": "Tipo de comprobante. Puede tener los valores `\"I\"`: Ingreso, `\"P\"`: Pago, `\"E\"`: Egreso, `\"N\"`: Nómina, `\"T\"`: Traslado.\n"
+                "const": "T",
+                "description": "Tipo de comprobante de esta variante de entrada."
               },
               "items": {
                 "type": "array",
@@ -15494,7 +15648,7 @@
               "complements": {
                 "type": "array",
                 "items": {
-                  "$ref": "#/components/schemas/CustomComplementInput"
+                  "$ref": "#/components/schemas/InvoiceComplementInput"
                 },
                 "description": "Complementos a incluir en el comprobante. Puedes incluir cualquier complemento en\nel comprobante si tú mismo construyes el nodo XML del complemento y usas el tipo\n`custom`. Es necesario agregar la información del complemento al PDF por separado\nusando el parámetro `pdf_custom_section`.\n"
               },

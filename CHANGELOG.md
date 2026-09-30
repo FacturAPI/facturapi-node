@@ -12,6 +12,7 @@ and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.
 - Deserialize ISO response timestamps into `Date` objects across SDK resources, including timestamps previously typed as strings (organization access and signed download URLs). Calls relying on string methods must use `date.toISOString()` or other `Date` APIs.
 - Import from `facturapi`; direct imports into internal package files such as `facturapi/dist/...` are no longer supported.
 - Type request fields against the API contract instead of accepting arbitrary objects. ISO strings and `Date` values remain supported for date inputs. Response types now reflect optional property tax accounts, nullable role dates, and the documented invoice/ZIP fields; use `cancellation_status` and `canceled_at` instead of `invoice.cancellation`.
+- Preserve required fields in composed input types. CFDI editing types identify their document variant; payroll perception inputs use the published catalog and require hours-extra data for code `019`. Mixed funding requires its own-resource amount, and Carta Porte road transport requires vehicle and liability insurance data.
 
 ### Fixed
 

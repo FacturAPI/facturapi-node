@@ -9,6 +9,15 @@ import Facturapi, {
   FacturapiError,
   Invoice,
   InvoiceCreateInput,
+  InvoiceNominaEditInput,
+  NominaPercepcionInput,
+  NominaEntidadSncfInput,
+  NominaEmisorInput,
+  NominaHorasExtraInput,
+  BaseTax,
+  TaxType,
+  IepsMode,
+  CartaPorteAutotransporte,
   InvoiceItem,
   InvoiceType,
   IssuingType,
@@ -30,6 +39,75 @@ import Facturapi, {
 } from '../dist'
 
 const client = new Facturapi('sk_test_123')
+
+expectAssignable<InvoiceNominaEditInput>({ type: 'N' })
+expectError<InvoiceNominaEditInput>({ type: 'P' })
+expectAssignable<InvoiceCreateInput>({
+  status: 'draft',
+  complements: [
+    {
+      type: 'leyendas_fiscales',
+      data: { leyendas: [{ texto_leyenda: 'Ejemplo' }] },
+    },
+  ],
+})
+expectAssignable<NominaPercepcionInput>({
+  tipo_percepcion: '001',
+  clave: 'ABC',
+  importe_gravado: 1,
+  importe_exento: 0,
+})
+expectError<NominaPercepcionInput>({
+  tipo_percepcion: '019',
+  clave: 'ABC',
+  importe_gravado: 1,
+  importe_exento: 0,
+})
+expectError<NominaPercepcionInput>({ tipo_percepcion: '001', clave: 'ABC' })
+expectAssignable<NominaPercepcionInput>({
+  tipo_percepcion: '019',
+  clave: 'ABC',
+  importe_gravado: 1,
+  importe_exento: 0,
+  horas_extra: [
+    { dias: 1, tipo_horas: '01', horas_extra: 1, importe_pagado: 1 },
+  ],
+})
+expectError<NominaHorasExtraInput>({
+  dias: 1,
+  tipo_horas: '01',
+  horas_extra: 1,
+})
+expectAssignable<NominaEntidadSncfInput>({
+  origen_recurso: 'IM',
+  monto_recurso_propio: 1,
+})
+expectAssignable<NominaEntidadSncfInput>({ origen_recurso: 'IF' })
+expectError<NominaEntidadSncfInput>({ origen_recurso: 'IM' })
+expectError<NominaEmisorInput>({ entidad_sncf: { origen_recurso: 'IM' } })
+expectError(
+  client.invoices.create({
+    type: 'P',
+    customer: 'cus',
+    complements: [{ type: 'pago', data: { tipo_nomina: 'O' } }],
+  }),
+)
+expectError<InvoiceCreateInput>({
+  type: 'P',
+  customer: 'cus',
+  payment_method: 'PPD',
+  complements: [],
+})
+client.invoices.updateDraft('draft', { type: 'N' })
+expectAssignable<BaseTax>({
+  type: TaxType.IEPS,
+  rate: 0.08,
+  ieps_mode: IepsMode.UNIT,
+})
+expectError<CartaPorteAutotransporte>({
+  PermSCT: 'TPAF01',
+  NumPermisoSCT: 'Example',
+})
 
 expectAssignable<InvoiceCreateInput>({ status: 'draft', date: new Date() })
 expectAssignable<InvoiceCreateInput>({

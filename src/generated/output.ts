@@ -2669,6 +2669,7 @@ export interface components {
        * @enum {string}
        */
       type?: TaxType
+      ieps_mode?: components['schemas']['IepsMode']
       /**
        * @description Tipo factor
        * @default Tasa
@@ -2681,23 +2682,26 @@ export interface components {
        */
       withholding?: boolean
     }
+    /**
+     * @description Indica la manera de cobrar el impuesto, y puede tener los valores:
+     *
+     *     `"sum_before_taxes"`: Aplica primero el IEPS al subtotal y usa el resultado como base del resto de impuestos en el producto.
+     *
+     *     `"break_down"`: Cobra y desglosa el IEPS al mismo nivel que el resto de los impuestos en el producto.
+     *
+     *     `"unit"`: Aplica el IEPS antes del precio unitario, y usa el precio unitario original como base para el resto de impuestos.
+     *
+     *     `"subtract_before_break_down"`: Aplica el IEPS solo para calcular impuestos como IVA de traslado y retenciones, y usa el precio unitario original como base para el resto de impuestos.
+     *
+     *     Consulta con tu contador qué caso aplica para tu giro de empresa y producto.
+     * @default sum_before_taxes
+     * @enum {string}
+     */
+    IepsMode: IepsMode
     IepsTax: Omit<components['schemas']['BaseTax'], 'type'> & {
-      /**
-       * @description Indica la manera de cobrar el impuesto, y puede tener los valores:
-       *
-       *     `"sum_before_taxes"`: Aplica primero el IEPS al subtotal y usa el resultado como base del resto de impuestos en el producto.
-       *
-       *     `"break_down"`: Cobra y desglosa el IEPS al mismo nivel que el resto de los impuestos en el producto.
-       *
-       *     `"unit"`: Aplica el IEPS antes del precio unitario, y usa el precio unitario original como base para el resto de impuestos.
-       *
-       *     `"subtract_before_break_down"`: Aplica el IEPS solo para calcular impuestos como IVA de traslado y retenciones, y usa el precio unitario original como base para el resto de impuestos.
-       *
-       *     Consulta con tu contador qué caso aplica para tu giro de empresa y producto.
-       * @default sum_before_taxes
-       * @enum {string}
-       */
-      ieps_mode?: IepsMode
+      /** @constant */
+      type: 'IEPS'
+      ieps_mode?: components['schemas']['IepsMode']
     } & {
       /**
        * @description discriminator enum property added by openapi-typescript
@@ -2916,21 +2920,25 @@ export interface components {
       data: components['schemas']['CustomComplementData']
     }
     /** CustomComplement */
-    CustomComplementInput: Record<string, unknown> &
-      components['schemas']['CustomComplementProperties'] & {
-        /**
-         * @description discriminator enum property added by openapi-typescript
-         * @enum {string}
-         */
-        type: 'custom'
-      }
+    CustomComplementInput: components['schemas']['CustomComplementProperties'] & {
+      /**
+       * @description discriminator enum property added by openapi-typescript
+       * @enum {string}
+       */
+      type: 'custom'
+    }
     /**
      * NominaComplementData
      * @description Objeto con la información del complemento de nómina.
      */
-    NominaComplementDataInput: Record<string, unknown> &
-      components['schemas']['NominaComplementDataDirectProperties'] &
-      components['schemas']['NominaComplementDataNestedInput']
+    NominaComplementDataInput: WithRequired<
+      components['schemas']['NominaComplementDataDirectProperties'],
+      'fecha_inicial_pago' | 'fecha_final_pago' | 'num_dias_pagados'
+    > &
+      WithRequired<
+        components['schemas']['NominaComplementDataNestedInput'],
+        'receptor' | 'percepciones'
+      >
     /** @description Complemento de Nómina. */
     NominaComplementDataProperties: components['schemas']['NominaComplementDataDirectProperties'] &
       components['schemas']['NominaComplementDataNestedProperties']
@@ -2962,7 +2970,7 @@ export interface components {
       num_dias_pagados?: number
     }
     NominaComplementDataNestedInput: {
-      emisor?: components['schemas']['NominaEmisorProperties']
+      emisor?: components['schemas']['NominaEmisorInput']
       receptor?: components['schemas']['NominaReceptorInput']
       percepciones?: components['schemas']['NominaPercepcionesInput']
       /** @description Arreglo de objetos donde se expresan las deducciones aplicables. */
@@ -2988,8 +2996,10 @@ export interface components {
       incapacidades?: components['schemas']['NominaIncapacidadProperties'][]
     }
     /** Incapacidad */
-    NominaIncapacidadInput: Record<string, unknown> &
-      components['schemas']['NominaIncapacidadProperties']
+    NominaIncapacidadInput: WithRequired<
+      components['schemas']['NominaIncapacidadProperties'],
+      'dias_incapacidad' | 'tipo_incapacidad'
+    >
     NominaIncapacidadProperties: {
       /** @description Número de días enteros que el trabajador se incapacitó en el periodo. */
       dias_incapacidad?: number
@@ -2999,10 +3009,12 @@ export interface components {
       importe_monetario?: number
     }
     /** OtroPago */
-    NominaOtroPagoInput: Record<string, unknown> &
-      components['schemas']['NominaOtroPagoDirectProperties'] & {
-        compensacion_saldos_a_favor?: components['schemas']['NominaCompensacionInput']
-      }
+    NominaOtroPagoInput: WithRequired<
+      components['schemas']['NominaOtroPagoDirectProperties'],
+      'tipo_otro_pago' | 'clave' | 'importe'
+    > & {
+      compensacion_saldos_a_favor?: components['schemas']['NominaCompensacionInput']
+    }
     NominaOtroPagoDirectProperties: {
       /** @description Clave del catálogo [Tipo de Otro Pago](#tipo-de-otro-pago). */
       tipo_otro_pago?: string
@@ -3021,8 +3033,10 @@ export interface components {
        */
       subsidio_causado?: number
     }
-    NominaCompensacionInput: Record<string, unknown> &
-      components['schemas']['NominaCompensacionProperties']
+    NominaCompensacionInput: WithRequired<
+      components['schemas']['NominaCompensacionProperties'],
+      'saldo_a_favor' | 'ano' | 'remanente_sal_fav'
+    >
     /** @description Objeto con información referente a la compensación de saldos a favor de un trabajador. */
     NominaCompensacionProperties: {
       /** @description Monto por saldo a favor determinado por el patrón al trabajador en periodos o ejercicios anteriores. */
@@ -3033,8 +3047,10 @@ export interface components {
       remanente_sal_fav?: number
     }
     /** Deduccion */
-    NominaDeduccionInput: Record<string, unknown> &
-      components['schemas']['NominaDeduccionProperties']
+    NominaDeduccionInput: WithRequired<
+      components['schemas']['NominaDeduccionProperties'],
+      'tipo_deduccion' | 'clave' | 'importe'
+    >
     NominaDeduccionProperties: {
       /** @description Clave del catálogo [Tipo de deducción](#tipo-de-deducción). */
       tipo_deduccion?: string
@@ -3066,8 +3082,14 @@ export interface components {
       separacion_indemnizacion?: components['schemas']['NominaSeparacionProperties']
     }
     /** Separacion */
-    NominaSeparacionInput: Record<string, unknown> &
-      components['schemas']['NominaSeparacionProperties']
+    NominaSeparacionInput: WithRequired<
+      components['schemas']['NominaSeparacionProperties'],
+      | 'total_pagado'
+      | 'num_anos_servicio'
+      | 'ultimo_sueldo_mens_ord'
+      | 'ingreso_acumulable'
+      | 'ingreso_no_acumulable'
+    >
     /**
      * Jubilacion
      * @description Objeto con información detallada de pagos por separación (despido) o indemnización.
@@ -3085,8 +3107,10 @@ export interface components {
       ingreso_no_acumulable?: number
     }
     /** Jubilacion */
-    NominaJubilacionInput: Record<string, unknown> &
-      components['schemas']['NominaJubilacionProperties']
+    NominaJubilacionInput: WithRequired<
+      components['schemas']['NominaJubilacionProperties'],
+      'ingreso_acumulable' | 'ingreso_no_acumulable'
+    >
     /** @description Objeto con información detallada de pagos por jubilación, pensiones o haberes de retiro. */
     NominaJubilacionProperties: {
       /** @description Monto total del pago entregado en una sola exhibición. */
@@ -3103,10 +3127,72 @@ export interface components {
     /** Percepcion */
     NominaPercepcionProperties: components['schemas']['NominaPercepcionDirectProperties'] &
       components['schemas']['NominaPercepcionNestedProperties']
-    /** Percepcion */
-    NominaPercepcionInput: Record<string, unknown> &
-      components['schemas']['NominaPercepcionDirectProperties'] &
-      components['schemas']['NominaPercepcionNestedInput']
+    /**
+     * Percepcion
+     * @description La entrada utiliza las claves de percepción del catálogo publicado. La clave 019 requiere horas_extra.
+     */
+    NominaPercepcionInput: (WithRequired<
+      components['schemas']['NominaPercepcionDirectProperties'],
+      'tipo_percepcion' | 'clave' | 'importe_gravado' | 'importe_exento'
+    > &
+      components['schemas']['NominaPercepcionNestedInput']) &
+      (
+        | {
+            /** @constant */
+            tipo_percepcion?: '019'
+            horas_extra: components['schemas']['NominaHorasExtraInput'][]
+          }
+        | {
+            /** @enum {string} */
+            tipo_percepcion?:
+              | '001'
+              | '002'
+              | '003'
+              | '004'
+              | '005'
+              | '006'
+              | '009'
+              | '010'
+              | '011'
+              | '012'
+              | '013'
+              | '014'
+              | '015'
+              | '020'
+              | '021'
+              | '022'
+              | '023'
+              | '024'
+              | '025'
+              | '026'
+              | '027'
+              | '028'
+              | '029'
+              | '030'
+              | '031'
+              | '032'
+              | '033'
+              | '034'
+              | '035'
+              | '036'
+              | '037'
+              | '038'
+              | '039'
+              | '044'
+              | '045'
+              | '046'
+              | '047'
+              | '048'
+              | '049'
+              | '050'
+              | '051'
+              | '052'
+              | '053'
+              | '054'
+              | '055'
+              | '056'
+          }
+      )
     NominaPercepcionDirectProperties: {
       /** @description Clave del catálogo [Tipo de percepción](#tipo-de-percepcion). */
       tipo_percepcion?: string
@@ -3130,8 +3216,10 @@ export interface components {
       horas_extra?: components['schemas']['NominaHorasExtraProperties'][]
     }
     /** HorasExtra */
-    NominaHorasExtraInput: Record<string, unknown> &
-      components['schemas']['NominaHorasExtraProperties']
+    NominaHorasExtraInput: WithRequired<
+      components['schemas']['NominaHorasExtraProperties'],
+      'dias' | 'tipo_horas' | 'horas_extra' | 'importe_pagado'
+    >
     /** HorasExtra */
     NominaHorasExtraProperties: {
       /** @description Número de días en que el trabajador laboró horas extra adicionales a su jornada normal de trabajo. */
@@ -3144,8 +3232,10 @@ export interface components {
       importe_pagado?: number
     }
     /** Accion */
-    NominaAccionesInput: Record<string, unknown> &
-      components['schemas']['NominaAccionesProperties']
+    NominaAccionesInput: WithRequired<
+      components['schemas']['NominaAccionesProperties'],
+      'valor_mercado' | 'precio_al_otorgarse'
+    >
     /**
      * Accion
      * @description Objeto para expresar ingresos por acciones o títulos valor que representan bienes. Es requerido cuando existan ingresos por sueldos derivados de adquisición de acciones o títulos.
@@ -3166,8 +3256,15 @@ export interface components {
      * Receptor
      * @description Información del trabajador.
      */
-    NominaReceptorInput: Record<string, unknown> &
-      components['schemas']['NominaReceptorDirectProperties'] &
+    NominaReceptorInput: WithRequired<
+      components['schemas']['NominaReceptorDirectProperties'],
+      | 'curp'
+      | 'tipo_contrato'
+      | 'tipo_regimen'
+      | 'num_empleado'
+      | 'periodicidad_pago'
+      | 'clave_ent_fed'
+    > &
       components['schemas']['NominaReceptorNestedInput']
     NominaReceptorDirectProperties: {
       /** @description CURP del trabajador. */
@@ -3231,6 +3328,24 @@ export interface components {
       rfc_labora?: string
       /** @description Porcentaje de tiempo en que el trabajador prestó sus servicios a la persona o empresa que lo subcontrató. */
       porcentaje_tiempo?: number
+    }
+    NominaEntidadSncfInput: {
+      /** @enum {string} */
+      origen_recurso: 'IP' | 'IF' | 'IM'
+      monto_recurso_propio?: number
+    } & (
+      | {
+          /** @constant */
+          origen_recurso?: 'IM'
+          monto_recurso_propio: number
+        }
+      | {
+          /** @enum {string} */
+          origen_recurso?: 'IP' | 'IF'
+        }
+    )
+    NominaEmisorInput: components['schemas']['NominaEmisorProperties'] & {
+      entidad_sncf?: components['schemas']['NominaEntidadSncfInput']
     }
     /**
      * Emisor
@@ -3304,6 +3419,13 @@ export interface components {
        */
       type: 'pago'
     }
+    InvoiceComplementInput:
+      | components['schemas']['PagoComplementInput']
+      | components['schemas']['NominaComplementInput']
+      | components['schemas']['CartaPorteInput']
+      | components['schemas']['ComercioExteriorInput']
+      | components['schemas']['LeyendasFiscalesInput']
+      | components['schemas']['CustomComplementInput']
     InvoiceComplementProperties:
       | components['schemas']['PagoComplementProperties']
       | components['schemas']['NominaComplementProperties']
@@ -3781,19 +3903,19 @@ export interface components {
     }
     CartaPorteIdentificacionVehicular: {
       /** @description Configuración vehicular (catCartaPorte:c_ConfigAutotransporte) del vehículo primario. */
-      ConfigVehicular?: string
+      ConfigVehicular: string
       /** @description Peso bruto vehicular máximo permitido. */
-      PesoBrutoVehicular?: number
+      PesoBrutoVehicular: number
       /** @description Placa del vehículo motor. */
-      PlacaVM?: string
+      PlacaVM: string
       /** @description Año modelo del vehículo motor. */
-      AnioModeloVM?: string
+      AnioModeloVM: string
     }
     CartaPorteSeguros: {
       /** @description Nombre de la aseguradora de responsabilidad civil. */
-      AseguraRespCivil?: string
+      AseguraRespCivil: string
       /** @description Número de póliza de responsabilidad civil. */
-      PolizaRespCivil?: string
+      PolizaRespCivil: string
       /** @description Aseguradora contra daños al medio ambiente. */
       AseguraMedAmbiente?: string
       /** @description Número de póliza de medio ambiente. */
@@ -3813,13 +3935,13 @@ export interface components {
     }
     CartaPorteAutotransporte: {
       /** @description Clave del permiso SCT del autotransporte. */
-      PermSCT?: string
+      PermSCT: string
       /** @description Número del permiso SCT. */
-      NumPermisoSCT?: string
+      NumPermisoSCT: string
       /** @description Datos de identificación del vehículo principal. */
-      IdentificacionVehicular?: components['schemas']['CartaPorteIdentificacionVehicular']
+      IdentificacionVehicular: components['schemas']['CartaPorteIdentificacionVehicular']
       /** @description Información de seguros aplicables. */
-      Seguros?: components['schemas']['CartaPorteSeguros']
+      Seguros: components['schemas']['CartaPorteSeguros']
       /** @description Lista de remolques acoplados. */
       Remolques?: components['schemas']['CartaPorteRemolque'][]
     }
@@ -4221,7 +4343,10 @@ export interface components {
       /** @description Números de pedimento aduanal asociados a esta parte. */
       customs_keys?: string[]
     }
-    PartInput: Record<string, unknown> & components['schemas']['Parts']
+    PartInput: WithRequired<
+      components['schemas']['Parts'],
+      'description' | 'product_key'
+    >
     /** Objeto Product */
     Product: components['schemas']['ResourceAutoGeneratedProps'] &
       components['schemas']['ProductProperties'] & {
@@ -4499,8 +4624,10 @@ export interface components {
       /** @description ID del objeto `customer` relacionado a la factura, en caso de no haber sido eliminado */
       id?: string
     }
-    RelatedDocumentInput: Record<string, unknown> &
-      components['schemas']['RelatedDocument']
+    RelatedDocumentInput: WithRequired<
+      components['schemas']['RelatedDocument'],
+      'relationship'
+    >
     RelatedDocument: {
       /** @description Clave de relación del catálogo del SAT que puedes consultar en [esta tabla](#relacion-entre-facturas). Es requerido cuando se envíe el parámetro `related_documents`. */
       relationship?: string
@@ -5226,7 +5353,7 @@ export interface components {
        *     parámetro `pdf_custom_section`.
        * @default []
        */
-      complements?: components['schemas']['CartaPorteOrCustomComplementInput'][]
+      complements?: components['schemas']['InvoiceComplementInput'][]
     } & components['schemas']['InvoiceCommonInputProperties']
     /** Egreso */
     InvoiceEgresoInput: {
@@ -5275,7 +5402,7 @@ export interface components {
        *     del complemento al PDF por separado usando el parámetro `pdf_custom_section`.
        * @default []
        */
-      complements?: components['schemas']['CustomComplementInput'][]
+      complements?: components['schemas']['InvoiceComplementInput'][]
     } & components['schemas']['InvoiceCommonInputProperties']
     /** Pago */
     InvoicePagoInput: {
@@ -5288,21 +5415,15 @@ export interface components {
       related_documents?: components['schemas']['RelatedDocumentInput'][]
       third_party?: Record<string, unknown> &
         components['schemas']['ThirdParty']
-      /**
-       * @description Complementos a incluir en la factura.
-       * @default []
-       */
-      complements: components['schemas']['PagoOrCustomComplementInput'][]
+      /** @description Complementos a incluir en la factura. */
+      complements: components['schemas']['InvoiceComplementInput'][]
     } & components['schemas']['InvoiceCommonInputProperties']
     /** Nómina */
     InvoiceNominaInput: {
       /** @enum {string} */
       type: 'N'
-      /**
-       * @description Complementos a incluir en la factura.
-       * @default []
-       */
-      complements: components['schemas']['NominaOrCustomComplementInput'][]
+      /** @description Complementos a incluir en la factura. */
+      complements: components['schemas']['InvoiceComplementInput'][]
       /**
        * @description Documentos relacionados con la factura.
        * @default []
@@ -5327,7 +5448,7 @@ export interface components {
        *     usando el parámetro `pdf_custom_section`.
        * @default []
        */
-      complements?: components['schemas']['CartaPorteOrCustomComplementInput'][]
+      complements?: components['schemas']['InvoiceComplementInput'][]
       /**
        * @description Código de Uso CFDI según el catálogo del SAT. Puedes ver los códigos en
        *     [esta tabla](#uso-cfdi), o utilizar las constantes incluidas en nuestras librerías.
@@ -5354,10 +5475,10 @@ export interface components {
     /** Ingreso */
     InvoiceIngresoEditInput: {
       /**
-       * @description Tipo de comprobante. Puede tener los valores `"I"`: Ingreso, `"P"`: Pago, `"E"`: Egreso, `"N"`: Nómina, `"T"`: Traslado.
-       * @enum {string}
+       * @description Tipo de comprobante de esta variante de entrada.
+       * @constant
        */
-      type?: InvoiceType
+      type?: 'I'
       /**
        * @description Conceptos a incluir en la factura.
        *
@@ -5431,15 +5552,15 @@ export interface components {
        *     Es necesario agregar la información del complemento al PDF por separado usando el
        *     parámetro `pdf_custom_section`.
        */
-      complements?: components['schemas']['CustomComplementInput'][]
+      complements?: components['schemas']['InvoiceComplementInput'][]
     } & components['schemas']['InvoiceCommonEditInputProperties']
     /** Egreso */
     InvoiceEgresoEditInput: {
       /**
-       * @description Tipo de comprobante. Puede tener los valores `"I"`: Ingreso, `"P"`: Pago, `"E"`: Egreso, `"N"`: Nómina, `"T"`: Traslado.
-       * @enum {string}
+       * @description Tipo de comprobante de esta variante de entrada.
+       * @constant
        */
-      type?: InvoiceType
+      type?: 'E'
       /** @description Código que representa la forma de pago, de acuerdo al [catálogo del SAT](#forma-de-pago). */
       payment_form?: string
       /**
@@ -5469,41 +5590,41 @@ export interface components {
        *     complemento y usas el tipo `custom`. Es necesario agregar la información
        *     del complemento al PDF por separado usando el parámetro `pdf_custom_section`.
        */
-      complements?: components['schemas']['CustomComplementInput'][]
+      complements?: components['schemas']['InvoiceComplementInput'][]
     } & components['schemas']['InvoiceCommonInputProperties']
     /** Pago */
     InvoicePagoEditInput: {
       /**
-       * @description Tipo de comprobante. Puede tener los valores `"I"`: Ingreso, `"P"`: Pago, `"E"`: Egreso, `"N"`: Nómina, `"T"`: Traslado.
-       * @enum {string}
+       * @description Tipo de comprobante de esta variante de entrada.
+       * @constant
        */
-      type?: InvoiceType
+      type?: 'P'
       /** @description Documentos relacionados con la factura. */
       related_documents?: components['schemas']['RelatedDocumentInput'][]
       third_party?: Record<string, unknown> &
         components['schemas']['ThirdParty']
       /** @description Complementos a incluir en la factura. */
-      complements?: components['schemas']['PagoOrCustomComplementInput'][]
+      complements?: components['schemas']['InvoiceComplementInput'][]
     } & components['schemas']['InvoiceCommonEditInputProperties']
     /** Nómina */
     InvoiceNominaEditInput: {
       /**
-       * @description Tipo de comprobante. Puede tener los valores `"I"`: Ingreso, `"P"`: Pago, `"E"`: Egreso, `"N"`: Nómina, `"T"`: Traslado.
-       * @enum {string}
+       * @description Tipo de comprobante de esta variante de entrada.
+       * @constant
        */
-      type?: InvoiceType
+      type?: 'N'
       /** @description Complementos a incluir en la factura. */
-      complements?: components['schemas']['NominaOrCustomComplementInput'][]
+      complements?: components['schemas']['InvoiceComplementInput'][]
       /** @description Documentos relacionados con la factura. */
       related_documents?: components['schemas']['RelatedDocumentInput'][]
     } & components['schemas']['InvoiceCommonEditInputProperties']
     /** Traslado */
     InvoiceTrasladoEditInput: {
       /**
-       * @description Tipo de comprobante. Puede tener los valores `"I"`: Ingreso, `"P"`: Pago, `"E"`: Egreso, `"N"`: Nómina, `"T"`: Traslado.
-       * @enum {string}
+       * @description Tipo de comprobante de esta variante de entrada.
+       * @constant
        */
-      type?: InvoiceType
+      type?: 'T'
       /**
        * @description Conceptos a incluir en el comprobante de Traslado.
        *
@@ -5517,7 +5638,7 @@ export interface components {
        *     `custom`. Es necesario agregar la información del complemento al PDF por separado
        *     usando el parámetro `pdf_custom_section`.
        */
-      complements?: components['schemas']['CustomComplementInput'][]
+      complements?: components['schemas']['InvoiceComplementInput'][]
       /**
        * @description Código de Uso CFDI según el catálogo del SAT. Puedes ver los códigos en
        *     [esta tabla](#uso-cfdi), o utilizar las constantes incluidas en nuestras librerías.
@@ -10866,4 +10987,7 @@ export interface operations {
       }
     }
   }
+}
+type WithRequired<T, K extends keyof T> = T & {
+  [P in K]-?: T[P]
 }
