@@ -4160,7 +4160,7 @@ export interface components {
       organization?: string
       /** @description Ambiente en el cual se está dando de alta el webhook. */
       livemode?: boolean
-      /** @description Eventos dados de alta para el webhook. */
+      /** @description Eventos a los que está suscrito el webhook. El valor "*" puede aparecer en respuestas existentes, pero no se acepta al crear o actualizar un webhook; envía los nombres de eventos explícitos. */
       enabled_events?: (
         | 'receipt.self_invoice_complete'
         | 'invoice.cancellation_status_updated'
@@ -4863,7 +4863,8 @@ export interface components {
        * @enum {string}
        */
       type?: 'I' | 'E' | 'P' | 'N' | 'T'
-      customer?: components['schemas']['CustomerInfo']
+      /** @description Cliente de la factura. Es null cuando el borrador no tiene cliente. */
+      customer?: components['schemas']['CustomerInfo'] | null
       /** @description Monto total facturado. */
       total?: number
       /**

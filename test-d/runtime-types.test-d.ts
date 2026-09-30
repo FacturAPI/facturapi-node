@@ -8,6 +8,8 @@ import Facturapi, {
   PageSearchParams,
   FacturapiError,
   Invoice,
+  InvoiceDraft,
+  CustomerInfo,
   InvoiceCreateInput,
   InvoiceNominaEditInput,
   NominaPercepcionInput,
@@ -285,7 +287,23 @@ declare const organization: Organization
 expectType<Date>(organization.created_at)
 expectType<Date | undefined>(organization.certificate.expires_at)
 expectType<Date | undefined>(organization.pending_add_ons_update?.scheduled_for)
+declare const draftResponse: InvoiceDraft
+expectAssignable<InvoiceDraft['customer']>(null)
+expectType<CustomerInfo | null | undefined>(draftResponse.customer)
+expectError(
+  client.webhooks.create({
+    url: 'https://example.com/hooks',
+    enabled_events: ['*'],
+  }),
+)
+expectError(
+  client.webhooks.update('hook_example', {
+    status: 'enabled',
+    enabled_events: ['*'],
+  }),
+)
 declare const webhook: Webhook
+expectAssignable<NonNullable<Webhook['enabled_events']>[number]>('*')
 expectType<Date>(webhook.created_at)
 declare const event: ApiEvent
 expectType<Date>(event.created_at)

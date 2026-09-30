@@ -12831,7 +12831,7 @@
           },
           "enabled_events": {
             "type": "array",
-            "description": "Eventos dados de alta para el webhook.",
+            "description": "Eventos a los que está suscrito el webhook. El valor \"*\" puede aparecer en respuestas existentes, pero no se acepta al crear o actualizar un webhook; envía los nombres de eventos explícitos.\n",
             "items": {
               "type": "string",
               "enum": [
@@ -14255,7 +14255,15 @@
             "description": "Tipo de comprobante. Puede tener los valores `\"I\"`: Ingreso, `\"P\"`: Pago, `\"E\"`: Egreso, `\"N\"`: Nómina, `\"T\"`: Traslado.\n"
           },
           "customer": {
-            "$ref": "#/components/schemas/CustomerInfo"
+            "description": "Cliente de la factura. Es null cuando el borrador no tiene cliente.",
+            "anyOf": [
+              {
+                "$ref": "#/components/schemas/CustomerInfo"
+              },
+              {
+                "type": "null"
+              }
+            ]
           },
           "total": {
             "type": "number",
