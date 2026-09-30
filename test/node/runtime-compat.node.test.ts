@@ -594,6 +594,11 @@ describe('runtime compatibility (node)', () => {
 
   it('falls back to API validation when local crypto is unavailable', async () => {
     const client = createClient()
+    const payload = JSON.stringify({
+      id: 'evt_remote_123',
+      type: 'invoice.status_updated',
+      created_at: '2026-09-30T12:00:00.000Z',
+    })
     const originalBuffer = (globalThis as any).Buffer
     const cryptoDescriptor = Object.getOwnPropertyDescriptor(
       globalThis,
@@ -613,6 +618,11 @@ describe('runtime compatibility (node)', () => {
       expect(getHeader(options?.headers, 'Authorization')).toBe(
         'Bearer sk_test_123',
       )
+      expect(JSON.parse(options?.body as string)).toEqual({
+        secret: 'whsec_test',
+        signature: 'deadbeef',
+        payload,
+      })
       return {
         ok: true,
         headers: {
@@ -623,10 +633,7 @@ describe('runtime compatibility (node)', () => {
           },
         },
         async json() {
-          return {
-            id: 'evt_remote_123',
-            type: 'invoice.created',
-          }
+          return payload
         },
         async text() {
           return ''
@@ -638,10 +645,11 @@ describe('runtime compatibility (node)', () => {
       const event = await client.webhooks.validateSignature({
         secret: 'whsec_test',
         signature: 'deadbeef',
-        payload: '{"id":"evt_remote_123","type":"invoice.created"}',
+        payload,
       })
       expect(event.id).toBe('evt_remote_123')
-      expect(event.type).toBe('invoice.created')
+      expect(event.type).toBe('invoice.status_updated')
+      expect(event.created_at).toEqual(new Date('2026-09-30T12:00:00.000Z'))
     } finally {
       ;(globalThis as any).Buffer = originalBuffer
       if (cryptoDescriptor) {

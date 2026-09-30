@@ -181,12 +181,13 @@ export default class Webhooks {
     }
 
     // Fallback for runtimes without local crypto support (e.g. some RN setups)
-    return this.client.post('/webhooks/validate-signature', {
+    await this.client.post('/webhooks/validate-signature', {
       body: {
         secret,
         signature,
         payload: payloadString,
       },
     });
+    return deserializeResponseDates(JSON.parse(payloadString)) as ApiEvent<T>;
   }
 }

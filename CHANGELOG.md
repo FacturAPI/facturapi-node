@@ -14,6 +14,8 @@ and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.
 
 ### Fixed
 
+- Return parsed webhook events with hydrated dates when signature validation uses the API fallback, matching local validation.
+
 - Match nullable invoice and retention dates to the API response, and hydrate signed webhook events validated locally. SAT `stamp.date` remains a string because it is local wall-clock time without a timezone offset.
 - Allow `null` in customer validation/edit-link dates and `organization.pending_plan_update`, and expose `pending_add_ons_update` and `invoice.canceled_at` in response types.
 
