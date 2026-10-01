@@ -1,4 +1,9 @@
-import { expectAssignable, expectType, expectError } from 'tsd'
+import {
+  expectAssignable,
+  expectNotAssignable,
+  expectType,
+  expectError,
+} from 'tsd'
 import Facturapi, {
   BinaryDownload,
   ApiKeys,
@@ -117,6 +122,23 @@ expectError<CartaPorteAutotransporte>({
 })
 
 expectAssignable<InvoiceCreateInput>({ status: 'draft', date: new Date() })
+expectAssignable<InvoiceCreateInput>({ type: 'E', status: 'draft' })
+expectAssignable<InvoiceCreateInput>({ type: 'P', status: 'draft' })
+expectAssignable<InvoiceCreateInput>({ type: 'N', status: 'draft' })
+expectAssignable<InvoiceCreateInput>({ type: 'T', status: 'draft' })
+expectError<InvoiceCreateInput>({ type: 'I', status: 'pending' })
+expectError<InvoiceCreateInput>({ type: 'E', status: 'pending' })
+expectError<InvoiceCreateInput>({ type: 'P', status: 'pending' })
+expectError<InvoiceCreateInput>({ type: 'N', status: 'pending' })
+expectError<InvoiceCreateInput>({ type: 'T', status: 'pending' })
+expectError<InvoiceCreateInput>({})
+declare const invoiceInput: InvoiceCreateInput
+if (invoiceInput.status !== 'draft') {
+  expectNotAssignable<undefined>(invoiceInput.customer)
+  if (invoiceInput.type === 'P') {
+    expectNotAssignable<undefined>(invoiceInput.complements)
+  }
+}
 expectAssignable<InvoiceCreateInput>({
   status: 'draft',
   date: '2026-09-30T12:00:00Z',
