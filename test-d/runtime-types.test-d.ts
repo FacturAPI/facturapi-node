@@ -42,6 +42,11 @@ import Facturapi, {
 
 const client = new Facturapi('sk_test_123')
 
+declare const createdInvoice: Awaited<ReturnType<typeof client.invoices.create>>
+expectAssignable<Invoice | InvoiceDraft>(createdInvoice)
+expectAssignable<Date | null | undefined>(createdInvoice.date)
+expectAssignable<Invoice['stamp'] | undefined>(createdInvoice.stamp)
+
 expectAssignable<InvoiceNominaEditInput>({ type: 'N' })
 expectError<InvoiceNominaEditInput>({ type: 'P' })
 expectAssignable<InvoiceCreateInput>({

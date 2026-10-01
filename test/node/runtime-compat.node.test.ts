@@ -77,12 +77,16 @@ describe('runtime compatibility (node)', () => {
     await client.organizations.me()
   })
 
-  it('parses JSON responses and sends auth header', async () => {
+  it('parses retrieved and created invoice responses and sends auth headers', async () => {
     const client = createClient()
 
     globalThis.fetch = vi.fn(async (url, options) => {
-      expect(url).toBe('https://api.test.local/v2/invoices/inv_123')
-      expect(options?.method).toBe('GET')
+      expect(url).toBe(
+        options?.method === 'POST'
+          ? 'https://api.test.local/v2/invoices'
+          : 'https://api.test.local/v2/invoices/inv_123',
+      )
+      expect(['GET', 'POST']).toContain(options?.method)
       expect(getHeader(options?.headers, 'Authorization')).toBe(
         'Bearer sk_test_123',
       )
@@ -142,6 +146,23 @@ describe('runtime compatibility (node)', () => {
       invoice.complements?.find((complement) => complement.type === 'custom')
         ?.data,
     ).toBe('<Example date="2026-09-17T12:00:00.000Z"/>')
+    const created = await client.invoices.create({
+      customer: 'cus_123',
+      payment_form: '28',
+      items: [
+        {
+          quantity: 1,
+          product: {
+            description: 'Ejemplo',
+            product_key: '60131324',
+            price: 100,
+          },
+        },
+      ],
+    })
+    expect(created.created_at).toEqual(new Date('2026-09-17T12:00:00.000Z'))
+    expect(created.date).toEqual(new Date('2026-09-17T11:00:00.000Z'))
+    expect(created.stamp?.date).toBe('2026-09-17T06:59:16')
   })
 
   it('checks domain availability via GET query params', async () => {

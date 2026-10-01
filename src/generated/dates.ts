@@ -226,12 +226,26 @@ export const datePlans: DatePlan[] = [
     kind: 'union',
     variants: [
       { plan: 4, match: {} },
+      { plan: 53, match: {} },
+    ],
+  },
+  {
+    kind: 'union',
+    variants: [
+      { plan: 109, match: {} },
       { plan: 0, match: {} },
     ],
   },
-  { kind: 'array', items: 111 },
-  { kind: 'object', properties: { created_at: 1 } },
+  {
+    kind: 'union',
+    variants: [
+      { plan: 4, match: {} },
+      { plan: 0, match: {} },
+    ],
+  },
   { kind: 'array', items: 113 },
+  { kind: 'object', properties: { created_at: 1 } },
+  { kind: 'array', items: 115 },
   { kind: 'object', properties: { created_at: 1 } },
 ]
 export const componentDatePlans = {
@@ -498,7 +512,7 @@ export const operationDatePlans = {
   editProduct: 47,
   deleteProduct: 47,
   listInvoices: 54,
-  createInvoice: 0,
+  createInvoice: 110,
   listInvoiceZipRequests: 51,
   createInvoiceZipRequest: 50,
   retrieveInvoiceZipRequest: 50,
@@ -524,7 +538,7 @@ export const operationDatePlans = {
   downloadReceiptPdf: 0,
   sendReceiptByEmail: 0,
   invoiceReceipt: 4,
-  createToInvoiceFromReceipts: 109,
+  createToInvoiceFromReceipts: 111,
   previewToInvoiceFromReceipts: 0,
   previewToInvoiceFromReceiptsUrl: 27,
   createGlobalInvoice: 4,
@@ -554,9 +568,9 @@ export const operationDatePlans = {
   deleteOrganization: 96,
   getTestApiKey: 0,
   renewTestApiKey: 0,
-  listLiveApiKeys: 110,
+  listLiveApiKeys: 112,
   renewLiveApiKey: 0,
-  deleteLiveApiKey: 112,
+  deleteLiveApiKey: 114,
   getSeriesGroup: 0,
   createSeriesGroup: 0,
   updateDefaultSeries: 0,

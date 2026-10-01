@@ -7984,7 +7984,9 @@ export interface operations {
           [name: string]: unknown
         }
         content: {
-          'application/json': Record<string, unknown>
+          'application/json':
+            | components['schemas']['Invoice']
+            | components['schemas']['InvoiceDraft']
         }
       }
       /** @description Solicitud aceptada; Facturapi intentará recuperar el CFDI hasta cinco veces, una cada 10 minutos */
