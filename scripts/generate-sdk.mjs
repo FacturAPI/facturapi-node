@@ -136,7 +136,8 @@ for (const mode of ['input', 'output']) {
         .map(([name, file]) => `import type { ${name} } from '${file}';`)
         .join('\n') +
       '\n' +
-      astToString(ast),
+      // Use prose for descriptions rather than repeated tags in union completions.
+      astToString(ast).replace(/^(\s*\/\*\*|\s*\*) @description /gm, '$1 '),
   )
 }
 outputs.set(

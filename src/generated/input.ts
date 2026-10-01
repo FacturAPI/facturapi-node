@@ -10,7 +10,7 @@ export interface paths {
     }
     /**
      * Buscar códigos de transporte aéreo
-     * @description Devuelve entradas del catálogo de aerolíneas que coinciden con la consulta. Usado para el complemento Carta Porte.
+     * Devuelve entradas del catálogo de aerolíneas que coinciden con la consulta. Usado para el complemento Carta Porte.
      */
     get: operations['searchCartaPorteAirTransportCodes']
     put?: never
@@ -30,7 +30,7 @@ export interface paths {
     }
     /**
      * Buscar fracciones arancelarias
-     * @description Devuelve fracciones arancelarias que coinciden con la consulta.
+     * Devuelve fracciones arancelarias que coinciden con la consulta.
      */
     get: operations['searchComercioExteriorTariffFractions']
     put?: never
@@ -50,7 +50,7 @@ export interface paths {
     }
     /**
      * Buscar configuraciones de autotransporte
-     * @description Devuelve configuraciones de transporte (p. ej., camión/semirremolque).
+     * Devuelve configuraciones de transporte (p. ej., camión/semirremolque).
      */
     get: operations['searchCartaPorteTransportConfigs']
     put?: never
@@ -70,7 +70,7 @@ export interface paths {
     }
     /**
      * Buscar derechos de paso
-     * @description Devuelve derechos de paso ferroviarios que coinciden con la consulta.
+     * Devuelve derechos de paso ferroviarios que coinciden con la consulta.
      */
     get: operations['searchCartaPorteRightsOfPassage']
     put?: never
@@ -90,7 +90,7 @@ export interface paths {
     }
     /**
      * Buscar documentos aduaneros
-     * @description Devuelve tipos de documentos aduaneros.
+     * Devuelve tipos de documentos aduaneros.
      */
     get: operations['searchCartaPorteCustomsDocuments']
     put?: never
@@ -110,7 +110,7 @@ export interface paths {
     }
     /**
      * Buscar tipos de empaque
-     * @description Devuelve tipos de empaque para mercancías.
+     * Devuelve tipos de empaque para mercancías.
      */
     get: operations['searchCartaPortePackagingTypes']
     put?: never
@@ -130,7 +130,7 @@ export interface paths {
     }
     /**
      * Buscar tipos de remolque
-     * @description Devuelve tipos de remolque/semirremolque.
+     * Devuelve tipos de remolque/semirremolque.
      */
     get: operations['searchCartaPorteTrailerTypes']
     put?: never
@@ -150,7 +150,7 @@ export interface paths {
     }
     /**
      * Buscar materiales peligrosos
-     * @description Devuelve entradas del catálogo de materiales peligrosos.
+     * Devuelve entradas del catálogo de materiales peligrosos.
      */
     get: operations['searchCartaPorteHazardousMaterials']
     put?: never
@@ -170,7 +170,7 @@ export interface paths {
     }
     /**
      * Buscar autorizaciones navales
-     * @description Devuelve códigos de autorización naval (solo `key`).
+     * Devuelve códigos de autorización naval (solo `key`).
      */
     get: operations['searchCartaPorteNavalAuthorizations']
     put?: never
@@ -190,7 +190,7 @@ export interface paths {
     }
     /**
      * Buscar estaciones/puertos
-     * @description Devuelve entradas de estaciones aéreas/marítimas/terrestres.
+     * Devuelve entradas de estaciones aéreas/marítimas/terrestres.
      */
     get: operations['searchCartaPortePortStations']
     put?: never
@@ -210,7 +210,7 @@ export interface paths {
     }
     /**
      * Buscar contenedores marítimos
-     * @description Devuelve tipos de contenedores marítimos.
+     * Devuelve tipos de contenedores marítimos.
      */
     get: operations['searchCartaPorteMarineContainers']
     put?: never
@@ -230,13 +230,13 @@ export interface paths {
     }
     /**
      * Listar clientes
-     * @description Regresa una lista paginada de todos los clientes de una organización o realiza una búsqueda de acuerdo a parámetros
+     * Regresa una lista paginada de todos los clientes de una organización o realiza una búsqueda de acuerdo a parámetros
      */
     get: operations['listCustomers']
     put?: never
     /**
      * Crear cliente
-     * @description Registra un nuevo cliente en Facturapi.
+     * Registra un nuevo cliente en Facturapi.
      *
      *     Esta llamada valida que los datos fiscales coincidan con
      *     los registros del SAT para ese RFC, de lo contrario, la llamada
@@ -266,18 +266,18 @@ export interface paths {
     }
     /**
      * Obtener cliente por ID
-     * @description Regresa el objeto 'Customer' relacionado al `id` especificado.
+     * Regresa el objeto 'Customer' relacionado al `id` especificado.
      */
     get: operations['getCustomer']
     /**
      * Editar cliente
-     * @description Actualiza la información de un cliente existente, asignando los valores de los parámetros enviados. Los parámetros que no se envíen en la petición no se modificarán.
+     * Actualiza la información de un cliente existente, asignando los valores de los parámetros enviados. Los parámetros que no se envíen en la petición no se modificarán.
      */
     put: operations['editCustomer']
     post?: never
     /**
      * Eliminar cliente
-     * @description Elimina el cliente de tu organización. Las facturas asociadas al cliente **no** se eliminarán.
+     * Elimina el cliente de tu organización. Las facturas asociadas al cliente **no** se eliminarán.
      */
     delete: operations['deleteCustomer']
     options?: never
@@ -296,7 +296,7 @@ export interface paths {
     put?: never
     /**
      * Enviar enlace de edición por correo electrónico
-     * @description Envía un enlace para que el cliente pueda editar su información fiscal.
+     * Envía un enlace para que el cliente pueda editar su información fiscal.
      *
      *     Este enlace estará disponible en el campo `edit_link`, será válido por 7 días y sólo se podrá usar una vez.
      */
@@ -316,7 +316,7 @@ export interface paths {
     }
     /**
      * Validar información fiscal
-     * @description Valida que la información fiscal del cliente coincida con los registros del SAT.
+     * Valida que la información fiscal del cliente coincida con los registros del SAT.
      *
      *     Su función principal es validar que los datos del cliente registrado siguen cumpliendo la validación del SAT.
      *
@@ -344,13 +344,13 @@ export interface paths {
     }
     /**
      * Listar productos
-     * @description Regresa una lista paginada de todos los productos de una organización o realiza una búsqueda de acuerdo a parámetros
+     * Regresa una lista paginada de todos los productos de una organización o realiza una búsqueda de acuerdo a parámetros
      */
     get: operations['listProducts']
     put?: never
     /**
      * Crear producto
-     * @description Registra un nuevo producto o servicio en tu catálogo de Facturapi.
+     * Registra un nuevo producto o servicio en tu catálogo de Facturapi.
      *
      *     Puedes usar el ID del producto para crear facturas sin tener que enviar todos los datos del producto cada vez.
      *
@@ -373,18 +373,18 @@ export interface paths {
     }
     /**
      * Obtener producto por ID
-     * @description Regresa el objeto `Product` relacionado al `id` especificado.
+     * Regresa el objeto `Product` relacionado al `id` especificado.
      */
     get: operations['getProduct']
     /**
      * Editar producto
-     * @description Actualiza la información de un producto existente, asignando los valores de los parámetros enviados. Los parámetros que no se envíen en la petición no se modificarán.
+     * Actualiza la información de un producto existente, asignando los valores de los parámetros enviados. Los parámetros que no se envíen en la petición no se modificarán.
      */
     put: operations['editProduct']
     post?: never
     /**
      * Eliminar producto
-     * @description Elimina el producto de tu organización. Las facturas asociadas al producto **no** se eliminarán.
+     * Elimina el producto de tu organización. Las facturas asociadas al producto **no** se eliminarán.
      */
     delete: operations['deleteProduct']
     options?: never
@@ -401,7 +401,7 @@ export interface paths {
     }
     /**
      * Listar facturas
-     * @description Regresa una lista paginada de todas las facturas de una organización o realiza una búsqueda de acuerdo a parámetros.
+     * Regresa una lista paginada de todas las facturas de una organización o realiza una búsqueda de acuerdo a parámetros.
      *
      *     Por defecto, los resultados se ordenan por fecha de emisión, usando el campo `date` de forma descendente.
      */
@@ -409,7 +409,7 @@ export interface paths {
     put?: never
     /**
      * Crear factura (CFDI 4.0)
-     * @description Crea una nueva Factura. Si la factura es creada en ambiente Live, ésta será **timbrada y enviada al SAT**.
+     * Crea una nueva Factura. Si la factura es creada en ambiente Live, ésta será **timbrada y enviada al SAT**.
      *
      *     Revisa e infórmate sobre el [rescate de CFDI en intermitencias (Status 202)](/docs/guides/invoices/intermitencias).
      */
@@ -429,12 +429,12 @@ export interface paths {
     }
     /**
      * Obtener factura por ID
-     * @description Regresa el objeto 'Invoice' relacionado al `id` especificado.
+     * Regresa el objeto 'Invoice' relacionado al `id` especificado.
      */
     get: operations['getInvoice']
     /**
      * Editar borrador de factura
-     * @description Actualiza la información de una factura con status `draft`, asignando
+     * Actualiza la información de una factura con status `draft`, asignando
      *     los valores de los parámetros enviados. Los parámetros que no se envíen
      *     en la petición no se modificarán.
      *
@@ -447,7 +447,7 @@ export interface paths {
     post?: never
     /**
      * Cancelar factura
-     * @description Realiza una solicitud de cancelación de factura ante el SAT, soportando el esquema de cancelación 2022.
+     * Realiza una solicitud de cancelación de factura ante el SAT, soportando el esquema de cancelación 2022.
      *
      *     Al usar este método pueden ocurrir 3 posibles resultados:
      *
@@ -482,7 +482,7 @@ export interface paths {
     put?: never
     /**
      * Copiar a borrador
-     * @description Crea una copia en borrador de la factura especificada.
+     * Crea una copia en borrador de la factura especificada.
      */
     post: operations['copyToDraftInvoice']
     delete?: never
@@ -502,7 +502,7 @@ export interface paths {
     put?: never
     /**
      * Timbrar borrador de factura
-     * @description Timbra una factura con status `draft` y la envía al SAT para su validación.
+     * Timbra una factura con status `draft` y la envía al SAT para su validación.
      *
      *     Al usar este método, el valor del campo `is_ready_to_stamp` (asignado por Facturapi)
      *     deberá ser `true`. De otra forma, la llamada regresará un error.
@@ -527,7 +527,7 @@ export interface paths {
     get?: never
     /**
      * Actualizar status de factura
-     * @description Consulta el status de una factura timbrada en el SAT y actualiza el objeto invoice
+     * Consulta el status de una factura timbrada en el SAT y actualiza el objeto invoice
      *     con La información más reciente.
      */
     put: operations['updateInvoiceStatus']
@@ -547,7 +547,7 @@ export interface paths {
     }
     /**
      * Resumen de pago
-     * @description Devuelve la información necesaria para agregar esta factura como documento relacionado en un
+     * Devuelve la información necesaria para agregar esta factura como documento relacionado en un
      *     Comprobante de Pago (complemento de pago): el número de parcialidad que corresponde según el
      *     historial de pagos, el saldo anterior (`last_balance`) y el desglose de impuestos de la factura
      *     prorrateado al monto que se pretende pagar.
@@ -579,7 +579,7 @@ export interface paths {
     put?: never
     /**
      * Vista previa de factura en PDF
-     * @description Genera una vista previa en PDF de una factura sin timbrar ni guardar en la organización.
+     * Genera una vista previa en PDF de una factura sin timbrar ni guardar en la organización.
      */
     post: operations['previewInvoicePdf']
     delete?: never
@@ -599,7 +599,7 @@ export interface paths {
     put?: never
     /**
      * Obtener URL del preview PDF de factura
-     * @description Devuelve un objeto con los metadatos del archivo y una URL temporal para el preview PDF de una factura sin timbrar.
+     * Devuelve un objeto con los metadatos del archivo y una URL temporal para el preview PDF de una factura sin timbrar.
      */
     post: operations['previewInvoicePdfUrl']
     delete?: never
@@ -617,7 +617,7 @@ export interface paths {
     }
     /**
      * Descargar factura
-     * @description Descarga tu Factura en PDF, XML o ambos en un archivo comprimido ZIP.
+     * Descarga tu Factura en PDF, XML o ambos en un archivo comprimido ZIP.
      */
     get: operations['downloadInvoice']
     put?: never
@@ -637,7 +637,7 @@ export interface paths {
     }
     /**
      * Obtener enlace de descarga
-     * @description Devuelve un objeto con los metadatos del archivo y un enlace temporal para descargar la factura en PDF, XML o ambos en un archivo comprimido ZIP, sin que el archivo pase por tu servidor.
+     * Devuelve un objeto con los metadatos del archivo y un enlace temporal para descargar la factura en PDF, XML o ambos en un archivo comprimido ZIP, sin que el archivo pase por tu servidor.
      *
      *     El enlace da acceso a ese archivo mientras siga vigente: trátalo como una credencial y no lo almacenes.
      */
@@ -659,7 +659,7 @@ export interface paths {
     }
     /**
      * Descargar acuse de cancelación
-     * @description Descarga en XML o PDF el acuse emitido por el SAT al solicitar la cancelación mediante Facturapi. El acuse contiene el resultado inmediato de la solicitud y no necesariamente acredita que el CFDI ya esté cancelado; consulta el estado de la factura para confirmar el desenlace.
+     * Descarga en XML o PDF el acuse emitido por el SAT al solicitar la cancelación mediante Facturapi. El acuse contiene el resultado inmediato de la solicitud y no necesariamente acredita que el CFDI ya esté cancelado; consulta el estado de la factura para confirmar el desenlace.
      */
     get: operations['downloadCancellationReceiptXml']
     put?: never
@@ -679,7 +679,7 @@ export interface paths {
     }
     /**
      * Obtener enlace del acuse de cancelación
-     * @description Devuelve un objeto con los metadatos del archivo y un enlace temporal para descargar en XML o PDF el acuse emitido por el SAT al solicitar la cancelación mediante Facturapi. El acuse contiene el resultado inmediato de la solicitud y no necesariamente acredita que el CFDI ya esté cancelado; consulta el estado de la factura para confirmar el desenlace.
+     * Devuelve un objeto con los metadatos del archivo y un enlace temporal para descargar en XML o PDF el acuse emitido por el SAT al solicitar la cancelación mediante Facturapi. El acuse contiene el resultado inmediato de la solicitud y no necesariamente acredita que el CFDI ya esté cancelado; consulta el estado de la factura para confirmar el desenlace.
      *
      *     El enlace da acceso a ese archivo mientras siga vigente: trátalo como una credencial y no lo almacenes.
      */
@@ -703,7 +703,7 @@ export interface paths {
     put?: never
     /**
      * Enviar factura por correo electrónico
-     * @description Envía un correo electrónico a la dirección de tu cliente, con los archivos XML y PDF adjuntos al mensaje.
+     * Envía un correo electrónico a la dirección de tu cliente, con los archivos XML y PDF adjuntos al mensaje.
      */
     post: operations['sendInvoiceByEmail']
     delete?: never
@@ -721,7 +721,7 @@ export interface paths {
     }
     /**
      * Listar solicitudes de ZIP mensual
-     * @description Regresa una lista paginada de solicitudes de ZIP. `year` y `month` deben enviarse juntos. `invoice_types` filtra por un tipo o por un arreglo normalizado exacto.
+     * Regresa una lista paginada de solicitudes de ZIP. `year` y `month` deben enviarse juntos. `invoice_types` filtra por un tipo o por un arreglo normalizado exacto.
      *
      *     Este método requiere una llave de API de organización en ambiente Live, una suscripción activa y permiso para leer facturas.
      */
@@ -729,7 +729,7 @@ export interface paths {
     put?: never
     /**
      * Crear o recuperar solicitud de ZIP mensual
-     * @description Crea una solicitud para generar un archivo ZIP con las facturas de un mes, o recupera la solicitud existente con los mismos filtros.
+     * Crea una solicitud para generar un archivo ZIP con las facturas de un mes, o recupera la solicitud existente con los mismos filtros.
      *
      *     La operación es idempotente. Los tipos de factura se normalizan, por lo que `["I", "E"]` y `["E", "I"]` corresponden a la misma solicitud. Las llamadas concurrentes idénticas también regresan la misma solicitud.
      *
@@ -753,7 +753,7 @@ export interface paths {
     }
     /**
      * Recuperar solicitud de ZIP mensual
-     * @description Recupera una solicitud de ZIP. Consulta este método hasta que el status sea `finished` o `failed`. Cuando sea `finished`, descarga el archivo con el método de descarga.
+     * Recupera una solicitud de ZIP. Consulta este método hasta que el status sea `finished` o `failed`. Cuando sea `finished`, descarga el archivo con el método de descarga.
      *
      *     Requiere una llave de API de organización en ambiente Live, una suscripción activa y permiso para leer facturas.
      */
@@ -775,7 +775,7 @@ export interface paths {
     }
     /**
      * Descargar ZIP mensual
-     * @description Descarga el ZIP de una solicitud terminada. El nombre del archivo usa el formato `YYYY-MM.zip`.
+     * Descarga el ZIP de una solicitud terminada. El nombre del archivo usa el formato `YYYY-MM.zip`.
      *
      *     Requiere una llave de API de organización en ambiente Live, una suscripción activa y permiso para leer facturas.
      */
@@ -797,7 +797,7 @@ export interface paths {
     }
     /**
      * Obtener URL de descarga del ZIP mensual
-     * @description Devuelve un objeto con los metadatos del archivo y una URL temporal para descargar el ZIP de una solicitud terminada sin que el archivo viaje a través de tu servidor.
+     * Devuelve un objeto con los metadatos del archivo y una URL temporal para descargar el ZIP de una solicitud terminada sin que el archivo viaje a través de tu servidor.
      *
      *     La URL permite acceder únicamente a ese archivo mientras sea válida: trátala como una credencial y no la almacenes. Requiere una llave de API de organización en ambiente Live, una suscripción activa y permiso para leer facturas.
      */
@@ -819,13 +819,13 @@ export interface paths {
     }
     /**
      * Listar recibos
-     * @description Regresa una lista paginada de todos los recibos de una organización o realiza una búsqueda de acuerdo a parámetros
+     * Regresa una lista paginada de todos los recibos de una organización o realiza una búsqueda de acuerdo a parámetros
      */
     get: operations['listReceipts']
     put?: never
     /**
      * Crear recibo
-     * @description Crea un nuevo Recibo, el cual funge como nota de venta.
+     * Crea un nuevo Recibo, el cual funge como nota de venta.
      *
      *     Todos los recibos generan una URL de autofactura que cliente puede
      *     visitar para llenar sus datos fiscales en un micrositio con el branding
@@ -847,18 +847,18 @@ export interface paths {
     }
     /**
      * Obtener recibo por ID
-     * @description Regresa el objeto 'Receipt' relacionado al `id` especificado.
+     * Regresa el objeto 'Receipt' relacionado al `id` especificado.
      */
     get: operations['getReceipt']
     /**
      * Asignar o reasignar cliente a recibo
-     * @description Asigna o reasigna un cliente existente (por ID) a un recibo, o crea uno nuevo enviando el objeto del cliente.
+     * Asigna o reasigna un cliente existente (por ID) a un recibo, o crea uno nuevo enviando el objeto del cliente.
      */
     put: operations['assignReceiptCustomer']
     post?: never
     /**
      * Cancelar recibo
-     * @description Marca un recibo como cancelado, cambiando su propiedad `status` a `"canceled"`.
+     * Marca un recibo como cancelado, cambiando su propiedad `status` a `"canceled"`.
      *
      *     Una vez cancelado, el recibo no podrá ser facturado.
      */
@@ -879,7 +879,7 @@ export interface paths {
     put?: never
     /**
      * Facturar recibo
-     * @description Crea una factura a partir de un recibo.
+     * Crea una factura a partir de un recibo.
      *
      *     Sólo pueden facturarse recibos abiertos (`status = "open"`)
      *
@@ -907,7 +907,7 @@ export interface paths {
     put?: never
     /**
      * Facturar múltiples recibos
-     * @description Crea una sola factura a partir de múltiples recibos seleccionados por su `key`.
+     * Crea una sola factura a partir de múltiples recibos seleccionados por su `key`.
      *
      *     Si envías `customer`, ese cliente se usará como receptor de la factura y
      *     sobrescribirá el cliente asignado a los recibos incluidos. Si omites
@@ -935,7 +935,7 @@ export interface paths {
     put?: never
     /**
      * Vista previa PDF de factura múltiple
-     * @description Genera una vista previa en PDF para una factura construida a partir de múltiples recibos seleccionados por `key`.
+     * Genera una vista previa en PDF para una factura construida a partir de múltiples recibos seleccionados por `key`.
      *
      *     La vista previa valida las mismas reglas de cliente que la creación real:
      *     si omites `customer`, todos los recibos deben tener asignado el mismo cliente.
@@ -958,7 +958,7 @@ export interface paths {
     put?: never
     /**
      * Obtener URL del preview de factura de recibos
-     * @description Devuelve un objeto con los metadatos del archivo y una URL temporal para el preview PDF de una factura construida con los recibos seleccionados.
+     * Devuelve un objeto con los metadatos del archivo y una URL temporal para el preview PDF de una factura construida con los recibos seleccionados.
      */
     post: operations['previewToInvoiceFromReceiptsUrl']
     delete?: never
@@ -978,7 +978,7 @@ export interface paths {
     put?: never
     /**
      * Crear factura global
-     * @description Crea una factura global que incluirá todos los recibos con `status = “open”` de un cierto periodo.
+     * Crea una factura global que incluirá todos los recibos con `status = “open”` de un cierto periodo.
      *
      *     La factura global se emite al cliente genérico `PUBLICO EN GENERAL`.
      *     Los recibos incluidos quedan asociados a ese cliente y su `status`
@@ -1004,7 +1004,7 @@ export interface paths {
     }
     /**
      * Descargar PDF
-     * @description Descarga el recibo digital en formato PDF.
+     * Descarga el recibo digital en formato PDF.
      */
     get: operations['downloadReceiptPdf']
     put?: never
@@ -1024,7 +1024,7 @@ export interface paths {
     }
     /**
      * Obtener enlace de descarga
-     * @description Devuelve un objeto con los metadatos del archivo y un enlace temporal para descargar el recibo digital en PDF, sin que el archivo pase por tu servidor.
+     * Devuelve un objeto con los metadatos del archivo y un enlace temporal para descargar el recibo digital en PDF, sin que el archivo pase por tu servidor.
      *
      *     El enlace da acceso a ese archivo mientras siga vigente: trátalo como una credencial y no lo almacenes.
      */
@@ -1048,7 +1048,7 @@ export interface paths {
     put?: never
     /**
      * Enviar recibo por correo electrónico
-     * @description Envía un correo electrónico a la dirección de tu cliente.
+     * Envía un correo electrónico a la dirección de tu cliente.
      *
      *     El correo enviado estará personalizado con el logotipo y los colores de la organización que lo creó,
      *     e incluirá un botón para facturar el recibo, así con el recibo en formato PDF adjunto al mensaje.
@@ -1069,13 +1069,13 @@ export interface paths {
     }
     /**
      * Listar retenciones
-     * @description Regresa una lista paginada de todas las retenciones de una organización o realiza una búsqueda de acuerdo a parámetros
+     * Regresa una lista paginada de todas las retenciones de una organización o realiza una búsqueda de acuerdo a parámetros
      */
     get: operations['listRetentions']
     put?: never
     /**
      * Crear retención
-     * @description Crea una nueva Retención. Si el comprobante es creado en ambiente Live, ésta será **timbrado y enviado al SAT**.
+     * Crea una nueva Retención. Si el comprobante es creado en ambiente Live, ésta será **timbrado y enviado al SAT**.
      *
      *     Para crear una retención en borrador, envía `status: "draft"`. En ese caso,
      *     la retención se guardará sin timbrarse, no se enviará al PAC y podrá estar
@@ -1098,12 +1098,12 @@ export interface paths {
     }
     /**
      * Obtener retención por ID
-     * @description Regresa el objeto 'Retention' relacionado al `id` especificado.
+     * Regresa el objeto 'Retention' relacionado al `id` especificado.
      */
     get: operations['getRetention']
     /**
      * Editar borrador de retención
-     * @description Actualiza la información de una retención con status `draft`, asignando
+     * Actualiza la información de una retención con status `draft`, asignando
      *     los valores de los parámetros enviados. Los parámetros que no se envíen
      *     en la petición no se modificarán.
      *
@@ -1115,7 +1115,7 @@ export interface paths {
     post?: never
     /**
      * Cancelar retención
-     * @description Realiza una solicitud de cancelación de retención ante el SAT.
+     * Realiza una solicitud de cancelación de retención ante el SAT.
      *
      *     A diferencia de las facturas comunes, la cancelación de la retención es inmediata y no requiere autorización de parte del receptor.
      *
@@ -1139,7 +1139,7 @@ export interface paths {
     put?: never
     /**
      * Copiar a borrador
-     * @description Crea una copia en borrador de la retención especificada. La copia no conserva
+     * Crea una copia en borrador de la retención especificada. La copia no conserva
      *     campos propios del timbrado, cancelación, idempotencia o identidad externa.
      */
     post: operations['copyToDraftRetention']
@@ -1160,7 +1160,7 @@ export interface paths {
     put?: never
     /**
      * Timbrar borrador de retención
-     * @description Timbra una retención con status `draft` y la envía al SAT para su validación.
+     * Timbra una retención con status `draft` y la envía al SAT para su validación.
      *
      *     Facturapi validará el borrador como una retención completa antes de timbrarlo.
      *     Si el borrador está incompleto o no es válido, la llamada regresará un error.
@@ -1181,7 +1181,7 @@ export interface paths {
     }
     /**
      * Descargar retención
-     * @description Descarga una retención en PDF, XML o ambos en un archivo comprimido ZIP.
+     * Descarga una retención en PDF, XML o ambos en un archivo comprimido ZIP.
      */
     get: operations['downloadRetention']
     put?: never
@@ -1201,7 +1201,7 @@ export interface paths {
     }
     /**
      * Obtener enlace de descarga
-     * @description Devuelve un objeto con los metadatos del archivo y un enlace temporal para descargar la retención en PDF, XML o ambos en un archivo comprimido ZIP, sin que el archivo pase por tu servidor.
+     * Devuelve un objeto con los metadatos del archivo y un enlace temporal para descargar la retención en PDF, XML o ambos en un archivo comprimido ZIP, sin que el archivo pase por tu servidor.
      *
      *     El enlace da acceso a ese archivo mientras siga vigente: trátalo como una credencial y no lo almacenes.
      */
@@ -1225,7 +1225,7 @@ export interface paths {
     put?: never
     /**
      * Enviar retención por correo electrónico
-     * @description Envía un correo electrónico a la dirección de tu cliente, con los archivos XML y PDF adjuntos al mensaje.
+     * Envía un correo electrónico a la dirección de tu cliente, con los archivos XML y PDF adjuntos al mensaje.
      */
     post: operations['sendRetentionByEmail']
     delete?: never
@@ -1243,13 +1243,13 @@ export interface paths {
     }
     /**
      * Listar organizaciones
-     * @description Regresa una lista paginada de todas las organizationes registradas bajo tu cuenta, o realiza una búsqueda de acuerdo a parámetros.
+     * Regresa una lista paginada de todas las organizationes registradas bajo tu cuenta, o realiza una búsqueda de acuerdo a parámetros.
      */
     get: operations['listOrganizations']
     put?: never
     /**
      * Crear organización
-     * @description Crea una nueva Organización que pertenecerá a tu cuenta de usuario.
+     * Crea una nueva Organización que pertenecerá a tu cuenta de usuario.
      *
      *     Después de crear la organización y antes de poder emitir facturas con
      *     la organización, deberás de terminar de configurarla llamando a los
@@ -1285,7 +1285,7 @@ export interface paths {
     }
     /**
      * Detalle de organización
-     * @description Retorna el detalle de la organización actualmente autenticada.
+     * Retorna el detalle de la organización actualmente autenticada.
      */
     get: operations['meOrganization']
     put?: never
@@ -1305,14 +1305,14 @@ export interface paths {
     }
     /**
      * Obtener organización por ID
-     * @description Regresa el objeto 'Organization' relacionado al `id` especificado.
+     * Regresa el objeto 'Organization' relacionado al `id` especificado.
      */
     get: operations['getOrganization']
     put?: never
     post?: never
     /**
      * Eliminar organización
-     * @description Elimina la organización de tu cuenta de Facturapi. Una vez eliminada,
+     * Elimina la organización de tu cuenta de Facturapi. Una vez eliminada,
      *     ya no podrás acceder a sus recursos, tales como clientes, productos,
      *     facturas, recibos o retenciones.
      */
@@ -1332,7 +1332,7 @@ export interface paths {
     get?: never
     /**
      * Editar datos fiscales
-     * @description Actualiza los datos fiscales de la organización.
+     * Actualiza los datos fiscales de la organización.
      *
      *     Si estás buscando cómo editar el RFC, recuerda que la propiedad
      *     `tax_id` se asigna automáticamente al subir los Certificados de Sello
@@ -1356,7 +1356,7 @@ export interface paths {
     get?: never
     /**
      * Subir certificados (CSD)
-     * @description Sube los archivos del Certificado de Sello Digital (CSD) proporcionado
+     * Sube los archivos del Certificado de Sello Digital (CSD) proporcionado
      *     por el SAT. Esta llamada también debe usarse para reemplazar los
      *     certificados existentes en caso de solicitar nuevos.
      *
@@ -1367,7 +1367,7 @@ export interface paths {
     post?: never
     /**
      * Eliminar certificados (CSD)
-     * @description Elimina los certificados (CSD) de tu organización.
+     * Elimina los certificados (CSD) de tu organización.
      *
      *     Esto no afecta a las facturas ya emitidas, pero no podrás emitir nuevas facturas hasta que subas nuevos certificados.
      */
@@ -1387,7 +1387,7 @@ export interface paths {
     get?: never
     /**
      * Subir certificado FIEL
-     * @description Sube los archivos de la e.firma (FIEL) de la organización.
+     * Sube los archivos de la e.firma (FIEL) de la organización.
      *
      *     La e.firma (FIEL) no es necesaria para crear CFDI. Para timbrar CFDI
      *     solo necesitas cargar el Certificado de Sello Digital (CSD). La FIEL es
@@ -1411,7 +1411,7 @@ export interface paths {
     get?: never
     /**
      * Subir logotipo
-     * @description Sube el logotipo de la organización que será colocado en el PDF y en
+     * Sube el logotipo de la organización que será colocado en el PDF y en
      *     los correos que se envían al cliente con la factura adjunta.
      *
      *     El archivo debe ser una imagen en formato JPG o PNG y tener un tamaño
@@ -1438,7 +1438,7 @@ export interface paths {
     get?: never
     /**
      * Editar personalización
-     * @description Actualiza la información relacionada con la identidad o branding de la organización.
+     * Actualiza la información relacionada con la identidad o branding de la organización.
      */
     put: operations['editOrganizationCustomization']
     post?: never
@@ -1458,7 +1458,7 @@ export interface paths {
     get?: never
     /**
      * Editar config. recibos
-     * @description Actualiza los campos enviados de la configuración de recibos de la organización.
+     * Actualiza los campos enviados de la configuración de recibos de la organización.
      *     Para activar la generación automática de facturas globales, la organización
      *     debe tener contratado ese feature.
      */
@@ -1480,7 +1480,7 @@ export interface paths {
     get?: never
     /**
      * Editar config. autofactura
-     * @description Actualiza la configuración del portal de autofactura de la organización.
+     * Actualiza la configuración del portal de autofactura de la organización.
      */
     put: operations['editOrganizationSelfInvoiceSettings']
     post?: never
@@ -1499,7 +1499,7 @@ export interface paths {
     }
     /**
      * Revisar dominio disponible
-     * @description Revisa si un identificador está disponible para elegir como dominio para el portal de autofactura.
+     * Revisa si un identificador está disponible para elegir como dominio para el portal de autofactura.
      */
     get: operations['checkDomainAvailability']
     put?: never
@@ -1520,7 +1520,7 @@ export interface paths {
     get?: never
     /**
      * Elegir dominio de autofactura
-     * @description Elige el dominio que utilizará esta organización en su micrositio de
+     * Elige el dominio que utilizará esta organización en su micrositio de
      *     autofactura. Una vez elegido el dominio, deberás ponerte en contacto
      *     con nosotros si necesitas cambiarlo.
      *
@@ -1546,12 +1546,12 @@ export interface paths {
     }
     /**
      * Obtener Test Api Key
-     * @description Obtiene la llave secreta de ambiente Test de la organización.
+     * Obtiene la llave secreta de ambiente Test de la organización.
      */
     get: operations['getTestApiKey']
     /**
      * Renovar Test API Key
-     * @description Renueva la llave secreta de ambiente Test de la organización e invalida inmediatamente la anterior.
+     * Renueva la llave secreta de ambiente Test de la organización e invalida inmediatamente la anterior.
      */
     put: operations['renewTestApiKey']
     post?: never
@@ -1570,12 +1570,12 @@ export interface paths {
     }
     /**
      * Listar Live API Keys
-     * @description Listar llaves secretas de ambiente Live de la organización.
+     * Listar llaves secretas de ambiente Live de la organización.
      */
     get: operations['listLiveApiKeys']
     /**
      * Crear Live API Key
-     * @description Genera una nueva llave secreta de ambiente Live de la organización.
+     * Genera una nueva llave secreta de ambiente Live de la organización.
      *     Esta operación no invalida las llaves generadas previamente. El endpoint usa `PUT`
      *     por compatibilidad histórica, pero su comportamiento es crear una nueva llave.
      */
@@ -1599,7 +1599,7 @@ export interface paths {
     post?: never
     /**
      * Revocar Live API Key
-     * @description Revocar Live Api Key de tu organización.
+     * Revocar Live Api Key de tu organización.
      */
     delete: operations['deleteLiveApiKey']
     options?: never
@@ -1616,13 +1616,13 @@ export interface paths {
     }
     /**
      * Listado de series
-     * @description Listado de series creadas para la personalización de organización. La cual lleva control de foliaje para cada tipo de factura si está asignada en las personalización de organización.
+     * Listado de series creadas para la personalización de organización. La cual lleva control de foliaje para cada tipo de factura si está asignada en las personalización de organización.
      */
     get: operations['getSeriesGroup']
     put?: never
     /**
      * Crear serie
-     * @description Crea una nueva serie de folios para la organización.
+     * Crea una nueva serie de folios para la organización.
      *     Las series son útiles para llevar un control de los folios emitidos para cada tipo de factura.
      */
     post: operations['createSeriesGroup']
@@ -1642,7 +1642,7 @@ export interface paths {
     get?: never
     /**
      * Establecer serie predeterminada
-     * @description Asigna una serie predeterminada para el tipo de comprobante indicado.
+     * Asigna una serie predeterminada para el tipo de comprobante indicado.
      */
     put: operations['updateDefaultSeries']
     post?: never
@@ -1662,13 +1662,13 @@ export interface paths {
     get?: never
     /**
      * Editar serie
-     * @description Edita el número de foliaje de la serie en ambientes Test y Live de la organización.
+     * Edita el número de foliaje de la serie en ambientes Test y Live de la organización.
      */
     put: operations['updateSeriesGroup']
     post?: never
     /**
      * Eliminar serie
-     * @description Elimina la serie previamente creada
+     * Elimina la serie previamente creada
      */
     delete: operations['deleteSeriesGroup']
     options?: never
@@ -1685,7 +1685,7 @@ export interface paths {
     }
     /**
      * Listar usuarios con acceso a organización
-     * @description Regresa un arreglo con los usuarios que actualmente tienen acceso a la organización, incluyendo al propietario. Este endpoint no está paginado.
+     * Regresa un arreglo con los usuarios que actualmente tienen acceso a la organización, incluyendo al propietario. Este endpoint no está paginado.
      */
     get: operations['getOrganizationTeam']
     put?: never
@@ -1705,13 +1705,13 @@ export interface paths {
     }
     /**
      * Listar invitaciones enviadas
-     * @description Regresa invitaciones enviadas desde la organización.
+     * Regresa invitaciones enviadas desde la organización.
      */
     get: operations['listOrganizationTeamInvites']
     put?: never
     /**
      * Invitar usuario a organización
-     * @description Crea o actualiza una invitación de usuario. Por defecto, el acceso es de administrador con permisos completos; para limitarlo, crea un rol y envía su ID en `role`.
+     * Crea o actualiza una invitación de usuario. Por defecto, el acceso es de administrador con permisos completos; para limitarlo, crea un rol y envía su ID en `role`.
      *
      *     Cada organización puede invitar a un usuario sin costo adicional. A partir del segundo usuario invitado, cada usuario adicional tendrá un costo mensual. Este cargo se aplica automáticamente cuando el usuario acepta la invitación.
      *     Puedes consultar el precio vigente en nuestra [página de precios](https://www.facturapi.io/pricing).
@@ -1732,7 +1732,7 @@ export interface paths {
     }
     /**
      * Obtener acceso de usuario
-     * @description Regresa el detalle del acceso del usuario dentro de la organización usando su `access_id`, incluyendo accesos implícitos como el del propietario.
+     * Regresa el detalle del acceso del usuario dentro de la organización usando su `access_id`, incluyendo accesos implícitos como el del propietario.
      */
     get: operations['getOrganizationTeamUser']
     put?: never
@@ -1756,7 +1756,7 @@ export interface paths {
     post?: never
     /**
      * Cancelar invitación enviada
-     * @description Elimina una invitación pendiente de la organización.
+     * Elimina una invitación pendiente de la organización.
      */
     delete: operations['deleteOrganizationTeamInvite']
     options?: never
@@ -1773,7 +1773,7 @@ export interface paths {
     }
     /**
      * Listar invitaciones recibidas
-     * @description Regresa las invitaciones recibidas para el usuario autenticado.
+     * Regresa las invitaciones recibidas para el usuario autenticado.
      */
     get: operations['listPendingOrganizationInvites']
     put?: never
@@ -1795,7 +1795,7 @@ export interface paths {
     put?: never
     /**
      * Responder invitación
-     * @description Acepta o rechaza una invitación usando su `invite_key`.
+     * Acepta o rechaza una invitación usando su `invite_key`.
      */
     post: operations['respondOrganizationInvite']
     delete?: never
@@ -1901,13 +1901,13 @@ export interface paths {
     }
     /**
      * Listar webhooks
-     * @description Retorna una lista de webhooks creados previamente para la organización.
+     * Retorna una lista de webhooks creados previamente para la organización.
      */
     get: operations['listWebhooks']
     put?: never
     /**
      * Crear Webhook
-     * @description Registra un nuevo webhook en tu organización de Facturapi.
+     * Registra un nuevo webhook en tu organización de Facturapi.
      *     Utiliza esta llamada para recibir notificaciones de eventos asíncronos a la API.
      *     Los webhooks de ambiente test y ambiente live son independientes.
      */
@@ -1927,18 +1927,18 @@ export interface paths {
     }
     /**
      * Obtener webhook por ID
-     * @description Regresa el objeto "Webhook" relacionado al `id` especificado.
+     * Regresa el objeto "Webhook" relacionado al `id` especificado.
      */
     get: operations['getWebhook']
     /**
      * Editar webhook
-     * @description Actualiza la información de un Webhook existente con los parámetros que envíes en la petición.
+     * Actualiza la información de un Webhook existente con los parámetros que envíes en la petición.
      */
     put: operations['editWebhook']
     post?: never
     /**
      * Eliminar Webhook
-     * @description Elimina el webhook perteneciente a la organización.
+     * Elimina el webhook perteneciente a la organización.
      */
     delete: operations['deleteWebhook']
     options?: never
@@ -1957,7 +1957,7 @@ export interface paths {
     put?: never
     /**
      * Validar evento de webhook
-     * @description Valida la firma de un evento recibido mediante un Webhook.
+     * Valida la firma de un evento recibido mediante un Webhook.
      *     Utiliza esta operación para verificar la autenticidad e integridad de
      *     un evento recibido, comparando la firma recibida con la generada por Facturapi.
      */
@@ -1977,7 +1977,7 @@ export interface paths {
     }
     /**
      * Health check (Pulso)
-     * @description Comprueba que la API está disponible. Este endpoint requiere una llave secreta de API.
+     * Comprueba que la API está disponible. Este endpoint requiere una llave secreta de API.
      */
     get: operations['checkApiHealth']
     put?: never
@@ -1997,7 +1997,7 @@ export interface paths {
     }
     /**
      * Validar RFC
-     * @description Consulta el estado de un RFC en la lista de **EFOS** (Empresas que
+     * Consulta el estado de un RFC en la lista de **EFOS** (Empresas que
      *     Facturan Operaciones Simuladas). Al aparecer en esta lista, el RFC es o
      *     fue sospechoso de incurrir en simulación de operaciones fiscales
      *     (empresas factureras).
@@ -2029,7 +2029,7 @@ export interface paths {
     }
     /**
      * Clave Producto/Servicio
-     * @description Busca en el catálogo Productos/Servicios del SAT, el cual contiene la clave a incluir en la factura.
+     * Busca en el catálogo Productos/Servicios del SAT, el cual contiene la clave a incluir en la factura.
      */
     get: operations['searchProducts']
     put?: never
@@ -2049,7 +2049,7 @@ export interface paths {
     }
     /**
      * Unidades de medida
-     * @description Busca en el catálogo de Unidades de Medida del SAT.
+     * Busca en el catálogo de Unidades de Medida del SAT.
      */
     get: operations['searchUnits']
     put?: never
@@ -2073,7 +2073,7 @@ export interface webhooks {
     put?: never
     /**
      * Factura global creada
-     * @description Notifica acerca de la creación de una factura global a partir de e-Receipts.
+     * Notifica acerca de la creación de una factura global a partir de e-Receipts.
      */
     post: operations['onInvoiceGlobalInvoiceCreated']
     delete?: never
@@ -2093,7 +2093,7 @@ export interface webhooks {
     put?: never
     /**
      * Estatus de factura actualizado
-     * @description Notifica acerca del cambio del campo `status` de una factura.
+     * Notifica acerca del cambio del campo `status` de una factura.
      *
      *     Se utiliza cuando la factura se crea de manera asíncrona o cuando una tarea de recuperación por intermitencia de timbrado cambia su estado.
      */
@@ -2115,7 +2115,7 @@ export interface webhooks {
     put?: never
     /**
      * Creación de factura desde dashboard
-     * @description Notifica cuandos se crea una factura desde dashboard de Facturapi.
+     * Notifica cuandos se crea una factura desde dashboard de Facturapi.
      */
     post: operations['onInvoiceCreatedFromDashboard']
     delete?: never
@@ -2135,7 +2135,7 @@ export interface webhooks {
     put?: never
     /**
      * Estatus de cancelación actualizado
-     * @description Notifica acerca de cambios en el campo `cancellation_status` de una factura.
+     * Notifica acerca de cambios en el campo `cancellation_status` de una factura.
      */
     post: operations['onInvoiceCancellationStatusUpdated']
     delete?: never
@@ -2155,7 +2155,7 @@ export interface webhooks {
     put?: never
     /**
      * Autofactura completada
-     * @description Notifica acerca de la creación de una autofactura a partir de un e-Receipt.
+     * Notifica acerca de la creación de una autofactura a partir de un e-Receipt.
      */
     post: operations['onReceiptSelfInvoiceComplete']
     delete?: never
@@ -2175,7 +2175,7 @@ export interface webhooks {
     put?: never
     /**
      * Estatus de recibo actualizado
-     * @description Notifica acerca de cambios en el campo `status` de un recibo.
+     * Notifica acerca de cambios en el campo `status` de un recibo.
      */
     post: operations['onReceiptStatusUpdated']
     delete?: never
@@ -2204,17 +2204,17 @@ export interface webhooks {
 }
 export interface components {
   schemas: {
-    /** @description Fecha en formato YYYY-MM-DD o fecha y hora en formato ISO8601. */
+    /** Fecha en formato YYYY-MM-DD o fecha y hora en formato ISO8601. */
     DateOrDateTime: string | (Date | string)
     InvoiceGlobalInvoiceCreatedEvent: components['schemas']['EventBase'] & {
       /**
-       * @description Tipo de evento
+       * Tipo de evento
        * @enum {string}
        */
       type: 'invoice.global_invoice_created'
       data: {
         /**
-         * @description Tipo de objeto asociado al evento
+         * Tipo de objeto asociado al evento
          * @enum {string}
          */
         type: 'invoice'
@@ -2222,20 +2222,20 @@ export interface components {
       }
     } & {
       /**
-       * @description discriminator enum property added by openapi-typescript
+       * discriminator enum property added by openapi-typescript
        * @enum {string}
        */
       type: 'invoice.global_invoice_created'
     }
     InvoiceStatusUpdatedEvent: components['schemas']['EventBase'] & {
       /**
-       * @description Tipo de evento
+       * Tipo de evento
        * @enum {string}
        */
       type: 'invoice.status_updated'
       data: {
         /**
-         * @description Tipo de objeto asociado al evento
+         * Tipo de objeto asociado al evento
          * @enum {string}
          */
         type: 'invoice'
@@ -2243,20 +2243,20 @@ export interface components {
       }
     } & {
       /**
-       * @description discriminator enum property added by openapi-typescript
+       * discriminator enum property added by openapi-typescript
        * @enum {string}
        */
       type: 'invoice.status_updated'
     }
     InvoiceCreatedFromDashboardEvent: components['schemas']['EventBase'] & {
       /**
-       * @description Tipo de evento
+       * Tipo de evento
        * @enum {string}
        */
       type: 'invoice.created_from_dashboard'
       data: {
         /**
-         * @description Tipo de objeto asociado al evento
+         * Tipo de objeto asociado al evento
          * @enum {string}
          */
         type: 'invoice'
@@ -2264,20 +2264,20 @@ export interface components {
       }
     } & {
       /**
-       * @description discriminator enum property added by openapi-typescript
+       * discriminator enum property added by openapi-typescript
        * @enum {string}
        */
       type: 'invoice.created_from_dashboard'
     }
     InvoiceCancellationStatusUpdatedEvent: components['schemas']['EventBase'] & {
       /**
-       * @description Tipo de evento
+       * Tipo de evento
        * @enum {string}
        */
       type: 'invoice.cancellation_status_updated'
       data: {
         /**
-         * @description Tipo de objeto asociado al evento
+         * Tipo de objeto asociado al evento
          * @enum {string}
          */
         type: 'invoice'
@@ -2285,20 +2285,20 @@ export interface components {
       }
     } & {
       /**
-       * @description discriminator enum property added by openapi-typescript
+       * discriminator enum property added by openapi-typescript
        * @enum {string}
        */
       type: 'invoice.cancellation_status_updated'
     }
     ReceiptSelfInvoiceCompleteEvent: components['schemas']['EventBase'] & {
       /**
-       * @description Tipo de evento
+       * Tipo de evento
        * @enum {string}
        */
       type: 'receipt.self_invoice_complete'
       data: {
         /**
-         * @description Tipo de objeto asociado al evento
+         * Tipo de objeto asociado al evento
          * @enum {string}
          */
         type: 'receipt'
@@ -2306,20 +2306,20 @@ export interface components {
       }
     } & {
       /**
-       * @description discriminator enum property added by openapi-typescript
+       * discriminator enum property added by openapi-typescript
        * @enum {string}
        */
       type: 'receipt.self_invoice_complete'
     }
     ReceiptStatusUpdatedEvent: components['schemas']['EventBase'] & {
       /**
-       * @description Tipo de evento
+       * Tipo de evento
        * @enum {string}
        */
       type: 'receipt.status_updated'
       data: {
         /**
-         * @description Tipo de objeto asociado al evento
+         * Tipo de objeto asociado al evento
          * @enum {string}
          */
         type: 'receipt'
@@ -2327,7 +2327,7 @@ export interface components {
       }
     } & {
       /**
-       * @description discriminator enum property added by openapi-typescript
+       * discriminator enum property added by openapi-typescript
        * @enum {string}
        */
       type: 'receipt.status_updated'
@@ -2342,7 +2342,7 @@ export interface components {
       }
     } & {
       /**
-       * @description discriminator enum property added by openapi-typescript
+       * discriminator enum property added by openapi-typescript
        * @enum {string}
        */
       type: 'customer.edit_link_completed'
@@ -2355,252 +2355,252 @@ export interface components {
       | components['schemas']['ReceiptSelfInvoiceCompleteEvent']
       | components['schemas']['ReceiptStatusUpdatedEvent']
       | components['schemas']['CustomerEditLinkCompletedEvent']
-    /** @description Objeto con un enlace temporal de descarga y los metadatos del archivo. */
+    /** Objeto con un enlace temporal de descarga y los metadatos del archivo. */
     SignedDownloadUrl: {
       /**
        * Format: uri
-       * @description Enlace de descarga. Da acceso al archivo mientras siga vigente.
+       * Enlace de descarga. Da acceso al archivo mientras siga vigente.
        */
       url: string
       /**
        * Format: date-time
-       * @description Momento en el que el enlace deja de funcionar.
+       * Momento en el que el enlace deja de funcionar.
        */
       expires_at: Date | string
-      /** @description Tipo de contenido del archivo. */
+      /** Tipo de contenido del archivo. */
       content_type: string
-      /** @description Nombre sugerido del archivo. */
+      /** Nombre sugerido del archivo. */
       filename: string
     }
     SearchKeyDescriptionResult: components['schemas']['SearchResult'] & {
       data?: {
-        /** @description Clave del catálogo */
+        /** Clave del catálogo */
         key?: string
-        /** @description Descripción de la entrada del catálogo */
+        /** Descripción de la entrada del catálogo */
         description?: string
       }[]
     }
     RelatedResourceMessage: {
-      /** @description Tipo de recurso relacionado. */
+      /** Tipo de recurso relacionado. */
       resource_type?: string
-      /** @description ID del recurso relacionado. */
+      /** ID del recurso relacionado. */
       resource_id?: string
-      /** @description Origen del mensaje. */
+      /** Origen del mensaje. */
       source?: string
       /**
-       * @description Severidad del mensaje.
+       * Severidad del mensaje.
        * @enum {string}
        */
       severity?: 'error' | 'warning' | 'info'
-      /** @description Mensaje relacionado con el recurso. */
+      /** Mensaje relacionado con el recurso. */
       message?: string
       /**
        * Format: date-time
-       * @description Fecha y hora de creación del mensaje.
+       * Fecha y hora de creación del mensaje.
        */
       created_at?: Date | string
     }
     EventBase: {
-      /** @description ID del evento */
+      /** ID del evento */
       id: string
       /**
        * Format: date-time
-       * @description Fecha y hora de creación del evento
+       * Fecha y hora de creación del evento
        */
       created_at: Date | string
-      /** @description Indica si el evento se generó en modo test (false) o en modo producción (true). */
+      /** Indica si el evento se generó en modo test (false) o en modo producción (true). */
       livemode: boolean
-      /** @description ID de la organización a la que pertenece el evento */
+      /** ID de la organización a la que pertenece el evento */
       organization: string
-      /** @description Mensajes relacionados con el recurso asociado al evento. */
+      /** Mensajes relacionados con el recurso asociado al evento. */
       related_resource_messages?: components['schemas']['RelatedResourceMessage'][]
     }
     DateRange: {
       /**
        * Greater than
        * Format: date-time
-       * @description Límite inferior exclusivo del rango de fechas a solicitar.
+       * Límite inferior exclusivo del rango de fechas a solicitar.
        */
       gt?: Date | string
       /**
        * Greater than or equals
        * Format: date-time
-       * @description Límite inferior inclusivo del rango de fechas a solicitar.
+       * Límite inferior inclusivo del rango de fechas a solicitar.
        */
       gte?: Date | string
       /**
        * Lesser than
        * Format: date-time
-       * @description Límite superior exclusivo del rango de fechas a solicitar.
+       * Límite superior exclusivo del rango de fechas a solicitar.
        */
       lt?: Date | string
       /**
        * Lesser than or equals
        * Format: date-time
-       * @description Límite superior inclusivo del rango de fechas a solicitar.
+       * Límite superior inclusivo del rango de fechas a solicitar.
        */
       lte?: Date | string
     }
     GenericError: {
       /**
        * Descripción del error
-       * @description Indica qué salió mal y puede incluir una sugerencia sobre cómo solucionar el error.
+       * Indica qué salió mal y puede incluir una sugerencia sobre cómo solucionar el error.
        */
       message: string
       /**
        * Código de estado HTTP
        * Format: int32
-       * @description Código de estado HTTP de esta respuesta de error.
+       * Código de estado HTTP de esta respuesta de error.
        */
       status: number
-      /** @description Indica si la petición fue exitosa. Siempre `false` en respuestas de error. */
+      /** Indica si la petición fue exitosa. Siempre `false` en respuestas de error. */
       ok: boolean
-      /** @description Código de error estable para manejar el error de forma programática. Consulta la guía de manejo de errores para ver la lista de códigos documentados. */
+      /** Código de error estable para manejar el error de forma programática. Consulta la guía de manejo de errores para ver la lista de códigos documentados. */
       code: string
       /**
-       * @description Ubicación opcional del dato relacionado con el error.
+       * Ubicación opcional del dato relacionado con el error.
        * @enum {string}
        */
       location?: 'body' | 'query' | 'params' | 'headers' | 'files'
-      /** @description Ruta opcional del campo relacionado con el error. */
+      /** Ruta opcional del campo relacionado con el error. */
       path?: string
-      /** @description Detalles adicionales del error. Sólo se incluye cuando aporta información útil. */
+      /** Detalles adicionales del error. Sólo se incluye cuando aporta información útil. */
       errors?: components['schemas']['ErrorDetail'][]
     }
     ErrorDetail: {
-      /** @description Mensaje legible del detalle. */
+      /** Mensaje legible del detalle. */
       message: string
-      /** @description Subcódigo del detalle. En validaciones de Facturapi usa códigos como `required`, `invalid_type` o `tax_id_not_found`; en errores externos puede contener el código original del proveedor. */
+      /** Subcódigo del detalle. En validaciones de Facturapi usa códigos como `required`, `invalid_type` o `tax_id_not_found`; en errores externos puede contener el código original del proveedor. */
       code: string
       /**
-       * @description Ubicación opcional del dato relacionado con este detalle.
+       * Ubicación opcional del dato relacionado con este detalle.
        * @enum {string}
        */
       location?: 'body' | 'query' | 'params' | 'headers' | 'files'
-      /** @description Ruta opcional del campo relacionado con este detalle. */
+      /** Ruta opcional del campo relacionado con este detalle. */
       path?: string
       /**
-       * @description Fuente del detalle.
+       * Fuente del detalle.
        * @enum {string}
        */
       source: 'facturapi' | 'sat' | 'pac'
     }
     /**
-     * @description Indica si la factura fue emitida por tu organización o recibida de un tercero.
+     * Indica si la factura fue emitida por tu organización o recibida de un tercero.
      * @enum {string}
      */
     IssuingType: 'issuing' | 'receiving'
     /**
-     * @description Estado de la solicitud de cancelación de la factura.
+     * Estado de la solicitud de cancelación de la factura.
      * @enum {string}
      */
     CancellationStatus: 'none' | 'accepted' | 'pending' | 'rejected' | 'expired'
     SearchResult: {
       /**
        * Página
-       * @description Número de página. Vale 0 cuando no hay coincidencias. Se omite en todas las respuestas de paginación por cursor, incluida la primera página.
+       * Número de página. Vale 0 cuando no hay coincidencias. Se omite en todas las respuestas de paginación por cursor, incluida la primera página.
        */
       page?: number
       /**
        * Páginas totales
-       * @description Total de páginas. Se omite en todas las respuestas de paginación por cursor, incluida la primera página.
+       * Total de páginas. Se omite en todas las respuestas de paginación por cursor, incluida la primera página.
        */
       total_pages?: number
       /**
        * Resultados totales
-       * @description Número de elementos individuales en todas las páginas de resultados. En modo `pagination=cursor` solo se incluye en la primera página de la búsqueda (sin `after`/`before`); el total no cambia entre páginas.
+       * Número de elementos individuales en todas las páginas de resultados. En modo `pagination=cursor` solo se incluye en la primera página de la búsqueda (sin `after`/`before`); el total no cambia entre páginas.
        */
       total_results?: number
       /**
        * Cursor anterior
-       * @description Cursor para obtener la página anterior de resultados. Es `null` en la primera página. Solo disponible con `pagination=cursor`.
+       * Cursor para obtener la página anterior de resultados. Es `null` en la primera página. Solo disponible con `pagination=cursor`.
        */
       previous_cursor?: string | null
       /**
        * Cursor siguiente
-       * @description Cursor para obtener la página siguiente de resultados. Es `null` cuando no hay más resultados. Solo disponible con `pagination=cursor`.
+       * Cursor para obtener la página siguiente de resultados. Es `null` cuando no hay más resultados. Solo disponible con `pagination=cursor`.
        */
       next_cursor?: string | null
       /**
        * Resultados con tope
-       * @description Indica si `total_results` está limitado a 3,000 porque existen más resultados de los reportados.
+       * Indica si `total_results` está limitado a 3,000 porque existen más resultados de los reportados.
        */
       totals_are_capped?: boolean
     }
     ResourceAutoGeneratedProps: {
-      /** @description ID del objeto */
+      /** ID del objeto */
       id: string
       /**
        * Format: date-time
-       * @description Fecha de registro
+       * Fecha de registro
        */
       created_at: Date | string
-      /** @description Si el valor es `true`, indica que el objeto fue creado en ambiente Live; o si es `false`, en ambiente Test. */
+      /** Si el valor es `true`, indica que el objeto fue creado en ambiente Live; o si es `false`, en ambiente Test. */
       livemode: boolean
     }
     TaxIdValidationResult: {
       /**
-       * @description Resultado de la validación en la lista de Empresas que
+       * Resultado de la validación en la lista de Empresas que
        *     Facturan Operaciones Simuladas del SAT.
        */
       efos?: {
         /**
-         * @description Indica si el RFC tiene algún asunto relacionado con esta lista.
+         * Indica si el RFC tiene algún asunto relacionado con esta lista.
          *     `true`: El RFC no está en la lista de EFOS o su situación fue
          *     apelada y resultó favorable. `false`: El RFC está registrado como
          *     “Presunto” o “Definitivo” en la lista de EFOS.
          */
         is_valid?: boolean
         /**
-         * @description Objeto con el resultado de la búqueda ante el SAT.
+         * Objeto con el resultado de la búqueda ante el SAT.
          *     Toda la información contenida en este objeto proviene del SAT.
          */
         data?: {
           /**
-           * @description Disponible sólo cuando el RFC no fue encontrado en la lista,
+           * Disponible sólo cuando el RFC no fue encontrado en la lista,
            *     lo cual es bueno.
            */
           mensaje?: string
-          /** @description Texto que indica la fecha de actualización de la lista. */
+          /** Texto que indica la fecha de actualización de la lista. */
           fechaLista?: string
-          /** @description Arreglo con los resultados de la búsqueda en la lista de EFOS. */
+          /** Arreglo con los resultados de la búsqueda en la lista de EFOS. */
           detalles?: {
-            /** @description El RFC consultado, a manera de confirmación. */
+            /** El RFC consultado, a manera de confirmación. */
             rfc?: string
-            /** @description Razón social del contribuyente. */
+            /** Razón social del contribuyente. */
             razonSocial?: string
             /**
-             * @description Texto que indica la situación actual. Consulta
+             * Texto que indica la situación actual. Consulta
              *     [esta tabla](#situación-del-contribuyente) para ver
              *     el detalle de los distintos valores.
              */
             situacionContribuyente?: string
-            /** @description Texto con identificador y fecha del reporte de presunción. */
+            /** Texto con identificador y fecha del reporte de presunción. */
             numFechaPresuncion?: string
             /**
              * Format: DD/MM/YYYY
-             * @description Fecha de publicación de presunción.
+             * Fecha de publicación de presunción.
              */
             pubFechaSatPresuntos?: string
-            /** @description Texto con identificador y fecha de publicación en el listado global de presunción. */
+            /** Texto con identificador y fecha de publicación en el listado global de presunción. */
             numGlobalPresuncion?: string
             /**
              * Format: DD/MM/YYYY
-             * @description Fecha de publicación en el Diario Oficial de la Federación (DOF).
+             * Fecha de publicación en el Diario Oficial de la Federación (DOF).
              */
             pubFechaDofPresuntos?: string
-            /** @description Identificador de la publicación de estado “Definitivo”. */
+            /** Identificador de la publicación de estado “Definitivo”. */
             pubSatDefinitivos?: string
             /**
              * Format: DD/MM/YYYY
-             * @description Fecha de la publicación de estado “Definitivo” en el DOF.
+             * Fecha de la publicación de estado “Definitivo” en el DOF.
              */
             pubDofDefinitivos?: string
-            /** @description Texto con identificador y fecha de sentencia favorable. */
+            /** Texto con identificador y fecha de sentencia favorable. */
             numFechaSentFav?: string
             /**
              * Format: DD/MM/YYYY
-             * @description Fecha de sentencia favorable
+             * Fecha de sentencia favorable
              */
             pubSatSentFav?: string
           }[]
@@ -2608,23 +2608,23 @@ export interface components {
       }
     }
     ProductCatalogResult: {
-      /** @description Clave del catálogo */
+      /** Clave del catálogo */
       key?: string
-      /** @description Descripción */
+      /** Descripción */
       description?: string
       /**
-       * @description Número del 0 al 1 que representa el nivel de coincidencia del
+       * Número del 0 al 1 que representa el nivel de coincidencia del
        *     resultado con respecto a la consulta de búsqueda.
        */
       score?: number
     }
     UnitCatalogResult: {
-      /** @description Clave del catálogo */
+      /** Clave del catálogo */
       key?: string
-      /** @description Descripción */
+      /** Descripción */
       description?: string
       /**
-       * @description Número del 0 al 1 que representa el nivel de coincidencia del
+       * Número del 0 al 1 que representa el nivel de coincidencia del
        *     resultado con respecto a la consulta de búsqueda.
        */
       score?: number
@@ -2636,14 +2636,14 @@ export interface components {
       data: components['schemas']['UnitCatalogResult'][]
     }
     LocalTax: {
-      /** @description Tasa del impuesto en fracción decimal. */
+      /** Tasa del impuesto en fracción decimal. */
       rate: number
-      /** @description Base del impuesto. Si se omite, se utiliza el subtotal completo del concepto. */
+      /** Base del impuesto. Si se omite, se utiliza el subtotal completo del concepto. */
       base?: number
-      /** @description Nombre del impuesto. Texto libre. */
+      /** Nombre del impuesto. Texto libre. */
       type: string
       /**
-       * @description Indica si se trata de un impuesto retenido (`true`), o un impuesto trasladado (`false`)
+       * Indica si se trata de un impuesto retenido (`true`), o un impuesto trasladado (`false`)
        * @default false
        */
       withholding?: boolean
@@ -2652,31 +2652,31 @@ export interface components {
     }
     /** Tax */
     BaseTax: {
-      /** @description Tasa del impuesto en fracción decimal. */
+      /** Tasa del impuesto en fracción decimal. */
       rate: number
-      /** @description Base del impuesto. Si se omite, se calcula a partir del subtotal del concepto y el factor del impuesto. Para el factor Cuota, se utiliza la cantidad de unidades. */
+      /** Base del impuesto. Si se omite, se calcula a partir del subtotal del concepto y el factor del impuesto. Para el factor Cuota, se utiliza la cantidad de unidades. */
       base?: number
       /**
-       * @description Tipo de impuesto.
+       * Tipo de impuesto.
        * @default IVA
        * @enum {string}
        */
       type?: 'IVA' | 'ISR' | 'IEPS'
       ieps_mode?: components['schemas']['IepsMode']
       /**
-       * @description Tipo factor
+       * Tipo factor
        * @default Tasa
        * @enum {string}
        */
       factor?: 'Tasa' | 'Cuota' | 'Exento'
       /**
-       * @description Indica si se trata de un impuesto retenido (`true`), o un impuesto trasladado (`false`)
+       * Indica si se trata de un impuesto retenido (`true`), o un impuesto trasladado (`false`)
        * @default false
        */
       withholding?: boolean
     }
     /**
-     * @description Indica la manera de cobrar el impuesto, y puede tener los valores:
+     * Indica la manera de cobrar el impuesto, y puede tener los valores:
      *
      *     `"sum_before_taxes"`: Aplica primero el IEPS al subtotal y usa el resultado como base del resto de impuestos en el producto.
      *
@@ -2698,100 +2698,100 @@ export interface components {
       ieps_mode?: components['schemas']['IepsMode']
     } & {
       /**
-       * @description discriminator enum property added by openapi-typescript
+       * discriminator enum property added by openapi-typescript
        * @enum {string}
        */
       type: 'IEPS'
     }
-    /** @description Información sobre el timbre fiscal digital agregado por el PAC. */
+    /** Información sobre el timbre fiscal digital agregado por el PAC. */
     Stamp: {
-      /** @description Sello digital del comprobante fiscal. */
+      /** Sello digital del comprobante fiscal. */
       signature?: string
-      /** @description FechaTimbrado del SAT: fecha y hora local sin offset de zona horaria. Se conserva como texto. */
+      /** FechaTimbrado del SAT: fecha y hora local sin offset de zona horaria. Se conserva como texto. */
       date?: string
-      /** @description Número de serie del certificado del SAT usado para timbrar. */
+      /** Número de serie del certificado del SAT usado para timbrar. */
       sat_cert_number?: string
-      /** @description Sello digital del timbre fiscal digital. */
+      /** Sello digital del timbre fiscal digital. */
       sat_signature?: string
     }
     LineItem: {
-      /** @description Cuentas prediales de este concepto. */
+      /** Cuentas prediales de este concepto. */
       property_tax_account?: string[]
-      /** @description Cantidad de unidades incluidas del mismo concepto. */
+      /** Cantidad de unidades incluidas del mismo concepto. */
       quantity?: number
-      /** @description Monto total de descuento aplicado a este concepto. */
+      /** Monto total de descuento aplicado a este concepto. */
       discount?: number
-      /** @description Objeto con información del producto o servicio facturado. */
+      /** Objeto con información del producto o servicio facturado. */
       product?: components['schemas']['LineItemProduct']
-      /** @description Objeto con información de las partes de la factura. */
+      /** Objeto con información de las partes de la factura. */
       parts?: components['schemas']['Parts'][]
     }
     /**
-     * @description Objeto con información del contribuyente tercero, a cuenta del que se realiza la operación.
+     * Objeto con información del contribuyente tercero, a cuenta del que se realiza la operación.
      *
      *     Corresponde al campo "ACuentaTerceros" en el CFDI.
      */
     ThirdParty: {
-      /** @description Nombre o razón social del tercero. */
+      /** Nombre o razón social del tercero. */
       legal_name?: string
-      /** @description RFC del tercero. */
+      /** RFC del tercero. */
       tax_id?: string
-      /** @description Régimen fiscal del tercero. */
+      /** Régimen fiscal del tercero. */
       tax_system?: string
-      /** @description Código postal del tercero. */
+      /** Código postal del tercero. */
       zip?: string
     }
     /**
      * LineItem
-     * @description Conceptos incluidos en el documento
+     * Conceptos incluidos en el documento
      */
     LineItemInput: {
       /**
-       * @description Cantidad de unidades incluidas del mismo concepto.
+       * Cantidad de unidades incluidas del mismo concepto.
        * @default 1
        */
       quantity?: number
       /**
-       * @description Monto total de descuento aplicado a este concepto.
+       * Monto total de descuento aplicado a este concepto.
        * @default 0
        */
       discount?: number
-      /** @description Objeto con información del producto o servicio facturado. */
+      /** Objeto con información del producto o servicio facturado. */
       product: components['schemas']['LineItemProductInput'] | string
       parts?: components['schemas']['PartInput'][]
-      /** @description Números de pedimento asociados a este concepto. */
+      /** Números de pedimento asociados a este concepto. */
       customs_keys?: string[]
-      /** @description Código XML de tu complemento concepto, el complemento Hidrocarburos y Petrolíferos o el complemento Instituciones Educativas Privadas. */
+      /** Código XML de tu complemento concepto, el complemento Hidrocarburos y Petrolíferos o el complemento Instituciones Educativas Privadas. */
       complement?:
         | string
         | components['schemas']['HidroYPetroComplementInput']
         | components['schemas']['IeduComplementInput']
       third_party?: Record<string, unknown> &
         components['schemas']['ThirdParty']
-      /** @description Números de cuenta para el impuesto predial. */
+      /** Números de cuenta para el impuesto predial. */
       property_tax_account?: string[]
     }
     /**
      * LineItem
-     * @description Conceptos incluidos en el documento
+     * Conceptos incluidos en el documento
      */
     LineItemEgresoInput: {
       /**
-       * @description Cantidad de unidades incluidas del mismo concepto.
+       * Cantidad de unidades incluidas del mismo concepto.
        * @default 1
        */
       quantity?: number
       /**
-       * @description Monto total de descuento aplicado a este concepto.
+       * Monto total de descuento aplicado a este concepto.
        * @default 0
        */
       discount?: number
-      /** @description Objeto con información del producto o servicio facturado. */
+      /** Objeto con información del producto o servicio facturado. */
       product: components['schemas']['LineItemProductEgresoInput'] | string
       parts?: components['schemas']['PartInput'][]
-      /** @description Números de pedimento asociados a este concepto. */
+      /** Números de pedimento asociados a este concepto. */
       customs_keys?: string[]
-      /** @description Código XML de tu complemento concepto, el complemento Hidrocarburos y Petrolíferos o el complemento Instituciones Educativas Privadas. */
+      /** Código XML de tu complemento concepto, el complemento Hidrocarburos y Petrolíferos o el complemento Instituciones Educativas Privadas. */
       complement?:
         | string
         | components['schemas']['HidroYPetroComplementInput']
@@ -2801,39 +2801,39 @@ export interface components {
     }
     /**
      * LineItem
-     * @description Conceptos incluidos en el documento
+     * Conceptos incluidos en el documento
      */
     LineItemTrasladoInput: {
       /**
-       * @description Cantidad de unidades incluidas del mismo concepto.
+       * Cantidad de unidades incluidas del mismo concepto.
        * @default 1
        */
       quantity?: number
-      /** @description Objeto con información del producto o servicio facturado. */
+      /** Objeto con información del producto o servicio facturado. */
       product: components['schemas']['LineItemTrasladoProductInput'] | string
-      /** @description Números de pedimento asociados a este concepto. */
+      /** Números de pedimento asociados a este concepto. */
       customs_keys?: string[]
       /**
        * Format: xml
-       * @description Código XML de tu complemento concepto.
+       * Código XML de tu complemento concepto.
        */
       complement?: string
       parts?: components['schemas']['PartInput'][]
       third_party?: {
-        /** @description Nombre o razón social del tercero. */
+        /** Nombre o razón social del tercero. */
         legal_name: string
-        /** @description RFC del tercero. */
+        /** RFC del tercero. */
         tax_id: string
-        /** @description Régimen fiscal del tercero. */
+        /** Régimen fiscal del tercero. */
         tax_system: string
-        /** @description Código postal del tercero. */
+        /** Código postal del tercero. */
         zip: string
       }
     }
     /** HidroYPetroComplement */
     HidroYPetroComplementInput: {
       /**
-       * @description Tipo de permiso otorgado por la autoridad competente, conforme al [Catálogo Hidrocarburos Petrolíferos](#cat%C3%A1logos-hidrocarburos-petrol%C3%ADferos).
+       * Tipo de permiso otorgado por la autoridad competente, conforme al [Catálogo Hidrocarburos Petrolíferos](#cat%C3%A1logos-hidrocarburos-petrol%C3%ADferos).
        * @enum {string}
        */
       tipo_permiso:
@@ -2848,10 +2848,10 @@ export interface components {
         | 'PER09'
         | 'PER10'
         | 'PER11'
-      /** @description Número de permiso otorgado por la autoridad competente, conforme a la nomenclatura del catálogo c_TipoPermiso. */
+      /** Número de permiso otorgado por la autoridad competente, conforme a la nomenclatura del catálogo c_TipoPermiso. */
       numero_permiso: string
       /**
-       * @description Subtipo del hidrocarburo o petrolífero, conforme al [Catálogo Hidrocarburos Petrolíferos](#cat%C3%A1logos-hidrocarburos-petrol%C3%ADferos).
+       * Subtipo del hidrocarburo o petrolífero, conforme al [Catálogo Hidrocarburos Petrolíferos](#cat%C3%A1logos-hidrocarburos-petrol%C3%ADferos).
        * @enum {string}
        */
       sub_producto_hyp:
@@ -2865,7 +2865,7 @@ export interface components {
         | 'SP25'
         | 'SP48'
       /**
-       * @description Clave correspondiente a hidrocarburos y petrolíferos, conforme al [Catálogo Hidrocarburos Petrolíferos](#cat%C3%A1logos-hidrocarburos-petrol%C3%ADferos).
+       * Clave correspondiente a hidrocarburos y petrolíferos, conforme al [Catálogo Hidrocarburos Petrolíferos](#cat%C3%A1logos-hidrocarburos-petrol%C3%ADferos).
        *
        *     Puedes enviarla explícitamente o dejar que Facturapi la derive desde el `product_key` del concepto cuando aplique.
        * @enum {string}
@@ -2874,17 +2874,17 @@ export interface components {
     }
     /**
      * IeduComplement
-     * @description Complemento concepto de Instituciones Educativas Privadas versión 1.0.
+     * Complemento concepto de Instituciones Educativas Privadas versión 1.0.
      *
      *     Se incluye a nivel concepto dentro de `items[].complement`.
      */
     IeduComplementInput: {
-      /** @description Nombre del alumno. */
+      /** Nombre del alumno. */
       nombreAlumno: string
-      /** @description CURP del alumno de la institución educativa. */
+      /** CURP del alumno de la institución educativa. */
       CURP: string
       /**
-       * @description Nivel educativo que cursa el alumno.
+       * Nivel educativo que cursa el alumno.
        * @enum {string}
        */
       nivelEducativo:
@@ -2893,21 +2893,21 @@ export interface components {
         | 'Secundaria'
         | 'Profesional técnico'
         | 'Bachillerato o su equivalente'
-      /** @description Clave del centro de trabajo o reconocimiento de validez oficial de estudios de la institución educativa privada donde se realiza el pago. */
+      /** Clave del centro de trabajo o reconocimiento de validez oficial de estudios de la institución educativa privada donde se realiza el pago. */
       autRVOE: string
-      /** @description RFC de quien realiza el pago cuando sea diferente a quien recibe el servicio. */
+      /** RFC de quien realiza el pago cuando sea diferente a quien recibe el servicio. */
       rfcPago?: string
     }
     /**
      * string
      * Format: xml
-     * @description Código XML de tu complemento tal cual como quieres que se inserte en el XML. Debe contener solamente un nodo XML raíz.
+     * Código XML de tu complemento tal cual como quieres que se inserte en el XML. Debe contener solamente un nodo XML raíz.
      */
     CustomComplementData: string
     /** CustomComplement */
     CustomComplementProperties: {
       /**
-       * @description Tipo de complemento. (enum property replaced by openapi-typescript)
+       * Tipo de complemento. (enum property replaced by openapi-typescript)
        * @enum {string}
        */
       type: 'custom'
@@ -2916,14 +2916,14 @@ export interface components {
     /** CustomComplement */
     CustomComplementInput: components['schemas']['CustomComplementProperties'] & {
       /**
-       * @description discriminator enum property added by openapi-typescript
+       * discriminator enum property added by openapi-typescript
        * @enum {string}
        */
       type: 'custom'
     }
     /**
      * NominaComplementData
-     * @description Objeto con la información del complemento de nómina.
+     * Objeto con la información del complemento de nómina.
      */
     NominaComplementDataInput: WithRequired<
       components['schemas']['NominaComplementDataDirectProperties'],
@@ -2933,51 +2933,51 @@ export interface components {
         components['schemas']['NominaComplementDataNestedInput'],
         'receptor' | 'percepciones'
       >
-    /** @description Complemento de Nómina. */
+    /** Complemento de Nómina. */
     NominaComplementDataProperties: components['schemas']['NominaComplementDataDirectProperties'] &
       components['schemas']['NominaComplementDataNestedProperties']
     NominaComplementDataDirectProperties: {
       /**
-       * @description Tipo de nómina.
+       * Tipo de nómina.
        *     - `“O”` (Ordinaria): Cuando corresponde a un pago que se realiza de manera habitual, como sueldos.
        *     - `“E”` (Extraordinaria): Para pagos fuera de lo habitual, como liquidaciones, aguinaldos o bonos.
        * @default O
        * @enum {string}
        */
       tipo_nomina?: 'O' | 'E'
-      /** @description Fecha de pago de la nómina al trabajador. Si se omite, se utiliza la fecha y hora actuales. */
+      /** Fecha de pago de la nómina al trabajador. Si se omite, se utiliza la fecha y hora actuales. */
       fecha_pago?: components['schemas']['DateOrDateTime']
-      /** @description Fecha inicial del periodo de pago. */
+      /** Fecha inicial del periodo de pago. */
       fecha_inicial_pago?: components['schemas']['DateOrDateTime']
-      /** @description Fecha final del periodo de pago. */
+      /** Fecha final del periodo de pago. */
       fecha_final_pago?: components['schemas']['DateOrDateTime']
-      /** @description Número de días pagados. Puede ser entero o fracción. */
+      /** Número de días pagados. Puede ser entero o fracción. */
       num_dias_pagados?: number
     }
     NominaComplementDataNestedInput: {
       emisor?: components['schemas']['NominaEmisorInput']
       receptor?: components['schemas']['NominaReceptorInput']
       percepciones?: components['schemas']['NominaPercepcionesInput']
-      /** @description Arreglo de objetos donde se expresan las deducciones aplicables. */
+      /** Arreglo de objetos donde se expresan las deducciones aplicables. */
       deducciones?: components['schemas']['NominaDeduccionInput'][]
-      /** @description Arreglo de objetos para expresar otros pagos aplicables. */
+      /** Arreglo de objetos para expresar otros pagos aplicables. */
       otros_pagos?: (components['schemas']['NominaOtroPagoInput'] & {
         compensacion_saldos_a_favor?: components['schemas']['NominaCompensacionInput']
       })[]
-      /** @description Arreglo de objetos con información de incapacidades. */
+      /** Arreglo de objetos con información de incapacidades. */
       incapacidades?: components['schemas']['NominaIncapacidadInput'][]
     }
     NominaComplementDataNestedProperties: {
       emisor?: components['schemas']['NominaEmisorProperties']
       receptor?: components['schemas']['NominaReceptorProperties']
       percepciones?: components['schemas']['NominaPercepcionesProperties']
-      /** @description Arreglo de objetos donde se expresan las deducciones aplicables. */
+      /** Arreglo de objetos donde se expresan las deducciones aplicables. */
       deducciones?: components['schemas']['NominaDeduccionProperties'][]
-      /** @description Arreglo de objetos para expresar otros pagos aplicables. */
+      /** Arreglo de objetos para expresar otros pagos aplicables. */
       otros_pagos?: (components['schemas']['NominaOtroPagoDirectProperties'] & {
         compensacion_saldos_a_favor?: components['schemas']['NominaCompensacionProperties']
       })[]
-      /** @description Arreglo de objetos con información de incapacidades. */
+      /** Arreglo de objetos con información de incapacidades. */
       incapacidades?: components['schemas']['NominaIncapacidadProperties'][]
     }
     /** Incapacidad */
@@ -2986,11 +2986,11 @@ export interface components {
       'dias_incapacidad' | 'tipo_incapacidad'
     >
     NominaIncapacidadProperties: {
-      /** @description Número de días enteros que el trabajador se incapacitó en el periodo. */
+      /** Número de días enteros que el trabajador se incapacitó en el periodo. */
       dias_incapacidad?: number
-      /** @description Clave del catálogo [Tipo de Incapacidad](#tipo-de-incapacidad). */
+      /** Clave del catálogo [Tipo de Incapacidad](#tipo-de-incapacidad). */
       tipo_incapacidad?: string
-      /** @description Monto del importe monetario de la incapacidad. */
+      /** Monto del importe monetario de la incapacidad. */
       importe_monetario?: number
     }
     /** OtroPago */
@@ -3001,16 +3001,16 @@ export interface components {
       compensacion_saldos_a_favor?: components['schemas']['NominaCompensacionInput']
     }
     NominaOtroPagoDirectProperties: {
-      /** @description Clave del catálogo [Tipo de Otro Pago](#tipo-de-otro-pago). */
+      /** Clave del catálogo [Tipo de Otro Pago](#tipo-de-otro-pago). */
       tipo_otro_pago?: string
-      /** @description Clave de otro pago de nómina propia de la contabilidad de cada patrón. */
+      /** Clave de otro pago de nómina propia de la contabilidad de cada patrón. */
       clave?: string
-      /** @description Descripción alternativa correspondiente a la clave utilizada. */
+      /** Descripción alternativa correspondiente a la clave utilizada. */
       concepto?: string
-      /** @description Importe por concepto de otro pago. */
+      /** Importe por concepto de otro pago. */
       importe?: number
       /**
-       * @description Subsidio causado conforme a la tabla del subsidio para el empleo
+       * Subsidio causado conforme a la tabla del subsidio para el empleo
        *     publicada en el Anexo 8 de la Resolución Miscelánea Fiscal vigente.
        *
        *     Este valor será insertado dentro del nodo `SubsidioAlEmpleo`, y es
@@ -3022,13 +3022,13 @@ export interface components {
       components['schemas']['NominaCompensacionProperties'],
       'saldo_a_favor' | 'ano' | 'remanente_sal_fav'
     >
-    /** @description Objeto con información referente a la compensación de saldos a favor de un trabajador. */
+    /** Objeto con información referente a la compensación de saldos a favor de un trabajador. */
     NominaCompensacionProperties: {
-      /** @description Monto por saldo a favor determinado por el patrón al trabajador en periodos o ejercicios anteriores. */
+      /** Monto por saldo a favor determinado por el patrón al trabajador en periodos o ejercicios anteriores. */
       saldo_a_favor?: number
-      /** @description Año en que se determinó el saldo a favor del trabajador. */
+      /** Año en que se determinó el saldo a favor del trabajador. */
       ano?: number
-      /** @description Remanente del saldo a favor del trabajador. */
+      /** Remanente del saldo a favor del trabajador. */
       remanente_sal_fav?: number
     }
     /** Deduccion */
@@ -3037,31 +3037,31 @@ export interface components {
       'tipo_deduccion' | 'clave' | 'importe'
     >
     NominaDeduccionProperties: {
-      /** @description Clave del catálogo [Tipo de deducción](#tipo-de-deducción). */
+      /** Clave del catálogo [Tipo de deducción](#tipo-de-deducción). */
       tipo_deduccion?: string
-      /** @description Concepto de la deducción. Si no se envía, se utilizará la descripción del catálogo del tipo de deducción. */
+      /** Concepto de la deducción. Si no se envía, se utilizará la descripción del catálogo del tipo de deducción. */
       concepto?: string
-      /** @description Clave de control interno que asigna el patrón a cada deducción (descuento) de nómina propia de su contabilidad. */
+      /** Clave de control interno que asigna el patrón a cada deducción (descuento) de nómina propia de su contabilidad. */
       clave?: string
-      /** @description Importe del concepto de deducción. */
+      /** Importe del concepto de deducción. */
       importe?: number
     }
     /**
      * Percepciones
-     * @description Objeto para indicar las percepciones aplicables.
+     * Objeto para indicar las percepciones aplicables.
      */
     NominaPercepcionesInput: {
-      /** @description Objeto con información detallada de cada percepción. */
+      /** Objeto con información detallada de cada percepción. */
       percepcion: components['schemas']['NominaPercepcionInput'][]
       jubilacion_pension_retiro?: components['schemas']['NominaJubilacionInput']
       separacion_indemnizacion?: components['schemas']['NominaSeparacionInput']
     }
     /**
      * Percepciones
-     * @description Objeto para indicar las percepciones aplicables.
+     * Objeto para indicar las percepciones aplicables.
      */
     NominaPercepcionesProperties: {
-      /** @description Objeto con información detallada de cada percepción. */
+      /** Objeto con información detallada de cada percepción. */
       percepcion?: components['schemas']['NominaPercepcionProperties'][]
       jubilacion_pension_retiro?: components['schemas']['NominaJubilacionProperties']
       separacion_indemnizacion?: components['schemas']['NominaSeparacionProperties']
@@ -3077,18 +3077,18 @@ export interface components {
     >
     /**
      * Jubilacion
-     * @description Objeto con información detallada de pagos por separación (despido) o indemnización.
+     * Objeto con información detallada de pagos por separación (despido) o indemnización.
      */
     NominaSeparacionProperties: {
-      /** @description Monto total pagado por concepto de separación o indemnización. */
+      /** Monto total pagado por concepto de separación o indemnización. */
       total_pagado?: number
-      /** @description Años de servicio que laboró el trabajador, redondeado al entero inmediato superior. */
+      /** Años de servicio que laboró el trabajador, redondeado al entero inmediato superior. */
       num_anos_servicio?: number
-      /** @description Último sueldo mensual ordinario percibido por el trabajador. */
+      /** Último sueldo mensual ordinario percibido por el trabajador. */
       ultimo_sueldo_mens_ord?: number
-      /** @description Monto por ingresos acumulables. */
+      /** Monto por ingresos acumulables. */
       ingreso_acumulable?: number
-      /** @description Monto por ingresos no acumulables. */
+      /** Monto por ingresos no acumulables. */
       ingreso_no_acumulable?: number
     }
     /** Jubilacion */
@@ -3096,17 +3096,17 @@ export interface components {
       components['schemas']['NominaJubilacionProperties'],
       'ingreso_acumulable' | 'ingreso_no_acumulable'
     >
-    /** @description Objeto con información detallada de pagos por jubilación, pensiones o haberes de retiro. */
+    /** Objeto con información detallada de pagos por jubilación, pensiones o haberes de retiro. */
     NominaJubilacionProperties: {
-      /** @description Monto total del pago entregado en una sola exhibición. */
+      /** Monto total del pago entregado en una sola exhibición. */
       total_una_exhibicion?: number
-      /** @description Monto total del pago entregado en parcialidades. */
+      /** Monto total del pago entregado en parcialidades. */
       total_parcialidad?: number
-      /** @description Monto diario percibido por el trabajador cuando el pago se realiza en parcialidades. */
+      /** Monto diario percibido por el trabajador cuando el pago se realiza en parcialidades. */
       monto_diario?: number
-      /** @description Ingresos acumulables percibidos por el trabajador. */
+      /** Ingresos acumulables percibidos por el trabajador. */
       ingreso_acumulable?: number
-      /** @description Ingresos no acumulables percibidos por el trabajador. */
+      /** Ingresos no acumulables percibidos por el trabajador. */
       ingreso_no_acumulable?: number
     }
     /** Percepcion */
@@ -3114,7 +3114,7 @@ export interface components {
       components['schemas']['NominaPercepcionNestedProperties']
     /**
      * Percepcion
-     * @description La entrada utiliza las claves de percepción del catálogo publicado. La clave 019 requiere horas_extra.
+     * La entrada utiliza las claves de percepción del catálogo publicado. La clave 019 requiere horas_extra.
      */
     NominaPercepcionInput: (WithRequired<
       components['schemas']['NominaPercepcionDirectProperties'],
@@ -3179,25 +3179,25 @@ export interface components {
           }
       )
     NominaPercepcionDirectProperties: {
-      /** @description Clave del catálogo [Tipo de percepción](#tipo-de-percepcion). */
+      /** Clave del catálogo [Tipo de percepción](#tipo-de-percepcion). */
       tipo_percepcion?: string
-      /** @description Concepto de la percepción. Si no se envía, se utilizará la descripción del catálogo del tipo de percepción. */
+      /** Concepto de la percepción. Si no se envía, se utilizará la descripción del catálogo del tipo de percepción. */
       concepto?: string
-      /** @description Clave de control interno que asigna el patrón a cada percepción de nómina propia de su contabilidad. */
+      /** Clave de control interno que asigna el patrón a cada percepción de nómina propia de su contabilidad. */
       clave?: string
-      /** @description Importe gravado por el concepto indicado en el tipo de percepción. */
+      /** Importe gravado por el concepto indicado en el tipo de percepción. */
       importe_gravado?: number
-      /** @description Importe exento por el concepto indicado en el tipo de percepción. */
+      /** Importe exento por el concepto indicado en el tipo de percepción. */
       importe_exento?: number
     }
     NominaPercepcionNestedInput: {
       acciones_o_titulos?: components['schemas']['NominaAccionesInput']
-      /** @description Arreglo de objetos para expresar las horas extra aplicables. Requerido cuando el tipo de percepción es “019” (Horas extras). */
+      /** Arreglo de objetos para expresar las horas extra aplicables. Requerido cuando el tipo de percepción es “019” (Horas extras). */
       horas_extra?: components['schemas']['NominaHorasExtraInput'][]
     }
     NominaPercepcionNestedProperties: {
       acciones_o_titulos?: components['schemas']['NominaAccionesProperties']
-      /** @description Arreglo de objetos para expresar las horas extra aplicables. Requerido cuando el tipo de percepción es “019” (Horas extras). */
+      /** Arreglo de objetos para expresar las horas extra aplicables. Requerido cuando el tipo de percepción es “019” (Horas extras). */
       horas_extra?: components['schemas']['NominaHorasExtraProperties'][]
     }
     /** HorasExtra */
@@ -3207,13 +3207,13 @@ export interface components {
     >
     /** HorasExtra */
     NominaHorasExtraProperties: {
-      /** @description Número de días en que el trabajador laboró horas extra adicionales a su jornada normal de trabajo. */
+      /** Número de días en que el trabajador laboró horas extra adicionales a su jornada normal de trabajo. */
       dias?: number
-      /** @description Clave del catálogo [Tipo de Horas](#tipo-de-Horas). */
+      /** Clave del catálogo [Tipo de Horas](#tipo-de-Horas). */
       tipo_horas?: string
-      /** @description Número de horas extra trabajadas en el periodo. */
+      /** Número de horas extra trabajadas en el periodo. */
       horas_extra?: number
-      /** @description Importe pagado por las horas extra. */
+      /** Importe pagado por las horas extra. */
       importe_pagado?: number
     }
     /** Accion */
@@ -3223,23 +3223,23 @@ export interface components {
     >
     /**
      * Accion
-     * @description Objeto para expresar ingresos por acciones o títulos valor que representan bienes. Es requerido cuando existan ingresos por sueldos derivados de adquisición de acciones o títulos.
+     * Objeto para expresar ingresos por acciones o títulos valor que representan bienes. Es requerido cuando existan ingresos por sueldos derivados de adquisición de acciones o títulos.
      */
     NominaAccionesProperties: {
-      /** @description Valor de mercado de las Acciones o Títulos valor al ejercer la opción. */
+      /** Valor de mercado de las Acciones o Títulos valor al ejercer la opción. */
       valor_mercado?: number
-      /** @description Precio establecido al otorgarse la opción de ingresos en acciones o títulos valor. */
+      /** Precio establecido al otorgarse la opción de ingresos en acciones o títulos valor. */
       precio_al_otorgarse?: number
     }
     /**
      * Receptor
-     * @description Información del trabajador.
+     * Información del trabajador.
      */
     NominaReceptorProperties: components['schemas']['NominaReceptorDirectProperties'] &
       components['schemas']['NominaReceptorNestedProperties']
     /**
      * Receptor
-     * @description Información del trabajador.
+     * Información del trabajador.
      */
     NominaReceptorInput: WithRequired<
       components['schemas']['NominaReceptorDirectProperties'],
@@ -3252,63 +3252,63 @@ export interface components {
     > &
       components['schemas']['NominaReceptorNestedInput']
     NominaReceptorDirectProperties: {
-      /** @description CURP del trabajador. */
+      /** CURP del trabajador. */
       curp?: string
-      /** @description Número de seguridad social. */
+      /** Número de seguridad social. */
       num_seguridad_social?: string
-      /** @description Fecha de inicio de la relación laboral entre el empleador y el empleado. */
+      /** Fecha de inicio de la relación laboral entre el empleador y el empleado. */
       fecha_inicio_rel_laboral?: components['schemas']['DateOrDateTime']
       /**
-       * @description Antigüedad del empleado en el formato especificado por el SAT. Si se envía un `string`, se espera que éste contenga la antigüedad en el formato que especifica el SAT. Si se envía el valor booleano `false`, este campo no se incluirá en la factura. Si se envía el valor booleano `true` y `fecha_inicio_rel_laboral` existe, este valor se calculará con la diferencia entre la fecha de inicio de relación laboral y la fecha de pago.
+       * Antigüedad del empleado en el formato especificado por el SAT. Si se envía un `string`, se espera que éste contenga la antigüedad en el formato que especifica el SAT. Si se envía el valor booleano `false`, este campo no se incluirá en la factura. Si se envía el valor booleano `true` y `fecha_inicio_rel_laboral` existe, este valor se calculará con la diferencia entre la fecha de inicio de relación laboral y la fecha de pago.
        * @default true
        */
       antiguedad?: string | boolean
-      /** @description Clave del catálogo del SAT [Tipo de Contrato](#tipo-de-contrato). */
+      /** Clave del catálogo del SAT [Tipo de Contrato](#tipo-de-contrato). */
       tipo_contrato?: string
       /**
-       * @description Indica si el trabajador está asociado a un sindicato.
+       * Indica si el trabajador está asociado a un sindicato.
        * @default false
        */
       sindicalizado?: boolean
-      /** @description Clave del catálogo del SAT [Tipo de Jornada](#tipo-de-jornada). */
+      /** Clave del catálogo del SAT [Tipo de Jornada](#tipo-de-jornada). */
       tipo_jornada?: string
-      /** @description Clave del catálogo del SAT [Tipo de Régimen](#régimen-fiscal). */
+      /** Clave del catálogo del SAT [Tipo de Régimen](#régimen-fiscal). */
       tipo_regimen?: string
-      /** @description Número interno de empleado, asignado por el empleador. */
+      /** Número interno de empleado, asignado por el empleador. */
       num_empleado?: string
-      /** @description Nombre del departamento o área a la que pertenece el trabajador. */
+      /** Nombre del departamento o área a la que pertenece el trabajador. */
       departamento?: string
-      /** @description Nombre del puesto asignado al empleado o el nombre de la actividad que realiza. */
+      /** Nombre del puesto asignado al empleado o el nombre de la actividad que realiza. */
       puesto?: string
-      /** @description Clave del catálogo del SAT [Riesgo del Puesto](#riesgo-del-puesto). */
+      /** Clave del catálogo del SAT [Riesgo del Puesto](#riesgo-del-puesto). */
       riesgo_puesto?: string
-      /** @description Clave del catálogo del SAT [Periodicidad de Pago](#periodicidad-del-pago). */
+      /** Clave del catálogo del SAT [Periodicidad de Pago](#periodicidad-del-pago). */
       periodicidad_pago?: string
-      /** @description Clave del banco de acuerdo al catálogo del SAT “Bancos” que puedes consultar utilizando nuestra [herramienta de búsqueda](https://dashboard.facturapi.io/catalogs/bank). */
+      /** Clave del banco de acuerdo al catálogo del SAT “Bancos” que puedes consultar utilizando nuestra [herramienta de búsqueda](https://dashboard.facturapi.io/catalogs/bank). */
       banco?: string
-      /** @description Número de cuenta bancaria (11 caracteres) o número de teléfono celular (10 caracteres) o número de tarjeta (15 ó 16 caracteres) o la CLABE (18 caracteres) o número de monedero electrónico donde se realiza el depósito de nómina. */
+      /** Número de cuenta bancaria (11 caracteres) o número de teléfono celular (10 caracteres) o número de tarjeta (15 ó 16 caracteres) o la CLABE (18 caracteres) o número de monedero electrónico donde se realiza el depósito de nómina. */
       cuenta_bancaria?: string
-      /** @description Importe de la retribución en efectivo por cuota diaria, gratificaciones, percepciones, alimentación, habitación, primas, comisiones, prestaciones en especie, etc. */
+      /** Importe de la retribución en efectivo por cuota diaria, gratificaciones, percepciones, alimentación, habitación, primas, comisiones, prestaciones en especie, etc. */
       salario_base_cot_apor?: number
-      /** @description Salario que se integra con los pagos hechos en efectivo por cuota diaria, gratificaciones, percepciones, habitación, primas, comisiones, prestaciones en especie y cualquier otra cantidad o prestación que se entregue al trabajador por su trabajo. */
+      /** Salario que se integra con los pagos hechos en efectivo por cuota diaria, gratificaciones, percepciones, habitación, primas, comisiones, prestaciones en especie y cualquier otra cantidad o prestación que se entregue al trabajador por su trabajo. */
       salario_diario_integrado?: number
-      /** @description Clave de la entidad federativa en donde el trabajador prestó sus servicios al empleador, que puedes consultar utilizando nuestra [herramienta de búsqueda](https://dashboard.facturapi.io/catalogs/state). */
+      /** Clave de la entidad federativa en donde el trabajador prestó sus servicios al empleador, que puedes consultar utilizando nuestra [herramienta de búsqueda](https://dashboard.facturapi.io/catalogs/state). */
       clave_ent_fed?: string
     }
     NominaReceptorNestedProperties: {
-      /** @description Arreglo de objetos para expresar información sobre la empresa que se beneficia del trabajo del empleado, en casos donde el emisor preste servicios de subcontratación. */
+      /** Arreglo de objetos para expresar información sobre la empresa que se beneficia del trabajo del empleado, en casos donde el emisor preste servicios de subcontratación. */
       sub_contratacion?: components['schemas']['NominaSubContratacionProperties'][]
     }
     NominaReceptorNestedInput: {
-      /** @description Arreglo de objetos para expresar información sobre la empresa que se beneficia del trabajo del empleado, en casos donde el emisor preste servicios de subcontratación. */
+      /** Arreglo de objetos para expresar información sobre la empresa que se beneficia del trabajo del empleado, en casos donde el emisor preste servicios de subcontratación. */
       sub_contratacion?: (components['schemas']['NominaSubContratacionRequiredProperties'] &
         components['schemas']['NominaSubContratacionProperties'])[]
     }
     NominaSubContratacionRequiredProperties: Record<string, unknown>
     NominaSubContratacionProperties: {
-      /** @description RFC de la persona o empresa que subcontrata, es decir, de la persona o empresa en donde el trabajador prestó directamente sus servicios. */
+      /** RFC de la persona o empresa que subcontrata, es decir, de la persona o empresa en donde el trabajador prestó directamente sus servicios. */
       rfc_labora?: string
-      /** @description Porcentaje de tiempo en que el trabajador prestó sus servicios a la persona o empresa que lo subcontrató. */
+      /** Porcentaje de tiempo en que el trabajador prestó sus servicios a la persona o empresa que lo subcontrató. */
       porcentaje_tiempo?: number
     }
     NominaEntidadSncfInput: {
@@ -3331,19 +3331,19 @@ export interface components {
     }
     /**
      * Emisor
-     * @description Información del emisor, en caso de ser requerida.
+     * Información del emisor, en caso de ser requerida.
      */
     NominaEmisorProperties: {
-      /** @description Requerido cuando el empleador es persona física. CURP del empleador. */
+      /** Requerido cuando el empleador es persona física. CURP del empleador. */
       curp?: string
-      /** @description Clave de registro patronal asignada por la institución de seguridad social al patrón. */
+      /** Clave de registro patronal asignada por la institución de seguridad social al patrón. */
       registro_patronal?: string
-      /** @description RFC de la persona que fungió como patrón. Se usa cuando el pago se realiza a través de un tercero. */
+      /** RFC de la persona que fungió como patrón. Se usa cuando el pago se realiza a través de un tercero. */
       rfc_patron_origen?: string
-      /** @description Información para que las entidades adheridas al Sistema Nacional de Coordinación Fiscal realicen la identificación del origen de los recursos. */
+      /** Información para que las entidades adheridas al Sistema Nacional de Coordinación Fiscal realicen la identificación del origen de los recursos. */
       entidad_sncf?: {
         /**
-         * @description Clave de origen de recurso.
+         * Clave de origen de recurso.
          *
          *     - `“IP”`: Ingresos Propios
          *     - `“IF”`: Ingresos Federales
@@ -3351,14 +3351,14 @@ export interface components {
          * @enum {string}
          */
         origen_recurso?: 'IP' | 'IF' | 'IM'
-        /** @description Importe de recursos propios. Requerido cuando el origen del recurso es por ingresos mixtos. */
+        /** Importe de recursos propios. Requerido cuando el origen del recurso es por ingresos mixtos. */
         monto_recurso_propio?: number
       }
     }
     /** Complement */
     PagoOrCustomComplementProperties: {
       /**
-       * @description Tipo de complemento.
+       * Tipo de complemento.
        * @enum {string}
        */
       type?: 'pago' | 'custom'
@@ -3369,7 +3369,7 @@ export interface components {
     /** Complement */
     PagoOrCustomComplementInput: {
       /**
-       * @description Tipo de complemento.
+       * Tipo de complemento.
        * @enum {string}
        */
       type: 'pago' | 'custom'
@@ -3384,7 +3384,7 @@ export interface components {
       data?: components['schemas']['PagoComplementDataProperties']
     } & {
       /**
-       * @description discriminator enum property added by openapi-typescript
+       * discriminator enum property added by openapi-typescript
        * @enum {string}
        */
       type: 'pago'
@@ -3396,7 +3396,7 @@ export interface components {
       data?: components['schemas']['PagoComplementDataInput']
     } & {
       /**
-       * @description discriminator enum property added by openapi-typescript
+       * discriminator enum property added by openapi-typescript
        * @enum {string}
        */
       type: 'pago'
@@ -3422,7 +3422,7 @@ export interface components {
     }
     /**
      * PagoComplementData
-     * @description Pagos a incluir en este comprobante. Lo más común es incluir un sólo pago. Un caso en el que se debe de agregar más de uno es cuando el pago se realiza con 2 formas de pago distintas; por ejemplo, cuando se paga una parte con tarjeta y otra en efectivo.
+     * Pagos a incluir en este comprobante. Lo más común es incluir un sólo pago. Un caso en el que se debe de agregar más de uno es cuando el pago se realiza con 2 formas de pago distintas; por ejemplo, cuando se paga una parte con tarjeta y otra en efectivo.
      */
     PagoComplementDataInput:
       | components['schemas']['PaymentInput']
@@ -3430,7 +3430,7 @@ export interface components {
     /** Complement */
     NominaOrCustomComplementProperties: {
       /**
-       * @description Tipo de complemento.
+       * Tipo de complemento.
        * @enum {string}
        */
       type?: 'nomina' | 'custom'
@@ -3441,7 +3441,7 @@ export interface components {
     /** Complement */
     NominaOrCustomComplementInput: {
       /**
-       * @description Tipo de complemento.
+       * Tipo de complemento.
        * @enum {string}
        */
       type: 'nomina' | 'custom'
@@ -3456,7 +3456,7 @@ export interface components {
       data?: components['schemas']['NominaComplementDataProperties']
     } & {
       /**
-       * @description discriminator enum property added by openapi-typescript
+       * discriminator enum property added by openapi-typescript
        * @enum {string}
        */
       type: 'nomina'
@@ -3468,7 +3468,7 @@ export interface components {
       data?: components['schemas']['NominaComplementDataInput']
     } & {
       /**
-       * @description discriminator enum property added by openapi-typescript
+       * discriminator enum property added by openapi-typescript
        * @enum {string}
        */
       type: 'nomina'
@@ -3480,7 +3480,7 @@ export interface components {
       data?: components['schemas']['CartaPorteDataProperties']
     } & {
       /**
-       * @description discriminator enum property added by openapi-typescript
+       * discriminator enum property added by openapi-typescript
        * @enum {string}
        */
       type: 'carta_porte'
@@ -3492,7 +3492,7 @@ export interface components {
       data?: components['schemas']['CartaPorteDataInput']
     } & {
       /**
-       * @description discriminator enum property added by openapi-typescript
+       * discriminator enum property added by openapi-typescript
        * @enum {string}
        */
       type: 'carta_porte'
@@ -3504,7 +3504,7 @@ export interface components {
       data?: components['schemas']['ComercioExteriorDataProperties']
     } & {
       /**
-       * @description discriminator enum property added by openapi-typescript
+       * discriminator enum property added by openapi-typescript
        * @enum {string}
        */
       type: 'comercio_exterior'
@@ -3516,7 +3516,7 @@ export interface components {
       data?: components['schemas']['ComercioExteriorDataInput']
     } & {
       /**
-       * @description discriminator enum property added by openapi-typescript
+       * discriminator enum property added by openapi-typescript
        * @enum {string}
        */
       type: 'comercio_exterior'
@@ -3528,7 +3528,7 @@ export interface components {
       data?: components['schemas']['LeyendasFiscalesData']
     } & {
       /**
-       * @description discriminator enum property added by openapi-typescript
+       * discriminator enum property added by openapi-typescript
        * @enum {string}
        */
       type: 'leyendas_fiscales'
@@ -3540,7 +3540,7 @@ export interface components {
       data?: components['schemas']['LeyendasFiscalesData']
     } & {
       /**
-       * @description discriminator enum property added by openapi-typescript
+       * discriminator enum property added by openapi-typescript
        * @enum {string}
        */
       type: 'leyendas_fiscales'
@@ -3548,7 +3548,7 @@ export interface components {
     /** Complement */
     CartaPorteOrCustomComplementProperties: {
       /**
-       * @description Tipo de complemento.
+       * Tipo de complemento.
        * @enum {string}
        */
       type?:
@@ -3562,7 +3562,7 @@ export interface components {
     /** Complement */
     CartaPorteOrCustomComplementInput: {
       /**
-       * @description Tipo de complemento.
+       * Tipo de complemento.
        * @enum {string}
        */
       type: 'carta_porte' | 'comercio_exterior' | 'leyendas_fiscales' | 'custom'
@@ -3574,100 +3574,100 @@ export interface components {
     )
     /**
      * LeyendasFiscales
-     * @description Complemento de Leyendas Fiscales versión 1.0.
+     * Complemento de Leyendas Fiscales versión 1.0.
      */
     LeyendasFiscalesData: {
-      /** @description Leyendas fiscales a incluir en el comprobante. */
+      /** Leyendas fiscales a incluir en el comprobante. */
       leyendas: {
-        /** @description Disposición fiscal aplicable a la leyenda. */
+        /** Disposición fiscal aplicable a la leyenda. */
         disposicion_fiscal?: string
-        /** @description Norma que regula la leyenda. */
+        /** Norma que regula la leyenda. */
         norma?: string
-        /** @description Texto de la leyenda fiscal. */
+        /** Texto de la leyenda fiscal. */
         texto_leyenda: string
       }[]
     }
     /**
      * CartaPorte
-     * @description Complemento Carta Porte versión 3.1. (Beta)
+     * Complemento Carta Porte versión 3.1. (Beta)
      */
     CartaPorteDataProperties: {
-      /** @description Identificador único de la Carta Porte. */
+      /** Identificador único de la Carta Porte. */
       IdCCP: string
-      /** @description Indica si el transporte es internacional. */
+      /** Indica si el transporte es internacional. */
       TranspInternac: string
-      /** @description Entrada o salida de mercancías. */
+      /** Entrada o salida de mercancías. */
       EntradaSalidaMerc?: string
-      /** @description País de origen o destino. */
+      /** País de origen o destino. */
       PaisOrigenDestino?: string
-      /** @description Vía de entrada o salida. */
+      /** Vía de entrada o salida. */
       ViaEntradaSalida?: string
-      /** @description Distancia total recorrida. */
+      /** Distancia total recorrida. */
       TotalDistRec?: number
-      /** @description Registro del programa ISTMO. */
+      /** Registro del programa ISTMO. */
       RegistroISTMO?: string
-      /** @description Polo origen. */
+      /** Polo origen. */
       UbicacionPoloOrigen?: string
-      /** @description Polo destino. */
+      /** Polo destino. */
       UbicacionPoloDestino?: string
-      /** @description Objeto con los regímenes aduaneros aplicables. */
+      /** Objeto con los regímenes aduaneros aplicables. */
       RegimenesAduaneros?: Record<string, unknown>
-      /** @description Arreglo de ubicaciones. */
+      /** Arreglo de ubicaciones. */
       Ubicaciones: {
-        /** @description Atributo requerido para precisar si el tipo de ubicación corresponde al origen o destino de las ubicaciones para el traslado de los bienes y/o mercancías en los distintos medios de transporte. Valores: "Origen" | "Destino". */
+        /** Atributo requerido para precisar si el tipo de ubicación corresponde al origen o destino de las ubicaciones para el traslado de los bienes y/o mercancías en los distintos medios de transporte. Valores: "Origen" | "Destino". */
         TipoUbicacion: string
-        /** @description Atributo condicional para registrar una clave que identifique el punto de salida o entrada de los bienes y/o mercancías. Formato: "OR" o "DE" seguido de 6 dígitos numéricos (expresión regular (OR|DE)[0-9]{6}). */
+        /** Atributo condicional para registrar una clave que identifique el punto de salida o entrada de los bienes y/o mercancías. Formato: "OR" o "DE" seguido de 6 dígitos numéricos (expresión regular (OR|DE)[0-9]{6}). */
         IDUbicacion?: string
-        /** @description Atributo requerido para registrar el RFC del remitente o destinatario de los bienes y/o mercancías que se trasladan. */
+        /** Atributo requerido para registrar el RFC del remitente o destinatario de los bienes y/o mercancías que se trasladan. */
         RFCRemitenteDestinatario: string
-        /** @description Atributo opcional para registrar el nombre del remitente o destinatario de los bienes y/o mercancías (longitud 1 a 254 caracteres). */
+        /** Atributo opcional para registrar el nombre del remitente o destinatario de los bienes y/o mercancías (longitud 1 a 254 caracteres). */
         NombreRemitenteDestinatario?: string
-        /** @description Atributo condicional para el número de identificación o registro fiscal del país de residencia del remitente o destinatario cuando se trate de residentes en el extranjero (longitud 6 a 40 caracteres). */
+        /** Atributo condicional para el número de identificación o registro fiscal del país de residencia del remitente o destinatario cuando se trate de residentes en el extranjero (longitud 6 a 40 caracteres). */
         NumRegIdTrib?: string
-        /** @description Atributo condicional para registrar la clave del país de residencia fiscal conforme al catálogo c_Pais (ISO 3166-1). */
+        /** Atributo condicional para registrar la clave del país de residencia fiscal conforme al catálogo c_Pais (ISO 3166-1). */
         ResidenciaFiscal?: string
-        /** @description Atributo condicional para la clave de la estación de origen o destino conforme al catálogo c_Estaciones del complemento Carta Porte y al tipo de transporte. */
+        /** Atributo condicional para la clave de la estación de origen o destino conforme al catálogo c_Estaciones del complemento Carta Porte y al tipo de transporte. */
         NumEstacion?: string
-        /** @description Atributo condicional para el nombre de la estación de origen o destino conforme al catálogo c_Estaciones (longitud 1 a 50 caracteres). */
+        /** Atributo condicional para el nombre de la estación de origen o destino conforme al catálogo c_Estaciones (longitud 1 a 50 caracteres). */
         NombreEstacion?: string
-        /** @description Atributo condicional para registrar el tipo de puerto de origen o destino en transporte marítimo. Valores: "Altura" | "Cabotaje". */
+        /** Atributo condicional para registrar el tipo de puerto de origen o destino en transporte marítimo. Valores: "Altura" | "Cabotaje". */
         NavegacionTrafico?: string
-        /** @description Atributo requerido para registrar la fecha y hora estimada de salida o llegada en formato AAAA-MM-DDThh:mm:ss. */
+        /** Atributo requerido para registrar la fecha y hora estimada de salida o llegada en formato AAAA-MM-DDThh:mm:ss. */
         FechaHoraSalidaLlegada: string
-        /** @description Atributo condicional para registrar el tipo de estación por la que pasan las mercancías conforme al catálogo c_TipoEstacion. */
+        /** Atributo condicional para registrar el tipo de estación por la que pasan las mercancías conforme al catálogo c_TipoEstacion. */
         TipoEstacion?: string
-        /** @description Atributo condicional para registrar en kilómetros la distancia recorrida entre la ubicación de origen y la de destino parcial o final. */
+        /** Atributo condicional para registrar en kilómetros la distancia recorrida entre la ubicación de origen y la de destino parcial o final. */
         DistanciaRecorrida?: number
         Domicilio?: components['schemas']['CartaPorteDomicilio']
       }[]
       Mercancias: components['schemas']['CartaPorteMercancias']
-      /** @description Figuras de transporte. */
+      /** Figuras de transporte. */
       FiguraTransporte?: {
-        /** @description Atributo requerido. Clave que identifica el tipo de figura de transporte conforme al catálogo correspondiente (operador, propietario, arrendatario, notificado). Debe coincidir con c_TipoFigura. */
+        /** Atributo requerido. Clave que identifica el tipo de figura de transporte conforme al catálogo correspondiente (operador, propietario, arrendatario, notificado). Debe coincidir con c_TipoFigura. */
         TipoFigura: string
-        /** @description RFC del operador/propietario/arrendatario o figura interveniente. */
+        /** RFC del operador/propietario/arrendatario o figura interveniente. */
         RFCFigura?: string
-        /** @description Número de licencia del operador cuando TipoFigura corresponde a operador. */
+        /** Número de licencia del operador cuando TipoFigura corresponde a operador. */
         NumLicencia?: string
-        /** @description Nombre o razón social de la figura de transporte (requerido). */
+        /** Nombre o razón social de la figura de transporte (requerido). */
         NombreFigura: string
-        /** @description Número de registro fiscal en el extranjero de la figura cuando aplica. */
+        /** Número de registro fiscal en el extranjero de la figura cuando aplica. */
         NumRegIdTribFigura?: string
-        /** @description Clave del país de residencia fiscal de la figura (c_Pais) cuando es extranjero. */
+        /** Clave del país de residencia fiscal de la figura (c_Pais) cuando es extranjero. */
         ResidenciaFiscalFigura?: string
-        /** @description Arreglo opcional con las partes del transporte que se relacionan a la figura. */
+        /** Arreglo opcional con las partes del transporte que se relacionan a la figura. */
         PartesTransporte?: {
-          /** @description Clave de la parte del transporte conforme al catálogo c_ParteTransporte. */
+          /** Clave de la parte del transporte conforme al catálogo c_ParteTransporte. */
           ParteTransporte: string
         }[]
-        /** @description Domicilio asociado a la figura del transporte. */
+        /** Domicilio asociado a la figura del transporte. */
         Domicilio?: components['schemas']['CartaPorteDomicilio']
       }[]
     }
     CartaPorteDataInput: components['schemas']['CartaPorteDataProperties']
     /**
      * ComercioExterior
-     * @description Complemento Comercio Exterior versión 2.0.
+     * Complemento Comercio Exterior versión 2.0.
      */
     ComercioExteriorDataProperties: {
       /**
@@ -3675,27 +3675,27 @@ export interface components {
        * @enum {string}
        */
       Version?: '2.0'
-      /** @description Clave del catálogo c_MotivoTraslado. */
+      /** Clave del catálogo c_MotivoTraslado. */
       MotivoTraslado?: string
-      /** @description Clave del pedimento (catálogo c_ClavePedimento). */
+      /** Clave del pedimento (catálogo c_ClavePedimento). */
       ClaveDePedimento: string
       /**
-       * @description Indica si existe certificado de origen.
+       * Indica si existe certificado de origen.
        * @enum {integer}
        */
       CertificadoOrigen: 0 | 1
-      /** @description Número de certificado de origen. */
+      /** Número de certificado de origen. */
       NumCertificadoOrigen?: string
-      /** @description Número de exportador confiable. */
+      /** Número de exportador confiable. */
       NumeroExportadorConfiable?: string
-      /** @description Clave del INCOTERM (catálogo c_INCOTERM). */
+      /** Clave del INCOTERM (catálogo c_INCOTERM). */
       Incoterm?: string
       Observaciones?: string
-      /** @description Tipo de cambio USD. */
+      /** Tipo de cambio USD. */
       TipoCambioUSD: number
-      /** @description Total en USD. */
+      /** Total en USD. */
       TotalUSD: number
-      /** @description Objeto con información del emisor del complemento. Requerido cuando el domicilio y CURP del emisor no se toman de la organización que emite el complemento. */
+      /** Objeto con información del emisor del complemento. Requerido cuando el domicilio y CURP del emisor no se toman de la organización que emite el complemento. */
       Emisor?: components['schemas']['ComercioExteriorEmisor'] | boolean
       Propietario?: (
         | components['schemas']['ComercioExteriorPropietario']
@@ -3720,7 +3720,7 @@ export interface components {
       Referencia?: string
       Municipio?: string
       Estado: string
-      /** @description Clave del catálogo c_Pais. */
+      /** Clave del catálogo c_Pais. */
       Pais: string
       CodigoPostal: string
     }
@@ -3730,7 +3730,7 @@ export interface components {
     }
     ComercioExteriorPropietario: {
       NumRegIdTrib: string
-      /** @description Clave del catálogo c_Pais. */
+      /** Clave del catálogo c_Pais. */
       ResidenciaFiscal: string
     }
     ComercioExteriorReceptor: {
@@ -3751,10 +3751,10 @@ export interface components {
     ComercioExteriorMercancia: {
       DescripcionesEspecificas?: components['schemas']['ComercioExteriorDescripcionesEspecificas'][]
       NoIdentificacion: string
-      /** @description Clave del catálogo c_FraccionArancelaria. */
+      /** Clave del catálogo c_FraccionArancelaria. */
       FraccionArancelaria?: string
       CantidadAduana?: number
-      /** @description Clave del catálogo c_UnidadAduana. */
+      /** Clave del catálogo c_UnidadAduana. */
       UnidadAduana?: string
       ValorUnitarioAduana?: number
       ValorDolares: number
@@ -3766,380 +3766,380 @@ export interface components {
       Cantidad: number
       IDOrigen: string
       IDDestino: string
-      /** @description Clave del medio de transporte. */
+      /** Clave del medio de transporte. */
       CvesTransporte?: string
     }
     CartaPorteDetalleMercancia: {
-      /** @description Clave de la unidad de peso de la mercancía conforme al catálogo correspondiente. */
+      /** Clave de la unidad de peso de la mercancía conforme al catálogo correspondiente. */
       UnidadPesoMerc: string
-      /** @description Peso bruto de la mercancía incluyendo embalajes y tare. */
+      /** Peso bruto de la mercancía incluyendo embalajes y tare. */
       PesoBruto: number
-      /** @description Peso neto de la mercancía sin incluir embalajes ni tara. */
+      /** Peso neto de la mercancía sin incluir embalajes ni tara. */
       PesoNeto: number
-      /** @description Peso de la tara (contenedores, embalajes) asociado a la mercancía. */
+      /** Peso de la tara (contenedores, embalajes) asociado a la mercancía. */
       PesoTara: number
-      /** @description Número de piezas que conforman la mercancía detallada. */
+      /** Número de piezas que conforman la mercancía detallada. */
       NumPiezas?: number
     }
-    /** @description RFC del importador cuando aplica. */
+    /** RFC del importador cuando aplica. */
     CartaPorteDocumentacionAduanera: {
-      /** @description Tipo de documento aduanero (pedimento, guía, conocimiento) relacionado. */
+      /** Tipo de documento aduanero (pedimento, guía, conocimiento) relacionado. */
       TipoDocumento?: string
-      /** @description Número de pedimento de importación/exportación. */
+      /** Número de pedimento de importación/exportación. */
       NumPedimento?: string
-      /** @description Identificador alterno del documento aduanero. */
+      /** Identificador alterno del documento aduanero. */
       IdentDocAduanero?: string
       RFCImpo?: string
     }
     CartaPorteGuiaIdentificacion: {
-      /** @description Número de la guía de identificación asociada a la mercancía. */
+      /** Número de la guía de identificación asociada a la mercancía. */
       NumeroGuiaIdentificacion?: string
-      /** @description Descripción detallada de la guía de identificación. */
+      /** Descripción detallada de la guía de identificación. */
       DescripGuiaIdentificacion?: string
-      /** @description Peso amparado por la guía de identificación. */
+      /** Peso amparado por la guía de identificación. */
       PesoGuiaIdentificacion?: number
     }
     CartaPorteMercancia: {
-      /** @description Clave del bien o producto transportado (catCartaPorte:c_BienesTransp). */
+      /** Clave del bien o producto transportado (catCartaPorte:c_BienesTransp). */
       BienesTransp: string
-      /** @description Clave STCC para transporte ferroviario cuando corresponda. */
+      /** Clave STCC para transporte ferroviario cuando corresponda. */
       ClaveSTCC?: string
-      /** @description Descripción comercial del bien transportado. */
+      /** Descripción comercial del bien transportado. */
       Descripcion: string
-      /** @description Cantidad total de unidades del bien. */
+      /** Cantidad total de unidades del bien. */
       Cantidad: number
-      /** @description Clave de unidad (c_ClaveUnidad) aplicable a la cantidad. */
+      /** Clave de unidad (c_ClaveUnidad) aplicable a la cantidad. */
       ClaveUnidad: string
-      /** @description Texto descriptivo de la unidad de medida. */
+      /** Texto descriptivo de la unidad de medida. */
       Unidad?: string
-      /** @description Dimensiones físicas de la mercancía (largo x ancho x alto) si aplica. */
+      /** Dimensiones físicas de la mercancía (largo x ancho x alto) si aplica. */
       Dimensiones?: string
-      /** @description Indicador de si la mercancía es material peligroso ("Sí" / "No"). */
+      /** Indicador de si la mercancía es material peligroso ("Sí" / "No"). */
       MaterialPeligroso?: string
-      /** @description Clave del material peligroso (c_MaterialPeligroso) cuando MaterialPeligroso es Sí. */
+      /** Clave del material peligroso (c_MaterialPeligroso) cuando MaterialPeligroso es Sí. */
       CveMaterialPeligroso?: string
-      /** @description Clave del tipo de embalaje utilizado (c_TipoEmbalaje). */
+      /** Clave del tipo de embalaje utilizado (c_TipoEmbalaje). */
       Embalaje?: string
-      /** @description Descripción adicional del embalaje. */
+      /** Descripción adicional del embalaje. */
       DescripEmbalaje?: string
-      /** @description Sector regulado por COFEPRIS al que pertenece el producto. */
+      /** Sector regulado por COFEPRIS al que pertenece el producto. */
       SectorCOFEPRIS?: string
-      /** @description Nombre del ingrediente activo (productos regulados). */
+      /** Nombre del ingrediente activo (productos regulados). */
       NombreIngredienteActivo?: string
-      /** @description Nombre químico del producto cuando aplica. */
+      /** Nombre químico del producto cuando aplica. */
       NomQuimico?: string
-      /** @description Denominación genérica del producto farmacéutico. */
+      /** Denominación genérica del producto farmacéutico. */
       DenominacionGenericaProd?: string
-      /** @description Denominación distintiva (marca) del producto farmacéutico. */
+      /** Denominación distintiva (marca) del producto farmacéutico. */
       DenominacionDistintivaProd?: string
-      /** @description Nombre o razón social del fabricante. */
+      /** Nombre o razón social del fabricante. */
       Fabricante?: string
-      /** @description Fecha de caducidad del producto (AAAAMMDD o formato aplicable). */
+      /** Fecha de caducidad del producto (AAAAMMDD o formato aplicable). */
       FechaCaducidad?: string
-      /** @description Número de lote del medicamento. */
+      /** Número de lote del medicamento. */
       LoteMedicamento?: string
-      /** @description Forma farmacéutica (tableta, cápsula, solución, etc.). */
+      /** Forma farmacéutica (tableta, cápsula, solución, etc.). */
       FormaFarmaceutica?: string
-      /** @description Condiciones especiales de transporte (refrigeración, frágil, etc.). */
+      /** Condiciones especiales de transporte (refrigeración, frágil, etc.). */
       CondicionesEspTransp?: string
-      /** @description Registro sanitario o folio de autorización. */
+      /** Registro sanitario o folio de autorización. */
       RegistroSanitarioFolioAutorizacion?: string
-      /** @description Número de permiso de importación. */
+      /** Número de permiso de importación. */
       PermisoImportacion?: string
-      /** @description Folio VUCEM de importación. */
+      /** Folio VUCEM de importación. */
       FolioImpoVUCEM?: string
-      /** @description Número CAS para sustancias químicas. */
+      /** Número CAS para sustancias químicas. */
       NumCAS?: string
-      /** @description Razón social de la empresa importadora. */
+      /** Razón social de la empresa importadora. */
       RazonSocialEmpImp?: string
-      /** @description Número de registro sanitario o plaguicida COFEPRIS. */
+      /** Número de registro sanitario o plaguicida COFEPRIS. */
       NumRegSanPlagCOFEPRIS?: string
-      /** @description Información adicional del fabricante. */
+      /** Información adicional del fabricante. */
       DatosFabricante?: string
-      /** @description Información del formulador del producto. */
+      /** Información del formulador del producto. */
       DatosFormulador?: string
-      /** @description Información del maquilador (si aplica). */
+      /** Información del maquilador (si aplica). */
       DatosMaquilador?: string
-      /** @description Uso autorizado del producto. */
+      /** Uso autorizado del producto. */
       UsoAutorizado?: string
-      /** @description Peso en kilogramos de la mercancía (puede ser peso neto o bruto según contexto). */
+      /** Peso en kilogramos de la mercancía (puede ser peso neto o bruto según contexto). */
       PesoEnKg: number
-      /** @description Valor monetario de la mercancía. */
+      /** Valor monetario de la mercancía. */
       ValorMercancia?: number
-      /** @description Clave de moneda (c_Moneda) del valor de la mercancía. */
+      /** Clave de moneda (c_Moneda) del valor de la mercancía. */
       Moneda?: string
-      /** @description Fracción arancelaria aplicable (c_FraccionArancelaria). */
+      /** Fracción arancelaria aplicable (c_FraccionArancelaria). */
       FraccionArancelaria?: string
-      /** @description UUID asociado al complemento de Comercio Exterior relacionado. */
+      /** UUID asociado al complemento de Comercio Exterior relacionado. */
       UUIDComercioExt?: string
-      /** @description Tipo de materia prima (si aplica para minerales, sustancias, etc.). */
+      /** Tipo de materia prima (si aplica para minerales, sustancias, etc.). */
       TipoMateria?: string
-      /** @description Descripción de la materia prima. */
+      /** Descripción de la materia prima. */
       DescripcionMateria?: string
-      /** @description Documentos aduaneros asociados a la mercancía. */
+      /** Documentos aduaneros asociados a la mercancía. */
       DocumentacionAduanera?: components['schemas']['CartaPorteDocumentacionAduanera'][]
-      /** @description Guías de identificación asociadas. */
+      /** Guías de identificación asociadas. */
       GuiasIdentificacion?: components['schemas']['CartaPorteGuiaIdentificacion'][]
-      /** @description Detalle de cantidades transportadas por origen/destino. */
+      /** Detalle de cantidades transportadas por origen/destino. */
       CantidadTransporta?: components['schemas']['CartaPorteCantidadTransporta'][]
-      /** @description Detalle de pesos y piezas de la mercancía. */
+      /** Detalle de pesos y piezas de la mercancía. */
       DetalleMercancia?: components['schemas']['CartaPorteDetalleMercancia'][]
     }
     CartaPorteIdentificacionVehicular: {
-      /** @description Configuración vehicular (catCartaPorte:c_ConfigAutotransporte) del vehículo primario. */
+      /** Configuración vehicular (catCartaPorte:c_ConfigAutotransporte) del vehículo primario. */
       ConfigVehicular: string
-      /** @description Peso bruto vehicular máximo permitido. */
+      /** Peso bruto vehicular máximo permitido. */
       PesoBrutoVehicular: number
-      /** @description Placa del vehículo motor. */
+      /** Placa del vehículo motor. */
       PlacaVM: string
-      /** @description Año modelo del vehículo motor. */
+      /** Año modelo del vehículo motor. */
       AnioModeloVM: string
     }
     CartaPorteSeguros: {
-      /** @description Nombre de la aseguradora de responsabilidad civil. */
+      /** Nombre de la aseguradora de responsabilidad civil. */
       AseguraRespCivil: string
-      /** @description Número de póliza de responsabilidad civil. */
+      /** Número de póliza de responsabilidad civil. */
       PolizaRespCivil: string
-      /** @description Aseguradora contra daños al medio ambiente. */
+      /** Aseguradora contra daños al medio ambiente. */
       AseguraMedAmbiente?: string
-      /** @description Número de póliza de medio ambiente. */
+      /** Número de póliza de medio ambiente. */
       PolizaMedAmbiente?: string
-      /** @description Aseguradora de la carga. */
+      /** Aseguradora de la carga. */
       AseguraCarga?: string
-      /** @description Número de póliza de la carga. */
+      /** Número de póliza de la carga. */
       PolizaCarga?: string
-      /** @description Prima total de los seguros contratados. */
+      /** Prima total de los seguros contratados. */
       PrimaSeguro?: number
     }
     CartaPorteRemolque: {
-      /** @description Subtipo de remolque (catCartaPorte:c_SubTipoRem). */
+      /** Subtipo de remolque (catCartaPorte:c_SubTipoRem). */
       SubTipoRem?: string
-      /** @description Placa del remolque. */
+      /** Placa del remolque. */
       Placa?: string
     }
     CartaPorteAutotransporte: {
-      /** @description Clave del permiso SCT del autotransporte. */
+      /** Clave del permiso SCT del autotransporte. */
       PermSCT: string
-      /** @description Número del permiso SCT. */
+      /** Número del permiso SCT. */
       NumPermisoSCT: string
-      /** @description Datos de identificación del vehículo principal. */
+      /** Datos de identificación del vehículo principal. */
       IdentificacionVehicular: components['schemas']['CartaPorteIdentificacionVehicular']
-      /** @description Información de seguros aplicables. */
+      /** Información de seguros aplicables. */
       Seguros: components['schemas']['CartaPorteSeguros']
-      /** @description Lista de remolques acoplados. */
+      /** Lista de remolques acoplados. */
       Remolques?: components['schemas']['CartaPorteRemolque'][]
     }
     CartaPorteContenedorMaritimo: {
-      /** @description Tipo de contenedor marítimo (ISO / catálogo SAT). */
+      /** Tipo de contenedor marítimo (ISO / catálogo SAT). */
       TipoContenedor?: string
-      /** @description Matrícula o número identificador del contenedor. */
+      /** Matrícula o número identificador del contenedor. */
       MatriculaContenedor?: string
-      /** @description Número de precinto o sello de seguridad. */
+      /** Número de precinto o sello de seguridad. */
       NumPrecinto?: string
-      /** @description Identificador CCP relacionado cuando se reutiliza información. */
+      /** Identificador CCP relacionado cuando se reutiliza información. */
       IdCCPRelacionado?: string
-      /** @description Placa del vehículo motor asociado (si aplica en transbordo). */
+      /** Placa del vehículo motor asociado (si aplica en transbordo). */
       PlacaVMCCP?: string
-      /** @description Fecha de certificación CCP del contenedor. */
+      /** Fecha de certificación CCP del contenedor. */
       FechaCertificacionCCP?: string
       RemolquesCCP?: {
-        /** @description Subtipo de remolque relacionado (CCP). */
+        /** Subtipo de remolque relacionado (CCP). */
         SubTipoRemCCP?: string
-        /** @description Placa del remolque relacionado (CCP). */
+        /** Placa del remolque relacionado (CCP). */
         PlacaCCP?: string
       }[]
     }
     CartaPorteTransporteMaritimo: {
-      /** @description Clave del permiso SCT de la embarcación. */
+      /** Clave del permiso SCT de la embarcación. */
       PermSCT: string
-      /** @description Número de permiso SCT de la embarcación. */
+      /** Número de permiso SCT de la embarcación. */
       NumPermisoSCT: string
-      /** @description Nombre de la aseguradora marítima. */
+      /** Nombre de la aseguradora marítima. */
       NombreAseg?: string
-      /** @description Número de póliza de seguro marítimo. */
+      /** Número de póliza de seguro marítimo. */
       NumPolizaSeguro?: string
-      /** @description Tipo de embarcación (catCartaPorte:c_TipoEmbarcacion). */
+      /** Tipo de embarcación (catCartaPorte:c_TipoEmbarcacion). */
       TipoEmbarcacion?: string
-      /** @description Matrícula de la embarcación. */
+      /** Matrícula de la embarcación. */
       Matricula?: string
-      /** @description Número OMI (IMO number) de la embarcación. */
+      /** Número OMI (IMO number) de la embarcación. */
       NumeroOMI?: string
-      /** @description Año de construcción de la embarcación. */
+      /** Año de construcción de la embarcación. */
       AnioEmbarcacion?: string
-      /** @description Nombre propio de la embarcación. */
+      /** Nombre propio de la embarcación. */
       NombreEmbarc?: string
-      /** @description Nacionalidad o bandera de la embarcación. */
+      /** Nacionalidad o bandera de la embarcación. */
       NacionalidadEmbarc?: string
-      /** @description Toneladas de arqueo bruto. */
+      /** Toneladas de arqueo bruto. */
       UnidadesDeArqBruto?: number
-      /** @description Tipo de carga (granel, contenedores, líquidos, etc.). */
+      /** Tipo de carga (granel, contenedores, líquidos, etc.). */
       TipoCarga?: string
-      /** @description Longitud total de la embarcación (eslora). */
+      /** Longitud total de la embarcación (eslora). */
       Eslora?: number
-      /** @description Ancho máximo de la embarcación (manga). */
+      /** Ancho máximo de la embarcación (manga). */
       Manga?: number
-      /** @description Calado máximo. */
+      /** Calado máximo. */
       Calado?: number
-      /** @description Altura del puntal. */
+      /** Altura del puntal. */
       Puntal?: number
-      /** @description Nombre de la línea naviera. */
+      /** Nombre de la línea naviera. */
       LineaNaviera?: string
-      /** @description Nombre del agente naviero. */
+      /** Nombre del agente naviero. */
       NombreAgenteNaviero?: string
-      /** @description Número de autorización del agente naviero. */
+      /** Número de autorización del agente naviero. */
       NumAutorizacionNaviero?: string
-      /** @description Número de viaje o rotación. */
+      /** Número de viaje o rotación. */
       NumViaje?: string
-      /** @description Número de conocimiento de embarque. */
+      /** Número de conocimiento de embarque. */
       NumConocEmbarc?: string
-      /** @description Permiso temporal de navegación. */
+      /** Permiso temporal de navegación. */
       PermisoTempNavegacion?: string
-      /** @description Lista de contenedores asociados al embarque. */
+      /** Lista de contenedores asociados al embarque. */
       Contenedor?: components['schemas']['CartaPorteContenedorMaritimo'][]
     }
     CartaPorteTransporteAereo: {
-      /** @description Clave del permiso SCT para transporte aéreo. */
+      /** Clave del permiso SCT para transporte aéreo. */
       PermSCT?: string
-      /** @description Número de permiso SCT. */
+      /** Número de permiso SCT. */
       NumPermisoSCT?: string
-      /** @description Matrícula de la aeronave. */
+      /** Matrícula de la aeronave. */
       MatriculaAeronave?: string
-      /** @description Nombre de la aseguradora aérea. */
+      /** Nombre de la aseguradora aérea. */
       NombreAseg?: string
-      /** @description Número de póliza de seguro de la aeronave. */
+      /** Número de póliza de seguro de la aeronave. */
       NumPolizaSeguro?: string
-      /** @description Número de guía aérea (Air Waybill). */
+      /** Número de guía aérea (Air Waybill). */
       NumeroGuia?: string
-      /** @description Lugar donde se celebró el contrato de transporte. */
+      /** Lugar donde se celebró el contrato de transporte. */
       LugarContrato?: string
-      /** @description Código del transportista aéreo. */
+      /** Código del transportista aéreo. */
       CodigoTransportista?: string
-      /** @description RFC del embarcador. */
+      /** RFC del embarcador. */
       RFCEmbarcador?: string
-      /** @description Número de registro tributario extranjero del embarcador. */
+      /** Número de registro tributario extranjero del embarcador. */
       NumRegIdTribEmbarc?: string
-      /** @description País de residencia fiscal del embarcador. */
+      /** País de residencia fiscal del embarcador. */
       ResidenciaFiscalEmbarc?: string
-      /** @description Nombre o razón social del embarcador. */
+      /** Nombre o razón social del embarcador. */
       NombreEmbarcador?: string
     }
     CartaPorteDerechosDePaso: {
-      /** @description Tipo de derecho de paso ferroviario. */
+      /** Tipo de derecho de paso ferroviario. */
       TipoDerechoDePaso?: string
-      /** @description Kilometraje cubierto/pagado en el derecho de paso. */
+      /** Kilometraje cubierto/pagado en el derecho de paso. */
       KilometrajePagado?: number
     }
     CartaPorteContenedorFerroviario: {
-      /** @description Tipo de contenedor ferroviario. */
+      /** Tipo de contenedor ferroviario. */
       TipoContenedor?: string
-      /** @description Peso del contenedor vacío. */
+      /** Peso del contenedor vacío. */
       PesoContenedorVacio?: number
-      /** @description Peso neto de la mercancía contenida. */
+      /** Peso neto de la mercancía contenida. */
       PesoNetoMercancia?: number
     }
     CartaPorteCarroFerroviario: {
-      /** @description Tipo de carro ferroviario. */
+      /** Tipo de carro ferroviario. */
       TipoCarro?: string
-      /** @description Matrícula o número identificador del carro. */
+      /** Matrícula o número identificador del carro. */
       MatriculaCarro?: string
-      /** @description Número de guía asociado al carro. */
+      /** Número de guía asociado al carro. */
       GuiaCarro?: string
-      /** @description Toneladas netas transportadas en el carro. */
+      /** Toneladas netas transportadas en el carro. */
       ToneladasNetasCarro?: number
-      /** @description Contenedores asociados al carro. */
+      /** Contenedores asociados al carro. */
       Contenedor?: components['schemas']['CartaPorteContenedorFerroviario'][]
     }
     CartaPorteTransporteFerroviario: {
-      /** @description Tipo de servicio ferroviario (regular, intermodal, etc.). */
+      /** Tipo de servicio ferroviario (regular, intermodal, etc.). */
       TipoDeServicio?: string
-      /** @description Tipo de tráfico (nacional, internacional, etc.). */
+      /** Tipo de tráfico (nacional, internacional, etc.). */
       TipoDeTrafico?: string
-      /** @description Nombre de la aseguradora ferroviaria. */
+      /** Nombre de la aseguradora ferroviaria. */
       NombreAseg?: string
-      /** @description Número de póliza de seguro ferroviario. */
+      /** Número de póliza de seguro ferroviario. */
       NumPolizaSeguro?: string
-      /** @description Lista de derechos de paso aplicados. */
+      /** Lista de derechos de paso aplicados. */
       DerechosDePaso?: components['schemas']['CartaPorteDerechosDePaso'][]
-      /** @description Lista de carros ferroviarios involucrados. */
+      /** Lista de carros ferroviarios involucrados. */
       Carro?: components['schemas']['CartaPorteCarroFerroviario'][]
     }
-    /** @description Domicilio relacionado a la ubicación en el complemento Carta Porte. */
+    /** Domicilio relacionado a la ubicación en el complemento Carta Porte. */
     CartaPorteDomicilio: {
-      /** @description Calle del domicilio de origen y/o destino (requerida en XSD). */
+      /** Calle del domicilio de origen y/o destino (requerida en XSD). */
       Calle?: string
-      /** @description Número exterior donde se ubica el domicilio. */
+      /** Número exterior donde se ubica el domicilio. */
       NumeroExterior?: string
-      /** @description Número interior del domicilio, si existe. */
+      /** Número interior del domicilio, si existe. */
       NumeroInterior?: string
-      /** @description Colonia o dato análogo del domicilio. */
+      /** Colonia o dato análogo del domicilio. */
       Colonia?: string
-      /** @description Ciudad, población o distrito del domicilio. */
+      /** Ciudad, población o distrito del domicilio. */
       Localidad?: string
-      /** @description Referencia geográfica adicional (ej. coordenadas GPS). */
+      /** Referencia geográfica adicional (ej. coordenadas GPS). */
       Referencia?: string
-      /** @description Municipio, delegación, alcaldía o análogo del domicilio. */
+      /** Municipio, delegación, alcaldía o análogo del domicilio. */
       Municipio?: string
-      /** @description Clave de estado, entidad o región (ISO 3166-2 conforme catálogo SAT). */
+      /** Clave de estado, entidad o región (ISO 3166-2 conforme catálogo SAT). */
       Estado: string
-      /** @description Clave del país (catálogo c_Pais, ISO 3166-1). */
+      /** Clave del país (catálogo c_Pais, ISO 3166-1). */
       Pais: string
-      /** @description Código postal del domicilio. */
+      /** Código postal del domicilio. */
       CodigoPostal: string
     }
     CartaPorteMercancias: {
-      /** @description Suma del peso bruto total de las mercancías (aéreo y ferroviario). */
+      /** Suma del peso bruto total de las mercancías (aéreo y ferroviario). */
       PesoBrutoTotal: number
-      /** @description Clave de unidad de medida estandarizada del peso (catCartaPorte:c_ClaveUnidadPeso). */
+      /** Clave de unidad de medida estandarizada del peso (catCartaPorte:c_ClaveUnidadPeso). */
       UnidadPeso: string
-      /** @description Suma de los valores PesoNeto de cada DetalleMercancia. */
+      /** Suma de los valores PesoNeto de cada DetalleMercancia. */
       PesoNetoTotal?: number
-      /** @description Número total de mercancías (cantidad de nodos Mercancia). */
+      /** Número total de mercancías (cantidad de nodos Mercancia). */
       NumTotalMercancias: number
-      /** @description Importe pagado por la tasación de las mercancías (vía aérea). */
+      /** Importe pagado por la tasación de las mercancías (vía aérea). */
       CargoPorTasacion?: number
-      /** @description Indica si aplica logística inversa, recolección o devolución. */
+      /** Indica si aplica logística inversa, recolección o devolución. */
       LogisticaInversaRecoleccionDevolucion?: string
-      /** @description Arreglo requerido con las mercancías transportadas. */
+      /** Arreglo requerido con las mercancías transportadas. */
       Mercancia: components['schemas']['CartaPorteMercancia'][]
-      /** @description Datos del autotransporte de carga federal. */
+      /** Datos del autotransporte de carga federal. */
       Autotransporte?: components['schemas']['CartaPorteAutotransporte']
-      /** @description Datos de la embarcación para transporte marítimo. */
+      /** Datos de la embarcación para transporte marítimo. */
       TransporteMaritimo?: components['schemas']['CartaPorteTransporteMaritimo']
-      /** @description Datos del transporte aéreo utilizado. */
+      /** Datos del transporte aéreo utilizado. */
       TransporteAereo?: components['schemas']['CartaPorteTransporteAereo']
-      /** @description Datos del transporte ferroviario utilizado. */
+      /** Datos del transporte ferroviario utilizado. */
       TransporteFerroviario?: components['schemas']['CartaPorteTransporteFerroviario']
     }
     NamespaceRequiredProperties: Record<string, unknown>
     /** Namespace */
     NamespaceProperties: {
-      /** @description Prefijo o nombre del namespace. */
+      /** Prefijo o nombre del namespace. */
       prefix?: string
       /**
        * Format: url
-       * @description Dirección URL asociada al namespace.
+       * Dirección URL asociada al namespace.
        */
       uri?: string
       /**
        * Format: url
-       * @description Dirección URL del esquema de validación XSD.
+       * Dirección URL del esquema de validación XSD.
        */
       schema_location?: string
     }
     CommonAddressProperties: {
-      /** @description Nombre de la calle */
+      /** Nombre de la calle */
       street?: string
-      /** @description Número exterior. */
+      /** Número exterior. */
       exterior?: string
-      /** @description Número interior. */
+      /** Número interior. */
       interior?: string
-      /** @description Colonia */
+      /** Colonia */
       neighborhood?: string
-      /** @description Ciudad */
+      /** Ciudad */
       city?: string
-      /** @description Municipio o delegación */
+      /** Municipio o delegación */
       municipality?: string
-      /** @description Código postal */
+      /** Código postal */
       zip?: string
     }
     /** Objeto Webhook */
@@ -4149,11 +4149,11 @@ export interface components {
       data: components['schemas']['Webhook'][]
     }
     WebhookProperties: {
-      /** @description Id de la organización la cual se está dando de alta el webhook. */
+      /** Id de la organización la cual se está dando de alta el webhook. */
       organization?: string
-      /** @description Ambiente en el cual se está dando de alta el webhook. */
+      /** Ambiente en el cual se está dando de alta el webhook. */
       livemode?: boolean
-      /** @description Eventos a los que está suscrito el webhook. El valor "*" puede aparecer en respuestas existentes, pero no se acepta al crear o actualizar un webhook; envía los nombres de eventos explícitos. */
+      /** Eventos a los que está suscrito el webhook. El valor "*" puede aparecer en respuestas existentes, pero no se acepta al crear o actualizar un webhook; envía los nombres de eventos explícitos. */
       enabled_events?: (
         | 'receipt.self_invoice_complete'
         | 'invoice.cancellation_status_updated'
@@ -4166,11 +4166,11 @@ export interface components {
       )[]
       /**
        * Format: uri
-       * @description Http ruta para el webhook
+       * Http ruta para el webhook
        */
       url?: string
       /**
-       * @description Status del webhook
+       * Status del webhook
        * @enum {string}
        */
       status?: 'enabled' | 'disabled'
@@ -4180,10 +4180,10 @@ export interface components {
     WebhookCreateInput: {
       /**
        * Format: uri
-       * @description URL del webhook a dar de alta para recibir notificaciones.
+       * URL del webhook a dar de alta para recibir notificaciones.
        */
       url: string
-      /** @description Los eventos a los que el webhook se suscribirá. */
+      /** Los eventos a los que el webhook se suscribirá. */
       enabled_events: (
         | 'receipt.self_invoice_complete'
         | 'invoice.cancellation_status_updated'
@@ -4197,11 +4197,11 @@ export interface components {
     /** Webhook */
     WebhookCreateEdit: {
       /**
-       * @description Estatus del webhook
+       * Estatus del webhook
        * @enum {string}
        */
       status: 'disabled' | 'enabled'
-      /** @description Los eventos a los que el webhook se suscribirá. */
+      /** Los eventos a los que el webhook se suscribirá. */
       enabled_events: (
         | 'receipt.self_invoice_complete'
         | 'invoice.cancellation_status_updated'
@@ -4216,7 +4216,7 @@ export interface components {
     Customer: components['schemas']['ResourceAutoGeneratedProps'] &
       components['schemas']['CustomerNonEditableProperties'] &
       components['schemas']['CustomerProperties'] & {
-        /** @description ID de la organización a la que pertenece este recurso. */
+        /** ID de la organización a la que pertenece este recurso. */
         organization?: string
         curp?: string
         external_id?: string
@@ -4226,56 +4226,56 @@ export interface components {
     }
     CustomerNonEditableProperties: {
       /**
-       * @description Enlace a una página alojada donde el cliente puede editar su información una vez.
+       * Enlace a una página alojada donde el cliente puede editar su información una vez.
        *     Ejemplo: https://auto.facturapi.io/tax-info/abcdWXYZ1234
        */
       edit_link?: string | null
       /**
        * Format: date-time
-       * @description Fecha de expiración del enlace de edición.
+       * Fecha de expiración del enlace de edición.
        */
       edit_link_expires_at?: Date | string
       /**
        * Format: date-time
-       * @description Fecha en la que la información fiscal fue validado por el SAT.
+       * Fecha en la que la información fiscal fue validado por el SAT.
        */
       sat_validated_at?: Date | string
     }
     CustomerProperties: components['schemas']['CustomerCommonProperties'] & {
       address?: components['schemas']['CommonAddressProperties'] & {
-        /** @description Si el país es México ("MEX"), contiene el nombre del Estado o Entidad Federativa. Para extranjeros contiene el código de Estado de acuerdo al estándar [ISO 3166-2](https://en.wikipedia.org/wiki/ISO_3166-2), que puedes consultar en nuestro [Catálogo de Estados](https://dashboard.facturapi.io/catalogs/state). */
+        /** Si el país es México ("MEX"), contiene el nombre del Estado o Entidad Federativa. Para extranjeros contiene el código de Estado de acuerdo al estándar [ISO 3166-2](https://en.wikipedia.org/wiki/ISO_3166-2), que puedes consultar en nuestro [Catálogo de Estados](https://dashboard.facturapi.io/catalogs/state). */
         state?: string
         /**
-         * @description Código de país acorde al estándar [ISO 3166-1 alpha-3](https://en.wikipedia.org/wiki/ISO_3166-1_alpha-3), del [Catálogo de Países](https://dashboard.facturapi.io/catalogs/country).
+         * Código de país acorde al estándar [ISO 3166-1 alpha-3](https://en.wikipedia.org/wiki/ISO_3166-1_alpha-3), del [Catálogo de Países](https://dashboard.facturapi.io/catalogs/country).
          * @default MEX
          */
         country?: string
       }
     }
     CustomerCommonProperties: {
-      /** @description Nombre Fiscal o Razón Social del cliente. *sin* el régimen societario (ej.: S.A. de C.V.). */
+      /** Nombre Fiscal o Razón Social del cliente. *sin* el régimen societario (ej.: S.A. de C.V.). */
       legal_name?: string
-      /** @description En clientes de México contiene el RFC del cliente. Para extranjeros es opcional y representa el número de registro de identificación tributaria, es decir, el equivalente al RFC en el país del cliente. */
+      /** En clientes de México contiene el RFC del cliente. Para extranjeros es opcional y representa el número de registro de identificación tributaria, es decir, el equivalente al RFC en el país del cliente. */
       tax_id?: string
-      /** @description Requerido para clientes nacionales. Clave del régimen fiscal del cliente, del catálogo de [Regímenes Fiscales](#r%C3%A9gimen-fiscal). */
+      /** Requerido para clientes nacionales. Clave del régimen fiscal del cliente, del catálogo de [Regímenes Fiscales](#r%C3%A9gimen-fiscal). */
       tax_system?: string
       /**
        * Format: email
-       * @description Dirección de correo electrónico al cual enviar las facturas generadas.
+       * Dirección de correo electrónico al cual enviar las facturas generadas.
        */
       email?: string
-      /** @description Teléfono del cliente. */
+      /** Teléfono del cliente. */
       phone?: string
-      /** @description Uso de CFDI por defecto. */
+      /** Uso de CFDI por defecto. */
       default_invoice_use?: string
     }
     /** Customer */
     CustomerCreateInput: components['schemas']['CustomerCommonProperties'] & {
       address: components['schemas']['CommonAddressProperties'] & {
-        /** @description Si el país es México ("MEX"), contiene el nombre del Estado o Entidad Federativa. Para extranjeros contiene el código de Estado de acuerdo al estándar [ISO 3166-2](https://en.wikipedia.org/wiki/ISO_3166-2), que puedes consultar en nuestro [Catálogo de Estados](https://dashboard.facturapi.io/catalogs/state). */
+        /** Si el país es México ("MEX"), contiene el nombre del Estado o Entidad Federativa. Para extranjeros contiene el código de Estado de acuerdo al estándar [ISO 3166-2](https://en.wikipedia.org/wiki/ISO_3166-2), que puedes consultar en nuestro [Catálogo de Estados](https://dashboard.facturapi.io/catalogs/state). */
         state?: string
         /**
-         * @description Código de país acorde al estándar [ISO 3166-1 alpha-3](https://en.wikipedia.org/wiki/ISO_3166-1_alpha-3), del [Catálogo de Países](https://dashboard.facturapi.io/catalogs/country).
+         * Código de país acorde al estándar [ISO 3166-1 alpha-3](https://en.wikipedia.org/wiki/ISO_3166-1_alpha-3), del [Catálogo de Países](https://dashboard.facturapi.io/catalogs/country).
          * @default MEX
          */
         country?: string
@@ -4287,42 +4287,42 @@ export interface components {
     LineItemProductEgresoInput: components['schemas']['ProductEgresoProperties']
     /** Product */
     LineItemTrasladoProductInput: {
-      /** @description Descripción del bien o servicio como aparecerá en la factura. */
+      /** Descripción del bien o servicio como aparecerá en la factura. */
       description: string
-      /** @description Clave de producto/servicio, del catálogo del SAT. Nosotros te proporcionamos una manera más conveniente de encontrarlo utilizando nuestra [herramienta de búsqueda de claves](https://dashboard.facturapi.io/catalogs/productKey). */
+      /** Clave de producto/servicio, del catálogo del SAT. Nosotros te proporcionamos una manera más conveniente de encontrarlo utilizando nuestra [herramienta de búsqueda de claves](https://dashboard.facturapi.io/catalogs/productKey). */
       product_key?: string
       /**
-       * @description Clave de unidad de medida, del catálogo del SAT. El valor por default `"H87"` (elemento) es la clave para representar una pieza o unidad de venta (lápiz, cuaderno, televisión, etc).
+       * Clave de unidad de medida, del catálogo del SAT. El valor por default `"H87"` (elemento) es la clave para representar una pieza o unidad de venta (lápiz, cuaderno, televisión, etc).
        *     Si la unidad de tu producto es kilogramos, litros, horas u otra unidad, te proporcionamos una manera conveniente de encontrar la clave utilizando nuestra [herramienta de búsqueda de claves](https://dashboard.facturapi.io/catalogs/unit).
        * @default H87
        */
       unit_key?: string
       /**
-       * @description Palabra que representa la unidad de medida de tu producto. Debe estar relacionada con la clave de unidad `unit_key`.
+       * Palabra que representa la unidad de medida de tu producto. Debe estar relacionada con la clave de unidad `unit_key`.
        * @default Elemento
        */
       unit_name?: string
-      /** @description Identificador de uso interno designado por la empresa. Puede tener cualquier valor. */
+      /** Identificador de uso interno designado por la empresa. Puede tener cualquier valor. */
       sku?: string
     }
     LineItemProduct: {
-      /** @description ID del producto base. Sólo presente si se utilizó como base un objeto `Product` guardado previamente. */
+      /** ID del producto base. Sólo presente si se utilizó como base un objeto `Product` guardado previamente. */
       id?: string
     } & components['schemas']['ProductProperties']
     Parts: {
-      /** @description Descripción del producto o servicio. */
+      /** Descripción del producto o servicio. */
       description?: string
-      /** @description Clave de producto/servicio, del catálogo del SAT. Nosotros te proporcionamos una manera más conveniente de encontrarlo utilizando nuestra herramienta de búsqueda de claves. */
+      /** Clave de producto/servicio, del catálogo del SAT. Nosotros te proporcionamos una manera más conveniente de encontrarlo utilizando nuestra herramienta de búsqueda de claves. */
       product_key?: string
-      /** @description Cantidad */
+      /** Cantidad */
       quantity?: number
-      /** @description Identificador de uso interno designado por la empresa. Puede tener cualquier valor. */
+      /** Identificador de uso interno designado por la empresa. Puede tener cualquier valor. */
       sku?: string
-      /** @description Precio unitario */
+      /** Precio unitario */
       unit_price?: number
-      /** @description Nombre de la unidad de medida que expresa la cantidad. */
+      /** Nombre de la unidad de medida que expresa la cantidad. */
       unit_name?: string
-      /** @description Números de pedimento aduanal asociados a esta parte. */
+      /** Números de pedimento aduanal asociados a esta parte. */
       customs_keys?: string[]
     }
     PartInput: WithRequired<
@@ -4332,27 +4332,27 @@ export interface components {
     /** Objeto Product */
     Product: components['schemas']['ResourceAutoGeneratedProps'] &
       components['schemas']['ProductProperties'] & {
-        /** @description ID de la organización a la que pertenece este recurso. */
+        /** ID de la organización a la que pertenece este recurso. */
         organization: string
       }
     ProductSearchResult: components['schemas']['SearchResult'] & {
       data: components['schemas']['Product'][]
     }
     ProductProperties: {
-      /** @description Descripción del bien o servicio como aparecerá en la factura. */
+      /** Descripción del bien o servicio como aparecerá en la factura. */
       description: string
-      /** @description Clave de producto/servicio, del catálogo del SAT. Nosotros te proporcionamos una manera más conveniente de encontrarlo utilizando nuestra [herramienta de búsqueda de claves](https://dashboard.facturapi.io/catalogs/productKey). */
+      /** Clave de producto/servicio, del catálogo del SAT. Nosotros te proporcionamos una manera más conveniente de encontrarlo utilizando nuestra [herramienta de búsqueda de claves](https://dashboard.facturapi.io/catalogs/productKey). */
       product_key: string
-      /** @description Precio por unidad del bien o servicio. Este valor representará el precio con IVA incluido o sin él, dependiendo del valor de `tax_included`. */
+      /** Precio por unidad del bien o servicio. Este valor representará el precio con IVA incluido o sin él, dependiendo del valor de `tax_included`. */
       price: number
       /**
-       * @description - `true`: Indica que todos los impuestos aplicables están incluidos en el precio (atributo price) y se desglosarán automáticamente al emitir la factura.
+       * - `true`: Indica que todos los impuestos aplicables están incluidos en el precio (atributo price) y se desglosarán automáticamente al emitir la factura.
        *     - `false`: Indica que el atributo price no incluye impuestos, por lo que aquellos impuestos a aplicar se sumarán en el precio final.
        * @default true
        */
       tax_included?: boolean
       /**
-       * @description Código que representa si el bien o servicio es objeto de impuesto o no. Este atributo corresponde al campo "ObjetoImp" en el CFDI.
+       * Código que representa si el bien o servicio es objeto de impuesto o no. Este atributo corresponde al campo "ObjetoImp" en el CFDI.
        *
        *     - `01`: No objeto de impuesto.
        *     - `02`: Sí objeto de impuesto.
@@ -4367,7 +4367,7 @@ export interface components {
        */
       taxability?: '01' | '02' | '03' | '04' | '05' | '06' | '07' | '08'
       /**
-       * @description Lista de impuestos que deberán aplicarse a este producto.
+       * Lista de impuestos que deberán aplicarse a este producto.
        *
        *     Resolución cuando `taxes` se omite o es `null`:
        *     - `taxability` omitido o `"02"`: se agrega IVA trasladado 16%.
@@ -4384,42 +4384,42 @@ export interface components {
        */
       taxes?: components['schemas']['BaseTax'][]
       /**
-       * @description Arreglo de impuestos locales (estatales o municipales), en caso de haberlos.
+       * Arreglo de impuestos locales (estatales o municipales), en caso de haberlos.
        * @default []
        */
       local_taxes?: components['schemas']['LocalTax'][]
       /**
-       * @description Clave de unidad de medida, del catálogo del SAT. El valor por default `"H87"` (elemento) es la clave para representar una pieza o unidad de venta (lápiz, cuaderno, televisión, etc).
+       * Clave de unidad de medida, del catálogo del SAT. El valor por default `"H87"` (elemento) es la clave para representar una pieza o unidad de venta (lápiz, cuaderno, televisión, etc).
        *     Si la unidad de tu producto es kilogramos, litros, horas u otra unidad, puedes encontrar la clave utilizando nuestra [herramienta de búsqueda de claves](https://dashboard.facturapi.io/catalogs/unit).
        * @default H87
        */
       unit_key?: string
       /**
-       * @description Palabra que representa la unidad de medida de tu producto. Debe estar relacionada con la clave de unidad `unit_key`.
+       * Palabra que representa la unidad de medida de tu producto. Debe estar relacionada con la clave de unidad `unit_key`.
        * @default Elemento
        */
       unit_name?: string
-      /** @description Identificador de uso interno designado por la empresa. Puede tener cualquier valor. */
+      /** Identificador de uso interno designado por la empresa. Puede tener cualquier valor. */
       sku?: string
     }
     ProductEgresoProperties: {
-      /** @description Resumen de la operación en una sola descripción. Deben mencionarse cada uno de los productos que contempla el descuento, devolución o bonificación aplicada y que contienen las facturas relacionadas. Si el egreso está basado en un pocentaje (como al aplicar un 30% de descuento), dicho porcentaje debe incluirse en la descripción junto al nombre del producto que corresponda. */
+      /** Resumen de la operación en una sola descripción. Deben mencionarse cada uno de los productos que contempla el descuento, devolución o bonificación aplicada y que contienen las facturas relacionadas. Si el egreso está basado en un pocentaje (como al aplicar un 30% de descuento), dicho porcentaje debe incluirse en la descripción junto al nombre del producto que corresponda. */
       description: string
       /**
-       * @description Clave de producto/servicio, del catálogo del SAT. Nosotros te proporcionamos una manera más conveniente de encontrarlo utilizando nuestra [herramienta de búsqueda de claves](https://dashboard.facturapi.io/catalogs/productKey).
+       * Clave de producto/servicio, del catálogo del SAT. Nosotros te proporcionamos una manera más conveniente de encontrarlo utilizando nuestra [herramienta de búsqueda de claves](https://dashboard.facturapi.io/catalogs/productKey).
        * @default 84111506
        */
       product_key?: string
-      /** @description Suma total de la cantidad devuelta, descontada o bonificada. */
+      /** Suma total de la cantidad devuelta, descontada o bonificada. */
       price: number
       /**
-       * @description - `true`: Indica que todos los impuestos aplicables están incluidos en el precio (atributo price) y se desglosarán automáticamente al emitir la factura.
+       * - `true`: Indica que todos los impuestos aplicables están incluidos en el precio (atributo price) y se desglosarán automáticamente al emitir la factura.
        *     - `false`: Indica que el atributo price no incluye impuestos, por lo que aquellos impuestos a aplicar se sumarán en el precio final.
        * @default true
        */
       tax_included?: boolean
       /**
-       * @description Código que representa si el bien o servicio es objeto de impuesto o no. Este atributo corresponde al campo "ObjetoImp" en el CFDI.
+       * Código que representa si el bien o servicio es objeto de impuesto o no. Este atributo corresponde al campo "ObjetoImp" en el CFDI.
        *
        *     - `01`: No objeto de impuesto.
        *     - `02`: Sí objeto de impuesto.
@@ -4431,7 +4431,7 @@ export interface components {
        */
       taxability?: '01' | '02' | '03' | '04' | '05' | '06' | '07' | '08'
       /**
-       * @description Lista de impuestos que deberán aplicarse a este producto.
+       * Lista de impuestos que deberán aplicarse a este producto.
        *
        *     Resolución cuando `taxes` se omite o es `null`:
        *     - `taxability` omitido o `"02"`: se agrega IVA trasladado 16%.
@@ -4448,65 +4448,65 @@ export interface components {
        */
       taxes?: components['schemas']['BaseTax'][]
       /**
-       * @description Arreglo de impuestos locales (estatales o municipales), en caso de haberlos.
+       * Arreglo de impuestos locales (estatales o municipales), en caso de haberlos.
        * @default []
        */
       local_taxes?: components['schemas']['LocalTax'][]
       /**
-       * @description Clave de unidad de medida, del catálogo del SAT.
+       * Clave de unidad de medida, del catálogo del SAT.
        *     Puedes encontrar la clave utilizando nuestra [herramienta de búsqueda de claves](https://dashboard.facturapi.io/catalogs/unit).
        * @default ACT
        */
       unit_key?: string
       /**
-       * @description Palabra que representa la unidad de medida de tu producto. Debe estar relacionada con la clave de unidad `unit_key`.
+       * Palabra que representa la unidad de medida de tu producto. Debe estar relacionada con la clave de unidad `unit_key`.
        * @default Actividad
        */
       unit_name?: string
     }
     /** Payment */
     PaymentInput: {
-      /** @description Código de la forma de pago según el [catálogo del SAT](#forma-de-pago). También puedes utilizar la constante `PaymentForm` incluida en nuestras librerías. */
+      /** Código de la forma de pago según el [catálogo del SAT](#forma-de-pago). También puedes utilizar la constante `PaymentForm` incluida en nuestras librerías. */
       payment_form: string
-      /** @description Arreglo que incluye un elemento por cada comprobante de ingreso relacionado a este pago. Lo más común es que el pago esté relacionado a un sólo comprobante de ingreso. Un caso en el que se agrega más de un elemento es cuando se recibe (por ejemplo) un sólo depósito que ampara el pago de 2 facturas relacionadas. En lugar de expedir un comprobante de recepción de pago por cada factura, debes expedir sólo uno relacionando los 2 comprobantes. */
+      /** Arreglo que incluye un elemento por cada comprobante de ingreso relacionado a este pago. Lo más común es que el pago esté relacionado a un sólo comprobante de ingreso. Un caso en el que se agrega más de un elemento es cuando se recibe (por ejemplo) un sólo depósito que ampara el pago de 2 facturas relacionadas. En lugar de expedir un comprobante de recepción de pago por cada factura, debes expedir sólo uno relacionando los 2 comprobantes. */
       related_documents: {
         /**
          * Format: uuid
-         * @description Folio fiscal ó UUID del comprobante de ingreso relacionado.
+         * Folio fiscal ó UUID del comprobante de ingreso relacionado.
          */
         uuid: string
         /**
-         * @description Cantidad del pago correspondiente al comprobante relacionado,
+         * Cantidad del pago correspondiente al comprobante relacionado,
          *     usando el método de pago indicado en este elemento del arreglo
          *     de pagos. Este valor debe ser expresado en la moneda definida
          *     en `related_documents[].currency`.
          */
         amount: number
-        /** @description Arreglo con impuestos del documento relacionado que aplican al pago realizado. */
+        /** Arreglo con impuestos del documento relacionado que aplican al pago realizado. */
         taxes: {
-          /** @description Base utilizada para el cálculo del impuestos. */
+          /** Base utilizada para el cálculo del impuestos. */
           base: number
           /**
-           * @description Tipo de impuesto.
+           * Tipo de impuesto.
            * @enum {string}
            */
           type: 'IVA' | 'ISR' | 'IEPS'
-          /** @description Tasa o cuota del impuesto */
+          /** Tasa o cuota del impuesto */
           rate: number
           /**
-           * @description Tipo factor.
+           * Tipo factor.
            * @default Tasa
            * @enum {string}
            */
           factor?: 'Tasa' | 'Cuota' | 'Exento'
           /**
-           * @description Indica si el impuesto es una retención (`true`) o un traslado (`false`).
+           * Indica si el impuesto es una retención (`true`) o un traslado (`false`).
            * @default false
            */
           withholding?: boolean
         }[]
         /**
-         * @description Código que representa si el bien o servicio es objeto de impuesto o no. Este atributo corresponde al campo "ObjetoImp" en el CFDI.
+         * Código que representa si el bien o servicio es objeto de impuesto o no. Este atributo corresponde al campo "ObjetoImp" en el CFDI.
          *
          *     - `01`: No objeto de impuesto.
          *     - `02`: Sí objeto de impuesto.
@@ -4521,89 +4521,89 @@ export interface components {
          * @enum {string}
          */
         taxability?: '01' | '02' | '03' | '04' | '05' | '06' | '07' | '08'
-        /** @description Número de parcialidad del pago. */
+        /** Número de parcialidad del pago. */
         installment: number
-        /** @description Cantidad que estaba pendiente por pagar antes de recibir este pago. Este valor se expresa en la moneda definida en `related_documents[].currency`. */
+        /** Cantidad que estaba pendiente por pagar antes de recibir este pago. Este valor se expresa en la moneda definida en `related_documents[].currency`. */
         last_balance: number
         /**
-         * @description Si la moneda utilizada en la factura relacionada no es moneda nacional (MXN), debe especificarse su valor acorde al estándar [ISO 4217](https://es.wikipedia.org/wiki/ISO_4217).
+         * Si la moneda utilizada en la factura relacionada no es moneda nacional (MXN), debe especificarse su valor acorde al estándar [ISO 4217](https://es.wikipedia.org/wiki/ISO_4217).
          * @default MXN
          */
         currency?: string
-        /** @description Obligatorio cuando la moneda del documento relacionado es distinta a la moneda de pago. Tipo de cambio entre las dos monedas al momento del pago. Ejemplo: La factura de ingreso relacionada se registra en USD, mientras que el pago actual se realiza en MXN, este atributo debería registrarse como `0.45` (USD/MXN). */
+        /** Obligatorio cuando la moneda del documento relacionado es distinta a la moneda de pago. Tipo de cambio entre las dos monedas al momento del pago. Ejemplo: La factura de ingreso relacionada se registra en USD, mientras que el pago actual se realiza en MXN, este atributo debería registrarse como `0.45` (USD/MXN). */
         exchange?: number
-        /** @description Opcionalmente se puede incluir el número de folio del documento relacionado. */
+        /** Opcionalmente se puede incluir el número de folio del documento relacionado. */
         folio_number?: number
-        /** @description Opcionalmente se puede incluir la serie del documento relacionado. */
+        /** Opcionalmente se puede incluir la serie del documento relacionado. */
         series?: string | null
       }[]
       /**
-       * @description Código de la moneda, acorde al estándar [ISO 4217](https://es.wikipedia.org/wiki/ISO_4217).
+       * Código de la moneda, acorde al estándar [ISO 4217](https://es.wikipedia.org/wiki/ISO_4217).
        * @default MXN
        */
       currency?: string
       /**
-       * @description Tipo de cambio conforme a la moneda usada. Representa el número de pesos mexicanos que equivalen a una unidad de la divisa señalada en el atributo `currency`.
+       * Tipo de cambio conforme a la moneda usada. Representa el número de pesos mexicanos que equivalen a una unidad de la divisa señalada en el atributo `currency`.
        * @default 1
        */
       exchange?: number
       /**
        * Format: date-time
-       * @description Fecha en que se recibió el pago. Si se omite, se utiliza la fecha y hora actuales. Inclúyela cuando el pago sea anterior a la emisión del comprobante. No se permiten fechas futuras.
+       * Fecha en que se recibió el pago. Si se omite, se utiliza la fecha y hora actuales. Inclúyela cuando el pago sea anterior a la emisión del comprobante. No se permiten fechas futuras.
        */
       date?: Date | string
-      /** @description Número de cheque, de autorización, de referencia, clave de rastreo SPEI, línea de captura o algún número de referencia que permita identificar la operación correspondiente al pago efectuado. */
+      /** Número de cheque, de autorización, de referencia, clave de rastreo SPEI, línea de captura o algún número de referencia que permita identificar la operación correspondiente al pago efectuado. */
       numOperacion?: string
-      /** @description RFC de la entidad emisora de la cuenta de origen, es decir, la operadora, banco, institución financiera, emisor de monedero electrónico, etc. */
+      /** RFC de la entidad emisora de la cuenta de origen, es decir, la operadora, banco, institución financiera, emisor de monedero electrónico, etc. */
       rfcEmisorCtaOrd?: string
-      /** @description Nombre del banco ordenante. */
+      /** Nombre del banco ordenante. */
       nomBancoOrdExt?: string
-      /** @description Número de cuenta con la que se realizó el pago. */
+      /** Número de cuenta con la que se realizó el pago. */
       ctaOrdenante?: string
-      /** @description RFC de la entidad de la cuenta operadora destino, es decir, la operadora, banco, institución financiera, emisor de monedero electrónico, etc. */
+      /** RFC de la entidad de la cuenta operadora destino, es decir, la operadora, banco, institución financiera, emisor de monedero electrónico, etc. */
       rfcEmisorCtaBen?: string
-      /** @description Número de cuenta donde se recibió el pago. */
+      /** Número de cuenta donde se recibió el pago. */
       ctaBeneficiario?: string
       /**
-       * @description Clave del tipo de cadena de pago que genera la entidad receptora del pago.
+       * Clave del tipo de cadena de pago que genera la entidad receptora del pago.
        *     Si existe este campo, es obligatorio registrar los campos `certPago`, `cadPago` y `selloPago`.
        * @enum {string}
        */
       tipoCadPago?: '01'
       /**
        * Format: base64
-       * @description Certificado que corresponde al pago, como una cadena de texto en formato base 64.
+       * Certificado que corresponde al pago, como una cadena de texto en formato base 64.
        */
       certPago?: string
-      /** @description Cadena original del comprobante de pago generado por la entidad emisora de la cuenta beneficiaria. */
+      /** Cadena original del comprobante de pago generado por la entidad emisora de la cuenta beneficiaria. */
       cadPago?: string
       /**
        * Format: base64
-       * @description Sello digital que se asocie al pago expresado como una cadena de texto en formato base 64.
+       * Sello digital que se asocie al pago expresado como una cadena de texto en formato base 64.
        */
       selloPago?: string
     }
-    /** @description Objeto con información parcial del cliente receptor del comprobante. Para obtener el objeto `Customer` completo, deberás consultarlo con el método de [Obtener Cliente]('#/operation/getCustomer'). */
+    /** Objeto con información parcial del cliente receptor del comprobante. Para obtener el objeto `Customer` completo, deberás consultarlo con el método de [Obtener Cliente]('#/operation/getCustomer'). */
     CustomerInfo: {
-      /** @description ID del objeto `customer` relacionado a la factura, en caso de no haber sido eliminado */
+      /** ID del objeto `customer` relacionado a la factura, en caso de no haber sido eliminado */
       id?: string
-      /** @description Nombre Fiscal o Razón Social del cliente, *sin* incluir el régimen societario (ej.: S.A. de C.V.). */
+      /** Nombre Fiscal o Razón Social del cliente, *sin* incluir el régimen societario (ej.: S.A. de C.V.). */
       legal_name?: string
-      /** @description RFC del cliente. */
+      /** RFC del cliente. */
       tax_id?: string
       address?: {
         /**
          * Format: ISO 3166-1 alpha-3
-         * @description Código de País acorde al estándar ISO 3166-1 alpha-3, del Catálogo de Países.
+         * Código de País acorde al estándar ISO 3166-1 alpha-3, del Catálogo de Países.
          */
         country?: string
         zip?: string
       }
       tax_system?: string | null
     }
-    /** @description Objeto con información parcial del cliente receptor del comprobante. Para obtener el objeto `Customer` completo, deberás consultarlo con el método de [Obtener Cliente]('#/operation/getCustomer'). */
+    /** Objeto con información parcial del cliente receptor del comprobante. Para obtener el objeto `Customer` completo, deberás consultarlo con el método de [Obtener Cliente]('#/operation/getCustomer'). */
     CustomerComercioExterior: {
-      /** @description ID del objeto `customer` relacionado a la factura, en caso de no haber sido eliminado */
+      /** ID del objeto `customer` relacionado a la factura, en caso de no haber sido eliminado */
       id?: string
     }
     RelatedDocumentInput: WithRequired<
@@ -4611,16 +4611,16 @@ export interface components {
       'relationship'
     >
     RelatedDocument: {
-      /** @description Clave de relación del catálogo del SAT que puedes consultar en [esta tabla](#relacion-entre-facturas). Es requerido cuando se envíe el parámetro `related_documents`. */
+      /** Clave de relación del catálogo del SAT que puedes consultar en [esta tabla](#relacion-entre-facturas). Es requerido cuando se envíe el parámetro `related_documents`. */
       relationship?: string
       /**
-       * @description Folios fiscales (UUID) de facturas relacionadas.
+       * Folios fiscales (UUID) de facturas relacionadas.
        * @default []
        */
       documents?: string[]
     }
     /**
-     * @description Status de generación del ZIP:
+     * Status de generación del ZIP:
      *     - `created`: la solicitud fue creada y programada.
      *     - `processing`: la generación está en curso.
      *     - `finished`: el ZIP está listo para descargarse.
@@ -4631,7 +4631,7 @@ export interface components {
     InvoiceZipRequestStatus:
       'created' | 'processing' | 'finished' | 'failed' | 'none'
     /**
-     * @description Tipo de factura (`I` Ingreso, `E` Egreso, `T` Traslado, `N` Nómina o `P` Pago).
+     * Tipo de factura (`I` Ingreso, `E` Egreso, `T` Traslado, `N` Nómina o `P` Pago).
      * @enum {string}
      */
     InvoiceZipRequestInvoiceType: 'I' | 'E' | 'T' | 'N' | 'P'
@@ -4640,46 +4640,46 @@ export interface components {
       month: number
       /** @default issuing */
       issuer_type?: components['schemas']['IssuingType']
-      /** @description Tipos de factura a incluir. Por defecto se incluyen todos. */
+      /** Tipos de factura a incluir. Por defecto se incluyen todos. */
       invoice_types?: components['schemas']['InvoiceZipRequestInvoiceType'][]
     }
     /** Objeto InvoiceZipRequest */
     InvoiceZipRequest: components['schemas']['ResourceAutoGeneratedProps'] & {
       /**
-       * @description Siempre es `true` para este flujo.
+       * Siempre es `true` para este flujo.
        * @constant
        */
       livemode?: true
-      /** @description Identificador de la organización. */
+      /** Identificador de la organización. */
       organization: string
       issuer_type: components['schemas']['IssuingType']
-      /** @description Tipos normalizados de las facturas incluidas. */
+      /** Tipos normalizados de las facturas incluidas. */
       invoice_types: components['schemas']['InvoiceZipRequestInvoiceType'][]
       /**
        * Format: date-time
-       * @description Inicio inclusivo del mes solicitado.
+       * Inicio inclusivo del mes solicitado.
        */
       start_date: Date | string
       /**
        * Format: date-time
-       * @description Fin inclusivo del mes solicitado.
+       * Fin inclusivo del mes solicitado.
        */
       end_date: Date | string
       status: components['schemas']['InvoiceZipRequestStatus']
-      /** @description Número total de facturas por procesar. */
+      /** Número total de facturas por procesar. */
       document_count: number
-      /** @description Número de facturas procesadas. */
+      /** Número de facturas procesadas. */
       processed_document: number
-      /** @description Facturas que no pudieron agregarse al ZIP. */
+      /** Facturas que no pudieron agregarse al ZIP. */
       failed_documents: string[]
       /**
        * Format: date-time
-       * @description Fecha en que se programó el procesamiento.
+       * Fecha en que se programó el procesamiento.
        */
       scheduled_at?: Date | string
       /**
        * Format: date-time
-       * @description Momento en que comenzó el procesamiento, si existe.
+       * Momento en que comenzó el procesamiento, si existe.
        */
       processing_started_at?: Date | string
     }
@@ -4698,64 +4698,64 @@ export interface components {
     InvoiceRequiredProperties: Record<string, unknown>
     InvoiceProperties: {
       /**
-       * @description Estado actual de la factura. `failed` indica que el timbrado en segundo plano o la recuperación automática del CFDI terminó sin éxito.
+       * Estado actual de la factura. `failed` indica que el timbrado en segundo plano o la recuperación automática del CFDI terminó sin éxito.
        * @enum {string}
        */
       status?: 'pending' | 'valid' | 'canceled' | 'draft' | 'failed'
       /**
-       * @description Estado actual de la solicitud de cancelación, en caso de haberla realizado. Puedes leer más a detalle en la sección de [Cancelar Factura](#tag/invoice/operation/deleteInvoice)).
+       * Estado actual de la solicitud de cancelación, en caso de haberla realizado. Puedes leer más a detalle en la sección de [Cancelar Factura](#tag/invoice/operation/deleteInvoice)).
        * @enum {string}
        */
       cancellation_status?:
         'none' | 'pending' | 'accepted' | 'rejected' | 'expired' | 'verifying'
       /**
        * Format: date-time
-       * @description Fecha en la que se canceló el CFDI con hora aproximada.
+       * Fecha en la que se canceló el CFDI con hora aproximada.
        */
       canceled_at?: Date | string | null
       /**
        * Format: uri
-       * @description Dirección URL para verificar el estado del CFDI en el portal del SAT. Este link es el mismo que aparece en el código QR, en el PDF de la factura.
+       * Dirección URL para verificar el estado del CFDI en el portal del SAT. Este link es el mismo que aparece en el código QR, en el PDF de la factura.
        */
       verification_url?: string
       /**
        * Format: date-time
-       * @description Fecha de expedición en formato ISO8601. Puede ser null en borradores.
+       * Fecha de expedición en formato ISO8601. Puede ser null en borradores.
        */
       date: Date | string | null
       address?: components['schemas']['CommonAddressProperties'] & {
-        /** @description Nombre del Estado o Entidad Federativa. */
+        /** Nombre del Estado o Entidad Federativa. */
         state?: string
       }
       /**
-       * @description Tipo de comprobante. Puede tener los valores `"I"`: Ingreso, `"P"`: Pago, `"E"`: Egreso, `"N"`: Nómina, `"T"`: Traslado.
+       * Tipo de comprobante. Puede tener los valores `"I"`: Ingreso, `"P"`: Pago, `"E"`: Egreso, `"N"`: Nómina, `"T"`: Traslado.
        * @enum {string}
        */
       type?: 'I' | 'E' | 'P' | 'N' | 'T'
       customer?: components['schemas']['CustomerInfo'] | null
-      /** @description Monto total facturado. */
+      /** Monto total facturado. */
       total?: number
       /**
        * Format: uuid
-       * @description Folio fiscal de la factura, asignado por el SAT.
+       * Folio fiscal de la factura, asignado por el SAT.
        */
       uuid?: string
-      /** @description Número de folio autoincremental para control interno y sin validez fiscal. */
+      /** Número de folio autoincremental para control interno y sin validez fiscal. */
       folio_number?: number
-      /** @description Serie. Caracteres designados por la empresa para control interno y sin validez fiscal. En el PDF se imprime junto al número de folio. */
+      /** Serie. Caracteres designados por la empresa para control interno y sin validez fiscal. En el PDF se imprime junto al número de folio. */
       series?: string
-      /** @description Identificador que puedes usar para relacionar esta factura con tus registros para después buscar por este número. */
+      /** Identificador que puedes usar para relacionar esta factura con tus registros para después buscar por este número. */
       external_id?: string
-      /** @description Identificador único que puedes usar para evitar duplicados al reintentar una petición. Puede ser cualquier cadena de texto, mientras sea única para cada documento. */
+      /** Identificador único que puedes usar para evitar duplicados al reintentar una petición. Puede ser cualquier cadena de texto, mientras sea única para cada documento. */
       idempotency_key?: string
-      /** @description Código que representa la forma de pago, de acuerdo al [catálogo del SAT](#forma-de-pago). */
+      /** Código que representa la forma de pago, de acuerdo al [catálogo del SAT](#forma-de-pago). */
       payment_form?: string
-      /** @description Total del complemento de Pago cuando la factura es tipo P. */
+      /** Total del complemento de Pago cuando la factura es tipo P. */
       total_payment_amount?: number
-      /** @description Total del monto pagado convertido de la moneda de pago a Pesos Mexicanos. */
+      /** Total del monto pagado convertido de la moneda de pago a Pesos Mexicanos. */
       total_payment_amount_converted?: number
       /**
-       * @description Este campo es asignado automáticamente por Facturapi. Indica si una factura
+       * Este campo es asignado automáticamente por Facturapi. Indica si una factura
        *     con status `draft` está completa y lista para intentar timbrarse. Si el valor es `true`, puedes
        *     intentar timbrar la factura con el método [Timbrar Factura]('#/operation/stampInvoice').
        *     Si el valor es `false`, debes usar el método [Actualizar Factura]('#/operation/updateDraftInvoice')
@@ -4764,12 +4764,12 @@ export interface components {
        *     En una factura con status diferente a `draft`, este campo siempre será `false`.
        */
       is_ready_to_stamp?: boolean
-      /** @description Conceptos incluidos en el comprobante */
+      /** Conceptos incluidos en el comprobante */
       items?: components['schemas']['LineItem'][]
-      /** @description Documentos relacionados con la factura. */
+      /** Documentos relacionados con la factura. */
       related_documents?: components['schemas']['RelatedDocument'][]
       /**
-       * @description En facturas con tipo I (Ingreso) y método de pago PPD, este campo lista los
+       * En facturas con tipo I (Ingreso) y método de pago PPD, este campo lista los
        *     IDs de los comprobantes de pago cuyo arreglo de documentos relacionados incluye el UUID
        *     de esta factura. Este campo es llenado por Facturapi en el momento en que se crea o importa
        *     el comprobante de pago (tipo P), siempre y cuando pertenezca a la misma organización.
@@ -4777,35 +4777,35 @@ export interface components {
        */
       received_payment_ids?: string[]
       /**
-       * @description En facturas con tipo P (Pago), este arreglo lista los IDs de los comprobantes de ingreso
+       * En facturas con tipo P (Pago), este arreglo lista los IDs de los comprobantes de ingreso
        *     listados en el arreglo de documentos relacionados. Este campo es llenado por Facturapi siempre
        *     y cuando el comprobante relacionado también esté registrado en Facturapi y pertenezca a la misma organización.
        * @default []
        */
       target_invoice_ids?: string[]
-      /** @description Código de la moneda, acorde al estándar [ISO 4217](https://es.wikipedia.org/wiki/ISO_4217). */
+      /** Código de la moneda, acorde al estándar [ISO 4217](https://es.wikipedia.org/wiki/ISO_4217). */
       currency?: string
-      /** @description Tipo de cambio conforme a la moneda usada. Representa el número de pesos mexicanos que equivalen a una unidad de la divisa señalada en el atributo `currency`. */
+      /** Tipo de cambio conforme a la moneda usada. Representa el número de pesos mexicanos que equivalen a una unidad de la divisa señalada en el atributo `currency`. */
       exchange?: number
       /**
-       * @description Complementos a incluir en la factura.
+       * Complementos a incluir en la factura.
        * @default []
        */
       complements?: components['schemas']['InvoiceComplementProperties'][]
       /**
        * Format: html
-       * @description En caso de que necesites incluir más información en el PDF, este campo te permite insertar código HTML con tu propio contenido.
+       * En caso de que necesites incluir más información en el PDF, este campo te permite insertar código HTML con tu propio contenido.
        */
       pdf_custom_section?: string
       /**
        * Format: xml
-       * @description Código XML con la Addenda que se necesite agregar a la factura.
+       * Código XML con la Addenda que se necesite agregar a la factura.
        */
       addenda?: string
-      /** @description Namespaces a insertar en el nodo raíz de la factura. Requerido en `addenda`. */
+      /** Namespaces a insertar en el nodo raíz de la factura. Requerido en `addenda`. */
       namespaces?: components['schemas']['NamespaceProperties'][]
       stamp?: components['schemas']['Stamp'] | null
-      /** @description ID de la organización a la que pertenece este recurso. */
+      /** ID de la organización a la que pertenece este recurso. */
       organization?: string | null
       issuer_type?: components['schemas']['IssuingType']
       cfdi_version?: number
@@ -4827,81 +4827,81 @@ export interface components {
     }
     InvoiceDraftProperties: {
       /**
-       * @description Estado actual de la factura.
+       * Estado actual de la factura.
        * @enum {string}
        */
       status?: 'pending' | 'valid' | 'canceled' | 'draft'
       /**
-       * @description Estado actual de la solicitud de cancelación, en caso de haberla realizado. Puedes leer más a detalle en la sección de [Cancelar Factura](#tag/invoice/operation/deleteInvoice)).
+       * Estado actual de la solicitud de cancelación, en caso de haberla realizado. Puedes leer más a detalle en la sección de [Cancelar Factura](#tag/invoice/operation/deleteInvoice)).
        * @enum {string}
        */
       cancellation_status?:
         'none' | 'pending' | 'accepted' | 'rejected' | 'expired' | 'verifying'
       /**
        * Format: uri
-       * @description Dirección URL para verificar el estado del CFDI en el portal del SAT. Este link es el mismo que aparece en el código QR, en el PDF de la factura.
+       * Dirección URL para verificar el estado del CFDI en el portal del SAT. Este link es el mismo que aparece en el código QR, en el PDF de la factura.
        */
       verification_url?: string
       /**
        * Format: date-time
-       * @description Fecha de timbrado del comprobante en formato ISO8601 (UTC String). Si el estado es `draft`, este campo es nulo.
+       * Fecha de timbrado del comprobante en formato ISO8601 (UTC String). Si el estado es `draft`, este campo es nulo.
        */
       date?: Date | string | null
       address?: components['schemas']['CommonAddressProperties'] & {
-        /** @description Nombre del Estado o Entidad Federativa. */
+        /** Nombre del Estado o Entidad Federativa. */
         state?: string
       }
       /**
-       * @description Tipo de comprobante. Puede tener los valores `"I"`: Ingreso, `"P"`: Pago, `"E"`: Egreso, `"N"`: Nómina, `"T"`: Traslado.
+       * Tipo de comprobante. Puede tener los valores `"I"`: Ingreso, `"P"`: Pago, `"E"`: Egreso, `"N"`: Nómina, `"T"`: Traslado.
        * @enum {string}
        */
       type?: 'I' | 'E' | 'P' | 'N' | 'T'
-      /** @description Cliente de la factura. Es null cuando el borrador no tiene cliente. */
+      /** Cliente de la factura. Es null cuando el borrador no tiene cliente. */
       customer?: components['schemas']['CustomerInfo'] | null
-      /** @description Monto total facturado. */
+      /** Monto total facturado. */
       total?: number
       /**
        * Format: uuid
-       * @description Folio fiscal asignado por el SAT. En un borrador sin timbrar, este campo es null o se omite.
+       * Folio fiscal asignado por el SAT. En un borrador sin timbrar, este campo es null o se omite.
        */
       uuid?: string | null
-      /** @description Número de folio autoincremental para control interno y sin validez fiscal. */
+      /** Número de folio autoincremental para control interno y sin validez fiscal. */
       folio_number?: number
-      /** @description Serie. Caracteres designados por la empresa para control interno y sin validez fiscal. En el PDF se imprime junto al número de folio. */
+      /** Serie. Caracteres designados por la empresa para control interno y sin validez fiscal. En el PDF se imprime junto al número de folio. */
       series?: string
-      /** @description Identificador que puedes usar para relacionar esta factura con tus registros para después buscar por este número. */
+      /** Identificador que puedes usar para relacionar esta factura con tus registros para después buscar por este número. */
       external_id?: string
-      /** @description Identificador único que puedes usar para evitar duplicados al reintentar una petición. Puede ser cualquier cadena de texto, mientras sea única para cada documento. */
+      /** Identificador único que puedes usar para evitar duplicados al reintentar una petición. Puede ser cualquier cadena de texto, mientras sea única para cada documento. */
       idempotency_key?: string
-      /** @description Código que representa la forma de pago, de acuerdo al [catálogo del SAT](#forma-de-pago). */
+      /** Código que representa la forma de pago, de acuerdo al [catálogo del SAT](#forma-de-pago). */
       payment_form?: string
-      /** @description Conceptos incluidos en el comprobante */
+      /** Conceptos incluidos en el comprobante */
       items?: components['schemas']['LineItem'][]
-      /** @description Documentos relacionados con la factura. */
+      /** Documentos relacionados con la factura. */
       related_documents?: components['schemas']['RelatedDocument'][]
-      /** @description Código de la moneda, acorde al estándar [ISO 4217](https://es.wikipedia.org/wiki/ISO_4217). */
+      /** Código de la moneda, acorde al estándar [ISO 4217](https://es.wikipedia.org/wiki/ISO_4217). */
       currency?: string
-      /** @description Tipo de cambio conforme a la moneda usada. Representa el número de pesos mexicanos que equivalen a una unidad de la divisa señalada en el atributo `currency`. */
+      /** Tipo de cambio conforme a la moneda usada. Representa el número de pesos mexicanos que equivalen a una unidad de la divisa señalada en el atributo `currency`. */
       exchange?: number
       /**
-       * @description Complementos a incluir en la factura.
+       * Complementos a incluir en la factura.
        * @default []
        */
       complements?: components['schemas']['InvoiceComplementProperties'][]
       /**
        * Format: html
-       * @description En caso de que necesites incluir más información en el PDF, este campo te permite insertar código HTML con tu propio contenido.
+       * En caso de que necesites incluir más información en el PDF, este campo te permite insertar código HTML con tu propio contenido.
        */
       pdf_custom_section?: string
       /**
        * Format: xml
-       * @description Código XML con la Addenda que se necesite agregar a la factura.
+       * Código XML con la Addenda que se necesite agregar a la factura.
        */
       addenda?: string
-      /** @description Namespaces a insertar en el nodo raíz de la factura. Requerido en `addenda`. */
+      /** Namespaces a insertar en el nodo raíz de la factura. Requerido en `addenda`. */
       namespaces?: components['schemas']['NamespaceProperties'][]
       /**
-       * @description Este campo es asignado automáticamente por Facturapi. Indica si una factura
+       * Este campo es asignado automáticamente por Facturapi. Indica si una factura
        *     con status `draft` está completa y lista para intentar timbrarse. Si el valor es `true`, puedes
        *     intentar timbrar la factura con el método [Timbrar Factura]('#/operation/stampInvoice').
        *     Si el valor es `false`, debes usar el método [Actualizar Factura]('#/operation/updateDraftInvoice')
@@ -4913,92 +4913,92 @@ export interface components {
       stamp?: components['schemas']['Stamp'] | null
     }
     InvoiceableCommonInput: {
-      /** @description Número de folio asignado por la empresa para control interno. Si se omite, se asignará el valor autoincremental de la organización. */
+      /** Número de folio asignado por la empresa para control interno. Si se omite, se asignará el valor autoincremental de la organización. */
       folio_number?: number
-      /** @description Serie. Caracteres designados por la empresa para control interno y sin validez fiscal. */
+      /** Serie. Caracteres designados por la empresa para control interno y sin validez fiscal. */
       series?: string
       /**
        * Format: xml
-       * @description En caso de que necesites incluir más información en el PDF, este campo te permite enviar código HTML con tu propio contenido.
+       * En caso de que necesites incluir más información en el PDF, este campo te permite enviar código HTML con tu propio contenido.
        *
        *     Por seguridad, el código que puedes enviar está limitado a las siguientes etiquetas: `h1`, `h2`, `h3`, `h4`, `h5`, `h6`, `div`, `p`, `span`, `small`, `br`, `b`, `i`, `ul`, `ol`, `li`, `strong`, `table`, `thead`, `tbody`, `tfoot`, `tr`, `th` y `td`. No se permiten atributos ni estilos.
        */
       pdf_custom_section?: string
       /**
        * Format: xml
-       * @description Código XML con la Addenda que se necesite agregar a la factura.
+       * Código XML con la Addenda que se necesite agregar a la factura.
        */
       addenda?: string
       /**
-       * @description Si incluiste el parámetro `complements`, este campo es opcional; en cambio si incluiste el parámetro `addenda`, debes enviar la información necesaria para incluir estos namespaces en el documento XML.
+       * Si incluiste el parámetro `complements`, este campo es opcional; en cambio si incluiste el parámetro `addenda`, debes enviar la información necesaria para incluir estos namespaces en el documento XML.
        * @default []
        */
       namespaces?: (components['schemas']['NamespaceRequiredProperties'] &
         components['schemas']['NamespaceProperties'])[]
-      /** @description Configura qué campos opcionales se quieren mostrar en el PDF. El SAT no obliga a mostrar estos campos, pero pueden activarse según la preferencia del cliente para la factura en curso. Utiliza este campo para peticiones de generación de facturas en las cuales necesites utilizar una configuración distinta al campo pdf_extra de la organización. */
+      /** Configura qué campos opcionales se quieren mostrar en el PDF. El SAT no obliga a mostrar estos campos, pero pueden activarse según la preferencia del cliente para la factura en curso. Utiliza este campo para peticiones de generación de facturas en las cuales necesites utilizar una configuración distinta al campo pdf_extra de la organización. */
       pdf_options?: {
         /**
-         * @description Mostrar códigos de catálogos del SAT junto a sus descripciones. Ejemplo: “KGM Kilogramo”.
+         * Mostrar códigos de catálogos del SAT junto a sus descripciones. Ejemplo: “KGM Kilogramo”.
          * @default true
          */
         codes?: boolean
         /**
-         * @description Mostrar la clave de producto-servicio.
+         * Mostrar la clave de producto-servicio.
          * @default true
          */
         product_key?: boolean
         /**
-         * @description Mostrar los códigos estandarizados de estado y de país en el PDF.
+         * Mostrar los códigos estandarizados de estado y de país en el PDF.
          * @default true
          */
         address_codes?: boolean
         /**
-         * @description Mostrar la clave de exportación en el PDF.
+         * Mostrar la clave de exportación en el PDF.
          * @default false
          */
         export_key?: boolean
         /**
-         * @description Redondear el precio unitario en el PDF a 2 decimales, pero conservar los 6 decimales en el XML.
+         * Redondear el precio unitario en el PDF a 2 decimales, pero conservar los 6 decimales en el XML.
          * @default false
          */
         round_unit_price?: boolean
         /**
-         * @description Mostrar el desglose de impuestos en el PDF. Si se desactiva, sólo se mostrarán los impuestos en los totales, pero no en el detalle de cada concepto.
+         * Mostrar el desglose de impuestos en el PDF. Si se desactiva, sólo se mostrarán los impuestos en los totales, pero no en el detalle de cada concepto.
          * @default true
          */
         tax_breakdown?: boolean
         /**
-         * @description Mostrar el desglose de IEPS en el PDF. Si se desactiva, solo se mostrarán los impuestos relacionados al IVA en el subtotal.
+         * Mostrar el desglose de IEPS en el PDF. Si se desactiva, solo se mostrarán los impuestos relacionados al IVA en el subtotal.
          * @default true
          */
         ieps_breakdown?: boolean
         /**
-         * @description Suma IEPS con subtotal sin desglosarlo en el PDF.
+         * Suma IEPS con subtotal sin desglosarlo en el PDF.
          * @default false
          */
         combine_ieps_with_subtotal?: boolean
         /**
-         * @description Renderizar el complemento de Carta Porte 3.1 en el PDF sólo si el complemento de carta porte está incluido en la factura.
+         * Renderizar el complemento de Carta Porte 3.1 en el PDF sólo si el complemento de carta porte está incluido en la factura.
          * @default false
          */
         render_carta_porte?: boolean
         /**
-         * @description Renderizar el complemento de Instituciones Educativas Privadas en el PDF.
+         * Renderizar el complemento de Instituciones Educativas Privadas en el PDF.
          * @default false
          */
         render_iedu?: boolean
         /**
-         * @description Renderizar el complemento de hidrocarburos y petrolíferos en el PDF.
+         * Renderizar el complemento de hidrocarburos y petrolíferos en el PDF.
          * @default false
          */
         render_hyp_complement?: boolean
         /**
-         * @description Renderizar el complemento de comercio exterior en el PDF.
+         * Renderizar el complemento de comercio exterior en el PDF.
          * @default false
          */
         render_comercio_exterior?: boolean
         /**
-         * @description Repetir la firma electrónica en cada página del PDF.
+         * Repetir la firma electrónica en cada página del PDF.
          * @default false
          */
         repeat_signature?: boolean
@@ -5015,89 +5015,89 @@ export interface components {
       }
     }
     InvoiceableCommonEditInput: {
-      /** @description Número de folio asignado por la empresa para control interno. Si se omite, se asignará el valor autoincremental de la organización. */
+      /** Número de folio asignado por la empresa para control interno. Si se omite, se asignará el valor autoincremental de la organización. */
       folio_number?: number
-      /** @description Serie. Caracteres designados por la empresa para control interno y sin validez fiscal. */
+      /** Serie. Caracteres designados por la empresa para control interno y sin validez fiscal. */
       series?: string
       /**
        * Format: xml
-       * @description En caso de que necesites incluir más información en el PDF, este campo te permite enviar código HTML con tu propio contenido.
+       * En caso de que necesites incluir más información en el PDF, este campo te permite enviar código HTML con tu propio contenido.
        *
        *     Por seguridad, el código que puedes enviar está limitado a las siguientes etiquetas: `h1`, `h2`, `h3`, `h4`, `h5`, `h6`, `div`, `p`, `span`, `small`, `br`, `b`, `i`, `ul`, `ol`, `li`, `strong`, `table`, `thead`, `tbody`, `tfoot`, `tr`, `th` y `td`. No se permiten atributos ni estilos.
        */
       pdf_custom_section?: string
       /**
        * Format: xml
-       * @description Código XML con la Addenda que se necesite agregar a la factura.
+       * Código XML con la Addenda que se necesite agregar a la factura.
        */
       addenda?: string
-      /** @description Si incluiste el parámetro `complements`, este campo es opcional; en cambio si incluiste el parámetro `addenda`, debes enviar la información necesaria para incluir estos namespaces en el documento XML. */
+      /** Si incluiste el parámetro `complements`, este campo es opcional; en cambio si incluiste el parámetro `addenda`, debes enviar la información necesaria para incluir estos namespaces en el documento XML. */
       namespaces?: (components['schemas']['NamespaceRequiredProperties'] &
         components['schemas']['NamespaceProperties'])[]
-      /** @description Configura qué campos opcionales se quieren mostrar en el PDF. El SAT no obliga a mostrar estos campos, pero pueden activarse según la preferencia del cliente para la factura en curso. Utiliza este campo para peticiones de generación de facturas en las cuales necesites utilizar una configuración distinta al campo pdf_extra de la organización. */
+      /** Configura qué campos opcionales se quieren mostrar en el PDF. El SAT no obliga a mostrar estos campos, pero pueden activarse según la preferencia del cliente para la factura en curso. Utiliza este campo para peticiones de generación de facturas en las cuales necesites utilizar una configuración distinta al campo pdf_extra de la organización. */
       pdf_options?: {
         /**
-         * @description Mostrar códigos de catálogos del SAT junto a sus descripciones. Ejemplo: “KGM Kilogramo”.
+         * Mostrar códigos de catálogos del SAT junto a sus descripciones. Ejemplo: “KGM Kilogramo”.
          * @default true
          */
         codes?: boolean
         /**
-         * @description Mostrar la clave de producto-servicio.
+         * Mostrar la clave de producto-servicio.
          * @default true
          */
         product_key?: boolean
         /**
-         * @description Mostrar los códigos estandarizados de estado y de país en el PDF.
+         * Mostrar los códigos estandarizados de estado y de país en el PDF.
          * @default true
          */
         address_codes?: boolean
         /**
-         * @description Mostrar la clave de exportación en el PDF.
+         * Mostrar la clave de exportación en el PDF.
          * @default false
          */
         export_key?: boolean
         /**
-         * @description Redondear el precio unitario en el PDF a 2 decimales, pero conservar los 6 decimales en el XML.
+         * Redondear el precio unitario en el PDF a 2 decimales, pero conservar los 6 decimales en el XML.
          * @default false
          */
         round_unit_price?: boolean
         /**
-         * @description Mostrar el desglose de impuestos en el PDF. Si se desactiva, sólo se mostratán los impuestos en los totales, pero no en el detalle de cada concepto.
+         * Mostrar el desglose de impuestos en el PDF. Si se desactiva, sólo se mostratán los impuestos en los totales, pero no en el detalle de cada concepto.
          * @default true
          */
         tax_breakdown?: boolean
         /**
-         * @description Mostrar el desglose de IEPS en el PDF. Si se desactiva, solo se mostrarán los impuestos relacionados al IVA en el subtotal.
+         * Mostrar el desglose de IEPS en el PDF. Si se desactiva, solo se mostrarán los impuestos relacionados al IVA en el subtotal.
          * @default true
          */
         ieps_breakdown?: boolean
         /**
-         * @description Suma IEPS con subtotal sin desglosarlo en el PDF.
+         * Suma IEPS con subtotal sin desglosarlo en el PDF.
          * @default false
          */
         combine_ieps_with_subtotal?: boolean
         /**
-         * @description Renderizar el complemento de Carta Porte 3.1 en el PDF sólo si el complemento de carta porte está incluido en la factura.
+         * Renderizar el complemento de Carta Porte 3.1 en el PDF sólo si el complemento de carta porte está incluido en la factura.
          * @default false
          */
         render_carta_porte?: boolean
         /**
-         * @description Renderizar el complemento de Instituciones Educativas Privadas en el PDF.
+         * Renderizar el complemento de Instituciones Educativas Privadas en el PDF.
          * @default false
          */
         render_iedu?: boolean
         /**
-         * @description Renderizar el complemento de hidrocarburos y petrolíferos en el PDF.
+         * Renderizar el complemento de hidrocarburos y petrolíferos en el PDF.
          * @default false
          */
         render_hyp_complement?: boolean
         /**
-         * @description Renderizar el complemento de comercio exterior en el PDF.
+         * Renderizar el complemento de comercio exterior en el PDF.
          * @default false
          */
         render_comercio_exterior?: boolean
         /**
-         * @description Repetir la firma electrónica en cada página del PDF.
+         * Repetir la firma electrónica en cada página del PDF.
          * @default false
          */
         repeat_signature?: boolean
@@ -5113,12 +5113,12 @@ export interface components {
         }
       }
     }
-    /** @description Cliente receptor de la factura. */
+    /** Cliente receptor de la factura. */
     InvoiceCustomerInput: components['schemas']['CustomerCreateInput'] | string
     InvoiceCommonInputProperties: {
       customer?: components['schemas']['InvoiceCustomerInput']
       /**
-       * @description Estado inicial de la factura. Si se envía `draft`, la factura se guardará como borrador y no se timbrará ni se
+       * Estado inicial de la factura. Si se envía `draft`, la factura se guardará como borrador y no se timbrará ni se
        *     enviará al SAT. También al enviar `draft`, todos los campos requeridos se vuelven
        *     opcionales. Si se omite, el estado por default es `pending` y una vez timbrada (en la respuesta) este
        *     campo se actualizará a `valid`. Para facturas asíncronas, este campo se quedará en `pending` hasta que
@@ -5129,50 +5129,50 @@ export interface components {
       status?: 'pending' | 'draft'
       /**
        * Format: date-time
-       * @description Fecha de expedición del comprobante en formato ISO8601. Si se omite, se utiliza la fecha y hora actuales. No puede ser anterior a 72 horas en el pasado ni posterior al presente.
+       * Fecha de expedición del comprobante en formato ISO8601. Si se omite, se utiliza la fecha y hora actuales. No puede ser anterior a 72 horas en el pasado ni posterior al presente.
        */
       date?: Date | string
       address?: components['schemas']['CommonAddressProperties'] & {
-        /** @description Nombre del Estado o Entidad Federativa. */
+        /** Nombre del Estado o Entidad Federativa. */
         state?: string
       }
-      /** @description Identificador opcional que puedes usar para relacionar esta factura con tus registros y poder hacer búsquedas usando este identificador. Facturapi no valida que este campo sea único. */
+      /** Identificador opcional que puedes usar para relacionar esta factura con tus registros y poder hacer búsquedas usando este identificador. Facturapi no valida que este campo sea único. */
       external_id?: string
       /**
-       * @description Identificador único que puedes usar para evitar duplicados al reintentar una petición. Puede ser cualquier cadena de texto, mientras sea única para cada documento.
+       * Identificador único que puedes usar para evitar duplicados al reintentar una petición. Puede ser cualquier cadena de texto, mientras sea única para cada documento.
        *     Si se deja en blanco, no se tomará en cuenta.
        */
       idempotency_key?: string
     } & components['schemas']['InvoiceableCommonInput']
     InvoiceCommonEditInputProperties: {
       /**
-       * @description Estado de la factura. El valor `draft` identifica un borrador que no se ha timbrado ni enviado al SAT.
+       * Estado de la factura. El valor `draft` identifica un borrador que no se ha timbrado ni enviado al SAT.
        *     Sólo es posible editar facturas con este estado; al editarlas, no se puede cambiar `status`.
        * @enum {string}
        */
       status?: 'draft'
       /**
        * Format: date-time
-       * @description Fecha de expedición del comprobante en formato ISO8601 (UTC String). No puede ser anterior a 72 horas en el pasado, ni posterior al presente.
+       * Fecha de expedición del comprobante en formato ISO8601 (UTC String). No puede ser anterior a 72 horas en el pasado, ni posterior al presente.
        */
       date?: Date | string
       address?: components['schemas']['CommonAddressProperties'] & {
-        /** @description Nombre del Estado o Entidad Federativa. */
+        /** Nombre del Estado o Entidad Federativa. */
         state?: string
       }
-      /** @description Identificador opcional que puedes usar para relacionar esta factura con tus registros y poder hacer búsquedas usando este identificador. Facturapi no valida que este campo sea único. */
+      /** Identificador opcional que puedes usar para relacionar esta factura con tus registros y poder hacer búsquedas usando este identificador. Facturapi no valida que este campo sea único. */
       external_id?: string
       /**
-       * @description Identificador único que puedes usar para evitar duplicados al reintentar una petición. Puede ser cualquier cadena de texto, mientras sea única para cada documento.
+       * Identificador único que puedes usar para evitar duplicados al reintentar una petición. Puede ser cualquier cadena de texto, mientras sea única para cada documento.
        *     Si se deja en blanco, no se tomará en cuenta.
        */
       idempotency_key?: string
     } & components['schemas']['InvoiceableCommonEditInput']
     InvoiceDraftInputProperties: components['schemas']['InvoiceCommonEditInputProperties'] & {
-      /** @description Cliente receptor de la factura. */
+      /** Cliente receptor de la factura. */
       customer?: null | components['schemas']['CustomerCreateInput'] | string
     }
-    /** @description Datos de la factura según su tipo y estado inicial. Omite status para timbrar; usa draft para guardar un borrador. */
+    /** Datos de la factura según su tipo y estado inicial. Omite status para timbrar; usa draft para guardar un borrador. */
     InvoiceCreateInput:
       | (
           | (components['schemas']['InvoiceIngresoInput'] & {
@@ -5242,22 +5242,22 @@ export interface components {
     /** Ingreso */
     InvoiceIngresoInput: {
       /**
-       * @description Tipo de comprobante. El valor default es `“I”` (Ingreso).
+       * Tipo de comprobante. El valor default es `“I”` (Ingreso).
        * @default I
        * @enum {string}
        */
       type?: 'I'
       /**
-       * @description Conceptos a incluir en la factura.
+       * Conceptos a incluir en la factura.
        *
        *     El número máximo de elementos que puedes incluir en una factura es de 5,000. Si necesitas
        *     emitir una factura con más de 5,000 conceptos, puedes dividir la transacción en varias facturas.
        */
       items: components['schemas']['LineItemInput'][]
-      /** @description Código que representa la forma de pago, de acuerdo al [catálogo del SAT](#forma-de-pago). */
+      /** Código que representa la forma de pago, de acuerdo al [catálogo del SAT](#forma-de-pago). */
       payment_form: string
       /**
-       * @description Código del método de pago según el catálogo del SAT.
+       * Código del método de pago según el catálogo del SAT.
        *
        *     - `PUE`: Pago en Una sola Exhibición
        *     - `PPD`: Pago en Parcialidades o Diferido
@@ -5266,7 +5266,7 @@ export interface components {
        */
       payment_method?: 'PUE' | 'PPD'
       /**
-       * @description Si se omite o es null, se utiliza el uso configurado en el cliente; si no tiene uno, se utiliza G03. Para clientes extranjeros o público en general se utiliza S01.
+       * Si se omite o es null, se utiliza el uso configurado en el cliente; si no tiene uno, se utiliza G03. Para clientes extranjeros o público en general se utiliza S01.
        *
        *     Código de Uso CFDI según el catálogo del SAT. Puedes ver los códigos
        *     en [esta tabla](#uso-cfdi), o utilizar las constantes incluidas en
@@ -5276,27 +5276,27 @@ export interface components {
        */
       use?: string | null
       /**
-       * @description Código de la moneda, acorde al estándar [ISO 4217](https://es.wikipedia.org/wiki/ISO_4217).
+       * Código de la moneda, acorde al estándar [ISO 4217](https://es.wikipedia.org/wiki/ISO_4217).
        * @default MXN
        */
       currency?: string
       /**
-       * @description Tipo de cambio conforme a la moneda usada. Representa el número de pesos
+       * Tipo de cambio conforme a la moneda usada. Representa el número de pesos
        *     mexicanos (MXN) que equivalen a una unidad de la divisa señalada en el atributo `currency`.
        * @default 1
        */
       exchange?: number
-      /** @description Condiciones de pago */
+      /** Condiciones de pago */
       conditions?: string
       /**
-       * @description Documentos relacionados con la factura.
+       * Documentos relacionados con la factura.
        * @default []
        */
       related_documents?: components['schemas']['RelatedDocumentInput'][]
-      /** @description Objeto requerido al crear una factura global. */
+      /** Objeto requerido al crear una factura global. */
       global?: {
         /**
-         * @description Periodicidad que abarca la factura global.
+         * Periodicidad que abarca la factura global.
          *
          *     - `day`: Diario
          *     - `week`: Semanal
@@ -5307,15 +5307,15 @@ export interface components {
          */
         periodicity: 'day' | 'week' | 'fortnight' | 'month' | 'two_months'
         /**
-         * @description Clave que representa el mes o bimestre de la factura. Consulta
+         * Clave que representa el mes o bimestre de la factura. Consulta
          *     los posibles valores en el [catálogo de Meses y Bimestres](#meses-y-bimestres).
          */
         months: string
-        /** @description Año de la factura. */
+        /** Año de la factura. */
         year: number
       }
       /**
-       * @description Indica si el comprobante ampara una operación de exportación.
+       * Indica si el comprobante ampara una operación de exportación.
        *
        *     - `01`: No aplica
        *     - `02`: Definitiva con clave A1
@@ -5326,7 +5326,7 @@ export interface components {
        */
       export?: '01' | '02' | '03' | '04'
       /**
-       * @description Complementos a incluir en la factura. Puedes incluir cualquier complemento en la
+       * Complementos a incluir en la factura. Puedes incluir cualquier complemento en la
        *     factura si tú mismo construyes el nodo XML del complemento y usas el tipo `custom`.
        *     Es necesario agregar la información del complemento al PDF por separado usando el
        *     parámetro `pdf_custom_section`.
@@ -5338,44 +5338,44 @@ export interface components {
     InvoiceEgresoInput: {
       /** @enum {string} */
       type: 'E'
-      /** @description Código que representa la forma de pago, de acuerdo al [catálogo del SAT](#forma-de-pago). */
+      /** Código que representa la forma de pago, de acuerdo al [catálogo del SAT](#forma-de-pago). */
       payment_form: string
       /**
-       * @description Código del método de pago según el catálogo del SAT. Para facturas de Egreso,
+       * Código del método de pago según el catálogo del SAT. Para facturas de Egreso,
        *     este campo es opcional y el único valor permitido es `PUE` (Pago en Una sola Exhibición).
        * @default PUE
        * @enum {string}
        */
       payment_method?: 'PUE'
       /**
-       * @description Documentos relacionados con la nota de crédito.
+       * Documentos relacionados con la nota de crédito.
        * @default []
        */
       related_documents?: components['schemas']['RelatedDocumentInput'][]
       /**
-       * @description Conceptos a incluir en la nota de crédito.
+       * Conceptos a incluir en la nota de crédito.
        *
        *     El número máximo de elementos que puedes incluir en el comprobante es de 5,000. Si necesitas
        *     emitir un comprobante con más de 5,000 conceptos, puedes dividir la transacción en varios comprobantes.
        */
       items: components['schemas']['LineItemEgresoInput'][]
       /**
-       * @description Código de Uso CFDI según el catálogo del SAT. Puedes ver los códigos en [esta tabla](#uso-cfdi), o utilizar las constantes incluidas en nuestras librerías.
+       * Código de Uso CFDI según el catálogo del SAT. Puedes ver los códigos en [esta tabla](#uso-cfdi), o utilizar las constantes incluidas en nuestras librerías.
        * @default G02
        */
       use?: string
       /**
-       * @description Código de la moneda, acorde al estándar [ISO 4217](https://es.wikipedia.org/wiki/ISO_4217).
+       * Código de la moneda, acorde al estándar [ISO 4217](https://es.wikipedia.org/wiki/ISO_4217).
        * @default MXN
        */
       currency?: string
       /**
-       * @description Tipo de cambio conforme a la moneda usada. Representa el número de pesos mexicanos (MXN) que equivalen a una unidad de la divisa señalada en el atributo `currency`.
+       * Tipo de cambio conforme a la moneda usada. Representa el número de pesos mexicanos (MXN) que equivalen a una unidad de la divisa señalada en el atributo `currency`.
        * @default 1
        */
       exchange?: number
       /**
-       * @description Complementos a incluir en el comprobante. Puedes incluir cualquier
+       * Complementos a incluir en el comprobante. Puedes incluir cualquier
        *     complemento en el comprobante si tú mismo construyes el nodo XML del
        *     complemento y usas el tipo `custom`. Es necesario agregar la información
        *     del complemento al PDF por separado usando el parámetro `pdf_custom_section`.
@@ -5388,23 +5388,23 @@ export interface components {
       /** @enum {string} */
       type: 'P'
       /**
-       * @description Documentos relacionados con la factura.
+       * Documentos relacionados con la factura.
        * @default []
        */
       related_documents?: components['schemas']['RelatedDocumentInput'][]
       third_party?: Record<string, unknown> &
         components['schemas']['ThirdParty']
-      /** @description Complementos a incluir en la factura. */
+      /** Complementos a incluir en la factura. */
       complements: components['schemas']['InvoiceComplementInput'][]
     } & components['schemas']['InvoiceCommonInputProperties']
     /** Nómina */
     InvoiceNominaInput: {
       /** @enum {string} */
       type: 'N'
-      /** @description Complementos a incluir en la factura. */
+      /** Complementos a incluir en la factura. */
       complements: components['schemas']['InvoiceComplementInput'][]
       /**
-       * @description Documentos relacionados con la factura.
+       * Documentos relacionados con la factura.
        * @default []
        */
       related_documents?: components['schemas']['RelatedDocumentInput'][]
@@ -5414,14 +5414,14 @@ export interface components {
       /** @enum {string} */
       type: 'T'
       /**
-       * @description Conceptos a incluir en el comprobante de Traslado.
+       * Conceptos a incluir en el comprobante de Traslado.
        *
        *     El número máximo de elementos que puedes incluir en un comprobante es de 5,000. Si necesitas
        *     emitir un comprobante con más de 5,000 conceptos, puedes dividir la transacción en varios comprobantes.
        */
       items: components['schemas']['LineItemTrasladoInput'][]
       /**
-       * @description Complementos a incluir en el comprobante. Puedes incluir cualquier complemento en
+       * Complementos a incluir en el comprobante. Puedes incluir cualquier complemento en
        *     el comprobante si tú mismo construyes el nodo XML del complemento y usas el tipo
        *     `custom`. Es necesario agregar la información del complemento al PDF por separado
        *     usando el parámetro `pdf_custom_section`.
@@ -5429,24 +5429,24 @@ export interface components {
        */
       complements?: components['schemas']['InvoiceComplementInput'][]
       /**
-       * @description Código de Uso CFDI según el catálogo del SAT. Puedes ver los códigos en
+       * Código de Uso CFDI según el catálogo del SAT. Puedes ver los códigos en
        *     [esta tabla](#uso-cfdi), o utilizar las constantes incluidas en nuestras librerías.
        * @default S01
        */
       use?: string
       /**
-       * @description Código de la moneda, acorde al estándar [ISO 4217](https://es.wikipedia.org/wiki/ISO_4217).
+       * Código de la moneda, acorde al estándar [ISO 4217](https://es.wikipedia.org/wiki/ISO_4217).
        * @default XXX
        */
       currency?: string
       /**
-       * @description Tipo de cambio conforme a la moneda usada. Representa el número de pesos mexicanos
+       * Tipo de cambio conforme a la moneda usada. Representa el número de pesos mexicanos
        *     (MXN) que equivalen a una unidad de la divisa señalada en el atributo `currency`.
        * @default 1
        */
       exchange?: number
       /**
-       * @description Documentos relacionados con el comprobante.
+       * Documentos relacionados con el comprobante.
        * @default []
        */
       related_documents?: components['schemas']['RelatedDocumentInput'][]
@@ -5454,21 +5454,21 @@ export interface components {
     /** Ingreso */
     InvoiceIngresoEditInput: {
       /**
-       * @description Tipo de comprobante de esta variante de entrada.
+       * Tipo de comprobante de esta variante de entrada.
        * @constant
        */
       type?: 'I'
       /**
-       * @description Conceptos a incluir en la factura.
+       * Conceptos a incluir en la factura.
        *
        *     El número máximo de elementos que puedes incluir en una factura es de 5,000. Si necesitas
        *     emitir una factura con más de 5,000 conceptos, puedes dividir la transacción en varias facturas.
        */
       items?: components['schemas']['LineItemInput'][]
-      /** @description Código que representa la forma de pago, de acuerdo al [catálogo del SAT](#forma-de-pago). */
+      /** Código que representa la forma de pago, de acuerdo al [catálogo del SAT](#forma-de-pago). */
       payment_form?: string | null
       /**
-       * @description Código del método de pago según el catálogo del SAT.
+       * Código del método de pago según el catálogo del SAT.
        *
        *     - `PUE`: Pago en Una sola Exhibición
        *     - `PPD`: Pago en Parcialidades o Diferido
@@ -5476,28 +5476,28 @@ export interface components {
        */
       payment_method?: 'PUE' | 'PPD'
       /**
-       * @description Código de Uso CFDI según el catálogo del SAT. Puedes ver los códigos
+       * Código de Uso CFDI según el catálogo del SAT. Puedes ver los códigos
        *     en [esta tabla](#uso-cfdi), o utilizar las constantes incluidas en
        *     nuestras librerías.
        *
        *     Para factura global debe ingresarse la clave `S01`.
        */
       use?: string | null
-      /** @description Código de la moneda, acorde al estándar [ISO 4217](https://es.wikipedia.org/wiki/ISO_4217). */
+      /** Código de la moneda, acorde al estándar [ISO 4217](https://es.wikipedia.org/wiki/ISO_4217). */
       currency?: string
       /**
-       * @description Tipo de cambio conforme a la moneda usada. Representa el número de pesos
+       * Tipo de cambio conforme a la moneda usada. Representa el número de pesos
        *     mexicanos (MXN) que equivalen a una unidad de la divisa señalada en el atributo `currency`.
        */
       exchange?: number
-      /** @description Condiciones de pago */
+      /** Condiciones de pago */
       conditions?: string
-      /** @description Documentos relacionados con la factura. */
+      /** Documentos relacionados con la factura. */
       related_documents?: components['schemas']['RelatedDocumentInput'][]
-      /** @description Objeto requerido al crear una factura global. */
+      /** Objeto requerido al crear una factura global. */
       global?: {
         /**
-         * @description Periodicidad que abarca la factura global.
+         * Periodicidad que abarca la factura global.
          *
          *     - `day`: Diario
          *     - `week`: Semanal
@@ -5508,15 +5508,15 @@ export interface components {
          */
         periodicity: 'day' | 'week' | 'fortnight' | 'month' | 'two_months'
         /**
-         * @description Clave que representa el mes o bimestre de la factura. Consulta
+         * Clave que representa el mes o bimestre de la factura. Consulta
          *     los posibles valores en el [catálogo de Meses y Bimestres](#meses-y-bimestres).
          */
         months: string
-        /** @description Año de la factura. */
+        /** Año de la factura. */
         year: number
       }
       /**
-       * @description Indica si el comprobante ampara una operación de exportación.
+       * Indica si el comprobante ampara una operación de exportación.
        *
        *     - `01`: No aplica
        *     - `02`: Definitiva con clave A1
@@ -5526,7 +5526,7 @@ export interface components {
        */
       export?: '01' | '02' | '03' | '04'
       /**
-       * @description Complementos a incluir en la factura. Puedes incluir cualquier complemento en la
+       * Complementos a incluir en la factura. Puedes incluir cualquier complemento en la
        *     factura si tú mismo construyes el nodo XML del complemento y usas el tipo `custom`.
        *     Es necesario agregar la información del complemento al PDF por separado usando el
        *     parámetro `pdf_custom_section`.
@@ -5536,35 +5536,35 @@ export interface components {
     /** Egreso */
     InvoiceEgresoEditInput: {
       /**
-       * @description Tipo de comprobante de esta variante de entrada.
+       * Tipo de comprobante de esta variante de entrada.
        * @constant
        */
       type?: 'E'
-      /** @description Código que representa la forma de pago, de acuerdo al [catálogo del SAT](#forma-de-pago). */
+      /** Código que representa la forma de pago, de acuerdo al [catálogo del SAT](#forma-de-pago). */
       payment_form?: string
       /**
-       * @description Código del método de pago según el catálogo del SAT. Para facturas de Egreso,
+       * Código del método de pago según el catálogo del SAT. Para facturas de Egreso,
        *     este campo es opcional y el único valor permitido es `PUE` (Pago en Una sola Exhibición).
        * @enum {string}
        */
       payment_method?: 'PUE'
-      /** @description Documentos relacionados con la nota de crédito. */
+      /** Documentos relacionados con la nota de crédito. */
       related_documents?: components['schemas']['RelatedDocumentInput'][]
       /**
-       * @description Conceptos a incluir en la nota de crédito.
+       * Conceptos a incluir en la nota de crédito.
        *
        *     El número máximo de elementos que puedes incluir en el comprobante es de 5,000. Si necesitas
        *     emitir un comprobante con más de 5,000 conceptos, puedes dividir la transacción en varios comprobantes.
        */
       items?: components['schemas']['LineItemEgresoInput'][]
-      /** @description Código de Uso CFDI según el catálogo del SAT. Puedes ver los códigos en [esta tabla](#uso-cfdi), o utilizar las constantes incluidas en nuestras librerías. */
+      /** Código de Uso CFDI según el catálogo del SAT. Puedes ver los códigos en [esta tabla](#uso-cfdi), o utilizar las constantes incluidas en nuestras librerías. */
       use?: string
-      /** @description Código de la moneda, acorde al estándar [ISO 4217](https://es.wikipedia.org/wiki/ISO_4217). */
+      /** Código de la moneda, acorde al estándar [ISO 4217](https://es.wikipedia.org/wiki/ISO_4217). */
       currency?: string
-      /** @description Tipo de cambio conforme a la moneda usada. Representa el número de pesos mexicanos (MXN) que equivalen a una unidad de la divisa señalada en el atributo `currency`. */
+      /** Tipo de cambio conforme a la moneda usada. Representa el número de pesos mexicanos (MXN) que equivalen a una unidad de la divisa señalada en el atributo `currency`. */
       exchange?: number
       /**
-       * @description Complementos a incluir en el comprobante. Puedes incluir cualquier
+       * Complementos a incluir en el comprobante. Puedes incluir cualquier
        *     complemento en el comprobante si tú mismo construyes el nodo XML del
        *     complemento y usas el tipo `custom`. Es necesario agregar la información
        *     del complemento al PDF por separado usando el parámetro `pdf_custom_section`.
@@ -5574,122 +5574,122 @@ export interface components {
     /** Pago */
     InvoicePagoEditInput: {
       /**
-       * @description Tipo de comprobante de esta variante de entrada.
+       * Tipo de comprobante de esta variante de entrada.
        * @constant
        */
       type?: 'P'
-      /** @description Documentos relacionados con la factura. */
+      /** Documentos relacionados con la factura. */
       related_documents?: components['schemas']['RelatedDocumentInput'][]
       third_party?: Record<string, unknown> &
         components['schemas']['ThirdParty']
-      /** @description Complementos a incluir en la factura. */
+      /** Complementos a incluir en la factura. */
       complements?: components['schemas']['InvoiceComplementInput'][]
     } & components['schemas']['InvoiceDraftInputProperties']
     /** Nómina */
     InvoiceNominaEditInput: {
       customer?: components['schemas']['InvoiceCustomerInput']
       /**
-       * @description Tipo de comprobante de esta variante de entrada.
+       * Tipo de comprobante de esta variante de entrada.
        * @constant
        */
       type?: 'N'
-      /** @description Complementos a incluir en la factura. */
+      /** Complementos a incluir en la factura. */
       complements?: components['schemas']['InvoiceComplementInput'][]
-      /** @description Documentos relacionados con la factura. */
+      /** Documentos relacionados con la factura. */
       related_documents?: components['schemas']['RelatedDocumentInput'][]
     } & components['schemas']['InvoiceCommonEditInputProperties']
     /** Traslado */
     InvoiceTrasladoEditInput: {
       customer?: components['schemas']['InvoiceCustomerInput']
       /**
-       * @description Tipo de comprobante de esta variante de entrada.
+       * Tipo de comprobante de esta variante de entrada.
        * @constant
        */
       type?: 'T'
       /**
-       * @description Conceptos a incluir en el comprobante de Traslado.
+       * Conceptos a incluir en el comprobante de Traslado.
        *
        *     El número máximo de elementos que puedes incluir en un comprobante es de 5,000. Si necesitas
        *     emitir un comprobante con más de 5,000 conceptos, puedes dividir la transacción en varios comprobantes.
        */
       items?: components['schemas']['LineItemTrasladoInput'][]
       /**
-       * @description Complementos a incluir en el comprobante. Puedes incluir cualquier complemento en
+       * Complementos a incluir en el comprobante. Puedes incluir cualquier complemento en
        *     el comprobante si tú mismo construyes el nodo XML del complemento y usas el tipo
        *     `custom`. Es necesario agregar la información del complemento al PDF por separado
        *     usando el parámetro `pdf_custom_section`.
        */
       complements?: components['schemas']['InvoiceComplementInput'][]
       /**
-       * @description Código de Uso CFDI según el catálogo del SAT. Puedes ver los códigos en
+       * Código de Uso CFDI según el catálogo del SAT. Puedes ver los códigos en
        *     [esta tabla](#uso-cfdi), o utilizar las constantes incluidas en nuestras librerías.
        */
       use?: string
-      /** @description Código de la moneda, acorde al estándar [ISO 4217](https://es.wikipedia.org/wiki/ISO_4217). */
+      /** Código de la moneda, acorde al estándar [ISO 4217](https://es.wikipedia.org/wiki/ISO_4217). */
       currency?: string
       /**
-       * @description Tipo de cambio conforme a la moneda usada. Representa el número de pesos mexicanos
+       * Tipo de cambio conforme a la moneda usada. Representa el número de pesos mexicanos
        *     (MXN) que equivalen a una unidad de la divisa señalada en el atributo `currency`.
        */
       exchange?: number
-      /** @description Documentos relacionados con el comprobante. */
+      /** Documentos relacionados con el comprobante. */
       related_documents?: components['schemas']['RelatedDocumentInput'][]
     } & components['schemas']['InvoiceCommonEditInputProperties']
     /** Objeto Receipt */
     Receipt: components['schemas']['ResourceAutoGeneratedProps'] &
       components['schemas']['ReceiptProperties'] & {
-        /** @description ID de la organización a la que pertenece este recurso. */
+        /** ID de la organización a la que pertenece este recurso. */
         organization?: string
       }
     ReceiptProperties: {
       /**
        * Format: date-time
-       * @description Fecha de emisión del recibo.
+       * Fecha de emisión del recibo.
        */
       date: Date | string
       /**
        * Format: date-time
-       * @description Fecha de expiración en formato ISO8601 (UTC String).
+       * Fecha de expiración en formato ISO8601 (UTC String).
        *     Es la fecha límite para que el cliente pueda facturar su recibo en el portal de autofactura.
        *     Se calcula automáticamente a partir de las configuraciones de recibo de la organización.
        */
       expires_at: Date | string
       /**
-       * @description Estado actual del recibo.
+       * Estado actual del recibo.
        * @enum {string}
        */
       status?:
         'open' | 'canceled' | 'invoiced_to_customer' | 'invoiced_globally'
       /**
        * Format: url
-       * @description Dirección URL para realizar autofactura. Incluye el `key` del recibo.
+       * Dirección URL para realizar autofactura. Incluye el `key` del recibo.
        *     Puedes usarla para generar un botón o un QR de facturación para tus clientes.
        */
       self_invoice_url?: string
-      /** @description Monto total de la operación */
+      /** Monto total de la operación */
       total?: number
-      /** @description ID de la factura asociada, en caso de estar facturado. */
+      /** ID de la factura asociada, en caso de estar facturado. */
       invoice?: string
-      /** @description ID del cliente asociado al recibo, en caso de haberse asignado. */
+      /** ID del cliente asociado al recibo, en caso de haberse asignado. */
       customer?: string
-      /** @description Autogenerado. Identificador único alfanumérico corto, útil para acceder a la autofactura desde tu micrositio en factura.space */
+      /** Autogenerado. Identificador único alfanumérico corto, útil para acceder a la autofactura desde tu micrositio en factura.space */
       key?: string
-      /** @description Conceptos incluidos en el recibo */
+      /** Conceptos incluidos en el recibo */
       items?: components['schemas']['LineItem'][]
-      /** @description Identificador que puedes usar para relacionar este recibo con tus registros para después buscar por este número. */
+      /** Identificador que puedes usar para relacionar este recibo con tus registros para después buscar por este número. */
       external_id?: string
-      /** @description Identificador único que puedes usar para evitar duplicados al reintentar una petición. Puede ser cualquier cadena de texto, mientras sea única para cada documento. */
+      /** Identificador único que puedes usar para evitar duplicados al reintentar una petición. Puede ser cualquier cadena de texto, mientras sea única para cada documento. */
       idempotency_key?: string
     } & components['schemas']['ReceiptEditableProperties']
     ReceiptInput: {
-      /** @description Cliente asociado al recibo. Puedes enviar el ID de un cliente existente o un objeto de cliente para crearlo. */
+      /** Cliente asociado al recibo. Puedes enviar el ID de un cliente existente o un objeto de cliente para crearlo. */
       customer?: string | components['schemas']['CustomerCreateInput']
       address?: components['schemas']['CommonAddressProperties'] & {
-        /** @description Nombre del Estado o Entidad Federativa. */
+        /** Nombre del Estado o Entidad Federativa. */
         state?: string
       }
       /**
-       * @description Conceptos a incluir en el recibo.
+       * Conceptos a incluir en el recibo.
        *
        *     El número máximo de elementos que puedes incluir en un recibo es de 5,000. Si necesitas
        *     emitir una recibo con más de 5,000 conceptos, prueba dividir la transacción en varios recibos.
@@ -5697,7 +5697,7 @@ export interface components {
       items: components['schemas']['LineItemInput'][]
     } & components['schemas']['ReceiptEditableProperties'] & {
         /**
-         * @description Identificador único que puedes usar para evitar duplicados al reintentar una petición. Puede ser cualquier cadena de texto, mientras sea única para cada documento.
+         * Identificador único que puedes usar para evitar duplicados al reintentar una petición. Puede ser cualquier cadena de texto, mientras sea única para cada documento.
          *     Si se deja en blanco, no se tomará en cuenta.
          */
         idempotency_key?: string
@@ -5705,24 +5705,24 @@ export interface components {
     ReceiptEditableProperties: {
       /**
        * Format: date-time
-       * @description Fecha de emisión del recibo. Por defecto se utiliza la fecha actual.
+       * Fecha de emisión del recibo. Por defecto se utiliza la fecha actual.
        */
       date?: Date | string
-      /** @description Código que representa la forma de pago, según el [catálogo del SAT](#forma-de-pago). */
+      /** Código que representa la forma de pago, según el [catálogo del SAT](#forma-de-pago). */
       payment_form?: string
-      /** @description Autoincremental. Número de folio del recibo para control interno y sin validez fiscal. */
+      /** Autoincremental. Número de folio del recibo para control interno y sin validez fiscal. */
       folio_number?: number
-      /** @description Código de la moneda, acorde al estándar [ISO 4217](https://es.wikipedia.org/wiki/ISO_4217). */
+      /** Código de la moneda, acorde al estándar [ISO 4217](https://es.wikipedia.org/wiki/ISO_4217). */
       currency?: string
-      /** @description Tipo de cambio conforme a la moneda usada. Representa el número de pesos mexicanos que equivalen a una unidad de la divisa señalada en el atributo `currency`. */
+      /** Tipo de cambio conforme a la moneda usada. Representa el número de pesos mexicanos que equivalen a una unidad de la divisa señalada en el atributo `currency`. */
       exchange?: number
-      /** @description Nombre de la sucursal donde se expidió el recibo. */
+      /** Nombre de la sucursal donde se expidió el recibo. */
       branch?: string
-      /** @description Identificador opcional que puedes usar para relacionar este recibo con tus registros y poder hacer búsquedas usando este identificador. Facturapi no valida que este campo sea único. */
+      /** Identificador opcional que puedes usar para relacionar este recibo con tus registros y poder hacer búsquedas usando este identificador. Facturapi no valida que este campo sea único. */
       external_id?: string
     }
     ReceiptAssignCustomerInput: {
-      /** @description Cliente a asignar o reasignar al recibo. Puedes enviar el ID de un cliente existente o un objeto de cliente para crearlo. */
+      /** Cliente a asignar o reasignar al recibo. Puedes enviar el ID de un cliente existente o un objeto de cliente para crearlo. */
       customer: string | components['schemas']['CustomerCreateInput']
     }
     ReceiptSearchResult: components['schemas']['SearchResult'] & {
@@ -5730,36 +5730,36 @@ export interface components {
     }
     InvoiceReceiptInput: {
       /**
-       * @description Cliente receptor de la factura. Puedes enviarlo como ID de un cliente existente
+       * Cliente receptor de la factura. Puedes enviarlo como ID de un cliente existente
        *     o como objeto para crear un cliente nuevo. Si lo omites, el recibo debe tener
        *     un cliente asignado previamente.
        */
       customer?: components['schemas']['CustomerCreateInput'] | string
       /**
-       * @description Código de Uso CFDI según el catálogo del SAT. Puedes ver los códigos en [esta tabla](#uso-cfdi), o utilizar las constantes incluidas en nuestras librerías.
+       * Código de Uso CFDI según el catálogo del SAT. Puedes ver los códigos en [esta tabla](#uso-cfdi), o utilizar las constantes incluidas en nuestras librerías.
        * @default G01
        */
       use?: string
-      /** @description Condiciones de pago */
+      /** Condiciones de pago */
       conditions?: string
     } & components['schemas']['InvoiceableCommonInput']
     GlobalInvoiceInput: {
       /**
-       * @description Fecha inicial de los recibos que se incluirán en la factura global.
+       * Fecha inicial de los recibos que se incluirán en la factura global.
        *     Por default, este valor es el inicio del último periodo (día, semana,
        *     quincena o mes), según el valor de "Periodicidad" (`periodicity`)
        *     en la configuración de recibos de tu organización. Este valor es requerido cuando se envíe el campo `receipts`.
        */
       from?: components['schemas']['DateOrDateTime']
       /**
-       * @description Fecha final de los recibos que se incluirán en la factura global.
+       * Fecha final de los recibos que se incluirán en la factura global.
        *     Por default, este valor es el fin del último periodo (día, semana,
        *     quincena o mes), según el valor de "Periodicidad" (`periodicity`)
        *     en la configuración de recibos de tu organización. Este valor es requerido cuando se envíe el campo `receipts`.
        */
       to?: components['schemas']['DateOrDateTime']
       /**
-       * @description Periodicidad que corresponde al rango de fechas utilizado.
+       * Periodicidad que corresponde al rango de fechas utilizado.
        *     Si omites los campos `from` y `to`, las fechas que se asignarán por
        *     default dependerán del valor de `periodicity`.
        *
@@ -5768,27 +5768,27 @@ export interface components {
        */
       periodicity: 'day' | 'week' | 'fortnight' | 'month' | 'two_months'
       /**
-       * @description Clave que representa el mes o bimestre de la factura. Consulta
+       * Clave que representa el mes o bimestre de la factura. Consulta
        *     los posibles valores en el [catálogo de Meses y Bimestres](#meses-y-bimestres).
        *
        *     Si se omite, el mes o bimestre se determina a partir de la fecha inicial y la periodicidad.
        */
       months?: string
       /**
-       * @description Número de folio asignado por la empresa para control interno.
+       * Número de folio asignado por la empresa para control interno.
        *     Si se omite, se asignará el valor autoincremental de la organización.
        */
       folio_number?: number
-      /** @description Serie. Caracteres designados por la empresa para control interno y sin validez fiscal. */
+      /** Serie. Caracteres designados por la empresa para control interno y sin validez fiscal. */
       series?: string
-      /** @description Fecha de emisión de la factura. Si se omite, se utiliza la fecha final (`to`), limitada a la fecha y hora actuales. */
+      /** Fecha de emisión de la factura. Si se omite, se utiliza la fecha final (`to`), limitada a la fecha y hora actuales. */
       date?: components['schemas']['DateOrDateTime']
-      /** @description description: Código que representa la forma de pago, de acuerdo al [catálogo del SAT](#forma-de-pago). Si se incluye, los recibos se agruparán y se crearán la factura global por la forma de pago. */
+      /** description: Código que representa la forma de pago, de acuerdo al [catálogo del SAT](#forma-de-pago). Si se incluye, los recibos se agruparán y se crearán la factura global por la forma de pago. */
       payment_form?: string
-      /** @description Recibos a incluir en la factura global. Si se incluye este parámetro, los parámetros `from` y `to` serán requeridos y tendrán que cumplir con el campo `periodicity`. */
+      /** Recibos a incluir en la factura global. Si se incluye este parámetro, los parámetros `from` y `to` serán requeridos y tendrán que cumplir con el campo `periodicity`. */
       receipts?: string[]
       /**
-       * @description Permite procesar periodos con más de 5,000 recibos abiertos. Cuando es
+       * Permite procesar periodos con más de 5,000 recibos abiertos. Cuando es
        *     `true`, la factura incluye como máximo 5,000 recibos y los restantes
        *     conservan el status `"open"`. Repite la solicitud con el mismo periodo
        *     hasta recibir `null`, que indica que ya no quedan recibos por facturar.
@@ -5800,43 +5800,43 @@ export interface components {
       limit_to_max_receipts?: boolean
     }
     ToInvoiceInput: {
-      /** @description Lista de keys de recibos que se incluirán en la factura. */
+      /** Lista de keys de recibos que se incluirán en la factura. */
       keys: string[]
       /**
-       * @description Cliente receptor de la factura. Si lo envías, sobrescribe el cliente
+       * Cliente receptor de la factura. Si lo envías, sobrescribe el cliente
        *     asignado a los recibos incluidos. Si lo omites, todos los recibos deben
        *     tener asignado el mismo cliente. Esta regla también aplica cuando
        *     `dry_run` es `true`.
        */
       customer?: components['schemas']['CustomerCreateInput'] | string
       /**
-       * @description Código de Uso CFDI según catálogo del SAT.
+       * Código de Uso CFDI según catálogo del SAT.
        * @default G01
        */
       use?: string
       /**
-       * @description Si es `true`, sólo valida y regresa un resumen sin crear la factura.
+       * Si es `true`, sólo valida y regresa un resumen sin crear la factura.
        * @default false
        */
       dry_run?: boolean
-      /** @description Código de forma de pago según el [catálogo del SAT](#forma-de-pago). */
+      /** Código de forma de pago según el [catálogo del SAT](#forma-de-pago). */
       payment_form?: string | null
     }
     ToInvoicePreviewInput: {
-      /** @description Lista de keys de recibos que se incluirán en la vista previa. */
+      /** Lista de keys de recibos que se incluirán en la vista previa. */
       keys: string[]
       /**
-       * @description Cliente opcional para renderizar la vista previa. Si lo omites,
+       * Cliente opcional para renderizar la vista previa. Si lo omites,
        *     todos los recibos deben tener asignado el mismo cliente.
        */
       customer?: components['schemas']['CustomerCreateInput'] | string | null
       /**
-       * @description Código de Uso CFDI según catálogo del SAT.
+       * Código de Uso CFDI según catálogo del SAT.
        * @default G01
        */
       use?: string
     }
-    /** @description Resumen de importes e impuestos de los recibos cuando `dry_run=true`. */
+    /** Resumen de importes e impuestos de los recibos cuando `dry_run=true`. */
     ToInvoiceSummary: {
       subtotal: number
       discount: number
@@ -5871,82 +5871,82 @@ export interface components {
     Retention: components['schemas']['ResourceAutoGeneratedProps'] &
       components['schemas']['RetentionReadOnlyProperties'] &
       components['schemas']['RetentionProperties'] & {
-        /** @description ID de la organización a la que pertenece este recurso. */
+        /** ID de la organización a la que pertenece este recurso. */
         organization?: string
       }
     RetentionReadOnlyProperties: {
       /**
-       * @description Estado actual de la retención.
+       * Estado actual de la retención.
        * @enum {string}
        */
       status?: 'draft' | 'pending' | 'valid' | 'canceled'
       /**
        * Format: uri
-       * @description Dirección URL para verificar el estado de la retención en el portal del SAT. Este link es el mismo que aparece en el código QR, en el PDF de la retención.
+       * Dirección URL para verificar el estado de la retención en el portal del SAT. Este link es el mismo que aparece en el código QR, en el PDF de la retención.
        */
       verification_url?: string
       /**
-       * @description Tipo de comprobante.
+       * Tipo de comprobante.
        * @enum {string}
        */
       type?: 'Retención'
       /**
        * Format: uuid
-       * @description Folio fiscal de la retención, asignado por el SAT.
+       * Folio fiscal de la retención, asignado por el SAT.
        */
       uuid?: string
       stamp?: components['schemas']['Stamp'] | null
       customer?: components['schemas']['CustomerInfo'] | null
       /**
-       * @description Indica si la retención con status `draft` está completa y lista para intentar timbrarse.
+       * Indica si la retención con status `draft` está completa y lista para intentar timbrarse.
        *     En una retención con status diferente a `draft`, este campo siempre será `false`.
        */
       is_ready_to_stamp?: boolean
     }
     RetentionProperties: {
-      /** @description Clave de la retención o información de pagos de acuerdo al catálogo del SAT. */
+      /** Clave de la retención o información de pagos de acuerdo al catálogo del SAT. */
       cve_retenc?: string
       /**
        * Format: date-time
-       * @description Fecha de expedición del comprobante en formato ISO8601 (UTC String).
+       * Fecha de expedición del comprobante en formato ISO8601 (UTC String).
        */
       fecha_exp: Date | string | null
-      /** @description Si la clave de la retención es “25” (Otro tipo de retenciones), este campo se usa para registrar la descripción de la retención. */
+      /** Si la clave de la retención es “25” (Otro tipo de retenciones), este campo se usa para registrar la descripción de la retención. */
       desc_retenc?: string
-      /** @description Identificador alfanumérico para control interno de la empresa y sin relevancia fiscal. */
+      /** Identificador alfanumérico para control interno de la empresa y sin relevancia fiscal. */
       folio_int?: string
-      /** @description Información sobre el periodo de la retención. */
+      /** Información sobre el periodo de la retención. */
       periodo?: {
-        /** @description Mes inicial del periodo de la retención. */
+        /** Mes inicial del periodo de la retención. */
         mes_ini?: number
-        /** @description Mes final del periodo de la retención. */
+        /** Mes final del periodo de la retención. */
         mes_fin?: number
-        /** @description Año o ejercicio fiscal en que se realizó la retención. */
+        /** Año o ejercicio fiscal en que se realizó la retención. */
         ejerc?: number
       }
-      /** @description Información sobre el total de retenciones efectuadas en el periodo correspondiente. */
+      /** Información sobre el total de retenciones efectuadas en el periodo correspondiente. */
       totales?: {
-        /** @description Monto total de la operación, con precisión de hasta 6 decimales. */
+        /** Monto total de la operación, con precisión de hasta 6 decimales. */
         monto_tot_operacion?: number
-        /** @description Monto total gravado. */
+        /** Monto total gravado. */
         monto_tot_grav?: number
-        /** @description Monto total exento. */
+        /** Monto total exento. */
         monto_tot_exent?: number
-        /** @description Suma de los montos de impuestos retenidos. */
+        /** Suma de los montos de impuestos retenidos. */
         monto_tot_ret?: number
-        /** @description Colección de impuestos retenidos. */
+        /** Colección de impuestos retenidos. */
         imp_retenidos?: {
-          /** @description Base del impuesto retenido. */
+          /** Base del impuesto retenido. */
           base?: number
           /**
-           * @description Clave del tipo de impuesto retenido, del catálogo del SAT.
+           * Clave del tipo de impuesto retenido, del catálogo del SAT.
            * @enum {string}
            */
           impuesto?: 'IVA' | 'ISR'
-          /** @description Importe del impuesto retenido */
+          /** Importe del impuesto retenido */
           monto?: number
           /**
-           * @description - `01`: Pago definitivo IVA
+           * - `01`: Pago definitivo IVA
            *     - `02`: Pago definitivo IEPS
            *     - `03`: Pago definitivo ISR Plataformas
            *     - `04`: Pago provisional ISR
@@ -5955,30 +5955,30 @@ export interface components {
           tipo_pago_ret?: '01' | '02' | '03' | '04'
         }[]
       }
-      /** @description Identificador opcional que puedes usar para relacionar esta retención con tus registros y poder hacer búsquedas usando este identificador. Facturapi no valida que este campo sea único. */
+      /** Identificador opcional que puedes usar para relacionar esta retención con tus registros y poder hacer búsquedas usando este identificador. Facturapi no valida que este campo sea único. */
       external_id?: string
       /**
-       * @description Identificador único que puedes usar para evitar duplicados al reintentar una petición. Puede ser cualquier cadena de texto, mientras sea única para cada documento.
+       * Identificador único que puedes usar para evitar duplicados al reintentar una petición. Puede ser cualquier cadena de texto, mientras sea única para cada documento.
        *     Si se deja en blanco, no se tomará en cuenta.
        */
       idempotency_key?: string
       /**
-       * @description Arreglo de complementos a incluir en la factura. Cada elemento contiene
+       * Arreglo de complementos a incluir en la factura. Cada elemento contiene
        *     un `string` con el código XML del complemento.
        * @default []
        */
       complements?: components['schemas']['CustomComplementData'][]
       /**
        * Format: html
-       * @description En caso de que necesites incluir más información en el PDF, este campo te permite insertar código HTML con tu propio contenido.
+       * En caso de que necesites incluir más información en el PDF, este campo te permite insertar código HTML con tu propio contenido.
        */
       pdf_custom_section?: string
       /**
        * Format: xml
-       * @description Código XML con la Addenda que se necesite agregar a la factura.
+       * Código XML con la Addenda que se necesite agregar a la factura.
        */
       addenda?: string
-      /** @description Namespaces a insertar en el nodo raíz de la factura. Requerido en `addenda`. */
+      /** Namespaces a insertar en el nodo raíz de la factura. Requerido en `addenda`. */
       namespaces?: components['schemas']['NamespaceProperties'][]
     }
     RetentionSearchResult: components['schemas']['SearchResult'] & {
@@ -5991,58 +5991,58 @@ export interface components {
           Record<string, unknown>)
     RetentionUpdateInput: {
       /**
-       * @description Estado inicial de la retención. Si se envía `draft`, la retención se
+       * Estado inicial de la retención. Si se envía `draft`, la retención se
        *     guardará como borrador y no se timbrará ni se enviará al SAT. También
        *     al enviar `draft`, `customer`, `cve_retenc`, `periodo` y `totales`
        *     pueden omitirse o enviarse como `null`.
        * @enum {string}
        */
       status?: 'draft'
-      /** @description Cliente receptor de la factura. */
+      /** Cliente receptor de la factura. */
       customer?: components['schemas']['CustomerCreateInput'] | string | null
-      /** @description Clave de la retención o información de pagos de acuerdo al [catálogo del SAT](#clave-de-retencion). */
+      /** Clave de la retención o información de pagos de acuerdo al [catálogo del SAT](#clave-de-retencion). */
       cve_retenc?: string | null
       /**
        * Format: date-time
-       * @description Fecha de expedición del comprobante en formato ISO8601 (UTC String).
+       * Fecha de expedición del comprobante en formato ISO8601 (UTC String).
        */
       fecha_exp?: Date | string
-      /** @description Si la clave de la retención es “25” (Otro tipo de retenciones), este campo se usa para registrar la descripción de la retención. */
+      /** Si la clave de la retención es “25” (Otro tipo de retenciones), este campo se usa para registrar la descripción de la retención. */
       desc_retenc?: string
-      /** @description Identificador alfanumérico para control interno de la empresa y sin relevancia fiscal. */
+      /** Identificador alfanumérico para control interno de la empresa y sin relevancia fiscal. */
       folio_int?: string
-      /** @description Información sobre el periodo de la retención. */
+      /** Información sobre el periodo de la retención. */
       periodo?: {
-        /** @description Mes inicial del periodo de la retención. */
+        /** Mes inicial del periodo de la retención. */
         mes_ini: number
-        /** @description Mes final del periodo de la retención. */
+        /** Mes final del periodo de la retención. */
         mes_fin: number
-        /** @description Año o ejercicio fiscal en que se realizó la retención. */
+        /** Año o ejercicio fiscal en que se realizó la retención. */
         ejerc: number
       } | null
-      /** @description Información sobre el total de retenciones efectuadas en el periodo correspondiente. */
+      /** Información sobre el total de retenciones efectuadas en el periodo correspondiente. */
       totales?: {
-        /** @description Monto total de la operación, con precisión de hasta 6 decimales. */
+        /** Monto total de la operación, con precisión de hasta 6 decimales. */
         monto_tot_operacion: number
-        /** @description Monto total gravado. */
+        /** Monto total gravado. */
         monto_tot_grav?: number
-        /** @description Monto total exento. */
+        /** Monto total exento. */
         monto_tot_exent: number
-        /** @description Suma de los montos de impuestos retenidos. */
+        /** Suma de los montos de impuestos retenidos. */
         monto_tot_ret?: number
-        /** @description Colección de impuestos retenidos. */
+        /** Colección de impuestos retenidos. */
         imp_retenidos: {
-          /** @description Base del impuesto retenido. */
+          /** Base del impuesto retenido. */
           base_ret?: number
           /**
-           * @description Clave del tipo de impuesto retenido, del catálogo del SAT.
+           * Clave del tipo de impuesto retenido, del catálogo del SAT.
            * @enum {string}
            */
           impuesto?: 'IVA' | 'ISR'
-          /** @description Importe del impuesto retenido */
+          /** Importe del impuesto retenido */
           monto_ret: number
           /**
-           * @description - `01`: Pago definitivo IVA
+           * - `01`: Pago definitivo IVA
            *     - `02`: Pago definitivo IEPS
            *     - `03`: Pago definitivo ISR Plataformas
            *     - `04`: Pago provisional ISR
@@ -6051,12 +6051,12 @@ export interface components {
           tipo_pago_ret: '01' | '02' | '03' | '04'
         }[]
       } | null
-      /** @description Identificador opcional que puedes usar para relacionar esta retención con tus registros y poder hacer búsquedas usando este identificador. Facturapi no valida que este campo sea único. */
+      /** Identificador opcional que puedes usar para relacionar esta retención con tus registros y poder hacer búsquedas usando este identificador. Facturapi no valida que este campo sea único. */
       external_id?: string
-      /** @description Identificador único que puedes usar para evitar duplicados al reintentar una petición. Puede ser cualquier cadena de texto, mientras sea única para cada documento. */
+      /** Identificador único que puedes usar para evitar duplicados al reintentar una petición. Puede ser cualquier cadena de texto, mientras sea única para cada documento. */
       idempotency_key?: string
       /**
-       * @description Arreglo de complementos a incluir en la factura. Cada elemento del arreglo deberá contener
+       * Arreglo de complementos a incluir en la factura. Cada elemento del arreglo deberá contener
        *     un `string` con el código XML de tu complemento tal cual como quieres que se inserte en el
        *     XML del CFDI. Sólo se permite un nodo XML raíz por elemento del arreglo.
        * @default []
@@ -6064,20 +6064,20 @@ export interface components {
       complements?: components['schemas']['CustomComplementData'][]
       /**
        * Format: html
-       * @description En caso de que necesites incluir más información en el PDF, este campo te permite insertar código HTML con tu propio contenido.
+       * En caso de que necesites incluir más información en el PDF, este campo te permite insertar código HTML con tu propio contenido.
        */
       pdf_custom_section?: string
       /**
        * Format: xml
-       * @description Código XML con la Addenda que se necesite agregar a la factura.
+       * Código XML con la Addenda que se necesite agregar a la factura.
        */
       addenda?: string
-      /** @description Namespaces a insertar en el nodo raíz de la factura. Requerido en `addenda`. */
+      /** Namespaces a insertar en el nodo raíz de la factura. Requerido en `addenda`. */
       namespaces?: (components['schemas']['NamespaceRequiredProperties'] &
         components['schemas']['NamespaceProperties'])[]
     }
     OrganizationAddress: components['schemas']['CommonAddressProperties'] & {
-      /** @description Nombre del Estado o Entidad Federativa. */
+      /** Nombre del Estado o Entidad Federativa. */
       state?: string
     }
     OrganizationSearchResult: components['schemas']['SearchResult'] & {
@@ -6085,127 +6085,127 @@ export interface components {
     }
     /** Objeto Organization */
     Organization: {
-      /** @description ID del objeto */
+      /** ID del objeto */
       id: string
       /**
        * Format: uri
-       * @description URL del logotipo de la organización.
+       * URL del logotipo de la organización.
        */
       logo_url?: string
-      /** @description Zona horaria de la organización, en formato IANA. */
+      /** Zona horaria de la organización, en formato IANA. */
       timezone?: string
       /**
        * Format: date-time
-       * @description Fecha de registro
+       * Fecha de registro
        */
       created_at: Date | string
-      /** @description Indica si la organización tiene información necesaria para facturar en ambiente Live. */
+      /** Indica si la organización tiene información necesaria para facturar en ambiente Live. */
       is_production_ready?: boolean
-      /** @description Lista de pasos que se necesitan completar para que esta organización pueda emitir facturas válidas en ambiente Live. */
+      /** Lista de pasos que se necesitan completar para que esta organización pueda emitir facturas válidas en ambiente Live. */
       pending_steps?: {
         /**
-         * @description Código que representa el tipo de paso que se requiere completar
+         * Código que representa el tipo de paso que se requiere completar
          * @enum {string}
          */
         type?: 'legal' | 'logo' | 'certificate' | 'manifiesto'
-        /** @description Texto que describe el paso que se requiere completar y que puedes usar para mostrárselo al usuario. */
+        /** Texto que describe el paso que se requiere completar y que puedes usar para mostrárselo al usuario. */
         description?: string
       }[]
-      /** @description Datos fiscales de la empresa. */
+      /** Datos fiscales de la empresa. */
       legal?: {
-        /** @description Nombre comercial de la organización. */
+        /** Nombre comercial de la organización. */
         name?: string
-        /** @description Nombre Fiscal o Razón Social de la organización, *sin* el régimen societario (ej.: S.A. de C.V.). */
+        /** Nombre Fiscal o Razón Social de la organización, *sin* el régimen societario (ej.: S.A. de C.V.). */
         legal_name?: string
-        /** @description Código de Régimen Fiscal, del [catálogo del SAT](#régimen-fiscal). */
+        /** Código de Régimen Fiscal, del [catálogo del SAT](#régimen-fiscal). */
         tax_system?: string
-        /** @description Sitio web de la organización, que se utilizará al enviar la factura por correo electrónico. */
+        /** Sitio web de la organización, que se utilizará al enviar la factura por correo electrónico. */
         website?: string
-        /** @description Teléfono de la organización, que aparecerá en el PDF de la factura. */
+        /** Teléfono de la organización, que aparecerá en el PDF de la factura. */
         phone?: string
         address?: Record<string, unknown> &
           components['schemas']['OrganizationAddress']
       }
       /**
-       * @description Configuración de personalización de la organización, que se utilizarán para reflejar el branding y
+       * Configuración de personalización de la organización, que se utilizarán para reflejar el branding y
        *     las preferencias de PDFs de la organización. Estos datos se pueden actualizar en cualquier momento.
        */
       customization?: {
-        /** @description Indica si la organización ya tiene un logotipo cargado. */
+        /** Indica si la organización ya tiene un logotipo cargado. */
         has_logo?: boolean
         /**
          * Format: hex
-         * @description Color distintivo de la marca en representación Hexadecimal RGB de 6 caracteres.
+         * Color distintivo de la marca en representación Hexadecimal RGB de 6 caracteres.
          */
         color?: string
-        /** @description Número de folio que se asignará a la siguiente factura en ambiente Live (y que se incrementará automáticamente por cada nueva factura). */
+        /** Número de folio que se asignará a la siguiente factura en ambiente Live (y que se incrementará automáticamente por cada nueva factura). */
         next_folio_number?: number
-        /** @description Número de folio que se asignará a la siguiente factura en ambiente Test (y que se incrementará automáticamente por cada nueva factura). */
+        /** Número de folio que se asignará a la siguiente factura en ambiente Test (y que se incrementará automáticamente por cada nueva factura). */
         next_folio_number_test?: number
-        /** @description Configura qué campos opcionales se quieren mostrar en el PDF. El SAT no obliga a mostrar estos campos, pero pueden activarse según la preferencia de la organización. */
+        /** Configura qué campos opcionales se quieren mostrar en el PDF. El SAT no obliga a mostrar estos campos, pero pueden activarse según la preferencia de la organización. */
         pdf_extra?: {
           /**
-           * @description Mostrar códigos de catálogos del SAT junto a sus descripciones. Ejemplo: “KGM Kilogramo”.
+           * Mostrar códigos de catálogos del SAT junto a sus descripciones. Ejemplo: “KGM Kilogramo”.
            * @default true
            */
           codes?: boolean
           /**
-           * @description Mostrar los códigos estandarizados de estado y de país en el PDF. Ejemplo: "SON" en lugar de "Sonora" y "MEX" en lugar de "México".
+           * Mostrar los códigos estandarizados de estado y de país en el PDF. Ejemplo: "SON" en lugar de "Sonora" y "MEX" en lugar de "México".
            * @default true
            */
           address_codes?: boolean
           /**
-           * @description Mostrar la clave de producto-servicio.
+           * Mostrar la clave de producto-servicio.
            * @default true
            */
           product_key?: boolean
           /**
-           * @description Mostrar la clave de exportación en el PDF.
+           * Mostrar la clave de exportación en el PDF.
            * @default false
            */
           export_key?: boolean
           /**
-           * @description Redondear el precio unitario en el PDF a 2 decimales, pero conservar los 6 decimales en el XML.
+           * Redondear el precio unitario en el PDF a 2 decimales, pero conservar los 6 decimales en el XML.
            * @default false
            */
           round_unit_price?: boolean
           /**
-           * @description Mostrar el desglose de impuestos en el PDF. Si se desactiva, sólo se mostratán los impuestos en los totales, pero no en el detalle de cada concepto.
+           * Mostrar el desglose de impuestos en el PDF. Si se desactiva, sólo se mostratán los impuestos en los totales, pero no en el detalle de cada concepto.
            * @default true
            */
           tax_breakdown?: boolean
           /**
-           * @description Mostrar el desglose de IEPS en el PDF. Si se desactiva, solo se mostrarán los impuestos relacionados al IVA en el subtotal.
+           * Mostrar el desglose de IEPS en el PDF. Si se desactiva, solo se mostrarán los impuestos relacionados al IVA en el subtotal.
            * @default true
            */
           ieps_breakdown?: boolean
           /**
-           * @description Suma IEPS con subtotal sin desglosarlo en el PDF.
+           * Suma IEPS con subtotal sin desglosarlo en el PDF.
            * @default false
            */
           combine_ieps_with_subtotal?: boolean
           /**
-           * @description Renderizar el complemento de Carta Porte 3.1 en el PDF sólo si el complemento de carta porte está incluido en la factura.
+           * Renderizar el complemento de Carta Porte 3.1 en el PDF sólo si el complemento de carta porte está incluido en la factura.
            * @default false
            */
           render_carta_porte?: boolean
           /**
-           * @description Repetir la firma electrónica en cada página del PDF. Si se desactiva, la firma electrónica sólo se mostrará una vez.
+           * Repetir la firma electrónica en cada página del PDF. Si se desactiva, la firma electrónica sólo se mostrará una vez.
            * @default false
            */
           repeat_signature?: boolean
           /**
-           * @description Renderizar el complemento de Instituciones Educativas Privadas en el PDF.
+           * Renderizar el complemento de Instituciones Educativas Privadas en el PDF.
            * @default false
            */
           render_iedu?: boolean
           /**
-           * @description Renderizar el complemento de hidrocarburos y petrolíferos en el PDF.
+           * Renderizar el complemento de hidrocarburos y petrolíferos en el PDF.
            * @default false
            */
           render_hyp_complement?: boolean
           /**
-           * @description Renderizar el complemento de comercio exterior en el PDF.
+           * Renderizar el complemento de comercio exterior en el PDF.
            * @default false
            */
           render_comercio_exterior?: boolean
@@ -6221,44 +6221,44 @@ export interface components {
           }
         }
       }
-      /** @description Información útil sobre el certificado de sello digital (CSD) de la organización, que se utilizará para firmar las facturas. */
+      /** Información útil sobre el certificado de sello digital (CSD) de la organización, que se utilizará para firmar las facturas. */
       certificate: {
-        /** @description Indica si la organización ya tiene el Certificado de Sello Digital (CSD) cargado. */
+        /** Indica si la organización ya tiene el Certificado de Sello Digital (CSD) cargado. */
         has_certificate?: boolean
         /**
          * Format: date-time
-         * @description Fecha de la última actualización del certificado. Se omite cuando no hay un certificado cargado.
+         * Fecha de la última actualización del certificado. Se omite cuando no hay un certificado cargado.
          */
         updated_at?: Date | string
         /**
          * Format: date-time
-         * @description Fecha de expiración del certificado. Se omite cuando no hay un certificado cargado.
+         * Fecha de expiración del certificado. Se omite cuando no hay un certificado cargado.
          */
         expires_at?: Date | string
-        /** @description Número de serie del certificado CSD. */
+        /** Número de serie del certificado CSD. */
         serial_number?: string
       }
-      /** @description Información sobre el certificado FIEL de la organización, que se utiliza para el servicio de descarga masiva de CFDI. */
+      /** Información sobre el certificado FIEL de la organización, que se utiliza para el servicio de descarga masiva de CFDI. */
       fiel: {
-        /** @description Indica si la organización ya tiene el Certificado FIEL cargado. */
+        /** Indica si la organización ya tiene el Certificado FIEL cargado. */
         has_certificate?: boolean
         /**
          * Format: date-time
-         * @description Fecha de la última actualización del certificado FIEL. Se omite cuando no hay un certificado cargado.
+         * Fecha de la última actualización del certificado FIEL. Se omite cuando no hay un certificado cargado.
          */
         updated_at?: Date | string
         /**
          * Format: date-time
-         * @description Fecha de expiración del certificado FIEL. Se omite cuando no hay un certificado cargado.
+         * Fecha de expiración del certificado FIEL. Se omite cuando no hay un certificado cargado.
          */
         expires_at?: Date | string
-        /** @description Número de serie del certificado FIEL. */
+        /** Número de serie del certificado FIEL. */
         serial_number?: string
       }
-      /** @description Configuración para recibos y la emisión de facturas globales a partir de recibos. */
+      /** Configuración para recibos y la emisión de facturas globales a partir de recibos. */
       receipts?: {
         /**
-         * @description Periodicidad con la que la empresa decide emitir una factura global
+         * Periodicidad con la que la empresa decide emitir una factura global
          *     (al público en general) por todos los recibos que no se hayan facturado.
          *     Este valor se utiliza como el default al crear una factura global.
          * @default month
@@ -6266,63 +6266,63 @@ export interface components {
          */
         periodicity?: 'day' | 'week' | 'fortnight' | 'month' | 'two_months'
         /**
-         * @description Número máximo de días para facturar a través del portal de autofactura
+         * Número máximo de días para facturar a través del portal de autofactura
          *     después de que se emite el recibo y antes del último día del periodo.
          * @default 7
          */
         duration_days?: number
         /**
-         * @description Número de folio que se asignará al siguiente recibo en ambiente Live.
+         * Número de folio que se asignará al siguiente recibo en ambiente Live.
          *     Se incrementará automáticamente por cada nuevo recibo.
          */
         next_folio_number?: number
         /**
-         * @description Número de folio que se asignará al siguiente recibo en ambiente Test.
+         * Número de folio que se asignará al siguiente recibo en ambiente Test.
          *     Se incrementará automáticamente por cada nuevo recibo.
          */
         next_folio_number_test?: number
         /**
-         * @description Indica si la organización genera automáticamente una factura global
+         * Indica si la organización genera automáticamente una factura global
          *     después de cerrar cada periodo configurado. Requiere tener contratado
          *     el feature de factura global.
          * @default false
          */
         activate_global_invoice?: boolean
         /**
-         * @description Agrupa conceptos equivalentes al facturar varios recibos seleccionados,
+         * Agrupa conceptos equivalentes al facturar varios recibos seleccionados,
          *     incluyendo las autofacturas. No modifica la generación de facturas globales.
          * @default false
          */
         grouped_items_invoice?: boolean
       }
-      /** @description Configuraciones para el portal de autofactura, que permite a los clientes facturar sus recibos a través de un micrositio. */
+      /** Configuraciones para el portal de autofactura, que permite a los clientes facturar sus recibos a través de un micrositio. */
       self_invoice?: {
-        /** @description Lista de usos CFDI permitidos para la autofactura. Si este campo está vacío, se permitirán todos los usos CFDI. */
+        /** Lista de usos CFDI permitidos para la autofactura. Si este campo está vacío, se permitirán todos los usos CFDI. */
         allowed_cfdi_uses?: string[]
         /**
-         * @description Indica si la organización aplica el ISR bajo el régimen RESICO. Si es verdadero, el ISR se calculará de acuerdo con el régimen RESICO.
+         * Indica si la organización aplica el ISR bajo el régimen RESICO. Si es verdadero, el ISR se calculará de acuerdo con el régimen RESICO.
          *     Si es falso, el ISR se calculará de acuerdo con el régimen general.
          */
         apply_resico_isr?: boolean
-        /** @description Dirección de correo electrónico para aclaraciones. Aparecerá en el portal de autofacturación. */
+        /** Dirección de correo electrónico para aclaraciones. Aparecerá en el portal de autofacturación. */
         support_email?: string
-        /** @description Indica si el correo electrónico de soporte ha sido verificado. Si es falso, el correo electrónico utilizado en el portal de autofacturación será el correo electrónico principal de la cuenta. */
+        /** Indica si el correo electrónico de soporte ha sido verificado. Si es falso, el correo electrónico utilizado en el portal de autofacturación será el correo electrónico principal de la cuenta. */
         support_email_verified?: boolean
       }
       /**
        * @deprecated
-       * @description Plan heredado de la organización.
+       * Plan heredado de la organización.
        */
       plan?: string | null
-      /** @description Funcionalidades adicionales contratadas por la organización. */
+      /** Funcionalidades adicionales contratadas por la organización. */
       add_ons?: string[]
-      /** @description Cambio de plan programado, si existe. */
+      /** Cambio de plan programado, si existe. */
       pending_plan_update?: {
         plan?: string
         /** Format: date-time */
         scheduled_for?: Date | string
       } | null
-      /** @description Cambio programado de funcionalidades adicionales, si existe. */
+      /** Cambio programado de funcionalidades adicionales, si existe. */
       pending_add_ons_update?: {
         add_ons?: string[]
         /** Format: date-time */
@@ -6334,26 +6334,26 @@ export interface components {
     OrganizationDeleteCerts: {
       /**
        * Format: date-time
-       * @description Fecha de eliminación del certificado CSD.
+       * Fecha de eliminación del certificado CSD.
        */
       updated_at?: Date | string
     }
     OrganizationCreateInput: {
-      /** @description Nombre comercial de la organización. */
+      /** Nombre comercial de la organización. */
       name: string
     }
     OrganizationLegalInput: {
-      /** @description Nombre comercial de la organización. */
+      /** Nombre comercial de la organización. */
       name: string
-      /** @description Nombre Fiscal o Razón Social de la organización, *sin* el régimen societario (ej.: S.A. de C.V.). */
+      /** Nombre Fiscal o Razón Social de la organización, *sin* el régimen societario (ej.: S.A. de C.V.). */
       legal_name: string
-      /** @description Código del Régimen Fiscal, del [catálogo del SAT](#régimen-fiscal). */
+      /** Código del Régimen Fiscal, del [catálogo del SAT](#régimen-fiscal). */
       tax_system: string
-      /** @description Sitio web de la organización, que aparecerá en el PDF y correos de facturas y recibos. */
+      /** Sitio web de la organización, que aparecerá en el PDF y correos de facturas y recibos. */
       website?: string
-      /** @description Dirección de correo electrónico para aclaraciones. Aparecerá en el PDF y correos de facturas y recibos. */
+      /** Dirección de correo electrónico para aclaraciones. Aparecerá en el PDF y correos de facturas y recibos. */
       support_email?: string
-      /** @description Teléfono de la organización, que aparecerá en el PDF y correos de facturas y recibos. */
+      /** Teléfono de la organización, que aparecerá en el PDF y correos de facturas y recibos. */
       phone?: string
       address: Record<string, unknown> &
         components['schemas']['OrganizationAddress']
@@ -6361,35 +6361,35 @@ export interface components {
     OrganizationCertsInput: {
       /**
        * Format: binary
-       * @description Contenido binario del archivo con extensión `.cer` del certificado CSD.
+       * Contenido binario del archivo con extensión `.cer` del certificado CSD.
        */
       cer: BinaryInput
       /**
        * Format: binary
-       * @description Contenido binario del archivo con extensión `.key` del certificado CSD.
+       * Contenido binario del archivo con extensión `.key` del certificado CSD.
        */
       key: BinaryInput
-      /** @description Contraseña de la llave del certificado. */
+      /** Contraseña de la llave del certificado. */
       password: string
     }
     OrganizationFielInput: {
       /**
        * Format: binary
-       * @description Contenido binario del archivo con extensión `.cer` de la e.firma (FIEL).
+       * Contenido binario del archivo con extensión `.cer` de la e.firma (FIEL).
        */
       cer: BinaryInput
       /**
        * Format: binary
-       * @description Contenido binario del archivo con extensión `.key` de la e.firma (FIEL).
+       * Contenido binario del archivo con extensión `.key` de la e.firma (FIEL).
        */
       key: BinaryInput
-      /** @description Contraseña de la llave privada de la e.firma (FIEL). */
+      /** Contraseña de la llave privada de la e.firma (FIEL). */
       password: string
     }
     OrganizationLogoInput: {
       /**
        * Format: binary
-       * @description Contenido binario del archivo con la imagen que se usará como
+       * Contenido binario del archivo con la imagen que se usará como
        *     logotipo. Formatos soportados:
        *     - jpg
        *     - png
@@ -6400,77 +6400,77 @@ export interface components {
     OrganizationCustomizationInput: {
       /**
        * Format: hex
-       * @description Color distintivo de la marca en representación Hexadecimal RGB de 6 caracteres.
+       * Color distintivo de la marca en representación Hexadecimal RGB de 6 caracteres.
        */
       color?: string
-      /** @description Número de folio que se asignará a la siguiente factura en ambiente Live (y que se incrementará automáticamente por cada nueva factura). */
+      /** Número de folio que se asignará a la siguiente factura en ambiente Live (y que se incrementará automáticamente por cada nueva factura). */
       next_folio_number?: number
-      /** @description Número de folio que se asignará a la siguiente factura en ambiente Test (y que se incrementará automáticamente por cada nueva factura). */
+      /** Número de folio que se asignará a la siguiente factura en ambiente Test (y que se incrementará automáticamente por cada nueva factura). */
       next_folio_number_test?: number
-      /** @description Configura qué campos opcionales se quieren mostrar en el PDF. El SAT no obliga a mostrar estos campos, pero pueden activarse según la preferencia de la organización. */
+      /** Configura qué campos opcionales se quieren mostrar en el PDF. El SAT no obliga a mostrar estos campos, pero pueden activarse según la preferencia de la organización. */
       pdf_extra?: {
         /**
-         * @description Mostrar códigos de catálogos del SAT junto a sus descripciones. Ejemplo: “KGM Kilogramo”.
+         * Mostrar códigos de catálogos del SAT junto a sus descripciones. Ejemplo: “KGM Kilogramo”.
          * @default true
          */
         codes?: boolean
         /**
-         * @description Mostrar la clave de producto-servicio.
+         * Mostrar la clave de producto-servicio.
          * @default true
          */
         product_key?: boolean
         /**
-         * @description Mostrar los códigos estandarizados de estado y de país en el PDF.
+         * Mostrar los códigos estandarizados de estado y de país en el PDF.
          * @default true
          */
         address_codes?: boolean
         /**
-         * @description Mostrar la clave de exportación en el PDF.
+         * Mostrar la clave de exportación en el PDF.
          * @default false
          */
         export_key?: boolean
         /**
-         * @description Redondear el precio unitario en el PDF a 2 decimales, pero conservar los 6 decimales en el XML.
+         * Redondear el precio unitario en el PDF a 2 decimales, pero conservar los 6 decimales en el XML.
          * @default false
          */
         round_unit_price?: boolean
         /**
-         * @description Mostrar el desglose de impuestos en el PDF. Si se desactiva, sólo se mostratán los impuestos en los totales, pero no en el detalle de cada concepto.
+         * Mostrar el desglose de impuestos en el PDF. Si se desactiva, sólo se mostratán los impuestos en los totales, pero no en el detalle de cada concepto.
          * @default true
          */
         tax_breakdown?: boolean
         /**
-         * @description Mostrar el desglose de IEPS en el PDF. Si se desactiva, solo se mostrarán los impuestos relacionados al IVA en el subtotal.
+         * Mostrar el desglose de IEPS en el PDF. Si se desactiva, solo se mostrarán los impuestos relacionados al IVA en el subtotal.
          * @default true
          */
         ieps_breakdown?: boolean
         /**
-         * @description Suma IEPS con subtotal sin desglosarlo en el PDF.
+         * Suma IEPS con subtotal sin desglosarlo en el PDF.
          * @default false
          */
         combine_ieps_with_subtotal?: boolean
         /**
-         * @description Renderizar el complemento de Carta Porte 3.1 en el PDF sólo si el complemento de carta porte está incluido en la factura.
+         * Renderizar el complemento de Carta Porte 3.1 en el PDF sólo si el complemento de carta porte está incluido en la factura.
          * @default false
          */
         render_carta_porte?: boolean
         /**
-         * @description Renderizar el complemento de Instituciones Educativas Privadas en el PDF.
+         * Renderizar el complemento de Instituciones Educativas Privadas en el PDF.
          * @default false
          */
         render_iedu?: boolean
         /**
-         * @description Renderizar el complemento de hidrocarburos y petrolíferos en el PDF.
+         * Renderizar el complemento de hidrocarburos y petrolíferos en el PDF.
          * @default false
          */
         render_hyp_complement?: boolean
         /**
-         * @description Renderizar el complemento de comercio exterior en el PDF.
+         * Renderizar el complemento de comercio exterior en el PDF.
          * @default false
          */
         render_comercio_exterior?: boolean
         /**
-         * @description Repetir la firma electrónica en cada página del PDF.
+         * Repetir la firma electrónica en cada página del PDF.
          * @default false
          */
         repeat_signature?: boolean
@@ -6488,7 +6488,7 @@ export interface components {
     }
     OrganizationReceiptsInput: {
       /**
-       * @description Periodicidad con la que la empresa decide realizar una factura global
+       * Periodicidad con la que la empresa decide realizar una factura global
        *     (al público en general) por todos los recibos no facturados. Este
        *     valor se utiliza como default al crear una factura global.
        * @default month
@@ -6496,7 +6496,7 @@ export interface components {
        */
       periodicity?: 'day' | 'week' | 'fortnight' | 'month' | 'two_months'
       /**
-       * @description Días máximos para facturar por medio del portal de autofactura
+       * Días máximos para facturar por medio del portal de autofactura
        *     después de emitido el recibo y antes del último día del periodo
        *     definido por el atributo `periodicity`. El valor `0` desactiva esta
        *     opción, haciendo que los recibos expiren siempre el último día del
@@ -6504,40 +6504,40 @@ export interface components {
        * @default 7
        */
       duration_days?: number
-      /** @description Número de folio que se asignará al siguiente recibo creado en esta organización en ambiente Live. */
+      /** Número de folio que se asignará al siguiente recibo creado en esta organización en ambiente Live. */
       next_folio_number?: number
-      /** @description Número de folio que se asignará al siguiente recibo creado en esta organización en ambiente Test. */
+      /** Número de folio que se asignará al siguiente recibo creado en esta organización en ambiente Test. */
       next_folio_number_test?: number
       /**
-       * @description Activa o desactiva la generación automática de una factura global después
+       * Activa o desactiva la generación automática de una factura global después
        *     de cerrar cada periodo configurado. Para activarla, la organización debe
        *     tener contratado el feature de factura global.
        * @default false
        */
       activate_global_invoice?: boolean
       /**
-       * @description Cuando es `true`, agrupa conceptos equivalentes al facturar varios recibos
+       * Cuando es `true`, agrupa conceptos equivalentes al facturar varios recibos
        *     seleccionados, incluyendo las autofacturas. No aplica a las facturas globales.
        * @default false
        */
       grouped_items_invoice?: boolean
     }
     OrganizationSelfInvoiceInput: {
-      /** @description Lista de usos CFDI permitidos para la autofactura. Si este campo está vacío, se permitirán todos los usos CFDI. */
+      /** Lista de usos CFDI permitidos para la autofactura. Si este campo está vacío, se permitirán todos los usos CFDI. */
       allowed_cfdi_uses?: string[]
       /**
-       * @description Indica si la organización aplica el ISR bajo el régimen RESICO. Si es verdadero, el ISR se calculará de acuerdo con el régimen RESICO.
+       * Indica si la organización aplica el ISR bajo el régimen RESICO. Si es verdadero, el ISR se calculará de acuerdo con el régimen RESICO.
        *     Si es falso, el ISR se calculará de acuerdo con el régimen general.
        */
       apply_resico_isr?: boolean
       /**
-       * @description Dirección de correo electrónico para aclaraciones. Aparecerá en el portal de autofacturación.
+       * Dirección de correo electrónico para aclaraciones. Aparecerá en el portal de autofacturación.
        *     Al modificarlo se enviará un correo de verificación a la nueva dirección.
        */
       support_email?: string
     }
     /**
-     * @description Nombre del dominio. Se permiten caracteres alfanuméricos, sólo minúsculas,
+     * Nombre del dominio. Se permiten caracteres alfanuméricos, sólo minúsculas,
      *     guión (-) y guión bajo (_). Debe empezar con una letra y
      *     terminar en letra o número.
      */
@@ -6546,103 +6546,103 @@ export interface components {
       domain: components['schemas']['DomainField']
     }
     OrganizationSeriesCreateInput: {
-      /** @description Nombre de la serie. */
+      /** Nombre de la serie. */
       series: string
-      /** @description Número de folio que se asignará a la siguiente factura en ambiente Live (y que se incrementará automáticamente por cada nueva factura). */
+      /** Número de folio que se asignará a la siguiente factura en ambiente Live (y que se incrementará automáticamente por cada nueva factura). */
       next_folio: number
-      /** @description Número de folio que se asignará a la siguiente factura en ambiente Test (y que se incrementará automáticamente por cada nueva factura). */
+      /** Número de folio que se asignará a la siguiente factura en ambiente Test (y que se incrementará automáticamente por cada nueva factura). */
       next_folio_test: number
     }
     OrganizationSeriesUpdateInput: {
-      /** @description Número de folio que se asignará a la siguiente factura en ambiente Live (y que se incrementará automáticamente por cada nueva factura). */
+      /** Número de folio que se asignará a la siguiente factura en ambiente Live (y que se incrementará automáticamente por cada nueva factura). */
       next_folio?: number
-      /** @description Número de folio que se asignará a la siguiente factura en ambiente Test (y que se incrementará automáticamente por cada nueva factura). */
+      /** Número de folio que se asignará a la siguiente factura en ambiente Test (y que se incrementará automáticamente por cada nueva factura). */
       next_folio_test?: number
     }
     OrganizationSeriesDefaultInput: {
       /**
-       * @description Tipo de comprobante. Valores posibles:
+       * Tipo de comprobante. Valores posibles:
        *     `I` (Ingreso), `E` (Egreso), `P` (Pago), `N` (Nómina), `T` (Traslado).
        * @enum {string}
        */
       type: 'I' | 'E' | 'P' | 'N' | 'T'
-      /** @description Nombre de la serie. */
+      /** Nombre de la serie. */
       series: string
     }
     /** Objeto Series */
     OrganizationSeriesGroup: {
-      /** @description Nombre de la serie. */
+      /** Nombre de la serie. */
       series?: string
-      /** @description Número de folio que se asignará a la siguiente factura en ambiente Live (y que se incrementará automáticamente por cada nueva factura). */
+      /** Número de folio que se asignará a la siguiente factura en ambiente Live (y que se incrementará automáticamente por cada nueva factura). */
       next_folio?: number
-      /** @description Número de folio que se asignará a la siguiente factura en ambiente Test (y que se incrementará automáticamente por cada nueva factura). */
+      /** Número de folio que se asignará a la siguiente factura en ambiente Test (y que se incrementará automáticamente por cada nueva factura). */
       next_folio_test?: number
     }
     OkResponse: {
       ok: boolean
     }
     OrganizationInvite: {
-      /** @description Identificador único de la invitación. */
+      /** Identificador único de la invitación. */
       id?: string
       /**
        * Format: date-time
-       * @description Fecha y hora en que se creó la invitación.
+       * Fecha y hora en que se creó la invitación.
        */
       created_at: Date | string
       /**
        * Format: email
-       * @description Correo electrónico al que se envió la invitación.
+       * Correo electrónico al que se envió la invitación.
        */
       email?: string
-      /** @description Nombre de la organización que envió la invitación. */
+      /** Nombre de la organización que envió la invitación. */
       organization_name?: string
-      /** @description ID del rol asignado en la invitación, si existe. */
+      /** ID del rol asignado en la invitación, si existe. */
       role?: string | null
-      /** @description Nombre del rol asignado en la invitación, si existe. */
+      /** Nombre del rol asignado en la invitación, si existe. */
       role_name?: string | null
-      /** @description Lista de roles visibles que describe el acceso otorgado por la invitación. */
+      /** Lista de roles visibles que describe el acceso otorgado por la invitación. */
       roles?: string[]
       /**
        * Format: date-time
-       * @description Fecha y hora en que expira la invitación.
+       * Fecha y hora en que expira la invitación.
        */
       expires_at: Date | string | null
     }
-    /** @description Lista de invitaciones de organización. */
+    /** Lista de invitaciones de organización. */
     OrganizationInviteList: components['schemas']['OrganizationInvite'][]
     OrganizationPermissionRole: {
-      /** @description Identificador único del rol. */
+      /** Identificador único del rol. */
       id?: string
-      /** @description Nombre del rol. */
+      /** Nombre del rol. */
       name?: string
-      /** @description Código de plantilla base del rol, si proviene de una plantilla del sistema. */
+      /** Código de plantilla base del rol, si proviene de una plantilla del sistema. */
       template_code?: string | null
-      /** @description ID de la organización a la que pertenece el rol. */
+      /** ID de la organización a la que pertenece el rol. */
       organization?: string | null
-      /** @description Número de usuarios que actualmente usan este rol. */
+      /** Número de usuarios que actualmente usan este rol. */
       used_by?: number
-      /** @description Operaciones agregadas al rol además de las definidas por su plantilla. */
+      /** Operaciones agregadas al rol además de las definidas por su plantilla. */
       overrides_add?: string[]
-      /** @description Operaciones removidas del rol respecto a su plantilla. */
+      /** Operaciones removidas del rol respecto a su plantilla. */
       overrides_remove?: string[]
-      /** @description Lista final de operaciones permitidas por este rol. */
+      /** Lista final de operaciones permitidas por este rol. */
       operations?: string[]
       /**
        * Format: date-time
-       * @description Fecha y hora de creación del rol.
+       * Fecha y hora de creación del rol.
        */
       created_at: Date | string | null
       /**
        * Format: date-time
-       * @description Fecha y hora de la última actualización del rol.
+       * Fecha y hora de la última actualización del rol.
        */
       updated_at: Date | string | null
     }
-    /** @description Lista de roles configurables de la organización. */
+    /** Lista de roles configurables de la organización. */
     OrganizationPermissionRoleList: components['schemas']['OrganizationPermissionRole'][]
     OrganizationPermissionRoleTemplate: {
       /**
-       * @description Código interno de la plantilla de rol.
+       * Código interno de la plantilla de rol.
        * @enum {string}
        */
       code?:
@@ -6651,64 +6651,64 @@ export interface components {
         | 'org-billing'
         | 'org-developer'
         | 'org-team-manager'
-      /** @description Nombre visible de la plantilla de rol. */
+      /** Nombre visible de la plantilla de rol. */
       label?: string
-      /** @description Operaciones incluidas por defecto en la plantilla. */
+      /** Operaciones incluidas por defecto en la plantilla. */
       operations?: string[]
     }
-    /** @description Lista de plantillas de roles disponibles para la organización. */
+    /** Lista de plantillas de roles disponibles para la organización. */
     OrganizationPermissionRoleTemplateList: components['schemas']['OrganizationPermissionRoleTemplate'][]
-    /** @description Lista de operaciones disponibles para permisos a nivel organización. */
+    /** Lista de operaciones disponibles para permisos a nivel organización. */
     OrganizationPermissionOperationList: string[]
     OrganizationUserAccess: {
-      /** @description Identificador del acceso del usuario dentro de la organización. Para el propietario, este valor es `owner` porque su acceso es implícito. */
+      /** Identificador del acceso del usuario dentro de la organización. Para el propietario, este valor es `owner` porque su acceso es implícito. */
       id?: string
-      /** @description Nombre completo del usuario. */
+      /** Nombre completo del usuario. */
       full_name?: string
       /**
        * Format: email
-       * @description Correo electrónico del usuario.
+       * Correo electrónico del usuario.
        */
       email?: string
-      /** @description ID del rol asignado al usuario, si existe. Para el propietario, este valor es `null` porque su acceso es implícito. */
+      /** ID del rol asignado al usuario, si existe. Para el propietario, este valor es `null` porque su acceso es implícito. */
       role?: string | null
-      /** @description Nombre del rol asignado o del acceso implícito del usuario. Para el propietario, este valor es `owner`. */
+      /** Nombre del rol asignado o del acceso implícito del usuario. Para el propietario, este valor es `owner`. */
       role_name?: string | null
-      /** @description ID de la organización a la que pertenece el acceso. */
+      /** ID de la organización a la que pertenece el acceso. */
       organization?: string | null
-      /** @description Lista final de operaciones permitidas para el usuario. */
+      /** Lista final de operaciones permitidas para el usuario. */
       operations?: string[]
       /**
        * Format: date-time
-       * @description Fecha y hora en que se creó el acceso. Para el propietario, corresponde a la creación de la organización.
+       * Fecha y hora en que se creó el acceso. Para el propietario, corresponde a la creación de la organización.
        */
       created_at: Date | string
       /**
        * Format: date-time
-       * @description Fecha y hora de la última actualización del acceso. Para el propietario, corresponde a la creación de la organización porque su acceso es implícito.
+       * Fecha y hora de la última actualización del acceso. Para el propietario, corresponde a la creación de la organización porque su acceso es implícito.
        */
       updated_at: Date | string
     }
-    /** @description Lista de accesos de usuarios a la organización, incluyendo accesos implícitos como el del propietario. */
+    /** Lista de accesos de usuarios a la organización, incluyendo accesos implícitos como el del propietario. */
     OrganizationUserAccessList: components['schemas']['OrganizationUserAccess'][]
     OrganizationInviteCreateInput: {
       /**
        * Format: email
-       * @description Correo electrónico del usuario que será invitado.
+       * Correo electrónico del usuario que será invitado.
        */
       email: string
-      /** @description ID de rol personalizado de la organización. */
+      /** ID de rol personalizado de la organización. */
       role?: string
     }
     OrganizationInviteRespondInput: {
-      /** @description Indica si la invitación debe aceptarse (`true`) o rechazarse (`false`). */
+      /** Indica si la invitación debe aceptarse (`true`) o rechazarse (`false`). */
       accept: boolean
     }
     OrganizationPermissionRoleCreateInput: {
-      /** @description Nombre del rol. */
+      /** Nombre del rol. */
       name: string
       /**
-       * @description Código de plantilla base para inicializar el rol, si aplica.
+       * Código de plantilla base para inicializar el rol, si aplica.
        * @enum {string|null}
        */
       template_code?:
@@ -6718,16 +6718,16 @@ export interface components {
         | 'org-developer'
         | 'org-team-manager'
         | null
-      /** @description Operaciones adicionales que se agregarán al rol. */
+      /** Operaciones adicionales que se agregarán al rol. */
       add?: string[]
-      /** @description Operaciones que se removerán del rol. */
+      /** Operaciones que se removerán del rol. */
       remove?: string[]
     }
     OrganizationPermissionRoleUpdateInput: {
-      /** @description Nuevo nombre del rol. */
+      /** Nuevo nombre del rol. */
       name?: string
       /**
-       * @description Nuevo código de plantilla base del rol, si aplica.
+       * Nuevo código de plantilla base del rol, si aplica.
        * @enum {string|null}
        */
       template_code?:
@@ -6737,18 +6737,18 @@ export interface components {
         | 'org-developer'
         | 'org-team-manager'
         | null
-      /** @description Lista completa de operaciones extra que debe conservar el rol. */
+      /** Lista completa de operaciones extra que debe conservar el rol. */
       add?: string[]
-      /** @description Lista completa de operaciones removidas que debe conservar el rol. */
+      /** Lista completa de operaciones removidas que debe conservar el rol. */
       remove?: string[]
     }
     OrganizationUserAccessRoleUpdateInput: {
-      /** @description ID del rol que se asignará al usuario. */
+      /** ID del rol que se asignará al usuario. */
       role: string
     }
   }
   responses: {
-    /** @description Error en parámetros de la petición */
+    /** Error en parámetros de la petición */
     BadRequest: {
       headers: {
         [name: string]: unknown
@@ -6757,7 +6757,7 @@ export interface components {
         'application/json': components['schemas']['GenericError']
       }
     }
-    /** @description Error de autenticación */
+    /** Error de autenticación */
     Unauthenticated: {
       headers: {
         [name: string]: unknown
@@ -6766,7 +6766,7 @@ export interface components {
         'application/json': components['schemas']['GenericError']
       }
     }
-    /** @description Conflicto en la petición. La operación que se intenta realizar no puede completarse debido a conflictos en el estado actual del recurso. */
+    /** Conflicto en la petición. La operación que se intenta realizar no puede completarse debido a conflictos en el estado actual del recurso. */
     Conflict: {
       headers: {
         [name: string]: unknown
@@ -6775,7 +6775,7 @@ export interface components {
         'application/json': components['schemas']['GenericError']
       }
     }
-    /** @description No se encontró el recurso especificado. */
+    /** No se encontró el recurso especificado. */
     NotFound: {
       headers: {
         [name: string]: unknown
@@ -6784,10 +6784,10 @@ export interface components {
         'application/json': components['schemas']['GenericError']
       }
     }
-    /** @description Demasiadas solicitudes en una ventana de tiempo corta. */
+    /** Demasiadas solicitudes en una ventana de tiempo corta. */
     RateLimited: {
       headers: {
-        /** @description Segundos recomendados antes de reintentar. */
+        /** Segundos recomendados antes de reintentar. */
         'Retry-After'?: number
         [name: string]: unknown
       }
@@ -6795,7 +6795,7 @@ export interface components {
         'application/json': components['schemas']['GenericError']
       }
     }
-    /** @description Error inesperado */
+    /** Error inesperado */
     UnexpectedError: {
       headers: {
         [name: string]: unknown
@@ -6804,7 +6804,7 @@ export interface components {
         'application/json': components['schemas']['GenericError']
       }
     }
-    /** @description Se requiere una suscripción activa y acceso al ambiente Live. */
+    /** Se requiere una suscripción activa y acceso al ambiente Live. */
     InvoiceZipRequestAccessRequired: {
       headers: {
         [name: string]: unknown
@@ -6813,7 +6813,7 @@ export interface components {
         'application/json': components['schemas']['GenericError']
       }
     }
-    /** @description No existen facturas válidas que coincidan con los filtros. */
+    /** No existen facturas válidas que coincidan con los filtros. */
     InvoiceZipRequestNoInvoices: {
       headers: {
         [name: string]: unknown
@@ -6822,7 +6822,7 @@ export interface components {
         'application/json': components['schemas']['GenericError']
       }
     }
-    /** @description La solicitud no existe o no pertenece a la organización o ambiente actuales. */
+    /** La solicitud no existe o no pertenece a la organización o ambiente actuales. */
     InvoiceZipRequestNotFound: {
       headers: {
         [name: string]: unknown
@@ -6831,7 +6831,7 @@ export interface components {
         'application/json': components['schemas']['GenericError']
       }
     }
-    /** @description La generación del ZIP todavía no ha terminado. */
+    /** La generación del ZIP todavía no ha terminado. */
     InvoiceZipRequestNotReady: {
       headers: {
         [name: string]: unknown
@@ -6842,19 +6842,19 @@ export interface components {
     }
   }
   parameters: {
-    /** @description Identificador de la solicitud de ZIP. */
+    /** Identificador de la solicitud de ZIP. */
     InvoiceZipRequestId: string
-    /** @description Objeto con rango de fechas solicitado. */
+    /** Objeto con rango de fechas solicitado. */
     SearchDate: components['schemas']['DateRange']
-    /** @description Página de resultados a regresar, empezando desde la página 1. El máximo no es fijo; junto con `limit` debe caber dentro del tope de 3,000 resultados (con el `limit` por defecto de 100, la página máxima es 30). */
+    /** Página de resultados a regresar, empezando desde la página 1. El máximo no es fijo; junto con `limit` debe caber dentro del tope de 3,000 resultados (con el `limit` por defecto de 100, la página máxima es 30). */
     SearchPage: number
-    /** @description Número del 1 al 100 que representa la cantidad máxima de resultados a regresar con motivos de paginación. */
+    /** Número del 1 al 100 que representa la cantidad máxima de resultados a regresar con motivos de paginación. */
     SearchLimit: number
-    /** @description Modo de paginación de la búsqueda. `page` (por defecto) o `cursor` (recomendado para listas grandes). */
+    /** Modo de paginación de la búsqueda. `page` (por defecto) o `cursor` (recomendado para listas grandes). */
     SearchPagination: 'page' | 'cursor'
-    /** @description Devuelve los resultados posteriores al cursor indicado. Solo con `pagination=cursor`; mutuamente excluyente con `before`. */
+    /** Devuelve los resultados posteriores al cursor indicado. Solo con `pagination=cursor`; mutuamente excluyente con `before`. */
     SearchAfter: string
-    /** @description Devuelve los resultados anteriores al cursor indicado. Solo con `pagination=cursor`; mutuamente excluyente con `after`. */
+    /** Devuelve los resultados anteriores al cursor indicado. Solo con `pagination=cursor`; mutuamente excluyente con `after`. */
     SearchBefore: string
   }
   requestBodies: {
@@ -7047,17 +7047,17 @@ export interface operations {
   searchCartaPorteAirTransportCodes: {
     parameters: {
       query: {
-        /** @description Modo de paginación de la búsqueda. `page` (por defecto) o `cursor` (recomendado para listas grandes). */
+        /** Modo de paginación de la búsqueda. `page` (por defecto) o `cursor` (recomendado para listas grandes). */
         pagination?: components['parameters']['SearchPagination']
-        /** @description Devuelve los resultados posteriores al cursor indicado. Solo con `pagination=cursor`; mutuamente excluyente con `before`. */
+        /** Devuelve los resultados posteriores al cursor indicado. Solo con `pagination=cursor`; mutuamente excluyente con `before`. */
         after?: components['parameters']['SearchAfter']
-        /** @description Devuelve los resultados anteriores al cursor indicado. Solo con `pagination=cursor`; mutuamente excluyente con `after`. */
+        /** Devuelve los resultados anteriores al cursor indicado. Solo con `pagination=cursor`; mutuamente excluyente con `after`. */
         before?: components['parameters']['SearchBefore']
-        /** @description Prefijo para buscar en `key`, `airline_name` o `icao_designator`. */
+        /** Prefijo para buscar en `key`, `airline_name` o `icao_designator`. */
         q: string
-        /** @description Página de resultados a regresar, empezando desde la página 1. El máximo no es fijo; junto con `limit` debe caber dentro del tope de 3,000 resultados. */
+        /** Página de resultados a regresar, empezando desde la página 1. El máximo no es fijo; junto con `limit` debe caber dentro del tope de 3,000 resultados. */
         page?: number
-        /** @description Número del 1 al 100 que representa la cantidad máxima de resultados a regresar con motivos de paginación. */
+        /** Número del 1 al 100 que representa la cantidad máxima de resultados a regresar con motivos de paginación. */
         limit?: number
       }
       header?: never
@@ -7066,7 +7066,7 @@ export interface operations {
     }
     requestBody?: never
     responses: {
-      /** @description Búsqueda exitosa */
+      /** Búsqueda exitosa */
       200: {
         headers: {
           [name: string]: unknown
@@ -7085,17 +7085,17 @@ export interface operations {
   searchComercioExteriorTariffFractions: {
     parameters: {
       query: {
-        /** @description Modo de paginación de la búsqueda. `page` (por defecto) o `cursor` (recomendado para listas grandes). */
+        /** Modo de paginación de la búsqueda. `page` (por defecto) o `cursor` (recomendado para listas grandes). */
         pagination?: components['parameters']['SearchPagination']
-        /** @description Devuelve los resultados posteriores al cursor indicado. Solo con `pagination=cursor`; mutuamente excluyente con `before`. */
+        /** Devuelve los resultados posteriores al cursor indicado. Solo con `pagination=cursor`; mutuamente excluyente con `before`. */
         after?: components['parameters']['SearchAfter']
-        /** @description Devuelve los resultados anteriores al cursor indicado. Solo con `pagination=cursor`; mutuamente excluyente con `after`. */
+        /** Devuelve los resultados anteriores al cursor indicado. Solo con `pagination=cursor`; mutuamente excluyente con `after`. */
         before?: components['parameters']['SearchBefore']
-        /** @description Prefijo para buscar en `key` o `description`. */
+        /** Prefijo para buscar en `key` o `description`. */
         q: string
-        /** @description Página de resultados a regresar, empezando desde la página 1. El máximo no es fijo; junto con `limit` debe caber dentro del tope de 3,000 resultados. */
+        /** Página de resultados a regresar, empezando desde la página 1. El máximo no es fijo; junto con `limit` debe caber dentro del tope de 3,000 resultados. */
         page?: number
-        /** @description Número del 1 al 100 que representa la cantidad máxima de resultados a regresar con motivos de paginación. */
+        /** Número del 1 al 100 que representa la cantidad máxima de resultados a regresar con motivos de paginación. */
         limit?: number
       }
       header?: never
@@ -7104,7 +7104,7 @@ export interface operations {
     }
     requestBody?: never
     responses: {
-      /** @description Búsqueda exitosa */
+      /** Búsqueda exitosa */
       200: {
         headers: {
           [name: string]: unknown
@@ -7123,17 +7123,17 @@ export interface operations {
   searchCartaPorteTransportConfigs: {
     parameters: {
       query: {
-        /** @description Modo de paginación de la búsqueda. `page` (por defecto) o `cursor` (recomendado para listas grandes). */
+        /** Modo de paginación de la búsqueda. `page` (por defecto) o `cursor` (recomendado para listas grandes). */
         pagination?: components['parameters']['SearchPagination']
-        /** @description Devuelve los resultados posteriores al cursor indicado. Solo con `pagination=cursor`; mutuamente excluyente con `before`. */
+        /** Devuelve los resultados posteriores al cursor indicado. Solo con `pagination=cursor`; mutuamente excluyente con `before`. */
         after?: components['parameters']['SearchAfter']
-        /** @description Devuelve los resultados anteriores al cursor indicado. Solo con `pagination=cursor`; mutuamente excluyente con `after`. */
+        /** Devuelve los resultados anteriores al cursor indicado. Solo con `pagination=cursor`; mutuamente excluyente con `after`. */
         before?: components['parameters']['SearchBefore']
-        /** @description Prefijo para buscar en `key` o `description`. */
+        /** Prefijo para buscar en `key` o `description`. */
         q: string
-        /** @description Página de resultados a regresar, empezando desde la página 1. El máximo no es fijo; junto con `limit` debe caber dentro del tope de 3,000 resultados. */
+        /** Página de resultados a regresar, empezando desde la página 1. El máximo no es fijo; junto con `limit` debe caber dentro del tope de 3,000 resultados. */
         page?: number
-        /** @description Número del 1 al 100 que representa la cantidad máxima de resultados a regresar con motivos de paginación. */
+        /** Número del 1 al 100 que representa la cantidad máxima de resultados a regresar con motivos de paginación. */
         limit?: number
       }
       header?: never
@@ -7142,7 +7142,7 @@ export interface operations {
     }
     requestBody?: never
     responses: {
-      /** @description Búsqueda exitosa */
+      /** Búsqueda exitosa */
       200: {
         headers: {
           [name: string]: unknown
@@ -7161,17 +7161,17 @@ export interface operations {
   searchCartaPorteRightsOfPassage: {
     parameters: {
       query: {
-        /** @description Modo de paginación de la búsqueda. `page` (por defecto) o `cursor` (recomendado para listas grandes). */
+        /** Modo de paginación de la búsqueda. `page` (por defecto) o `cursor` (recomendado para listas grandes). */
         pagination?: components['parameters']['SearchPagination']
-        /** @description Devuelve los resultados posteriores al cursor indicado. Solo con `pagination=cursor`; mutuamente excluyente con `before`. */
+        /** Devuelve los resultados posteriores al cursor indicado. Solo con `pagination=cursor`; mutuamente excluyente con `before`. */
         after?: components['parameters']['SearchAfter']
-        /** @description Devuelve los resultados anteriores al cursor indicado. Solo con `pagination=cursor`; mutuamente excluyente con `after`. */
+        /** Devuelve los resultados anteriores al cursor indicado. Solo con `pagination=cursor`; mutuamente excluyente con `after`. */
         before?: components['parameters']['SearchBefore']
-        /** @description Prefijo para buscar en `key`, `right_of_passage` o `concessionaire`. */
+        /** Prefijo para buscar en `key`, `right_of_passage` o `concessionaire`. */
         q: string
-        /** @description Página de resultados a regresar, empezando desde la página 1. El máximo no es fijo; junto con `limit` debe caber dentro del tope de 3,000 resultados. */
+        /** Página de resultados a regresar, empezando desde la página 1. El máximo no es fijo; junto con `limit` debe caber dentro del tope de 3,000 resultados. */
         page?: number
-        /** @description Número del 1 al 100 que representa la cantidad máxima de resultados a regresar con motivos de paginación. */
+        /** Número del 1 al 100 que representa la cantidad máxima de resultados a regresar con motivos de paginación. */
         limit?: number
       }
       header?: never
@@ -7180,7 +7180,7 @@ export interface operations {
     }
     requestBody?: never
     responses: {
-      /** @description Búsqueda exitosa */
+      /** Búsqueda exitosa */
       200: {
         headers: {
           [name: string]: unknown
@@ -7199,17 +7199,17 @@ export interface operations {
   searchCartaPorteCustomsDocuments: {
     parameters: {
       query: {
-        /** @description Modo de paginación de la búsqueda. `page` (por defecto) o `cursor` (recomendado para listas grandes). */
+        /** Modo de paginación de la búsqueda. `page` (por defecto) o `cursor` (recomendado para listas grandes). */
         pagination?: components['parameters']['SearchPagination']
-        /** @description Devuelve los resultados posteriores al cursor indicado. Solo con `pagination=cursor`; mutuamente excluyente con `before`. */
+        /** Devuelve los resultados posteriores al cursor indicado. Solo con `pagination=cursor`; mutuamente excluyente con `before`. */
         after?: components['parameters']['SearchAfter']
-        /** @description Devuelve los resultados anteriores al cursor indicado. Solo con `pagination=cursor`; mutuamente excluyente con `after`. */
+        /** Devuelve los resultados anteriores al cursor indicado. Solo con `pagination=cursor`; mutuamente excluyente con `after`. */
         before?: components['parameters']['SearchBefore']
-        /** @description Prefijo para buscar en `key` o `description`. */
+        /** Prefijo para buscar en `key` o `description`. */
         q: string
-        /** @description Página de resultados a regresar, empezando desde la página 1. El máximo no es fijo; junto con `limit` debe caber dentro del tope de 3,000 resultados. */
+        /** Página de resultados a regresar, empezando desde la página 1. El máximo no es fijo; junto con `limit` debe caber dentro del tope de 3,000 resultados. */
         page?: number
-        /** @description Número del 1 al 100 que representa la cantidad máxima de resultados a regresar con motivos de paginación. */
+        /** Número del 1 al 100 que representa la cantidad máxima de resultados a regresar con motivos de paginación. */
         limit?: number
       }
       header?: never
@@ -7218,7 +7218,7 @@ export interface operations {
     }
     requestBody?: never
     responses: {
-      /** @description Búsqueda exitosa */
+      /** Búsqueda exitosa */
       200: {
         headers: {
           [name: string]: unknown
@@ -7237,17 +7237,17 @@ export interface operations {
   searchCartaPortePackagingTypes: {
     parameters: {
       query: {
-        /** @description Modo de paginación de la búsqueda. `page` (por defecto) o `cursor` (recomendado para listas grandes). */
+        /** Modo de paginación de la búsqueda. `page` (por defecto) o `cursor` (recomendado para listas grandes). */
         pagination?: components['parameters']['SearchPagination']
-        /** @description Devuelve los resultados posteriores al cursor indicado. Solo con `pagination=cursor`; mutuamente excluyente con `before`. */
+        /** Devuelve los resultados posteriores al cursor indicado. Solo con `pagination=cursor`; mutuamente excluyente con `before`. */
         after?: components['parameters']['SearchAfter']
-        /** @description Devuelve los resultados anteriores al cursor indicado. Solo con `pagination=cursor`; mutuamente excluyente con `after`. */
+        /** Devuelve los resultados anteriores al cursor indicado. Solo con `pagination=cursor`; mutuamente excluyente con `after`. */
         before?: components['parameters']['SearchBefore']
-        /** @description Prefijo para buscar en `key` o `description`. */
+        /** Prefijo para buscar en `key` o `description`. */
         q: string
-        /** @description Página de resultados a regresar, empezando desde la página 1. El máximo no es fijo; junto con `limit` debe caber dentro del tope de 3,000 resultados. */
+        /** Página de resultados a regresar, empezando desde la página 1. El máximo no es fijo; junto con `limit` debe caber dentro del tope de 3,000 resultados. */
         page?: number
-        /** @description Número del 1 al 100 que representa la cantidad máxima de resultados a regresar con motivos de paginación. */
+        /** Número del 1 al 100 que representa la cantidad máxima de resultados a regresar con motivos de paginación. */
         limit?: number
       }
       header?: never
@@ -7256,7 +7256,7 @@ export interface operations {
     }
     requestBody?: never
     responses: {
-      /** @description Búsqueda exitosa */
+      /** Búsqueda exitosa */
       200: {
         headers: {
           [name: string]: unknown
@@ -7275,17 +7275,17 @@ export interface operations {
   searchCartaPorteTrailerTypes: {
     parameters: {
       query: {
-        /** @description Modo de paginación de la búsqueda. `page` (por defecto) o `cursor` (recomendado para listas grandes). */
+        /** Modo de paginación de la búsqueda. `page` (por defecto) o `cursor` (recomendado para listas grandes). */
         pagination?: components['parameters']['SearchPagination']
-        /** @description Devuelve los resultados posteriores al cursor indicado. Solo con `pagination=cursor`; mutuamente excluyente con `before`. */
+        /** Devuelve los resultados posteriores al cursor indicado. Solo con `pagination=cursor`; mutuamente excluyente con `before`. */
         after?: components['parameters']['SearchAfter']
-        /** @description Devuelve los resultados anteriores al cursor indicado. Solo con `pagination=cursor`; mutuamente excluyente con `after`. */
+        /** Devuelve los resultados anteriores al cursor indicado. Solo con `pagination=cursor`; mutuamente excluyente con `after`. */
         before?: components['parameters']['SearchBefore']
-        /** @description Prefijo para buscar en `key` o `description`. */
+        /** Prefijo para buscar en `key` o `description`. */
         q: string
-        /** @description Página de resultados a regresar, empezando desde la página 1. El máximo no es fijo; junto con `limit` debe caber dentro del tope de 3,000 resultados. */
+        /** Página de resultados a regresar, empezando desde la página 1. El máximo no es fijo; junto con `limit` debe caber dentro del tope de 3,000 resultados. */
         page?: number
-        /** @description Número del 1 al 100 que representa la cantidad máxima de resultados a regresar con motivos de paginación. */
+        /** Número del 1 al 100 que representa la cantidad máxima de resultados a regresar con motivos de paginación. */
         limit?: number
       }
       header?: never
@@ -7294,7 +7294,7 @@ export interface operations {
     }
     requestBody?: never
     responses: {
-      /** @description Búsqueda exitosa */
+      /** Búsqueda exitosa */
       200: {
         headers: {
           [name: string]: unknown
@@ -7313,17 +7313,17 @@ export interface operations {
   searchCartaPorteHazardousMaterials: {
     parameters: {
       query: {
-        /** @description Modo de paginación de la búsqueda. `page` (por defecto) o `cursor` (recomendado para listas grandes). */
+        /** Modo de paginación de la búsqueda. `page` (por defecto) o `cursor` (recomendado para listas grandes). */
         pagination?: components['parameters']['SearchPagination']
-        /** @description Devuelve los resultados posteriores al cursor indicado. Solo con `pagination=cursor`; mutuamente excluyente con `before`. */
+        /** Devuelve los resultados posteriores al cursor indicado. Solo con `pagination=cursor`; mutuamente excluyente con `before`. */
         after?: components['parameters']['SearchAfter']
-        /** @description Devuelve los resultados anteriores al cursor indicado. Solo con `pagination=cursor`; mutuamente excluyente con `after`. */
+        /** Devuelve los resultados anteriores al cursor indicado. Solo con `pagination=cursor`; mutuamente excluyente con `after`. */
         before?: components['parameters']['SearchBefore']
-        /** @description Prefijo para buscar en `key`, `description` o `class_division`. */
+        /** Prefijo para buscar en `key`, `description` o `class_division`. */
         q: string
-        /** @description Página de resultados a regresar, empezando desde la página 1. El máximo no es fijo; junto con `limit` debe caber dentro del tope de 3,000 resultados. */
+        /** Página de resultados a regresar, empezando desde la página 1. El máximo no es fijo; junto con `limit` debe caber dentro del tope de 3,000 resultados. */
         page?: number
-        /** @description Número del 1 al 100 que representa la cantidad máxima de resultados a regresar con motivos de paginación. */
+        /** Número del 1 al 100 que representa la cantidad máxima de resultados a regresar con motivos de paginación. */
         limit?: number
       }
       header?: never
@@ -7332,7 +7332,7 @@ export interface operations {
     }
     requestBody?: never
     responses: {
-      /** @description Búsqueda exitosa */
+      /** Búsqueda exitosa */
       200: {
         headers: {
           [name: string]: unknown
@@ -7351,17 +7351,17 @@ export interface operations {
   searchCartaPorteNavalAuthorizations: {
     parameters: {
       query: {
-        /** @description Modo de paginación de la búsqueda. `page` (por defecto) o `cursor` (recomendado para listas grandes). */
+        /** Modo de paginación de la búsqueda. `page` (por defecto) o `cursor` (recomendado para listas grandes). */
         pagination?: components['parameters']['SearchPagination']
-        /** @description Devuelve los resultados posteriores al cursor indicado. Solo con `pagination=cursor`; mutuamente excluyente con `before`. */
+        /** Devuelve los resultados posteriores al cursor indicado. Solo con `pagination=cursor`; mutuamente excluyente con `before`. */
         after?: components['parameters']['SearchAfter']
-        /** @description Devuelve los resultados anteriores al cursor indicado. Solo con `pagination=cursor`; mutuamente excluyente con `after`. */
+        /** Devuelve los resultados anteriores al cursor indicado. Solo con `pagination=cursor`; mutuamente excluyente con `after`. */
         before?: components['parameters']['SearchBefore']
-        /** @description Prefijo para buscar en `key`. */
+        /** Prefijo para buscar en `key`. */
         q: string
-        /** @description Página de resultados a regresar, empezando desde la página 1. El máximo no es fijo; junto con `limit` debe caber dentro del tope de 3,000 resultados. */
+        /** Página de resultados a regresar, empezando desde la página 1. El máximo no es fijo; junto con `limit` debe caber dentro del tope de 3,000 resultados. */
         page?: number
-        /** @description Número del 1 al 100 que representa la cantidad máxima de resultados a regresar con motivos de paginación. */
+        /** Número del 1 al 100 que representa la cantidad máxima de resultados a regresar con motivos de paginación. */
         limit?: number
       }
       header?: never
@@ -7370,7 +7370,7 @@ export interface operations {
     }
     requestBody?: never
     responses: {
-      /** @description Búsqueda exitosa */
+      /** Búsqueda exitosa */
       200: {
         headers: {
           [name: string]: unknown
@@ -7393,17 +7393,17 @@ export interface operations {
   searchCartaPortePortStations: {
     parameters: {
       query: {
-        /** @description Modo de paginación de la búsqueda. `page` (por defecto) o `cursor` (recomendado para listas grandes). */
+        /** Modo de paginación de la búsqueda. `page` (por defecto) o `cursor` (recomendado para listas grandes). */
         pagination?: components['parameters']['SearchPagination']
-        /** @description Devuelve los resultados posteriores al cursor indicado. Solo con `pagination=cursor`; mutuamente excluyente con `before`. */
+        /** Devuelve los resultados posteriores al cursor indicado. Solo con `pagination=cursor`; mutuamente excluyente con `before`. */
         after?: components['parameters']['SearchAfter']
-        /** @description Devuelve los resultados anteriores al cursor indicado. Solo con `pagination=cursor`; mutuamente excluyente con `after`. */
+        /** Devuelve los resultados anteriores al cursor indicado. Solo con `pagination=cursor`; mutuamente excluyente con `after`. */
         before?: components['parameters']['SearchBefore']
-        /** @description Prefijo para buscar en `key`, `description` o `iata_designator`. */
+        /** Prefijo para buscar en `key`, `description` o `iata_designator`. */
         q: string
-        /** @description Página de resultados a regresar, empezando desde la página 1. El máximo no es fijo; junto con `limit` debe caber dentro del tope de 3,000 resultados. */
+        /** Página de resultados a regresar, empezando desde la página 1. El máximo no es fijo; junto con `limit` debe caber dentro del tope de 3,000 resultados. */
         page?: number
-        /** @description Número del 1 al 100 que representa la cantidad máxima de resultados a regresar con motivos de paginación. */
+        /** Número del 1 al 100 que representa la cantidad máxima de resultados a regresar con motivos de paginación. */
         limit?: number
       }
       header?: never
@@ -7412,7 +7412,7 @@ export interface operations {
     }
     requestBody?: never
     responses: {
-      /** @description Búsqueda exitosa */
+      /** Búsqueda exitosa */
       200: {
         headers: {
           [name: string]: unknown
@@ -7431,17 +7431,17 @@ export interface operations {
   searchCartaPorteMarineContainers: {
     parameters: {
       query: {
-        /** @description Modo de paginación de la búsqueda. `page` (por defecto) o `cursor` (recomendado para listas grandes). */
+        /** Modo de paginación de la búsqueda. `page` (por defecto) o `cursor` (recomendado para listas grandes). */
         pagination?: components['parameters']['SearchPagination']
-        /** @description Devuelve los resultados posteriores al cursor indicado. Solo con `pagination=cursor`; mutuamente excluyente con `before`. */
+        /** Devuelve los resultados posteriores al cursor indicado. Solo con `pagination=cursor`; mutuamente excluyente con `before`. */
         after?: components['parameters']['SearchAfter']
-        /** @description Devuelve los resultados anteriores al cursor indicado. Solo con `pagination=cursor`; mutuamente excluyente con `after`. */
+        /** Devuelve los resultados anteriores al cursor indicado. Solo con `pagination=cursor`; mutuamente excluyente con `after`. */
         before?: components['parameters']['SearchBefore']
-        /** @description Prefijo para buscar en `key` o `description`. */
+        /** Prefijo para buscar en `key` o `description`. */
         q: string
-        /** @description Página de resultados a regresar, empezando desde la página 1. El máximo no es fijo; junto con `limit` debe caber dentro del tope de 3,000 resultados. */
+        /** Página de resultados a regresar, empezando desde la página 1. El máximo no es fijo; junto con `limit` debe caber dentro del tope de 3,000 resultados. */
         page?: number
-        /** @description Número del 1 al 100 que representa la cantidad máxima de resultados a regresar con motivos de paginación. */
+        /** Número del 1 al 100 que representa la cantidad máxima de resultados a regresar con motivos de paginación. */
         limit?: number
       }
       header?: never
@@ -7450,7 +7450,7 @@ export interface operations {
     }
     requestBody?: never
     responses: {
-      /** @description Búsqueda exitosa */
+      /** Búsqueda exitosa */
       200: {
         headers: {
           [name: string]: unknown
@@ -7469,19 +7469,19 @@ export interface operations {
   listCustomers: {
     parameters: {
       query?: {
-        /** @description Modo de paginación de la búsqueda. `page` (por defecto) o `cursor` (recomendado para listas grandes). */
+        /** Modo de paginación de la búsqueda. `page` (por defecto) o `cursor` (recomendado para listas grandes). */
         pagination?: components['parameters']['SearchPagination']
-        /** @description Devuelve los resultados posteriores al cursor indicado. Solo con `pagination=cursor`; mutuamente excluyente con `before`. */
+        /** Devuelve los resultados posteriores al cursor indicado. Solo con `pagination=cursor`; mutuamente excluyente con `before`. */
         after?: components['parameters']['SearchAfter']
-        /** @description Devuelve los resultados anteriores al cursor indicado. Solo con `pagination=cursor`; mutuamente excluyente con `after`. */
+        /** Devuelve los resultados anteriores al cursor indicado. Solo con `pagination=cursor`; mutuamente excluyente con `after`. */
         before?: components['parameters']['SearchBefore']
-        /** @description Consulta. Texto a buscar en `legal_name` (nombre fiscal) o en `tax_id` (RFC). */
+        /** Consulta. Texto a buscar en `legal_name` (nombre fiscal) o en `tax_id` (RFC). */
         q?: string
-        /** @description Objeto con rango de fechas solicitado. */
+        /** Objeto con rango de fechas solicitado. */
         date?: components['parameters']['SearchDate']
-        /** @description Página de resultados a regresar, empezando desde la página 1. El máximo no es fijo; junto con `limit` debe caber dentro del tope de 3,000 resultados (con el `limit` por defecto de 100, la página máxima es 30). */
+        /** Página de resultados a regresar, empezando desde la página 1. El máximo no es fijo; junto con `limit` debe caber dentro del tope de 3,000 resultados (con el `limit` por defecto de 100, la página máxima es 30). */
         page?: components['parameters']['SearchPage']
-        /** @description Número del 1 al 100 que representa la cantidad máxima de resultados a regresar con motivos de paginación. */
+        /** Número del 1 al 100 que representa la cantidad máxima de resultados a regresar con motivos de paginación. */
         limit?: components['parameters']['SearchLimit']
       }
       header?: never
@@ -7490,7 +7490,7 @@ export interface operations {
     }
     requestBody?: never
     responses: {
-      /** @description Resultado de la búsqueda */
+      /** Resultado de la búsqueda */
       200: {
         headers: {
           [name: string]: unknown
@@ -7510,7 +7510,7 @@ export interface operations {
     parameters: {
       query?: {
         /**
-         * @description Si pasas el valor `true`, se generará un enlace para que el cliente pueda editar
+         * Si pasas el valor `true`, se generará un enlace para que el cliente pueda editar
          *     su información fiscal. Este enlace estará disponible en el campo "edit_link", será
          *     válido por 7 días y sólo se podrá usar una vez.
          *     Además, pasar el valor `true` desactivará la validación de información fiscal con el SAT,
@@ -7524,7 +7524,7 @@ export interface operations {
     }
     requestBody: components['requestBodies']['CustomerCreate']
     responses: {
-      /** @description Un objeto `Customer` con la misma información ya existía */
+      /** Un objeto `Customer` con la misma información ya existía */
       200: {
         headers: {
           [name: string]: unknown
@@ -7533,7 +7533,7 @@ export interface operations {
           'application/json': components['schemas']['Customer']
         }
       }
-      /** @description Nuevo objeto `Customer` creado */
+      /** Nuevo objeto `Customer` creado */
       201: {
         headers: {
           [name: string]: unknown
@@ -7554,14 +7554,14 @@ export interface operations {
       query?: never
       header?: never
       path: {
-        /** @description ID del objeto a obtener */
+        /** ID del objeto a obtener */
         customer_id: string
       }
       cookie?: never
     }
     requestBody?: never
     responses: {
-      /** @description Objeto `Customer` */
+      /** Objeto `Customer` */
       200: {
         headers: {
           [name: string]: unknown
@@ -7580,7 +7580,7 @@ export interface operations {
     parameters: {
       query?: {
         /**
-         * @description Si pasas el valor `true`, se generará un enlace para que el cliente pueda editar
+         * Si pasas el valor `true`, se generará un enlace para que el cliente pueda editar
          *     su información fiscal. Este enlace estará disponible en el campo "edit_link", será
          *     válido por 7 días y sólo se podrá usar una vez. Pasar el valor `true` al editar
          *     **no** desactivará la validación de información fiscal con el SAT.
@@ -7589,14 +7589,14 @@ export interface operations {
       }
       header?: never
       path: {
-        /** @description ID del objeto a editar */
+        /** ID del objeto a editar */
         customer_id: string
       }
       cookie?: never
     }
     requestBody: components['requestBodies']['CustomerEdit']
     responses: {
-      /** @description Objeto `Customer` editado correctamente */
+      /** Objeto `Customer` editado correctamente */
       200: {
         headers: {
           [name: string]: unknown
@@ -7616,14 +7616,14 @@ export interface operations {
       query?: never
       header?: never
       path: {
-        /** @description ID del objeto a eliminar */
+        /** ID del objeto a eliminar */
         customer_id: string
       }
       cookie?: never
     }
     requestBody?: never
     responses: {
-      /** @description Objeto `Customer` eliminado correctamente */
+      /** Objeto `Customer` eliminado correctamente */
       200: {
         headers: {
           [name: string]: unknown
@@ -7643,7 +7643,7 @@ export interface operations {
       query?: never
       header?: never
       path: {
-        /** @description ID del objeto `Customer` a editar */
+        /** ID del objeto `Customer` a editar */
         customer_id: string
       }
       cookie?: never
@@ -7651,20 +7651,20 @@ export interface operations {
     requestBody?: {
       content: {
         'application/json': {
-          /** @description Correo electrónico del cliente. Si no se proporciona, se usará el correo electrónico del cliente. */
+          /** Correo electrónico del cliente. Si no se proporciona, se usará el correo electrónico del cliente. */
           email?: string
         }
       }
     }
     responses: {
-      /** @description Enlace de edición enviado correctamente */
+      /** Enlace de edición enviado correctamente */
       200: {
         headers: {
           [name: string]: unknown
         }
         content: {
           'application/json': {
-            /** @description Indica si el enlace se envió correctamente */
+            /** Indica si el enlace se envió correctamente */
             ok?: boolean
           }
         }
@@ -7680,34 +7680,34 @@ export interface operations {
       query?: never
       header?: never
       path: {
-        /** @description ID del objeto `Customer` a validar */
+        /** ID del objeto `Customer` a validar */
         customer_id: string
       }
       cookie?: never
     }
     requestBody?: never
     responses: {
-      /** @description Resultado de la validación */
+      /** Resultado de la validación */
       200: {
         headers: {
           [name: string]: unknown
         }
         content: {
           'application/json': {
-            /** @description Indica si la información fiscal del cliente coincide con los registros del SAT */
+            /** Indica si la información fiscal del cliente coincide con los registros del SAT */
             is_valid: boolean
-            /** @description Detalles de validación fiscal. Es un array vacío cuando `is_valid` es `true`. */
+            /** Detalles de validación fiscal. Es un array vacío cuando `is_valid` es `true`. */
             errors: {
               /**
-               * @description Indica que Facturapi generó el detalle de validación.
+               * Indica que Facturapi generó el detalle de validación.
                * @enum {string}
                */
               source: 'facturapi'
-              /** @description Código estable del detalle de validación. */
+              /** Código estable del detalle de validación. */
               code: string
-              /** @description Ruta del campo cuya información fiscal no es válida. */
+              /** Ruta del campo cuya información fiscal no es válida. */
               path?: string
-              /** @description Mensaje descriptivo del detalle de validación. */
+              /** Mensaje descriptivo del detalle de validación. */
               message: string
             }[]
           }
@@ -7722,19 +7722,19 @@ export interface operations {
   listProducts: {
     parameters: {
       query?: {
-        /** @description Modo de paginación de la búsqueda. `page` (por defecto) o `cursor` (recomendado para listas grandes). */
+        /** Modo de paginación de la búsqueda. `page` (por defecto) o `cursor` (recomendado para listas grandes). */
         pagination?: components['parameters']['SearchPagination']
-        /** @description Devuelve los resultados posteriores al cursor indicado. Solo con `pagination=cursor`; mutuamente excluyente con `before`. */
+        /** Devuelve los resultados posteriores al cursor indicado. Solo con `pagination=cursor`; mutuamente excluyente con `before`. */
         after?: components['parameters']['SearchAfter']
-        /** @description Devuelve los resultados anteriores al cursor indicado. Solo con `pagination=cursor`; mutuamente excluyente con `after`. */
+        /** Devuelve los resultados anteriores al cursor indicado. Solo con `pagination=cursor`; mutuamente excluyente con `after`. */
         before?: components['parameters']['SearchBefore']
-        /** @description Consulta. Texto a buscar en la descripción del producto o SKU. */
+        /** Consulta. Texto a buscar en la descripción del producto o SKU. */
         q?: string
-        /** @description SKU del producto. */
+        /** SKU del producto. */
         sku?: string
-        /** @description Página de resultados a regresar, empezando desde la página 1. El máximo no es fijo; junto con `limit` debe caber dentro del tope de 3,000 resultados (con el `limit` por defecto de 100, la página máxima es 30). */
+        /** Página de resultados a regresar, empezando desde la página 1. El máximo no es fijo; junto con `limit` debe caber dentro del tope de 3,000 resultados (con el `limit` por defecto de 100, la página máxima es 30). */
         page?: components['parameters']['SearchPage']
-        /** @description Número del 1 al 100 que representa la cantidad máxima de resultados a regresar con motivos de paginación. */
+        /** Número del 1 al 100 que representa la cantidad máxima de resultados a regresar con motivos de paginación. */
         limit?: components['parameters']['SearchLimit']
       }
       header?: never
@@ -7743,7 +7743,7 @@ export interface operations {
     }
     requestBody?: never
     responses: {
-      /** @description Resultado de la búsqueda */
+      /** Resultado de la búsqueda */
       200: {
         headers: {
           [name: string]: unknown
@@ -7768,7 +7768,7 @@ export interface operations {
     }
     requestBody: components['requestBodies']['ProductCreate']
     responses: {
-      /** @description Nuevo objeto `Product` creado */
+      /** Nuevo objeto `Product` creado */
       200: {
         headers: {
           [name: string]: unknown
@@ -7789,14 +7789,14 @@ export interface operations {
       query?: never
       header?: never
       path: {
-        /** @description ID del objeto a obtener */
+        /** ID del objeto a obtener */
         product_id: string
       }
       cookie?: never
     }
     requestBody?: never
     responses: {
-      /** @description Objeto `Product` */
+      /** Objeto `Product` */
       200: {
         headers: {
           [name: string]: unknown
@@ -7816,14 +7816,14 @@ export interface operations {
       query?: never
       header?: never
       path: {
-        /** @description ID del objeto a editar */
+        /** ID del objeto a editar */
         product_id: string
       }
       cookie?: never
     }
     requestBody: components['requestBodies']['ProductEdit']
     responses: {
-      /** @description Objeto `Product` editado correctamente */
+      /** Objeto `Product` editado correctamente */
       200: {
         headers: {
           [name: string]: unknown
@@ -7843,14 +7843,14 @@ export interface operations {
       query?: never
       header?: never
       path: {
-        /** @description ID del objeto a eliminar */
+        /** ID del objeto a eliminar */
         product_id: string
       }
       cookie?: never
     }
     requestBody?: never
     responses: {
-      /** @description Objeto `Product` eliminado correctamente */
+      /** Objeto `Product` eliminado correctamente */
       200: {
         headers: {
           [name: string]: unknown
@@ -7868,14 +7868,14 @@ export interface operations {
   listInvoices: {
     parameters: {
       query?: {
-        /** @description Modo de paginación de la búsqueda. `page` (por defecto) o `cursor` (recomendado para listas grandes). */
+        /** Modo de paginación de la búsqueda. `page` (por defecto) o `cursor` (recomendado para listas grandes). */
         pagination?: components['parameters']['SearchPagination']
-        /** @description Devuelve los resultados posteriores al cursor indicado. Solo con `pagination=cursor`; mutuamente excluyente con `before`. */
+        /** Devuelve los resultados posteriores al cursor indicado. Solo con `pagination=cursor`; mutuamente excluyente con `before`. */
         after?: components['parameters']['SearchAfter']
-        /** @description Devuelve los resultados anteriores al cursor indicado. Solo con `pagination=cursor`; mutuamente excluyente con `after`. */
+        /** Devuelve los resultados anteriores al cursor indicado. Solo con `pagination=cursor`; mutuamente excluyente con `after`. */
         before?: components['parameters']['SearchBefore']
         /**
-         * @description Consulta. Texto a buscar en la factura.
+         * Consulta. Texto a buscar en la factura.
          *
          *     La búsqueda se realizará por coincidencias **parciales** en los campos:
          *
@@ -7891,31 +7891,31 @@ export interface operations {
          *     - `total`
          */
         q?: string
-        /** @description Identificador del cliente. Útil para obtener las facturas emitidas a un sólo cliente. */
+        /** Identificador del cliente. Útil para obtener las facturas emitidas a un sólo cliente. */
         customer?: string
-        /** @description Tipo de factura. Búsqueda por tipo de factura con las claves exactas. */
+        /** Tipo de factura. Búsqueda por tipo de factura con las claves exactas. */
         type?: 'I' | 'E' | 'P' | 'N' | 'T'
-        /** @description Método de pago. Búsqueda exacta por método de pago. */
+        /** Método de pago. Búsqueda exacta por método de pago. */
         payment_method?: 'PUE' | 'PPD'
-        /** @description Filtrar por folio de la factura. Coincidencia exacta. */
+        /** Filtrar por folio de la factura. Coincidencia exacta. */
         folio_number?: number
-        /** @description Filtrar por serie de la factura. Coincidencia exacta. */
+        /** Filtrar por serie de la factura. Coincidencia exacta. */
         series?: string
-        /** @description Filtrar por identificador externo. Coincidencia exacta. */
+        /** Filtrar por identificador externo. Coincidencia exacta. */
         external_id?: string
-        /** @description Filtrar por tipo de emisión. */
+        /** Filtrar por tipo de emisión. */
         issuer_type?: components['schemas']['IssuingType']
-        /** @description Filtrar por uno o más estados de cancelación. */
+        /** Filtrar por uno o más estados de cancelación. */
         cancellation_status?: components['schemas']['CancellationStatus'][]
-        /** @description Filtrar por el UUID del CFDI. Coincidencia exacta. */
+        /** Filtrar por el UUID del CFDI. Coincidencia exacta. */
         uuid?: string
-        /** @description Filtrar por estado de pago. Coincidencia exacta. */
+        /** Filtrar por estado de pago. Coincidencia exacta. */
         payment_status?: 'paid' | 'unpaid'
-        /** @description Objeto con rango de fechas solicitado. El rango filtra el campo `date` de la factura. */
+        /** Objeto con rango de fechas solicitado. El rango filtra el campo `date` de la factura. */
         date?: components['schemas']['DateRange']
-        /** @description Página de resultados a regresar, empezando desde la página 1. El máximo no es fijo; junto con `limit` debe caber dentro del tope de 3,000 resultados (con el `limit` por defecto de 100, la página máxima es 30). */
+        /** Página de resultados a regresar, empezando desde la página 1. El máximo no es fijo; junto con `limit` debe caber dentro del tope de 3,000 resultados (con el `limit` por defecto de 100, la página máxima es 30). */
         page?: number
-        /** @description Número del 1 al 100 que representa la cantidad máxima de resultados a regresar con motivos de paginación. */
+        /** Número del 1 al 100 que representa la cantidad máxima de resultados a regresar con motivos de paginación. */
         limit?: number
       }
       header?: never
@@ -7924,7 +7924,7 @@ export interface operations {
     }
     requestBody?: never
     responses: {
-      /** @description Resultado de la búsqueda */
+      /** Resultado de la búsqueda */
       200: {
         headers: {
           [name: string]: unknown
@@ -7944,7 +7944,7 @@ export interface operations {
     parameters: {
       query?: {
         /**
-         * @description Útil para facturas de gran tamaño. Si se envía `false` o no se envía, la llamada esperará a que el SAT responda timbrando la factura.
+         * Útil para facturas de gran tamaño. Si se envía `false` o no se envía, la llamada esperará a que el SAT responda timbrando la factura.
          *     Si se envía `true`, la llamada regresará inmediatamente con el objeto `invoice` en status `pending`, y podrá consultarse su cambio de status
          *     a `valid` en un momento posterior.
          */
@@ -7956,7 +7956,7 @@ export interface operations {
     }
     requestBody: components['requestBodies']['InvoiceCreate']
     responses: {
-      /** @description Nuevo objeto `Invoice` creado */
+      /** Nuevo objeto `Invoice` creado */
       200: {
         headers: {
           [name: string]: unknown
@@ -7967,7 +7967,7 @@ export interface operations {
             | components['schemas']['InvoiceDraft']
         }
       }
-      /** @description Solicitud aceptada; Facturapi intentará recuperar el CFDI hasta cinco veces, una cada 10 minutos */
+      /** Solicitud aceptada; Facturapi intentará recuperar el CFDI hasta cinco veces, una cada 10 minutos */
       202: {
         headers: {
           [name: string]: unknown
@@ -7991,14 +7991,14 @@ export interface operations {
       query?: never
       header?: never
       path: {
-        /** @description ID del objeto a obtener */
+        /** ID del objeto a obtener */
         invoice_id: string
       }
       cookie?: never
     }
     requestBody?: never
     responses: {
-      /** @description Objeto `Invoice` */
+      /** Objeto `Invoice` */
       200: {
         headers: {
           [name: string]: unknown
@@ -8018,14 +8018,14 @@ export interface operations {
       query?: never
       header?: never
       path: {
-        /** @description ID del objeto a editar */
+        /** ID del objeto a editar */
         invoice_id: string
       }
       cookie?: never
     }
     requestBody: components['requestBodies']['InvoiceEdit']
     responses: {
-      /** @description Objeto `Invoice` editado correctamente */
+      /** Objeto `Invoice` editado correctamente */
       200: {
         headers: {
           [name: string]: unknown
@@ -8044,7 +8044,7 @@ export interface operations {
     parameters: {
       query: {
         /**
-         * @description Clave que representa el motivo de la cancelación de la factura.
+         * Clave que representa el motivo de la cancelación de la factura.
          *
          *     - `01`: **Comprobante emitido con errores con relación**. Cuando la
          *       factura contiene algún error en las cantidades, claves o cualquier otro dato y ya
@@ -8059,7 +8059,7 @@ export interface operations {
          */
         motive: '01' | '02' | '03' | '04'
         /**
-         * @description ID de la factura que sustituye a la factura que se está cancelando.
+         * ID de la factura que sustituye a la factura que se está cancelando.
          *
          *     Puedes usar el ID de Facturapi o el folio fiscal (UUID).
          */
@@ -8067,14 +8067,14 @@ export interface operations {
       }
       header?: never
       path: {
-        /** @description ID de la factura a cancelar */
+        /** ID de la factura a cancelar */
         invoice_id: string
       }
       cookie?: never
     }
     requestBody?: never
     responses: {
-      /** @description Solicitud de cancelación exitosa */
+      /** Solicitud de cancelación exitosa */
       200: {
         headers: {
           [name: string]: unknown
@@ -8095,14 +8095,14 @@ export interface operations {
       query?: never
       header?: never
       path: {
-        /** @description ID de la factura a copiar */
+        /** ID de la factura a copiar */
         invoice_id: string
       }
       cookie?: never
     }
     requestBody?: never
     responses: {
-      /** @description Nuevo objeto `Invoice` con status `draft`. */
+      /** Nuevo objeto `Invoice` con status `draft`. */
       200: {
         headers: {
           [name: string]: unknown
@@ -8121,7 +8121,7 @@ export interface operations {
     parameters: {
       query?: {
         /**
-         * @description Útil para facturas de gran tamaño. Si se envía `false` o no se envía, la llamada esperará a que el SAT responda timbrando la factura.
+         * Útil para facturas de gran tamaño. Si se envía `false` o no se envía, la llamada esperará a que el SAT responda timbrando la factura.
          *     Si se envía `true`, la llamada regresará inmediatamente con el objeto `invoice` en status `pending`, y podrá consultarse su cambio de status
          *     a `valid` en un momento posterior.
          */
@@ -8129,14 +8129,14 @@ export interface operations {
       }
       header?: never
       path: {
-        /** @description ID del objeto a timbrar */
+        /** ID del objeto a timbrar */
         invoice_id: string
       }
       cookie?: never
     }
     requestBody?: never
     responses: {
-      /** @description Objeto `Invoice` timbrado correctamente */
+      /** Objeto `Invoice` timbrado correctamente */
       200: {
         headers: {
           [name: string]: unknown
@@ -8157,14 +8157,14 @@ export interface operations {
       query?: never
       header?: never
       path: {
-        /** @description ID del objeto invoice a actualizar */
+        /** ID del objeto invoice a actualizar */
         invoice_id: string
       }
       cookie?: never
     }
     requestBody?: never
     responses: {
-      /** @description Objeto `Invoice` actualizado */
+      /** Objeto `Invoice` actualizado */
       200: {
         headers: {
           [name: string]: unknown
@@ -8182,58 +8182,58 @@ export interface operations {
   getInvoicePaymentSummary: {
     parameters: {
       query: {
-        /** @description Monto que se paga de esta factura, expresado en la divisa de la factura. No puede exceder el saldo pendiente. */
+        /** Monto que se paga de esta factura, expresado en la divisa de la factura. No puede exceder el saldo pendiente. */
         amount: number
       }
       header?: never
       path: {
-        /** @description ID de la factura de ingreso (método de pago PPD) que se desea pagar */
+        /** ID de la factura de ingreso (método de pago PPD) que se desea pagar */
         invoice_id: string
       }
       cookie?: never
     }
     requestBody?: never
     responses: {
-      /** @description Resumen del documento relacionado */
+      /** Resumen del documento relacionado */
       200: {
         headers: {
           [name: string]: unknown
         }
         content: {
           'application/json': {
-            /** @description UUID de la factura */
+            /** UUID de la factura */
             uuid: string
-            /** @description Folio de la factura. Se omite si la factura no lo tiene registrado. */
+            /** Folio de la factura. Se omite si la factura no lo tiene registrado. */
             folio_number?: number
-            /** @description Serie de la factura */
+            /** Serie de la factura */
             series: string | null
-            /** @description Número de parcialidad que corresponde a este pago */
+            /** Número de parcialidad que corresponde a este pago */
             installment: number
-            /** @description Saldo pendiente de la factura antes de aplicar este pago */
+            /** Saldo pendiente de la factura antes de aplicar este pago */
             last_balance: number
-            /** @description Total de la factura */
+            /** Total de la factura */
             total: number
-            /** @description Divisa de la factura */
+            /** Divisa de la factura */
             currency: string
-            /** @description Monto que se paga en esta parcialidad */
+            /** Monto que se paga en esta parcialidad */
             amount: number
-            /** @description Impuestos de la factura prorrateados al monto pagado */
+            /** Impuestos de la factura prorrateados al monto pagado */
             taxes: {
-              /** @description Base del impuesto prorrateada al monto pagado */
+              /** Base del impuesto prorrateada al monto pagado */
               base: number
-              /** @description Tasa o cuota del impuesto */
+              /** Tasa o cuota del impuesto */
               rate: number
               /**
-               * @description Tipo de impuesto (IVA, ISR, etc.)
+               * Tipo de impuesto (IVA, ISR, etc.)
                * @enum {string}
                */
               type: 'IVA' | 'ISR' | 'IEPS'
               /**
-               * @description Tipo de factor (Tasa, Exento, etc.)
+               * Tipo de factor (Tasa, Exento, etc.)
                * @enum {string}
                */
               factor: 'Tasa' | 'Cuota' | 'Exento'
-              /** @description Indica si se trata de una retención */
+              /** Indica si se trata de una retención */
               withholding: boolean
             }[]
           }
@@ -8255,7 +8255,7 @@ export interface operations {
     }
     requestBody: components['requestBodies']['InvoiceEdit']
     responses: {
-      /** @description El archivo PDF de la factura */
+      /** El archivo PDF de la factura */
       200: {
         headers: {
           [name: string]: unknown
@@ -8279,7 +8279,7 @@ export interface operations {
     }
     requestBody: components['requestBodies']['InvoiceEdit']
     responses: {
-      /** @description Objeto con una URL temporal de descarga, su fecha de expiración, el tipo de contenido y el nombre del archivo. */
+      /** Objeto con una URL temporal de descarga, su fecha de expiración, el tipo de contenido y el nombre del archivo. */
       200: {
         headers: {
           [name: string]: unknown
@@ -8299,16 +8299,16 @@ export interface operations {
       query?: never
       header?: never
       path: {
-        /** @description ID del objeto a descargar */
+        /** ID del objeto a descargar */
         invoice_id: string
-        /** @description Formato del archivo de descarga */
+        /** Formato del archivo de descarga */
         format: 'xml' | 'pdf' | 'zip'
       }
       cookie?: never
     }
     requestBody?: never
     responses: {
-      /** @description Archivo del comprobante CFDI en el formato solicitado */
+      /** Archivo del comprobante CFDI en el formato solicitado */
       200: {
         headers: {
           [name: string]: unknown
@@ -8328,16 +8328,16 @@ export interface operations {
       query?: never
       header?: never
       path: {
-        /** @description ID del objeto a descargar */
+        /** ID del objeto a descargar */
         invoice_id: string
-        /** @description Formato del archivo de descarga */
+        /** Formato del archivo de descarga */
         format: 'pdf' | 'xml' | 'zip'
       }
       cookie?: never
     }
     requestBody?: never
     responses: {
-      /** @description Objeto con una URL temporal de descarga, su fecha de expiración, el tipo de contenido y el nombre del archivo. */
+      /** Objeto con una URL temporal de descarga, su fecha de expiración, el tipo de contenido y el nombre del archivo. */
       200: {
         headers: {
           [name: string]: unknown
@@ -8359,16 +8359,16 @@ export interface operations {
       query?: never
       header?: never
       path: {
-        /** @description ID del objeto a obtener */
+        /** ID del objeto a obtener */
         invoice_id: string
-        /** @description Formato del archivo de descarga */
+        /** Formato del archivo de descarga */
         format: 'xml' | 'pdf'
       }
       cookie?: never
     }
     requestBody?: never
     responses: {
-      /** @description Archivo del acuse de recibo de cancelación */
+      /** Archivo del acuse de recibo de cancelación */
       200: {
         headers: {
           [name: string]: unknown
@@ -8388,16 +8388,16 @@ export interface operations {
       query?: never
       header?: never
       path: {
-        /** @description ID del objeto a descargar */
+        /** ID del objeto a descargar */
         invoice_id: string
-        /** @description Formato del acuse de cancelación */
+        /** Formato del acuse de cancelación */
         format: 'xml' | 'pdf'
       }
       cookie?: never
     }
     requestBody?: never
     responses: {
-      /** @description Objeto con una URL temporal de descarga, su fecha de expiración, el tipo de contenido y el nombre del archivo. */
+      /** Objeto con una URL temporal de descarga, su fecha de expiración, el tipo de contenido y el nombre del archivo. */
       200: {
         headers: {
           [name: string]: unknown
@@ -8418,7 +8418,7 @@ export interface operations {
       query?: never
       header?: never
       path: {
-        /** @description ID del objeto a obtener */
+        /** ID del objeto a obtener */
         invoice_id: string
       }
       cookie?: never
@@ -8426,20 +8426,20 @@ export interface operations {
     requestBody?: {
       content: {
         'application/json': {
-          /** @description Dirección de correo electrónico a enviar la factura. Si no se envía este parámetro, la factura será enviada al correo que el cliente tenga registrado. */
+          /** Dirección de correo electrónico a enviar la factura. Si no se envía este parámetro, la factura será enviada al correo que el cliente tenga registrado. */
           email?: string | string[]
         }
       }
     }
     responses: {
-      /** @description Objeto genérico de respuesta */
+      /** Objeto genérico de respuesta */
       200: {
         headers: {
           [name: string]: unknown
         }
         content: {
           'application/json': {
-            /** @description Indica si el correo fue enviado exitosamente */
+            /** Indica si el correo fue enviado exitosamente */
             ok: boolean
           }
         }
@@ -8453,19 +8453,19 @@ export interface operations {
   listInvoiceZipRequests: {
     parameters: {
       query?: {
-        /** @description Año a filtrar. Debe enviarse junto con `month`. */
+        /** Año a filtrar. Debe enviarse junto con `month`. */
         year?: number
-        /** @description Mes a filtrar. Debe enviarse junto con `year`. */
+        /** Mes a filtrar. Debe enviarse junto con `year`. */
         month?: number
-        /** @description Status de la solicitud. */
+        /** Status de la solicitud. */
         status?: components['schemas']['InvoiceZipRequestStatus']
-        /** @description Filtra facturas emitidas o recibidas. */
+        /** Filtra facturas emitidas o recibidas. */
         issuer_type?: components['schemas']['IssuingType']
-        /** @description Filtra por un tipo de factura o por un arreglo normalizado exacto. */
+        /** Filtra por un tipo de factura o por un arreglo normalizado exacto. */
         invoice_types?: components['schemas']['InvoiceZipRequestInvoiceType'][]
-        /** @description Página de resultados, empezando en 1. */
+        /** Página de resultados, empezando en 1. */
         page?: number
-        /** @description Número del 1 al 100 que representa la cantidad máxima de resultados a regresar con motivos de paginación. */
+        /** Número del 1 al 100 que representa la cantidad máxima de resultados a regresar con motivos de paginación. */
         limit?: components['parameters']['SearchLimit']
       }
       header?: never
@@ -8474,7 +8474,7 @@ export interface operations {
     }
     requestBody?: never
     responses: {
-      /** @description Resultado paginado de solicitudes de ZIP. */
+      /** Resultado paginado de solicitudes de ZIP. */
       200: {
         headers: {
           [name: string]: unknown
@@ -8503,7 +8503,7 @@ export interface operations {
       }
     }
     responses: {
-      /** @description Solicitud de ZIP creada o recuperada correctamente. */
+      /** Solicitud de ZIP creada o recuperada correctamente. */
       200: {
         headers: {
           [name: string]: unknown
@@ -8525,14 +8525,14 @@ export interface operations {
       query?: never
       header?: never
       path: {
-        /** @description Identificador de la solicitud de ZIP. */
+        /** Identificador de la solicitud de ZIP. */
         id: components['parameters']['InvoiceZipRequestId']
       }
       cookie?: never
     }
     requestBody?: never
     responses: {
-      /** @description Solicitud de ZIP recuperada correctamente. */
+      /** Solicitud de ZIP recuperada correctamente. */
       200: {
         headers: {
           [name: string]: unknown
@@ -8554,17 +8554,17 @@ export interface operations {
       query?: never
       header?: never
       path: {
-        /** @description Identificador de la solicitud de ZIP. */
+        /** Identificador de la solicitud de ZIP. */
         id: components['parameters']['InvoiceZipRequestId']
       }
       cookie?: never
     }
     requestBody?: never
     responses: {
-      /** @description Archivo ZIP generado. */
+      /** Archivo ZIP generado. */
       200: {
         headers: {
-          /** @description Nombre sugerido con formato `attachment; filename="YYYY-MM.zip"`. */
+          /** Nombre sugerido con formato `attachment; filename="YYYY-MM.zip"`. */
           'Content-Disposition'?: string
           [name: string]: unknown
         }
@@ -8586,14 +8586,14 @@ export interface operations {
       query?: never
       header?: never
       path: {
-        /** @description Identificador de la solicitud de ZIP. */
+        /** Identificador de la solicitud de ZIP. */
         id: components['parameters']['InvoiceZipRequestId']
       }
       cookie?: never
     }
     requestBody?: never
     responses: {
-      /** @description Objeto con una URL temporal de descarga, su fecha de expiración, el tipo de contenido y el nombre del archivo. */
+      /** Objeto con una URL temporal de descarga, su fecha de expiración, el tipo de contenido y el nombre del archivo. */
       200: {
         headers: {
           [name: string]: unknown
@@ -8614,29 +8614,29 @@ export interface operations {
   listReceipts: {
     parameters: {
       query?: {
-        /** @description Modo de paginación de la búsqueda. `page` (por defecto) o `cursor` (recomendado para listas grandes). */
+        /** Modo de paginación de la búsqueda. `page` (por defecto) o `cursor` (recomendado para listas grandes). */
         pagination?: components['parameters']['SearchPagination']
-        /** @description Devuelve los resultados posteriores al cursor indicado. Solo con `pagination=cursor`; mutuamente excluyente con `before`. */
+        /** Devuelve los resultados posteriores al cursor indicado. Solo con `pagination=cursor`; mutuamente excluyente con `before`. */
         after?: components['parameters']['SearchAfter']
-        /** @description Devuelve los resultados anteriores al cursor indicado. Solo con `pagination=cursor`; mutuamente excluyente con `after`. */
+        /** Devuelve los resultados anteriores al cursor indicado. Solo con `pagination=cursor`; mutuamente excluyente con `after`. */
         before?: components['parameters']['SearchBefore']
-        /** @description Consulta. Texto a buscar en la descripción de los conceptos del recibo o el SKU. */
+        /** Consulta. Texto a buscar en la descripción de los conceptos del recibo o el SKU. */
         q?: string
-        /** @description ID del cliente asociado al recibo. */
+        /** ID del cliente asociado al recibo. */
         customer?: string
-        /** @description Código que representa la forma de pago, de acuerdo al [catálogo del SAT](#forma-de-pago). Si se incluye, los recibos se agruparán y se listarán de acuerdo a la forma de pago. */
+        /** Código que representa la forma de pago, de acuerdo al [catálogo del SAT](#forma-de-pago). Si se incluye, los recibos se agruparán y se listarán de acuerdo a la forma de pago. */
         payment_form?: string
-        /** @description Fecha de creación mayor o igual a la especificada. */
+        /** Fecha de creación mayor o igual a la especificada. */
         'date[gte]'?: Date | string
-        /** @description Fecha de creación menor o igual a la especificada. */
+        /** Fecha de creación menor o igual a la especificada. */
         'date[lte]'?: Date | string
-        /** @description ID de la factura relacionada al recibo. */
+        /** ID de la factura relacionada al recibo. */
         invoice?: string
-        /** @description Objeto con rango de fechas solicitado. */
+        /** Objeto con rango de fechas solicitado. */
         date?: components['parameters']['SearchDate']
-        /** @description Página de resultados a regresar, empezando desde la página 1. El máximo no es fijo; junto con `limit` debe caber dentro del tope de 3,000 resultados (con el `limit` por defecto de 100, la página máxima es 30). */
+        /** Página de resultados a regresar, empezando desde la página 1. El máximo no es fijo; junto con `limit` debe caber dentro del tope de 3,000 resultados (con el `limit` por defecto de 100, la página máxima es 30). */
         page?: components['parameters']['SearchPage']
-        /** @description Número del 1 al 100 que representa la cantidad máxima de resultados a regresar con motivos de paginación. */
+        /** Número del 1 al 100 que representa la cantidad máxima de resultados a regresar con motivos de paginación. */
         limit?: components['parameters']['SearchLimit']
       }
       header?: never
@@ -8645,7 +8645,7 @@ export interface operations {
     }
     requestBody?: never
     responses: {
-      /** @description Resultado de la búsqueda */
+      /** Resultado de la búsqueda */
       200: {
         headers: {
           [name: string]: unknown
@@ -8670,7 +8670,7 @@ export interface operations {
     }
     requestBody: components['requestBodies']['ReceiptCreate']
     responses: {
-      /** @description Nuevo objeto `Receipt` creado */
+      /** Nuevo objeto `Receipt` creado */
       200: {
         headers: {
           [name: string]: unknown
@@ -8691,14 +8691,14 @@ export interface operations {
       query?: never
       header?: never
       path: {
-        /** @description ID del objeto a obtener */
+        /** ID del objeto a obtener */
         receipt_id: string
       }
       cookie?: never
     }
     requestBody?: never
     responses: {
-      /** @description Objeto `Receipt` */
+      /** Objeto `Receipt` */
       200: {
         headers: {
           [name: string]: unknown
@@ -8718,14 +8718,14 @@ export interface operations {
       query?: never
       header?: never
       path: {
-        /** @description ID del recibo a actualizar */
+        /** ID del recibo a actualizar */
         receipt_id: string
       }
       cookie?: never
     }
     requestBody: components['requestBodies']['ReceiptAssignCustomer']
     responses: {
-      /** @description Objeto `Receipt` actualizado */
+      /** Objeto `Receipt` actualizado */
       200: {
         headers: {
           [name: string]: unknown
@@ -8746,14 +8746,14 @@ export interface operations {
       query?: never
       header?: never
       path: {
-        /** @description ID del recibo a cancelar */
+        /** ID del recibo a cancelar */
         receipt_id: string
       }
       cookie?: never
     }
     requestBody?: never
     responses: {
-      /** @description Objeto 'Receipt' cancelado exitosamente */
+      /** Objeto 'Receipt' cancelado exitosamente */
       200: {
         headers: {
           [name: string]: unknown
@@ -8773,14 +8773,14 @@ export interface operations {
       query?: never
       header?: never
       path: {
-        /** @description ID del recibo a facturar */
+        /** ID del recibo a facturar */
         receipt_id: string
       }
       cookie?: never
     }
     requestBody: components['requestBodies']['ReceiptInvoice']
     responses: {
-      /** @description Nuevo objeto `Invoice` creado */
+      /** Nuevo objeto `Invoice` creado */
       200: {
         headers: {
           [name: string]: unknown
@@ -8805,7 +8805,7 @@ export interface operations {
     }
     requestBody: components['requestBodies']['ReceiptCreateToInvoice']
     responses: {
-      /** @description Objeto `Invoice` creado u objeto resumen cuando `dry_run=true` */
+      /** Objeto `Invoice` creado u objeto resumen cuando `dry_run=true` */
       200: {
         headers: {
           [name: string]: unknown
@@ -8831,7 +8831,7 @@ export interface operations {
     }
     requestBody: components['requestBodies']['ReceiptPreviewToInvoice']
     responses: {
-      /** @description Contenido binario del PDF */
+      /** Contenido binario del PDF */
       200: {
         headers: {
           [name: string]: unknown
@@ -8840,7 +8840,7 @@ export interface operations {
           'application/pdf': BinaryInput
         }
       }
-      /** @description No se encontraron recibos elegibles para las keys enviadas */
+      /** No se encontraron recibos elegibles para las keys enviadas */
       204: {
         headers: {
           [name: string]: unknown
@@ -8861,7 +8861,7 @@ export interface operations {
     }
     requestBody: components['requestBodies']['ReceiptPreviewToInvoice']
     responses: {
-      /** @description Objeto con una URL temporal de descarga, su fecha de expiración, el tipo de contenido y el nombre del archivo. */
+      /** Objeto con una URL temporal de descarga, su fecha de expiración, el tipo de contenido y el nombre del archivo. */
       200: {
         headers: {
           [name: string]: unknown
@@ -8886,7 +8886,7 @@ export interface operations {
     }
     requestBody: components['requestBodies']['ReceiptCreateGlobalInvoice']
     responses: {
-      /** @description Nuevo objeto `Invoice` creado, o `null` si no hay recibos abiertos en el periodo */
+      /** Nuevo objeto `Invoice` creado, o `null` si no hay recibos abiertos en el periodo */
       200: {
         headers: {
           [name: string]: unknown
@@ -8907,14 +8907,14 @@ export interface operations {
       query?: never
       header?: never
       path: {
-        /** @description ID del objeto a descargar */
+        /** ID del objeto a descargar */
         receipt_id: string
       }
       cookie?: never
     }
     requestBody?: never
     responses: {
-      /** @description Archivo del recibo digital en formato PDF */
+      /** Archivo del recibo digital en formato PDF */
       200: {
         headers: {
           [name: string]: unknown
@@ -8934,14 +8934,14 @@ export interface operations {
       query?: never
       header?: never
       path: {
-        /** @description ID del objeto a descargar */
+        /** ID del objeto a descargar */
         receipt_id: string
       }
       cookie?: never
     }
     requestBody?: never
     responses: {
-      /** @description Objeto con una URL temporal de descarga, su fecha de expiración, el tipo de contenido y el nombre del archivo. */
+      /** Objeto con una URL temporal de descarga, su fecha de expiración, el tipo de contenido y el nombre del archivo. */
       200: {
         headers: {
           [name: string]: unknown
@@ -8962,7 +8962,7 @@ export interface operations {
       query?: never
       header?: never
       path: {
-        /** @description ID del objeto a obtener */
+        /** ID del objeto a obtener */
         receipt_id: string
       }
       cookie?: never
@@ -8970,20 +8970,20 @@ export interface operations {
     requestBody?: {
       content: {
         'application/json': {
-          /** @description Dirección de correo electrónico a enviar el recibo digital. */
+          /** Dirección de correo electrónico a enviar el recibo digital. */
           email: string | string[]
         }
       }
     }
     responses: {
-      /** @description Objeto genérico de respuesta */
+      /** Objeto genérico de respuesta */
       200: {
         headers: {
           [name: string]: unknown
         }
         content: {
           'application/json': {
-            /** @description Indica si el correo fue enviado exitosamente */
+            /** Indica si el correo fue enviado exitosamente */
             ok: boolean
           }
         }
@@ -8997,25 +8997,25 @@ export interface operations {
   listRetentions: {
     parameters: {
       query?: {
-        /** @description Modo de paginación de la búsqueda. `page` (por defecto) o `cursor` (recomendado para listas grandes). */
+        /** Modo de paginación de la búsqueda. `page` (por defecto) o `cursor` (recomendado para listas grandes). */
         pagination?: components['parameters']['SearchPagination']
-        /** @description Devuelve los resultados posteriores al cursor indicado. Solo con `pagination=cursor`; mutuamente excluyente con `before`. */
+        /** Devuelve los resultados posteriores al cursor indicado. Solo con `pagination=cursor`; mutuamente excluyente con `before`. */
         after?: components['parameters']['SearchAfter']
-        /** @description Devuelve los resultados anteriores al cursor indicado. Solo con `pagination=cursor`; mutuamente excluyente con `after`. */
+        /** Devuelve los resultados anteriores al cursor indicado. Solo con `pagination=cursor`; mutuamente excluyente con `after`. */
         before?: components['parameters']['SearchBefore']
-        /** @description Consulta. Texto a buscar en el nombre fiscal del cliente o su RFC. */
+        /** Consulta. Texto a buscar en el nombre fiscal del cliente o su RFC. */
         q?: string
-        /** @description Identificador del cliente. Útil para obtener las retenciones emitidas a un sólo cliente. */
+        /** Identificador del cliente. Útil para obtener las retenciones emitidas a un sólo cliente. */
         customer?: string
-        /** @description Filtrar por uno o más estados de retención. Si se omite, no se filtra por estado, equivalente a `all`. Enviar `all` también desactiva este filtro. */
+        /** Filtrar por uno o más estados de retención. Si se omite, no se filtra por estado, equivalente a `all`. Enviar `all` también desactiva este filtro. */
         status?: (
           'all' | 'draft' | 'pending' | 'valid' | 'canceled' | 'failed'
         )[]
-        /** @description Objeto con rango de fechas solicitado. */
+        /** Objeto con rango de fechas solicitado. */
         date?: components['parameters']['SearchDate']
-        /** @description Página de resultados a regresar, empezando desde la página 1. El máximo no es fijo; junto con `limit` debe caber dentro del tope de 3,000 resultados (con el `limit` por defecto de 100, la página máxima es 30). */
+        /** Página de resultados a regresar, empezando desde la página 1. El máximo no es fijo; junto con `limit` debe caber dentro del tope de 3,000 resultados (con el `limit` por defecto de 100, la página máxima es 30). */
         page?: components['parameters']['SearchPage']
-        /** @description Número del 1 al 100 que representa la cantidad máxima de resultados a regresar con motivos de paginación. */
+        /** Número del 1 al 100 que representa la cantidad máxima de resultados a regresar con motivos de paginación. */
         limit?: components['parameters']['SearchLimit']
       }
       header?: never
@@ -9024,7 +9024,7 @@ export interface operations {
     }
     requestBody?: never
     responses: {
-      /** @description Resultado de la búsqueda */
+      /** Resultado de la búsqueda */
       200: {
         headers: {
           [name: string]: unknown
@@ -9049,7 +9049,7 @@ export interface operations {
     }
     requestBody: components['requestBodies']['RetentionCreate']
     responses: {
-      /** @description Nuevo objeto `Retention` creado */
+      /** Nuevo objeto `Retention` creado */
       200: {
         headers: {
           [name: string]: unknown
@@ -9070,14 +9070,14 @@ export interface operations {
       query?: never
       header?: never
       path: {
-        /** @description ID del objeto a obtener */
+        /** ID del objeto a obtener */
         retention_id: string
       }
       cookie?: never
     }
     requestBody?: never
     responses: {
-      /** @description Objeto `Retention` */
+      /** Objeto `Retention` */
       200: {
         headers: {
           [name: string]: unknown
@@ -9097,14 +9097,14 @@ export interface operations {
       query?: never
       header?: never
       path: {
-        /** @description ID de la retención a editar */
+        /** ID de la retención a editar */
         retention_id: string
       }
       cookie?: never
     }
     requestBody: components['requestBodies']['RetentionUpdate']
     responses: {
-      /** @description Objeto `Retention` editado correctamente */
+      /** Objeto `Retention` editado correctamente */
       200: {
         headers: {
           [name: string]: unknown
@@ -9124,7 +9124,7 @@ export interface operations {
     parameters: {
       query?: {
         /**
-         * @description Clave que representa el motivo de la cancelación de la retención.
+         * Clave que representa el motivo de la cancelación de la retención.
          *     Requerido para retenciones que no son borrador.
          *     - `01`: **Comprobante emitido con errores con relación**. Cuando la
          *       retención contiene algún error en las cantidades, claves o cualquier otro dato y ya
@@ -9139,21 +9139,21 @@ export interface operations {
          */
         motive?: '01' | '02' | '03' | '04'
         /**
-         * @description ID de la retención que sustituye a la retención que se está cancelando
+         * ID de la retención que sustituye a la retención que se está cancelando
          *     Puedes usar el ID de Facturapi o el folio fiscal (UUID).
          */
         substitution?: string
       }
       header?: never
       path: {
-        /** @description ID de la retención a cancelar */
+        /** ID de la retención a cancelar */
         retention_id: string
       }
       cookie?: never
     }
     requestBody?: never
     responses: {
-      /** @description Objeto `Retention` cancelado exitosamente */
+      /** Objeto `Retention` cancelado exitosamente */
       200: {
         headers: {
           [name: string]: unknown
@@ -9174,14 +9174,14 @@ export interface operations {
       query?: never
       header?: never
       path: {
-        /** @description ID de la retención a copiar */
+        /** ID de la retención a copiar */
         retention_id: string
       }
       cookie?: never
     }
     requestBody?: never
     responses: {
-      /** @description Nuevo objeto `Retention` con status `draft`. */
+      /** Nuevo objeto `Retention` con status `draft`. */
       200: {
         headers: {
           [name: string]: unknown
@@ -9201,14 +9201,14 @@ export interface operations {
       query?: never
       header?: never
       path: {
-        /** @description ID de la retención a timbrar */
+        /** ID de la retención a timbrar */
         retention_id: string
       }
       cookie?: never
     }
     requestBody?: never
     responses: {
-      /** @description Objeto `Retention` timbrado correctamente */
+      /** Objeto `Retention` timbrado correctamente */
       200: {
         headers: {
           [name: string]: unknown
@@ -9229,16 +9229,16 @@ export interface operations {
       query?: never
       header?: never
       path: {
-        /** @description ID del objeto a descargar */
+        /** ID del objeto a descargar */
         retention_id: string
-        /** @description Formato del archivo de descarga */
+        /** Formato del archivo de descarga */
         format: 'xml' | 'pdf' | 'zip'
       }
       cookie?: never
     }
     requestBody?: never
     responses: {
-      /** @description Archivo del comprobante CFDI en el formato solicitado */
+      /** Archivo del comprobante CFDI en el formato solicitado */
       200: {
         headers: {
           [name: string]: unknown
@@ -9258,16 +9258,16 @@ export interface operations {
       query?: never
       header?: never
       path: {
-        /** @description ID del objeto a descargar */
+        /** ID del objeto a descargar */
         retention_id: string
-        /** @description Formato del archivo de descarga */
+        /** Formato del archivo de descarga */
         format: 'pdf' | 'xml' | 'zip'
       }
       cookie?: never
     }
     requestBody?: never
     responses: {
-      /** @description Objeto con una URL temporal de descarga, su fecha de expiración, el tipo de contenido y el nombre del archivo. */
+      /** Objeto con una URL temporal de descarga, su fecha de expiración, el tipo de contenido y el nombre del archivo. */
       200: {
         headers: {
           [name: string]: unknown
@@ -9289,7 +9289,7 @@ export interface operations {
       query?: never
       header?: never
       path: {
-        /** @description ID del objeto a obtener */
+        /** ID del objeto a obtener */
         retention_id: string
       }
       cookie?: never
@@ -9297,20 +9297,20 @@ export interface operations {
     requestBody?: {
       content: {
         'application/json': {
-          /** @description Dirección de correo electrónico a enviar la retención. Si no se envía este parámetro, la retención será enviada al correo que el cliente tenga registrado. */
+          /** Dirección de correo electrónico a enviar la retención. Si no se envía este parámetro, la retención será enviada al correo que el cliente tenga registrado. */
           email?: string | string[]
         }
       }
     }
     responses: {
-      /** @description Objeto genérico de respuesta */
+      /** Objeto genérico de respuesta */
       200: {
         headers: {
           [name: string]: unknown
         }
         content: {
           'application/json': {
-            /** @description Indica si el correo fue enviado exitosamente */
+            /** Indica si el correo fue enviado exitosamente */
             ok: boolean
           }
         }
@@ -9324,19 +9324,19 @@ export interface operations {
   listOrganizations: {
     parameters: {
       query?: {
-        /** @description Modo de paginación de la búsqueda. `page` (por defecto) o `cursor` (recomendado para listas grandes). */
+        /** Modo de paginación de la búsqueda. `page` (por defecto) o `cursor` (recomendado para listas grandes). */
         pagination?: components['parameters']['SearchPagination']
-        /** @description Devuelve los resultados posteriores al cursor indicado. Solo con `pagination=cursor`; mutuamente excluyente con `before`. */
+        /** Devuelve los resultados posteriores al cursor indicado. Solo con `pagination=cursor`; mutuamente excluyente con `before`. */
         after?: components['parameters']['SearchAfter']
-        /** @description Devuelve los resultados anteriores al cursor indicado. Solo con `pagination=cursor`; mutuamente excluyente con `after`. */
+        /** Devuelve los resultados anteriores al cursor indicado. Solo con `pagination=cursor`; mutuamente excluyente con `after`. */
         before?: components['parameters']['SearchBefore']
-        /** @description Consulta. Texto a buscar en `name` (nombre comercial), `legal_name` (nombre fiscal) o en `tax_id` (RFC). */
+        /** Consulta. Texto a buscar en `name` (nombre comercial), `legal_name` (nombre fiscal) o en `tax_id` (RFC). */
         q?: string
-        /** @description Objeto con rango de fechas solicitado. */
+        /** Objeto con rango de fechas solicitado. */
         date?: components['parameters']['SearchDate']
-        /** @description Página de resultados a regresar, empezando desde la página 1. El máximo no es fijo; junto con `limit` debe caber dentro del tope de 3,000 resultados (con el `limit` por defecto de 100, la página máxima es 30). */
+        /** Página de resultados a regresar, empezando desde la página 1. El máximo no es fijo; junto con `limit` debe caber dentro del tope de 3,000 resultados (con el `limit` por defecto de 100, la página máxima es 30). */
         page?: components['parameters']['SearchPage']
-        /** @description Número del 1 al 100 que representa la cantidad máxima de resultados a regresar con motivos de paginación. */
+        /** Número del 1 al 100 que representa la cantidad máxima de resultados a regresar con motivos de paginación. */
         limit?: components['parameters']['SearchLimit']
       }
       header?: never
@@ -9345,7 +9345,7 @@ export interface operations {
     }
     requestBody?: never
     responses: {
-      /** @description Resultado de la búsqueda */
+      /** Resultado de la búsqueda */
       200: {
         headers: {
           [name: string]: unknown
@@ -9370,7 +9370,7 @@ export interface operations {
     }
     requestBody: components['requestBodies']['OrganizationCreate']
     responses: {
-      /** @description Nuevo objeto `Organization` creado */
+      /** Nuevo objeto `Organization` creado */
       200: {
         headers: {
           [name: string]: unknown
@@ -9395,7 +9395,7 @@ export interface operations {
     }
     requestBody?: never
     responses: {
-      /** @description Objeto `Organization` */
+      /** Objeto `Organization` */
       200: {
         headers: {
           [name: string]: unknown
@@ -9416,14 +9416,14 @@ export interface operations {
       query?: never
       header?: never
       path: {
-        /** @description ID de la organización */
+        /** ID de la organización */
         organization_id: string
       }
       cookie?: never
     }
     requestBody?: never
     responses: {
-      /** @description Objeto `Organization` */
+      /** Objeto `Organization` */
       200: {
         headers: {
           [name: string]: unknown
@@ -9443,14 +9443,14 @@ export interface operations {
       query?: never
       header?: never
       path: {
-        /** @description ID del objeto a eliminar */
+        /** ID del objeto a eliminar */
         organization_id: string
       }
       cookie?: never
     }
     requestBody?: never
     responses: {
-      /** @description Objeto `Organization` eliminado correctamente */
+      /** Objeto `Organization` eliminado correctamente */
       200: {
         headers: {
           [name: string]: unknown
@@ -9470,14 +9470,14 @@ export interface operations {
       query?: never
       header?: never
       path: {
-        /** @description ID de la organización */
+        /** ID de la organización */
         organization_id: string
       }
       cookie?: never
     }
     requestBody: components['requestBodies']['OrganizationEditLegal']
     responses: {
-      /** @description Objeto `Organization` modificado */
+      /** Objeto `Organization` modificado */
       200: {
         headers: {
           [name: string]: unknown
@@ -9498,14 +9498,14 @@ export interface operations {
       query?: never
       header?: never
       path: {
-        /** @description ID de la organización */
+        /** ID de la organización */
         organization_id: string
       }
       cookie?: never
     }
     requestBody: components['requestBodies']['OrganizationUploadCerts']
     responses: {
-      /** @description Objeto `Organization` modificado */
+      /** Objeto `Organization` modificado */
       200: {
         headers: {
           [name: string]: unknown
@@ -9526,14 +9526,14 @@ export interface operations {
       query?: never
       header?: never
       path: {
-        /** @description ID de la organización */
+        /** ID de la organización */
         organization_id: string
       }
       cookie?: never
     }
     requestBody?: never
     responses: {
-      /** @description Objeto `Organization` modificado */
+      /** Objeto `Organization` modificado */
       200: {
         headers: {
           [name: string]: unknown
@@ -9554,14 +9554,14 @@ export interface operations {
       query?: never
       header?: never
       path: {
-        /** @description ID de la organización. También puedes usar `me` con la Live Secret Key de la organización. */
+        /** ID de la organización. También puedes usar `me` con la Live Secret Key de la organización. */
         organization_id: string
       }
       cookie?: never
     }
     requestBody: components['requestBodies']['OrganizationUploadFiel']
     responses: {
-      /** @description Objeto `Organization` modificado */
+      /** Objeto `Organization` modificado */
       200: {
         headers: {
           [name: string]: unknown
@@ -9582,14 +9582,14 @@ export interface operations {
       query?: never
       header?: never
       path: {
-        /** @description ID de la organización */
+        /** ID de la organización */
         organization_id: string
       }
       cookie?: never
     }
     requestBody: components['requestBodies']['OrganizationUploadLogo']
     responses: {
-      /** @description Objeto `Organization` modificado */
+      /** Objeto `Organization` modificado */
       200: {
         headers: {
           [name: string]: unknown
@@ -9610,14 +9610,14 @@ export interface operations {
       query?: never
       header?: never
       path: {
-        /** @description ID de la organización */
+        /** ID de la organización */
         organization_id: string
       }
       cookie?: never
     }
     requestBody: components['requestBodies']['OrganizationEditCustomization']
     responses: {
-      /** @description Objeto `Organization` modificado */
+      /** Objeto `Organization` modificado */
       200: {
         headers: {
           [name: string]: unknown
@@ -9638,14 +9638,14 @@ export interface operations {
       query?: never
       header?: never
       path: {
-        /** @description ID de la organización */
+        /** ID de la organización */
         organization_id: string
       }
       cookie?: never
     }
     requestBody: components['requestBodies']['OrganizationEditReceiptsSettings']
     responses: {
-      /** @description Objeto `Organization` modificado */
+      /** Objeto `Organization` modificado */
       200: {
         headers: {
           [name: string]: unknown
@@ -9666,14 +9666,14 @@ export interface operations {
       query?: never
       header?: never
       path: {
-        /** @description ID de la organización */
+        /** ID de la organización */
         organization_id: string
       }
       cookie?: never
     }
     requestBody: components['requestBodies']['OrganizationEditSelfInvoiceSettings']
     responses: {
-      /** @description Objeto `Organization` modificado */
+      /** Objeto `Organization` modificado */
       200: {
         headers: {
           [name: string]: unknown
@@ -9700,14 +9700,14 @@ export interface operations {
     }
     requestBody?: never
     responses: {
-      /** @description Información de disponibilidad de dominio */
+      /** Información de disponibilidad de dominio */
       200: {
         headers: {
           [name: string]: unknown
         }
         content: {
           'application/json': {
-            /** @description Indica si el dominio está diponible */
+            /** Indica si el dominio está diponible */
             available: boolean
           }
         }
@@ -9723,14 +9723,14 @@ export interface operations {
       query?: never
       header?: never
       path: {
-        /** @description ID de la organización */
+        /** ID de la organización */
         organization_id: string
       }
       cookie?: never
     }
     requestBody: components['requestBodies']['OrganizationEditDomain']
     responses: {
-      /** @description Objeto `Organization` modificado */
+      /** Objeto `Organization` modificado */
       200: {
         headers: {
           [name: string]: unknown
@@ -9751,14 +9751,14 @@ export interface operations {
       query?: never
       header?: never
       path: {
-        /** @description ID de la organización */
+        /** ID de la organización */
         organization_id: string
       }
       cookie?: never
     }
     requestBody?: never
     responses: {
-      /** @description Test API Key */
+      /** Test API Key */
       200: {
         headers: {
           [name: string]: unknown
@@ -9778,14 +9778,14 @@ export interface operations {
       query?: never
       header?: never
       path: {
-        /** @description ID de la organización */
+        /** ID de la organización */
         organization_id: string
       }
       cookie?: never
     }
     requestBody?: never
     responses: {
-      /** @description Test API Key */
+      /** Test API Key */
       200: {
         headers: {
           [name: string]: unknown
@@ -9805,28 +9805,28 @@ export interface operations {
       query?: never
       header?: never
       path: {
-        /** @description ID de la organización */
+        /** ID de la organización */
         organization_id: string
       }
       cookie?: never
     }
     requestBody?: never
     responses: {
-      /** @description Live API Key */
+      /** Live API Key */
       200: {
         headers: {
           [name: string]: unknown
         }
         content: {
           'application/json': {
-            /** @description Primeros 12 caracteres de la llave secreta */
+            /** Primeros 12 caracteres de la llave secreta */
             first_12: string
             /**
              * Format: date-time
-             * @description Fecha de creación de la llave secreta
+             * Fecha de creación de la llave secreta
              */
             created_at: Date | string
-            /** @description ID de la llave secreta */
+            /** ID de la llave secreta */
             id: string
           }[]
         }
@@ -9842,14 +9842,14 @@ export interface operations {
       query?: never
       header?: never
       path: {
-        /** @description ID de la organización */
+        /** ID de la organización */
         organization_id: string
       }
       cookie?: never
     }
     requestBody?: never
     responses: {
-      /** @description Live API Key */
+      /** Live API Key */
       200: {
         headers: {
           [name: string]: unknown
@@ -9869,30 +9869,30 @@ export interface operations {
       query?: never
       header?: never
       path: {
-        /** @description ID de la organización */
+        /** ID de la organización */
         organization_id: string
-        /** @description ID de la llave secreta a eliminar */
+        /** ID de la llave secreta a eliminar */
         id: string
       }
       cookie?: never
     }
     requestBody?: never
     responses: {
-      /** @description Live API Key */
+      /** Live API Key */
       200: {
         headers: {
           [name: string]: unknown
         }
         content: {
           'application/json': {
-            /** @description Primeros 12 caracteres de la llave secreta */
+            /** Primeros 12 caracteres de la llave secreta */
             first_12?: string
             /**
              * Format: date-time
-             * @description Fecha de creación de la llave secreta
+             * Fecha de creación de la llave secreta
              */
             created_at?: Date | string
-            /** @description ID de la llave secreta */
+            /** ID de la llave secreta */
             id?: string
           }[]
         }
@@ -9908,14 +9908,14 @@ export interface operations {
       query?: never
       header?: never
       path: {
-        /** @description ID de la organización */
+        /** ID de la organización */
         organization_id: string
       }
       cookie?: never
     }
     requestBody?: never
     responses: {
-      /** @description Listado de objetos `Series` creadas previamente */
+      /** Listado de objetos `Series` creadas previamente */
       200: {
         headers: {
           [name: string]: unknown
@@ -9937,14 +9937,14 @@ export interface operations {
       query?: never
       header?: never
       path: {
-        /** @description ID de la organización */
+        /** ID de la organización */
         organization_id: string
       }
       cookie?: never
     }
     requestBody?: components['requestBodies']['OrganizationSeriesCreate']
     responses: {
-      /** @description Nuevo objeto de la `Serie` creada */
+      /** Nuevo objeto de la `Serie` creada */
       200: {
         headers: {
           [name: string]: unknown
@@ -9964,14 +9964,14 @@ export interface operations {
       query?: never
       header?: never
       path: {
-        /** @description ID de la organización */
+        /** ID de la organización */
         organization_id: string
       }
       cookie?: never
     }
     requestBody?: components['requestBodies']['OrganizationSeriesDefault']
     responses: {
-      /** @description Serie predeterminada actualizada */
+      /** Serie predeterminada actualizada */
       200: {
         headers: {
           [name: string]: unknown
@@ -9991,16 +9991,16 @@ export interface operations {
       query?: never
       header?: never
       path: {
-        /** @description ID de la organización */
+        /** ID de la organización */
         organization_id: string
-        /** @description Nombre de la serie */
+        /** Nombre de la serie */
         series_name: string
       }
       cookie?: never
     }
     requestBody?: components['requestBodies']['OrganizationSeriesUpdate']
     responses: {
-      /** @description Objeto `Serie` editada */
+      /** Objeto `Serie` editada */
       200: {
         headers: {
           [name: string]: unknown
@@ -10020,16 +10020,16 @@ export interface operations {
       query?: never
       header?: never
       path: {
-        /** @description ID de la organización */
+        /** ID de la organización */
         organization_id: string
-        /** @description Nombre de la serie */
+        /** Nombre de la serie */
         series_name: string
       }
       cookie?: never
     }
     requestBody?: never
     responses: {
-      /** @description Objeto `Serie` eliminado */
+      /** Objeto `Serie` eliminado */
       200: {
         headers: {
           [name: string]: unknown
@@ -10049,14 +10049,14 @@ export interface operations {
       query?: never
       header?: never
       path: {
-        /** @description ID de la organización */
+        /** ID de la organización */
         organization_id: string
       }
       cookie?: never
     }
     requestBody?: never
     responses: {
-      /** @description Lista de accesos de usuarios dentro de la organización, incluyendo accesos implícitos como el del propietario */
+      /** Lista de accesos de usuarios dentro de la organización, incluyendo accesos implícitos como el del propietario */
       200: {
         headers: {
           [name: string]: unknown
@@ -10076,14 +10076,14 @@ export interface operations {
       query?: never
       header?: never
       path: {
-        /** @description ID de la organización */
+        /** ID de la organización */
         organization_id: string
       }
       cookie?: never
     }
     requestBody?: never
     responses: {
-      /** @description Lista de invitaciones enviadas y aún vigentes para la organización */
+      /** Lista de invitaciones enviadas y aún vigentes para la organización */
       200: {
         headers: {
           [name: string]: unknown
@@ -10103,14 +10103,14 @@ export interface operations {
       query?: never
       header?: never
       path: {
-        /** @description ID de la organización */
+        /** ID de la organización */
         organization_id: string
       }
       cookie?: never
     }
     requestBody: components['requestBodies']['OrganizationInviteCreate']
     responses: {
-      /** @description Invitación creada o actualizada para el correo solicitado */
+      /** Invitación creada o actualizada para el correo solicitado */
       200: {
         headers: {
           [name: string]: unknown
@@ -10131,16 +10131,16 @@ export interface operations {
       query?: never
       header?: never
       path: {
-        /** @description ID de la organización */
+        /** ID de la organización */
         organization_id: string
-        /** @description ID del acceso */
+        /** ID del acceso */
         access_id: string
       }
       cookie?: never
     }
     requestBody?: never
     responses: {
-      /** @description Detalle del acceso del usuario dentro de la organización, incluyendo accesos implícitos como el del propietario */
+      /** Detalle del acceso del usuario dentro de la organización, incluyendo accesos implícitos como el del propietario */
       200: {
         headers: {
           [name: string]: unknown
@@ -10160,16 +10160,16 @@ export interface operations {
       query?: never
       header?: never
       path: {
-        /** @description ID de la organización */
+        /** ID de la organización */
         organization_id: string
-        /** @description ID del acceso */
+        /** ID del acceso */
         access_id: string
       }
       cookie?: never
     }
     requestBody?: never
     responses: {
-      /** @description Usuario removido de la organización */
+      /** Usuario removido de la organización */
       200: {
         headers: {
           [name: string]: unknown
@@ -10190,16 +10190,16 @@ export interface operations {
       query?: never
       header?: never
       path: {
-        /** @description ID de la organización */
+        /** ID de la organización */
         organization_id: string
-        /** @description Clave pública de la invitación. */
+        /** Clave pública de la invitación. */
         invite_key: string
       }
       cookie?: never
     }
     requestBody?: never
     responses: {
-      /** @description Invitación cancelada */
+      /** Invitación cancelada */
       200: {
         headers: {
           [name: string]: unknown
@@ -10223,7 +10223,7 @@ export interface operations {
     }
     requestBody?: never
     responses: {
-      /** @description Lista de invitaciones recibidas por el usuario autenticado */
+      /** Lista de invitaciones recibidas por el usuario autenticado */
       200: {
         headers: {
           [name: string]: unknown
@@ -10242,14 +10242,14 @@ export interface operations {
       query?: never
       header?: never
       path: {
-        /** @description Clave pública de la invitación. */
+        /** Clave pública de la invitación. */
         invite_key: string
       }
       cookie?: never
     }
     requestBody: components['requestBodies']['OrganizationInviteRespond']
     responses: {
-      /** @description Invitación aceptada o rechazada exitosamente */
+      /** Invitación aceptada o rechazada exitosamente */
       200: {
         headers: {
           [name: string]: unknown
@@ -10270,14 +10270,14 @@ export interface operations {
       query?: never
       header?: never
       path: {
-        /** @description ID de la organización */
+        /** ID de la organización */
         organization_id: string
       }
       cookie?: never
     }
     requestBody?: never
     responses: {
-      /** @description Lista de roles */
+      /** Lista de roles */
       200: {
         headers: {
           [name: string]: unknown
@@ -10297,14 +10297,14 @@ export interface operations {
       query?: never
       header?: never
       path: {
-        /** @description ID de la organización */
+        /** ID de la organización */
         organization_id: string
       }
       cookie?: never
     }
     requestBody: components['requestBodies']['OrganizationPermissionRoleCreate']
     responses: {
-      /** @description Rol creado */
+      /** Rol creado */
       200: {
         headers: {
           [name: string]: unknown
@@ -10325,14 +10325,14 @@ export interface operations {
       query?: never
       header?: never
       path: {
-        /** @description ID de la organización */
+        /** ID de la organización */
         organization_id: string
       }
       cookie?: never
     }
     requestBody?: never
     responses: {
-      /** @description Plantillas disponibles */
+      /** Plantillas disponibles */
       200: {
         headers: {
           [name: string]: unknown
@@ -10352,14 +10352,14 @@ export interface operations {
       query?: never
       header?: never
       path: {
-        /** @description ID de la organización */
+        /** ID de la organización */
         organization_id: string
       }
       cookie?: never
     }
     requestBody?: never
     responses: {
-      /** @description Lista de códigos de operación */
+      /** Lista de códigos de operación */
       200: {
         headers: {
           [name: string]: unknown
@@ -10379,16 +10379,16 @@ export interface operations {
       query?: never
       header?: never
       path: {
-        /** @description ID de la organización */
+        /** ID de la organización */
         organization_id: string
-        /** @description ID del rol */
+        /** ID del rol */
         role_id: string
       }
       cookie?: never
     }
     requestBody?: never
     responses: {
-      /** @description Detalle del rol */
+      /** Detalle del rol */
       200: {
         headers: {
           [name: string]: unknown
@@ -10408,16 +10408,16 @@ export interface operations {
       query?: never
       header?: never
       path: {
-        /** @description ID de la organización */
+        /** ID de la organización */
         organization_id: string
-        /** @description ID del rol */
+        /** ID del rol */
         role_id: string
       }
       cookie?: never
     }
     requestBody: components['requestBodies']['OrganizationPermissionRoleUpdate']
     responses: {
-      /** @description Rol actualizado */
+      /** Rol actualizado */
       200: {
         headers: {
           [name: string]: unknown
@@ -10438,16 +10438,16 @@ export interface operations {
       query?: never
       header?: never
       path: {
-        /** @description ID de la organización */
+        /** ID de la organización */
         organization_id: string
-        /** @description ID del rol */
+        /** ID del rol */
         role_id: string
       }
       cookie?: never
     }
     requestBody?: never
     responses: {
-      /** @description Rol eliminado */
+      /** Rol eliminado */
       200: {
         headers: {
           [name: string]: unknown
@@ -10469,16 +10469,16 @@ export interface operations {
       query?: never
       header?: never
       path: {
-        /** @description ID de la organización */
+        /** ID de la organización */
         organization_id: string
-        /** @description ID del acceso */
+        /** ID del acceso */
         access_id: string
       }
       cookie?: never
     }
     requestBody: components['requestBodies']['OrganizationUserAccessRoleUpdate']
     responses: {
-      /** @description Acceso del usuario actualizado con el nuevo rol */
+      /** Acceso del usuario actualizado con el nuevo rol */
       200: {
         headers: {
           [name: string]: unknown
@@ -10497,15 +10497,15 @@ export interface operations {
   listWebhooks: {
     parameters: {
       query?: {
-        /** @description Modo de paginación de la búsqueda. `page` (por defecto) o `cursor` (recomendado para listas grandes). */
+        /** Modo de paginación de la búsqueda. `page` (por defecto) o `cursor` (recomendado para listas grandes). */
         pagination?: components['parameters']['SearchPagination']
-        /** @description Devuelve los resultados posteriores al cursor indicado. Solo con `pagination=cursor`; mutuamente excluyente con `before`. */
+        /** Devuelve los resultados posteriores al cursor indicado. Solo con `pagination=cursor`; mutuamente excluyente con `before`. */
         after?: components['parameters']['SearchAfter']
-        /** @description Devuelve los resultados anteriores al cursor indicado. Solo con `pagination=cursor`; mutuamente excluyente con `after`. */
+        /** Devuelve los resultados anteriores al cursor indicado. Solo con `pagination=cursor`; mutuamente excluyente con `after`. */
         before?: components['parameters']['SearchBefore']
-        /** @description Página de resultados a regresar, empezando desde la página 1. El máximo no es fijo; junto con `limit` debe caber dentro del tope de 3,000 resultados (con el `limit` por defecto de 100, la página máxima es 30). */
+        /** Página de resultados a regresar, empezando desde la página 1. El máximo no es fijo; junto con `limit` debe caber dentro del tope de 3,000 resultados (con el `limit` por defecto de 100, la página máxima es 30). */
         page?: components['parameters']['SearchPage']
-        /** @description Número del 1 al 100 que representa la cantidad máxima de resultados a regresar con motivos de paginación. */
+        /** Número del 1 al 100 que representa la cantidad máxima de resultados a regresar con motivos de paginación. */
         limit?: components['parameters']['SearchLimit']
       }
       header?: never
@@ -10514,7 +10514,7 @@ export interface operations {
     }
     requestBody?: never
     responses: {
-      /** @description Resultado de la búsqueda */
+      /** Resultado de la búsqueda */
       200: {
         headers: {
           [name: string]: unknown
@@ -10539,7 +10539,7 @@ export interface operations {
     }
     requestBody: components['requestBodies']['WebhookCreate']
     responses: {
-      /** @description Nuevo objeto `Webhook` creado */
+      /** Nuevo objeto `Webhook` creado */
       201: {
         headers: {
           [name: string]: unknown
@@ -10560,14 +10560,14 @@ export interface operations {
       query?: never
       header?: never
       path: {
-        /** @description ID del objeto a obtener */
+        /** ID del objeto a obtener */
         webhook_id: string
       }
       cookie?: never
     }
     requestBody?: never
     responses: {
-      /** @description Objeto `Webhook` */
+      /** Objeto `Webhook` */
       200: {
         headers: {
           [name: string]: unknown
@@ -10587,14 +10587,14 @@ export interface operations {
       query?: never
       header?: never
       path: {
-        /** @description ID del objeto a editar */
+        /** ID del objeto a editar */
         webhook_id: string
       }
       cookie?: never
     }
     requestBody: components['requestBodies']['WebhookEdit']
     responses: {
-      /** @description Objeto `Webhook` editado correctamente */
+      /** Objeto `Webhook` editado correctamente */
       200: {
         headers: {
           [name: string]: unknown
@@ -10614,14 +10614,14 @@ export interface operations {
       query?: never
       header?: never
       path: {
-        /** @description ID del objeto a eliminar */
+        /** ID del objeto a eliminar */
         webhook_id: string
       }
       cookie?: never
     }
     requestBody?: never
     responses: {
-      /** @description Objeto `Webhook` eliminado correctamente */
+      /** Objeto `Webhook` eliminado correctamente */
       200: {
         headers: {
           [name: string]: unknown
@@ -10646,21 +10646,21 @@ export interface operations {
     requestBody: {
       content: {
         'application/json': {
-          /** @description Llave secreta del webhook. Se obtiene al crear un webhook o desde el dashboard de Facturapi. */
+          /** Llave secreta del webhook. Se obtiene al crear un webhook o desde el dashboard de Facturapi. */
           secret: string
-          /** @description Payload firmado. Prefiere el texto JSON original, conservando exactamente los bytes recibidos. También se aceptan objetos, pero la verificación utiliza su serialización JSON. */
+          /** Payload firmado. Prefiere el texto JSON original, conservando exactamente los bytes recibidos. También se aceptan objetos, pero la verificación utiliza su serialización JSON. */
           payload:
             | string
             | {
                 [key: string]: unknown
               }
-          /** @description Firma del webhook recibida en el header `Facturapi-Signature` */
+          /** Firma del webhook recibida en el header `Facturapi-Signature` */
           signature: string
         }
       }
     }
     responses: {
-      /** @description Payload original con firma válida */
+      /** Payload original con firma válida */
       200: {
         headers: {
           [name: string]: unknown
@@ -10689,7 +10689,7 @@ export interface operations {
     }
     requestBody?: never
     responses: {
-      /** @description La API está operando con normalidad. */
+      /** La API está operando con normalidad. */
       200: {
         headers: {
           [name: string]: unknown
@@ -10700,14 +10700,14 @@ export interface operations {
           }
         }
       }
-      /** @description Error de autenticación. Asegúrate de estar usando tu llave secreta. */
+      /** Error de autenticación. Asegúrate de estar usando tu llave secreta. */
       401: {
         headers: {
           [name: string]: unknown
         }
         content?: never
       }
-      /** @description Servicio temporalmente no disponible. */
+      /** Servicio temporalmente no disponible. */
       502: {
         headers: {
           [name: string]: unknown
@@ -10727,7 +10727,7 @@ export interface operations {
     }
     requestBody?: never
     responses: {
-      /** @description Resultado de la validación */
+      /** Resultado de la validación */
       200: {
         headers: {
           [name: string]: unknown
@@ -10745,17 +10745,17 @@ export interface operations {
   searchProducts: {
     parameters: {
       query?: {
-        /** @description Modo de paginación de la búsqueda. `page` (por defecto) o `cursor` (recomendado para listas grandes). */
+        /** Modo de paginación de la búsqueda. `page` (por defecto) o `cursor` (recomendado para listas grandes). */
         pagination?: components['parameters']['SearchPagination']
-        /** @description Devuelve los resultados posteriores al cursor indicado. Solo con `pagination=cursor`; mutuamente excluyente con `before`. */
+        /** Devuelve los resultados posteriores al cursor indicado. Solo con `pagination=cursor`; mutuamente excluyente con `before`. */
         after?: components['parameters']['SearchAfter']
-        /** @description Devuelve los resultados anteriores al cursor indicado. Solo con `pagination=cursor`; mutuamente excluyente con `after`. */
+        /** Devuelve los resultados anteriores al cursor indicado. Solo con `pagination=cursor`; mutuamente excluyente con `after`. */
         before?: components['parameters']['SearchBefore']
-        /** @description Consulta. Texto a buscar en la descripción de la clasificación. */
+        /** Consulta. Texto a buscar en la descripción de la clasificación. */
         q?: string
-        /** @description Página de resultados a regresar, empezando desde la página 1. El máximo no es fijo; junto con `limit` debe caber dentro del tope de 3,000 resultados (con el `limit` por defecto de 100, la página máxima es 30). */
+        /** Página de resultados a regresar, empezando desde la página 1. El máximo no es fijo; junto con `limit` debe caber dentro del tope de 3,000 resultados (con el `limit` por defecto de 100, la página máxima es 30). */
         page?: components['parameters']['SearchPage']
-        /** @description Número del 1 al 100 que representa la cantidad máxima de resultados a regresar con motivos de paginación. */
+        /** Número del 1 al 100 que representa la cantidad máxima de resultados a regresar con motivos de paginación. */
         limit?: components['parameters']['SearchLimit']
       }
       header?: never
@@ -10764,7 +10764,7 @@ export interface operations {
     }
     requestBody?: never
     responses: {
-      /** @description Resultado de la búsqueda */
+      /** Resultado de la búsqueda */
       200: {
         headers: {
           [name: string]: unknown
@@ -10783,17 +10783,17 @@ export interface operations {
   searchUnits: {
     parameters: {
       query?: {
-        /** @description Modo de paginación de la búsqueda. `page` (por defecto) o `cursor` (recomendado para listas grandes). */
+        /** Modo de paginación de la búsqueda. `page` (por defecto) o `cursor` (recomendado para listas grandes). */
         pagination?: components['parameters']['SearchPagination']
-        /** @description Devuelve los resultados posteriores al cursor indicado. Solo con `pagination=cursor`; mutuamente excluyente con `before`. */
+        /** Devuelve los resultados posteriores al cursor indicado. Solo con `pagination=cursor`; mutuamente excluyente con `before`. */
         after?: components['parameters']['SearchAfter']
-        /** @description Devuelve los resultados anteriores al cursor indicado. Solo con `pagination=cursor`; mutuamente excluyente con `after`. */
+        /** Devuelve los resultados anteriores al cursor indicado. Solo con `pagination=cursor`; mutuamente excluyente con `after`. */
         before?: components['parameters']['SearchBefore']
-        /** @description Consulta. Texto a buscar en la descripción de la unidad de medida. */
+        /** Consulta. Texto a buscar en la descripción de la unidad de medida. */
         q?: string
-        /** @description Página de resultados a regresar, empezando desde la página 1. El máximo no es fijo; junto con `limit` debe caber dentro del tope de 3,000 resultados (con el `limit` por defecto de 100, la página máxima es 30). */
+        /** Página de resultados a regresar, empezando desde la página 1. El máximo no es fijo; junto con `limit` debe caber dentro del tope de 3,000 resultados (con el `limit` por defecto de 100, la página máxima es 30). */
         page?: components['parameters']['SearchPage']
-        /** @description Número del 1 al 100 que representa la cantidad máxima de resultados a regresar con motivos de paginación. */
+        /** Número del 1 al 100 que representa la cantidad máxima de resultados a regresar con motivos de paginación. */
         limit?: components['parameters']['SearchLimit']
       }
       header?: never
@@ -10802,7 +10802,7 @@ export interface operations {
     }
     requestBody?: never
     responses: {
-      /** @description Resultado de la búsqueda */
+      /** Resultado de la búsqueda */
       200: {
         headers: {
           [name: string]: unknown
@@ -10831,7 +10831,7 @@ export interface operations {
       }
     }
     responses: {
-      /** @description OK */
+      /** OK */
       200: {
         headers: {
           [name: string]: unknown
@@ -10853,7 +10853,7 @@ export interface operations {
       }
     }
     responses: {
-      /** @description OK */
+      /** OK */
       200: {
         headers: {
           [name: string]: unknown
@@ -10875,7 +10875,7 @@ export interface operations {
       }
     }
     responses: {
-      /** @description OK */
+      /** OK */
       200: {
         headers: {
           [name: string]: unknown
@@ -10897,7 +10897,7 @@ export interface operations {
       }
     }
     responses: {
-      /** @description OK */
+      /** OK */
       200: {
         headers: {
           [name: string]: unknown
@@ -10919,7 +10919,7 @@ export interface operations {
       }
     }
     responses: {
-      /** @description OK */
+      /** OK */
       200: {
         headers: {
           [name: string]: unknown
@@ -10941,7 +10941,7 @@ export interface operations {
       }
     }
     responses: {
-      /** @description OK */
+      /** OK */
       200: {
         headers: {
           [name: string]: unknown
@@ -10963,7 +10963,7 @@ export interface operations {
       }
     }
     responses: {
-      /** @description OK */
+      /** OK */
       200: {
         headers: {
           [name: string]: unknown
