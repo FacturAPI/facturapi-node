@@ -1,7 +1,10 @@
 import { resolve } from 'node:path'
 import { expect, it, vi } from 'vitest'
 import { methodDocumentation } from '../../scripts/sdk/documentation.mjs'
-import { readSpecification } from '../../scripts/sdk/openapi-source.mjs'
+import {
+  readSpecification,
+  resolveRevision,
+} from '../../scripts/sdk/openapi-source.mjs'
 import { compileDatePlans } from '../../scripts/sdk/date-plans.mjs'
 import { resolveOperationBinding } from '../../scripts/sdk/operation-bindings.mjs'
 
@@ -141,7 +144,7 @@ it('documents SDK arguments, binary returns and absolute links from the public s
   expect(documentation).toContain('https://docs.facturapi.io/api/#tag/invoice')
 })
 
-it('rejects a changed remote spec before generation and preserves schema property names', async () => {
+it('resolves moving refs once and reads the pinned commit while preserving schema property names', async () => {
   const content = Buffer.from(
     JSON.stringify({
       openapi: '3.1.0',
@@ -159,26 +162,39 @@ it('rejects a changed remote spec before generation and preserves schema propert
       },
     }),
   )
-  vi.stubGlobal(
-    'fetch',
-    vi.fn(async () => new Response(content)),
-  )
+  const revision = 'a'.repeat(40)
+  const fetch = vi.fn(async (url: string) => {
+    if (url.startsWith('https://api.github.com/')) {
+      expect(url).toBe(
+        'https://api.github.com/repos/FacturAPI/facturapi-docs/commits/docs%2Ffuture-contract',
+      )
+      return Response.json({ sha: revision })
+    }
+    expect(url).toBe(
+      `https://raw.githubusercontent.com/FacturAPI/facturapi-docs/${revision}/website/openapi_v2.yaml`,
+    )
+    return new Response(content)
+  })
+  vi.stubGlobal('fetch', fetch)
   try {
     const source = {
       repository: 'FacturAPI/facturapi-docs',
+      revision: await resolveRevision(
+        'FacturAPI/facturapi-docs',
+        'docs/future-contract',
+      ),
       path: 'website/openapi_v2.yaml',
     }
-    const downloaded = await readSpecification(source)
-    expect(downloaded.sha256).toMatch(/^[a-f0-9]{64}$/)
-    expect(
-      downloaded.spec.components.schemas.Future.properties.example,
-    ).toBeDefined()
+    expect(source.revision).toBe(revision)
+    const spec = await readSpecification(source)
+    expect(spec.components.schemas.Future.properties.example).toBeDefined()
+    expect(fetch).toHaveBeenCalledTimes(2)
+    expect(await resolveRevision(source.repository, revision)).toBe(revision)
+    expect(fetch).toHaveBeenCalledTimes(2)
     await expect(
-      readSpecification({ ...source, sha256: '0'.repeat(64) }),
-    ).rejects.toThrow('specification changed')
-    await expect(
-      readSpecification({ ...source, sha256: downloaded.sha256 }),
-    ).resolves.toEqual(downloaded)
+      readSpecification({ ...source, revision: 'main' }),
+    ).rejects.toThrow('complete documentation commit SHA')
+    expect(fetch).toHaveBeenCalledTimes(2)
   } finally {
     vi.unstubAllGlobals()
   }

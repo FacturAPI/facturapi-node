@@ -10,11 +10,8 @@ import { readSpecification } from './sdk/openapi-source.mjs'
 import { methodDocumentation } from './sdk/documentation.mjs'
 
 const root = new URL('../', import.meta.url)
-const { spec } = await readSpecification(
+const spec = await readSpecification(
   JSON.parse(await readFile(new URL('openapi/source.json', root), 'utf8')),
-  process.argv.includes('--file')
-    ? process.argv[process.argv.indexOf('--file') + 1]
-    : undefined,
 )
 const resources = JSON.parse(
   await readFile(new URL('scripts/sdk/resources.json', root), 'utf8'),

@@ -1,19 +1,43 @@
 import assert from 'node:assert/strict'
-import { createHash } from 'node:crypto'
-import { readFile } from 'node:fs/promises'
 import * as yaml from 'js-yaml'
 
-export async function readSpecification(source, filename) {
-  const content = filename
-    ? await readFile(filename)
-    : await downloadPublicFile(source, source.path)
-  const sha256 = createHash('sha256').update(content).digest('hex')
-  if (source.sha256)
-    assert.equal(
-      sha256,
-      source.sha256,
-      'The public specification changed. Run pnpm sync:openapi and review the regenerated SDK.',
-    )
+export async function resolveRevision(repository, ref = 'main') {
+  if (/^[a-f0-9]{40}$/.test(ref)) return ref
+  const response = await fetch(
+    `https://api.github.com/repos/${repository}/commits/${encodeURIComponent(ref)}`,
+    {
+      headers: { Accept: 'application/vnd.github+json' },
+      signal: AbortSignal.timeout(30_000),
+    },
+  )
+  assert(
+    response.ok,
+    `Could not resolve the public documentation ref: HTTP ${response.status}`,
+  )
+  const { sha } = await response.json()
+  assert.match(
+    sha,
+    /^[a-f0-9]{40}$/,
+    'Expected a complete documentation commit SHA.',
+  )
+  return sha
+}
+
+export async function readSpecification(source) {
+  assert.match(
+    source.revision,
+    /^[a-f0-9]{40}$/,
+    'Pin a complete documentation commit SHA with pnpm sync:openapi.',
+  )
+  const response = await fetch(
+    `https://raw.githubusercontent.com/${source.repository}/${source.revision}/${source.path}`,
+    { signal: AbortSignal.timeout(30_000) },
+  )
+  assert(
+    response.ok,
+    `Could not read the public specification: HTTP ${response.status}`,
+  )
+  const content = Buffer.from(await response.arrayBuffer())
   const spec = yaml.load(content.toString('utf8'), {
     schema: yaml.JSON_SCHEMA,
   })
@@ -43,25 +67,13 @@ export async function readSpecification(source, filename) {
     'callbacks',
     'links',
   ])
-  return {
-    sha256,
-    spec: JSON.parse(
-      JSON.stringify(spec, function (key, value) {
-        if (value && typeof value === 'object' && dictionaryKeys.has(key))
-          dictionaries.add(value)
-        return presentation.has(key) && !dictionaries.has(this)
-          ? undefined
-          : value
-      }),
-    ),
-  }
-}
-
-export async function downloadPublicFile(source, path) {
-  const response = await fetch(
-    `https://raw.githubusercontent.com/${source.repository}/${source.ref || 'main'}/${path}`,
-    { signal: AbortSignal.timeout(30_000) },
+  return JSON.parse(
+    JSON.stringify(spec, function (key, value) {
+      if (value && typeof value === 'object' && dictionaryKeys.has(key))
+        dictionaries.add(value)
+      return presentation.has(key) && !dictionaries.has(this)
+        ? undefined
+        : value
+    }),
   )
-  assert(response.ok, `Could not read ${path}: HTTP ${response.status}`)
-  return Buffer.from(await response.arrayBuffer())
 }
