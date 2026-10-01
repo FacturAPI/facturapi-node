@@ -5153,8 +5153,8 @@ export interface components {
     } & components['schemas']['InvoiceableCommonInput']
     InvoiceCommonEditInputProperties: {
       /**
-       * @description Estado inicial de la factura. Sólo es posible editar una factura con status `draft`,
-       *     y no es posible cambiar el status al editar, por lo que el único valor permitido es `draft`.
+       * @description Estado de la factura. El valor `draft` identifica un borrador que no se ha timbrado ni enviado al SAT.
+       *     Sólo es posible editar facturas con este estado; al editarlas, no se puede cambiar `status`.
        * @enum {string}
        */
       status?: 'draft'
@@ -5181,81 +5181,71 @@ export interface components {
     }
     /** @description Datos de la factura según su tipo y estado inicial. Omite status para timbrar; usa draft para guardar un borrador. */
     InvoiceCreateInput:
-      | (components['schemas']['InvoiceIngresoInput'] & {
-          /** @constant */
-          type?: 'I'
-          /**
-           * @default pending
-           * @constant
-           */
-          status?: 'pending'
-        })
-      | (components['schemas']['InvoiceIngresoEditInput'] & {
-          /** @constant */
-          type?: 'I'
-          /** @constant */
-          status: 'draft'
-        })
-      | (components['schemas']['InvoiceEgresoInput'] & {
-          /** @constant */
-          type: 'E'
-          /**
-           * @default pending
-           * @constant
-           */
-          status?: 'pending'
-        })
-      | (components['schemas']['InvoiceEgresoEditInput'] & {
-          /** @constant */
-          type: 'E'
-          /** @constant */
-          status: 'draft'
-        })
-      | (components['schemas']['InvoicePagoInput'] & {
-          /** @constant */
-          type: 'P'
-          /**
-           * @default pending
-           * @constant
-           */
-          status?: 'pending'
-        })
-      | (components['schemas']['InvoicePagoEditInput'] & {
-          /** @constant */
-          type: 'P'
-          /** @constant */
-          status: 'draft'
-        })
-      | (components['schemas']['InvoiceNominaInput'] & {
-          /** @constant */
-          type: 'N'
-          /**
-           * @default pending
-           * @constant
-           */
-          status?: 'pending'
-        })
-      | (components['schemas']['InvoiceNominaEditInput'] & {
-          /** @constant */
-          type: 'N'
-          /** @constant */
-          status: 'draft'
-        })
-      | (components['schemas']['InvoiceTrasladoInput'] & {
-          /** @constant */
-          type: 'T'
-          /**
-           * @default pending
-           * @constant
-           */
-          status?: 'pending'
-        })
-      | (components['schemas']['InvoiceTrasladoEditInput'] & {
-          /** @constant */
-          type: 'T'
-          /** @constant */
-          status: 'draft'
-        })
+      | (
+          | (components['schemas']['InvoiceIngresoInput'] & {
+              /**
+               * @default pending
+               * @constant
+               */
+              status?: 'pending'
+            })
+          | (components['schemas']['InvoiceIngresoEditInput'] & {
+              /** @constant */
+              status: 'draft'
+            })
+        )
+      | (
+          | (components['schemas']['InvoiceEgresoInput'] & {
+              /**
+               * @default pending
+               * @constant
+               */
+              status?: 'pending'
+            })
+          | (components['schemas']['InvoiceEgresoEditInput'] & {
+              /** @constant */
+              status: 'draft'
+            })
+        )
+      | (
+          | (components['schemas']['InvoicePagoInput'] & {
+              /**
+               * @default pending
+               * @constant
+               */
+              status?: 'pending'
+            })
+          | (components['schemas']['InvoicePagoEditInput'] & {
+              /** @constant */
+              status: 'draft'
+            })
+        )
+      | (
+          | (components['schemas']['InvoiceNominaInput'] & {
+              /**
+               * @default pending
+               * @constant
+               */
+              status?: 'pending'
+            })
+          | (components['schemas']['InvoiceNominaEditInput'] & {
+              /** @constant */
+              status: 'draft'
+            })
+        )
+      | (
+          | (components['schemas']['InvoiceTrasladoInput'] & {
+              /**
+               * @default pending
+               * @constant
+               */
+              status?: 'pending'
+            })
+          | (components['schemas']['InvoiceTrasladoEditInput'] & {
+              /** @constant */
+              status: 'draft'
+            })
+        )
     /** Ingreso */
     InvoiceIngresoInput: {
       /**
