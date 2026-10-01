@@ -280,6 +280,31 @@ validateSignature<T extends ApiEventType = any>(data: { secret: string; signatur
       )
       .join('\n')
     const documentation = methodDocumentation(spec, operation, entry)
+    if (entry.bodyByQueryFlag) {
+      assert(
+        spec.components.schemas[entry.bodyByQueryFlag.true],
+        'Missing conditional body schema.',
+      )
+      assert(
+        entry.body?.argument && entry.params?.argument,
+        'Conditional bodies require body and query arguments.',
+      )
+      imports.push(
+        `import type { components as InputComponents } from '../generated/input';`,
+      )
+      methods.push(
+        `${documentation}${entry.name}(${entry.body.argument}: InputComponents['schemas']['${entry.bodyByQueryFlag.true}'], ${entry.params.argument}: OperationQuery<'${entry.operation}'> & { ${entry.bodyByQueryFlag.property}: true }): Promise<OperationResponse<'${entry.operation}'>>;`,
+      )
+      methods.push(
+        `${documentation}${entry.name}(${argumentsList.join(', ')}): Promise<OperationResponse<'${entry.operation}'>>;`,
+      )
+      argumentsList[
+        entry.arguments.findIndex(
+          (argument) => argument.name === entry.body.argument,
+        )
+      ] =
+        `${entry.body.argument}: OperationBody<'${entry.operation}'> | InputComponents['schemas']['${entry.bodyByQueryFlag.true}']`
+    }
     if (entry.responseByFlag) {
       imports.push(
         `import type { components as OutputComponents } from '../generated/output';`,

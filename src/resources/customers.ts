@@ -6,6 +6,7 @@ import type {
   OperationResponse,
 } from '../generated/contracts'
 import { operationDatePlans } from '../generated/dates'
+import type { components as InputComponents } from '../generated/input'
 export default class Customers {
   constructor(public client: WrapperClient) {}
   /**
@@ -31,7 +32,63 @@ export default class Customers {
    * 201: Nuevo objeto `Customer` creado
    */
   create(
+    data: InputComponents['schemas']['CustomerCreateWithEditLinkInput'],
+    params: OperationQuery<'createCustomer'> & { createEditLink: true },
+  ): Promise<OperationResponse<'createCustomer'>>
+
+  /**
+   * Crear cliente
+   *
+   * Registra un nuevo cliente en Facturapi.
+   *
+   * Esta llamada valida que los datos fiscales coincidan con
+   * los registros del SAT para ese RFC, de lo contrario, la llamada
+   * devolverá un error indicando el problema.
+   *
+   * Una vez creado el cliente y obtenido un objeto de respuesta,
+   * te recomendamos guardar el ID en tu base de datos junto a la información
+   * de tu cliente. Posteriormente, puedes llamar al endpoint de Crear Factura
+   * pasando el ID del cliente en lugar de repetir la información.
+   *
+   * Por último, ten en cuenta que los clientes que crees en ambiente _Test_ **no se
+   * comparten** con el ambiente _Live_.
+   *
+   * @param data - Datos de la solicitud.
+   * @param params - Parámetros de consulta.
+   * @returns 200: Un objeto `Customer` con la misma información ya existía
+   * 201: Nuevo objeto `Customer` creado
+   */
+  create(
     data: OperationBody<'createCustomer'>,
+    params?: OperationQuery<'createCustomer'> | null,
+  ): Promise<OperationResponse<'createCustomer'>>
+
+  /**
+   * Crear cliente
+   *
+   * Registra un nuevo cliente en Facturapi.
+   *
+   * Esta llamada valida que los datos fiscales coincidan con
+   * los registros del SAT para ese RFC, de lo contrario, la llamada
+   * devolverá un error indicando el problema.
+   *
+   * Una vez creado el cliente y obtenido un objeto de respuesta,
+   * te recomendamos guardar el ID en tu base de datos junto a la información
+   * de tu cliente. Posteriormente, puedes llamar al endpoint de Crear Factura
+   * pasando el ID del cliente en lugar de repetir la información.
+   *
+   * Por último, ten en cuenta que los clientes que crees en ambiente _Test_ **no se
+   * comparten** con el ambiente _Live_.
+   *
+   * @param data - Datos de la solicitud.
+   * @param params - Parámetros de consulta.
+   * @returns 200: Un objeto `Customer` con la misma información ya existía
+   * 201: Nuevo objeto `Customer` creado
+   */
+  create(
+    data:
+      | OperationBody<'createCustomer'>
+      | InputComponents['schemas']['CustomerCreateWithEditLinkInput'],
     params?: OperationQuery<'createCustomer'> | null,
   ): Promise<OperationResponse<'createCustomer'>> {
     return this.client.request<OperationResponse<'createCustomer'>>(

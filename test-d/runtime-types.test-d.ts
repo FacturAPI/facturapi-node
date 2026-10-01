@@ -400,3 +400,21 @@ expectAssignable<PagoComplementData['related_documents'][number]>(
 expectNotAssignable<
   PagoComplementData['related_documents'][number]['taxability']
 >(1)
+
+// Incomplete customer information is accepted only when an edit link is requested.
+client.customers.create({}, { createEditLink: true })
+client.customers.create(
+  { email: 'cliente@example.com' },
+  { createEditLink: true },
+)
+client.customers.create(
+  { address: { city: 'Hermosillo' } },
+  { createEditLink: true },
+)
+expectError(client.customers.create({}))
+expectError(client.customers.create({}, { createEditLink: false }))
+expectError(
+  client.customers.create({}, { createEditLink: Math.random() > 0.5 }),
+)
+expectError(client.customers.create({ address: { zip: '83200' } }))
+expectError(client.customers.create({ email: 123 }, { createEditLink: true }))

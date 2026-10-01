@@ -4269,8 +4269,14 @@ export interface components {
       /** Uso de CFDI por defecto. */
       default_invoice_use?: string
     }
+    /**
+     * Customer with edit link
+     * La información del cliente puede estar incompleta cuando createEditLink=true. Los campos enviados deben conservar formatos válidos.
+     */
+    CustomerCreateWithEditLinkInput: components['schemas']['CustomerProperties']
     /** Customer */
     CustomerCreateInput: components['schemas']['CustomerCommonProperties'] & {
+      legal_name: components['schemas']['CustomerCommonProperties']['legal_name']
       address: components['schemas']['CommonAddressProperties'] & {
         /** Si el país es México ("MEX"), contiene el nombre del Estado o Entidad Federativa. Para extranjeros contiene el código de Estado de acuerdo al estándar [ISO 3166-2](https://en.wikipedia.org/wiki/ISO_3166-2), que puedes consultar en nuestro [Catálogo de Estados](https://dashboard.facturapi.io/catalogs/state). */
         state?: string
@@ -7515,6 +7521,7 @@ export interface operations {
          *     válido por 7 días y sólo se podrá usar una vez.
          *     Además, pasar el valor `true` desactivará la validación de información fiscal con el SAT,
          *     permitiendo crear clientes con información incompleta.
+         *     Con `true`, el body sigue `CustomerCreateWithEditLinkInput`; en otro caso sigue `CustomerCreateInput`.
          */
         createEditLink?: boolean
       }

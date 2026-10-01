@@ -214,6 +214,8 @@ export type CustomerNonEditableProperties =
 export type CustomerProperties = Output['schemas']['CustomerProperties']
 export type CustomerCommonProperties =
   Output['schemas']['CustomerCommonProperties']
+export type CustomerCreateWithEditLinkInput =
+  Input['schemas']['CustomerCreateWithEditLinkInput']
 export type CustomerCreateInput = Input['schemas']['CustomerCreateInput']
 export type LineItemProductInput = Input['schemas']['LineItemProductInput']
 export type LineItemProductEgresoInput =

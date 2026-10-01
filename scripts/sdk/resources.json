@@ -3,7 +3,13 @@
     "className": "Customers",
     "directory": "resources",
     "methods": {
-      "create": "createCustomer",
+      "create": {
+        "operation": "createCustomer",
+        "bodyByQueryFlag": {
+          "property": "createEditLink",
+          "true": "CustomerCreateWithEditLinkInput"
+        }
+      },
       "list": "listCustomers",
       "retrieve": "getCustomer",
       "update": "editCustomer",

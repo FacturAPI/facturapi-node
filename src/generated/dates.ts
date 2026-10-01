@@ -487,6 +487,7 @@ export const componentDatePlans = {
   CustomerNonEditableProperties: 63,
   CustomerProperties: 0,
   CustomerCommonProperties: 0,
+  CustomerCreateWithEditLinkInput: 0,
   CustomerCreateInput: 0,
   LineItemProductInput: 0,
   LineItemProductEgresoInput: 0,
