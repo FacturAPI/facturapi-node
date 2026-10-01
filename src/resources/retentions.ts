@@ -77,7 +77,7 @@ export default class Retentions {
    *
    * Realiza una solicitud de cancelación de retención ante el SAT.
    *
-   * A diferencia de las facturas comúnes, la cancelación de la retención es inmediata y no requiere autorización de parte del receptor.
+   * A diferencia de las facturas comunes, la cancelación de la retención es inmediata y no requiere autorización de parte del receptor.
    *
    * Si el status de la retención es `draft`, este método la eliminará de la
    * base de datos sin llamar al SAT/PAC y sin requerir parámetros de cancelación.

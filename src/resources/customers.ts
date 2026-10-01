@@ -27,7 +27,8 @@ export default class Customers {
    *
    * @param data - Datos de la solicitud.
    * @param params - Parámetros de consulta.
-   * @returns Un objeto `Customer` con la misma información ya existía Nuevo objeto `Customer` creado
+   * @returns 200: Un objeto `Customer` con la misma información ya existía
+   * 201: Nuevo objeto `Customer` creado
    */
   create(
     data: OperationBody<'createCustomer'>,

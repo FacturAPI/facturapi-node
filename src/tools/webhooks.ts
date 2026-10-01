@@ -92,7 +92,7 @@ export default class Webhooks {
   /**
    * Eliminar Webhook
    *
-   * Elimina el webhook pertenciente a la organización.
+   * Elimina el webhook perteneciente a la organización.
    *
    * @param id - ID del objeto a eliminar
    * @returns Objeto `Webhook` eliminado correctamente

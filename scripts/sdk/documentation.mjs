@@ -68,7 +68,7 @@ export function methodDocumentation(spec, operation, entry) {
   }
   const responses = Object.entries(operation.responses || {})
     .filter(([status]) => /^2\d\d$/.test(status))
-    .map(([, response]) => dereference(response))
+    .map(([status, response]) => ({ status, ...dereference(response) }))
   const binary = responses.some((response) =>
     Object.values(response.content || {}).some(
       (content) => dereference(content.schema)?.format === 'binary',
@@ -78,9 +78,14 @@ export function methodDocumentation(spec, operation, entry) {
     `@returns ${
       binary
         ? 'Archivo como stream en Node.js o Blob en el navegador.'
-        : [...new Set(responses.map((response) => response.description))]
-            .filter(Boolean)
-            .join(' ')
+        : responses
+            .filter((response) => response.description)
+            .map((response) =>
+              responses.length > 1
+                ? `${response.status}: ${response.description}`
+                : response.description,
+            )
+            .join('\n')
     }`,
   )
   return (

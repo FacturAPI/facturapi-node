@@ -165,6 +165,34 @@ describe('runtime compatibility (node)', () => {
     expect(created.stamp?.date).toBe('2026-09-17T06:59:16')
   })
 
+  it('serializes payroll Date values as ISO timestamps and preserves date strings', async () => {
+    const client = createClient()
+    globalThis.fetch = vi.fn(async (_url, options) => {
+      expect(JSON.parse(options?.body as string).complements[0].data).toEqual({
+        fecha_pago: '2026-09-17T06:00:00.000Z',
+        fecha_inicial_pago: '2026-09-01',
+        fecha_final_pago: '2026-09-17T00:00:00-06:00',
+      })
+      return new Response(JSON.stringify({ id: 'inv_123', status: 'draft' }), {
+        headers: { 'content-type': 'application/json' },
+      })
+    }) as typeof fetch
+    await client.invoices.create({
+      type: 'N',
+      status: 'draft',
+      complements: [
+        {
+          type: 'nomina',
+          data: {
+            fecha_pago: new Date('2026-09-17T00:00:00-06:00'),
+            fecha_inicial_pago: '2026-09-01',
+            fecha_final_pago: '2026-09-17T00:00:00-06:00',
+          },
+        },
+      ],
+    })
+  })
+
   it('checks domain availability via GET query params', async () => {
     const client = createClient()
 
@@ -692,14 +720,16 @@ describe('runtime compatibility (node)', () => {
     }) as typeof fetch
 
     try {
-      const event = await client.webhooks.validateSignature({
-        secret: 'whsec_test',
-        signature: 'deadbeef',
-        payload,
-      })
-      expect(event.id).toBe('evt_remote_123')
-      expect(event.type).toBe('invoice.status_updated')
-      expect(event.created_at).toEqual(new Date('2026-09-30T12:00:00.000Z'))
+      for (const eventPayload of [payload, JSON.parse(payload)]) {
+        const event = await client.webhooks.validateSignature({
+          secret: 'whsec_test',
+          signature: 'deadbeef',
+          payload: eventPayload,
+        })
+        expect(event.id).toBe('evt_remote_123')
+        expect(event.type).toBe('invoice.status_updated')
+        expect(event.created_at).toEqual(new Date('2026-09-30T12:00:00.000Z'))
+      }
     } finally {
       ;(globalThis as any).Buffer = originalBuffer
       if (cryptoDescriptor) {

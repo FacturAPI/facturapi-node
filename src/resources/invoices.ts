@@ -17,7 +17,8 @@ export default class Invoices {
    *
    * @param body - Datos de la solicitud.
    * @param params - Parámetros de consulta.
-   * @returns Nuevo objeto `Invoice` creado Solicitud aceptada; Facturapi intentará recuperar el CFDI hasta cinco veces, una cada 10 minutos
+   * @returns 200: Nuevo objeto `Invoice` creado
+   * 202: Solicitud aceptada; Facturapi intentará recuperar el CFDI hasta cinco veces, una cada 10 minutos
    */
   create(
     body: OperationBody<'createInvoice'>,

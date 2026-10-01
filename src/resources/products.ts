@@ -15,7 +15,7 @@ export default class Products {
    *
    * Puedes usar el ID del producto para crear facturas sin tener que enviar todos los datos del producto cada vez.
    *
-   * Te en cuenta que los productos que crees en ambiente _Test_ **no se
+   * Ten en cuenta que los productos que crees en ambiente _Test_ **no se
    * comparten** con el ambiente _Live_.
    *
    * @param data - Datos de la solicitud.

@@ -90,10 +90,7 @@ for (const mode of ['input', 'output']) {
     defaultNonNullable: false,
     emptyObjectsUnknown: true,
     transform(schema) {
-      if (
-        schema.format === 'date-time' ||
-        (mode === 'input' && schema.format === 'date')
-      ) {
+      if (schema.format === 'date-time') {
         const types = [ts.factory.createTypeReferenceNode('Date')]
         if (mode === 'input')
           types.push(

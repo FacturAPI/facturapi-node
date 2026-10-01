@@ -354,7 +354,7 @@ export interface paths {
      *
      *     Puedes usar el ID del producto para crear facturas sin tener que enviar todos los datos del producto cada vez.
      *
-     *     Te en cuenta que los productos que crees en ambiente _Test_ **no se
+     *     Ten en cuenta que los productos que crees en ambiente _Test_ **no se
      *     comparten** con el ambiente _Live_.
      */
     post: operations['createProduct']
@@ -1051,7 +1051,7 @@ export interface paths {
      * Cancelar retención
      * @description Realiza una solicitud de cancelación de retención ante el SAT.
      *
-     *     A diferencia de las facturas comúnes, la cancelación de la retención es inmediata y no requiere autorización de parte del receptor.
+     *     A diferencia de las facturas comunes, la cancelación de la retención es inmediata y no requiere autorización de parte del receptor.
      *
      *     Si el status de la retención es `draft`, este método la eliminará de la
      *     base de datos sin llamar al SAT/PAC y sin requerir parámetros de cancelación.
@@ -1850,7 +1850,7 @@ export interface paths {
     post?: never
     /**
      * Eliminar Webhook
-     * @description Elimina el webhook pertenciente a la organización.
+     * @description Elimina el webhook perteneciente a la organización.
      */
     delete: operations['deleteWebhook']
     options?: never
@@ -2204,6 +2204,8 @@ export interface webhooks {
 }
 export interface components {
   schemas: {
+    /** @description Fecha en formato YYYY-MM-DD o fecha y hora en formato ISO8601. */
+    DateOrDateTime: string | (Date | string)
     InvoiceGlobalInvoiceCreatedEvent: components['schemas']['EventBase'] & {
       /**
        * @description Tipo de evento
@@ -2940,21 +2942,12 @@ export interface components {
        * @enum {string}
        */
       tipo_nomina?: 'O' | 'E'
-      /**
-       * Format: date
-       * @description Fecha de pago de la nómina al trabajador. Si se omite, se utiliza la fecha y hora actuales.
-       */
-      fecha_pago?: Date | string
-      /**
-       * Format: date
-       * @description Fecha inicial del periodo de pago.
-       */
-      fecha_inicial_pago?: Date | string
-      /**
-       * Format: date
-       * @description Fecha final del periodo de pago.
-       */
-      fecha_final_pago?: Date | string
+      /** @description Fecha de pago de la nómina al trabajador. Si se omite, se utiliza la fecha y hora actuales. */
+      fecha_pago?: components['schemas']['DateOrDateTime']
+      /** @description Fecha inicial del periodo de pago. */
+      fecha_inicial_pago?: components['schemas']['DateOrDateTime']
+      /** @description Fecha final del periodo de pago. */
+      fecha_final_pago?: components['schemas']['DateOrDateTime']
       /** @description Número de días pagados. Puede ser entero o fracción. */
       num_dias_pagados?: number
     }
@@ -3260,11 +3253,8 @@ export interface components {
       curp?: string
       /** @description Número de seguridad social. */
       num_seguridad_social?: string
-      /**
-       * Format: date
-       * @description Fecha de inicio de la relación laboral entre el empleador y el empleado.
-       */
-      fecha_inicio_rel_laboral?: Date | string
+      /** @description Fecha de inicio de la relación laboral entre el empleador y el empleado. */
+      fecha_inicio_rel_laboral?: components['schemas']['DateOrDateTime']
       /**
        * @description Antigüedad del empleado en el formato especificado por el SAT. Si se envía un `string`, se espera que éste contenga la antigüedad en el formato que especifica el SAT. Si se envía el valor booleano `false`, este campo no se incluirá en la factura. Si se envía el valor booleano `true` y `fecha_inicio_rel_laboral` existe, este valor se calculará con la diferencia entre la fecha de inicio de relación laboral y la fecha de pago.
        * @default true
@@ -5752,21 +5742,19 @@ export interface components {
     } & components['schemas']['InvoiceableCommonInput']
     GlobalInvoiceInput: {
       /**
-       * Format: date
        * @description Fecha inicial de los recibos que se incluirán en la factura global.
        *     Por default, este valor es el inicio del último periodo (día, semana,
        *     quincena o mes), según el valor de "Periodicidad" (`periodicity`)
        *     en la configuración de recibos de tu organización. Este valor es requerido cuando se envíe el campo `receipts`.
        */
-      from?: Date | string
+      from?: components['schemas']['DateOrDateTime']
       /**
-       * Format: date
        * @description Fecha final de los recibos que se incluirán en la factura global.
        *     Por default, este valor es el fin del último periodo (día, semana,
        *     quincena o mes), según el valor de "Periodicidad" (`periodicity`)
        *     en la configuración de recibos de tu organización. Este valor es requerido cuando se envíe el campo `receipts`.
        */
-      to?: Date | string
+      to?: components['schemas']['DateOrDateTime']
       /**
        * @description Periodicidad que corresponde al rango de fechas utilizado.
        *     Si omites los campos `from` y `to`, las fechas que se asignarán por
@@ -5790,11 +5778,8 @@ export interface components {
       folio_number?: number
       /** @description Serie. Caracteres designados por la empresa para control interno y sin validez fiscal. */
       series?: string
-      /**
-       * Format: date
-       * @description Fecha de emisión de la factura. Si se omite, se utiliza la fecha final (`to`), limitada a la fecha y hora actuales.
-       */
-      date?: Date | string
+      /** @description Fecha de emisión de la factura. Si se omite, se utiliza la fecha final (`to`), limitada a la fecha y hora actuales. */
+      date?: components['schemas']['DateOrDateTime']
       /** @description description: Código que representa la forma de pago, de acuerdo al [catálogo del SAT](#forma-de-pago). Si se incluye, los recibos se agruparán y se crearán la factura global por la forma de pago. */
       payment_form?: string
       /** @description Recibos a incluir en la factura global. Si se incluye este parámetro, los parámetros `from` y `to` serán requeridos y tendrán que cumplir con el campo `periodicity`. */
