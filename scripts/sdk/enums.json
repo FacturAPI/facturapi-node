@@ -22,7 +22,7 @@
   "#/components/schemas/InvoiceIngresoEditInput/allOf/0/properties/payment_method": "PaymentMethod",
   "#/components/schemas/InvoiceIngresoEditInput/allOf/0/properties/global/properties/periodicity": "GlobalInvoicePeriodicity",
   "#/components/schemas/ReceiptProperties/allOf/0/properties/status": "ReceiptStatus",
-  "#/components/schemas/GlobalInvoiceInput/properties/periodicity": "GlobalInvoicePeriodicity",
+  "#/components/schemas/GlobalInvoiceInputProperties/properties/periodicity": "GlobalInvoicePeriodicity",
   "#/components/schemas/Organization/properties/receipts/properties/periodicity": "InvoicingPeriod",
   "#/components/schemas/OrganizationReceiptsInput/properties/periodicity": "InvoicingPeriod",
   "#/components/schemas/OrganizationSeriesDefaultInput/properties/type": "InvoiceType",

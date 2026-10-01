@@ -214,8 +214,21 @@ export type CustomerNonEditableProperties =
 export type CustomerProperties = Output['schemas']['CustomerProperties']
 export type CustomerCommonProperties =
   Output['schemas']['CustomerCommonProperties']
+export type CancellationQueryInput = Input['schemas']['CancellationQueryInput']
 export type CustomerCreateWithEditLinkInput =
   Input['schemas']['CustomerCreateWithEditLinkInput']
+export type CustomerCreateCommonInput =
+  Input['schemas']['CustomerCreateCommonInput']
+export type CustomerNationalAddressInput =
+  Input['schemas']['CustomerNationalAddressInput']
+export type CustomerForeignAddressInput =
+  Input['schemas']['CustomerForeignAddressInput']
+export type CustomerNationalCreateInput =
+  Input['schemas']['CustomerNationalCreateInput']
+export type CustomerForeignCreateInput =
+  Input['schemas']['CustomerForeignCreateInput']
+export type CustomerGenericCreateInput =
+  Input['schemas']['CustomerGenericCreateInput']
 export type CustomerCreateInput = Input['schemas']['CustomerCreateInput']
 export type LineItemProductInput = Input['schemas']['LineItemProductInput']
 export type LineItemProductEgresoInput =
@@ -280,6 +293,8 @@ export type ReceiptAssignCustomerInput =
 export type ReceiptSearchResult = Output['schemas']['ReceiptSearchResult']
 export type InvoiceReceiptInput = Input['schemas']['InvoiceReceiptInput']
 export type GlobalInvoiceInput = Input['schemas']['GlobalInvoiceInput']
+export type GlobalInvoiceInputProperties =
+  Output['schemas']['GlobalInvoiceInputProperties']
 export type ToInvoiceInput = Input['schemas']['ToInvoiceInput']
 export type ToInvoicePreviewInput = Input['schemas']['ToInvoicePreviewInput']
 export type ToInvoiceSummary = Output['schemas']['ToInvoiceSummary']

@@ -28,6 +28,13 @@ export default class Customers {
    *
    * @param data - Datos de la solicitud.
    * @param params - Parámetros de consulta.
+   * @param params.createEditLink - Si pasas el valor `true`, se generará un enlace para que el cliente pueda editar
+   * su información fiscal. Este enlace estará disponible en el campo "edit_link", será
+   * válido por 3 días y sólo se podrá usar una vez.
+   * Además, pasar el valor `true` desactivará la validación de información fiscal con el SAT,
+   * permitiendo crear clientes con información incompleta.
+   * Con `true`, el body sigue `CustomerCreateWithEditLinkInput`; en otro caso sigue `CustomerCreateInput`.
+   *
    * @returns 200: Un objeto `Customer` con la misma información ya existía
    * 201: Nuevo objeto `Customer` creado
    */
@@ -55,6 +62,13 @@ export default class Customers {
    *
    * @param data - Datos de la solicitud.
    * @param params - Parámetros de consulta.
+   * @param params.createEditLink - Si pasas el valor `true`, se generará un enlace para que el cliente pueda editar
+   * su información fiscal. Este enlace estará disponible en el campo "edit_link", será
+   * válido por 3 días y sólo se podrá usar una vez.
+   * Además, pasar el valor `true` desactivará la validación de información fiscal con el SAT,
+   * permitiendo crear clientes con información incompleta.
+   * Con `true`, el body sigue `CustomerCreateWithEditLinkInput`; en otro caso sigue `CustomerCreateInput`.
+   *
    * @returns 200: Un objeto `Customer` con la misma información ya existía
    * 201: Nuevo objeto `Customer` creado
    */
@@ -82,6 +96,13 @@ export default class Customers {
    *
    * @param data - Datos de la solicitud.
    * @param params - Parámetros de consulta.
+   * @param params.createEditLink - Si pasas el valor `true`, se generará un enlace para que el cliente pueda editar
+   * su información fiscal. Este enlace estará disponible en el campo "edit_link", será
+   * válido por 3 días y sólo se podrá usar una vez.
+   * Además, pasar el valor `true` desactivará la validación de información fiscal con el SAT,
+   * permitiendo crear clientes con información incompleta.
+   * Con `true`, el body sigue `CustomerCreateWithEditLinkInput`; en otro caso sigue `CustomerCreateInput`.
+   *
    * @returns 200: Un objeto `Customer` con la misma información ya existía
    * 201: Nuevo objeto `Customer` creado
    */
@@ -217,7 +238,7 @@ export default class Customers {
    *
    * Envía un enlace para que el cliente pueda editar su información fiscal.
    *
-   * Este enlace estará disponible en el campo `edit_link`, será válido por 7 días y sólo se podrá usar una vez.
+   * Este enlace estará disponible en el campo `edit_link`, será válido por 3 días y sólo se podrá usar una vez.
    *
    * @param id - ID del objeto `Customer` a editar
    * @param options - Datos de la solicitud.

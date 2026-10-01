@@ -115,6 +115,12 @@ it('documents SDK arguments, binary returns and absolute links from the public s
         required: true,
         description: 'Monto en la moneda del documento.',
       },
+      {
+        in: 'query',
+        name: 'mode',
+        required: false,
+        description: 'Modo de la solicitud.',
+      },
     ],
     responses: {
       200: {
@@ -142,6 +148,15 @@ it('documents SDK arguments, binary returns and absolute links from the public s
     'https://docs.facturapi.io/docs/guides/invoices',
   )
   expect(documentation).toContain('https://docs.facturapi.io/api/#tag/invoice')
+  expect(
+    methodDocumentation(
+      spec,
+      operation,
+      resolveOperationBinding(spec, operation, {
+        querySchema: 'ConditionalInput',
+      }),
+    ),
+  ).toContain('@param params.mode - Modo de la solicitud.')
   expect(
     methodDocumentation(
       spec,

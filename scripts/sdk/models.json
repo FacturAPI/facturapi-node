@@ -26,7 +26,7 @@
     "GlobalInfo": "NonNullable<Output['InvoiceProperties']['global']>",
     "InvoiceComplement": "NonNullable<Output['InvoiceProperties']['complements']>[number]",
     "Invoice": "Output['Invoice']",
-    "CancelInvoiceOptions": "OperationQuery<'cancelInvoice'>",
+    "CancelInvoiceOptions": "Input['CancellationQueryInput']",
     "CreateZipRequestData": "OperationBody<'createInvoiceZipRequest'>",
     "ListZipRequestsParams": "OperationQuery<'listInvoiceZipRequests'>",
     "ZipRequest": "Output['InvoiceZipRequest']",

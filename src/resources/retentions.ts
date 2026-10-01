@@ -6,6 +6,7 @@ import type {
   OperationResponse,
 } from '../generated/contracts'
 import { operationDatePlans } from '../generated/dates'
+import type { components as InputComponents } from '../generated/input'
 export default class Retentions {
   constructor(public client: WrapperClient) {}
   /**
@@ -84,11 +85,28 @@ export default class Retentions {
    *
    * @param id - ID de la retención a cancelar
    * @param params - Parámetros de consulta.
+   * @param params.motive - Clave que representa el motivo de la cancelación de la retención.
+   * Requerido para retenciones que no son borrador.
+   * - `01`: **Comprobante emitido con errores con relación**. Cuando la
+   *   retención contiene algún error en las cantidades, claves o cualquier otro dato y ya
+   *   se ha emitido el comprobante que la sustituye, el cual deberá indicarse por medio
+   *   del atributo `substitution`.
+   * - `02`: **Comprobante emitido con errores sin relación**. Cuando la
+   *   retención contiene algún error en las cantidades, claves o cualquier otro dato y no
+   *   se requiere relacionar con otra retención.
+   * - `03`: **No se llevó a cabo la operación**. Cuando la operación o transacción no se concretó.
+   * - `04`: **Operación nominativa relacionada en la retención global**. Cuando se requiere cancelar
+   *   una retención al público en general porque el cliente solicita su comprobante.
+   *
+   * @param params.substitution - ID de la retención que sustituye a la retención que se está cancelando
+   * Puedes usar el ID de Facturapi o el folio fiscal (UUID).
+   * Requerido para los motivos 01 y 04. Eliminar un borrador no requiere parámetros de consulta.
+   *
    * @returns Objeto `Retention` cancelado exitosamente
    */
   cancel(
     id: string,
-    params?: OperationQuery<'cancelRetention'>,
+    params?: InputComponents['schemas']['CancellationQueryInput'],
   ): Promise<OperationResponse<'cancelRetention'>> {
     if (!id) return Promise.reject(new Error('id is required'))
 

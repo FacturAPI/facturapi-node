@@ -13,7 +13,7 @@ export type InvoiceComplement = NonNullable<
   Output['InvoiceProperties']['complements']
 >[number]
 export type Invoice = Output['Invoice']
-export type CancelInvoiceOptions = OperationQuery<'cancelInvoice'>
+export type CancelInvoiceOptions = Input['CancellationQueryInput']
 export type CreateZipRequestData = OperationBody<'createInvoiceZipRequest'>
 export type ListZipRequestsParams = OperationQuery<'listInvoiceZipRequests'>
 export type ZipRequest = Output['InvoiceZipRequest']

@@ -52,7 +52,9 @@ export function methodDocumentation(spec, operation, entry) {
       for (const parameter of parameters.filter(
         (parameter) =>
           parameter.in === 'query' &&
-          parameter.required &&
+          (parameter.required ||
+            entry.querySchema ||
+            entry.bodyByQueryFlag?.property === parameter.name) &&
           parameter.description,
       ))
         lines.push(

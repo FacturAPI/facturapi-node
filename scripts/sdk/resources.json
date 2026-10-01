@@ -39,7 +39,10 @@
       "list": "listInvoices",
       "retrieve": "getInvoice",
       "paymentSummary": "getInvoicePaymentSummary",
-      "cancel": "cancelInvoice",
+      "cancel": {
+        "operation": "cancelInvoice",
+        "querySchema": "CancellationQueryInput"
+      },
       "sendByEmail": {
         "operation": "sendInvoiceByEmail",
         "argumentNames": {
@@ -388,6 +391,7 @@
       "retrieve": "getRetention",
       "cancel": {
         "operation": "cancelRetention",
+        "querySchema": "CancellationQueryInput",
         "nullable": {
           "params": false
         }

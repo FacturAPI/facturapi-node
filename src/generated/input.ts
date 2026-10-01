@@ -298,7 +298,7 @@ export interface paths {
      * Enviar enlace de edición por correo electrónico
      * Envía un enlace para que el cliente pueda editar su información fiscal.
      *
-     *     Este enlace estará disponible en el campo `edit_link`, será válido por 7 días y sólo se podrá usar una vez.
+     *     Este enlace estará disponible en el campo `edit_link`, será válido por 3 días y sólo se podrá usar una vez.
      */
     post: operations['sendEditLinkByEmail']
     delete?: never
@@ -4234,7 +4234,7 @@ export interface components {
        * Format: date-time
        * Fecha de expiración del enlace de edición.
        */
-      edit_link_expires_at?: Date | string
+      edit_link_expires_at?: Date | string | null
       /**
        * Format: date-time
        * Fecha en la que la información fiscal fue validado por el SAT.
@@ -4256,37 +4256,123 @@ export interface components {
       /** Nombre Fiscal o Razón Social del cliente. *sin* el régimen societario (ej.: S.A. de C.V.). */
       legal_name?: string
       /** En clientes de México contiene el RFC del cliente. Para extranjeros es opcional y representa el número de registro de identificación tributaria, es decir, el equivalente al RFC en el país del cliente. */
-      tax_id?: string
+      tax_id?: string | null
       /** Requerido para clientes nacionales. Clave del régimen fiscal del cliente, del catálogo de [Regímenes Fiscales](#r%C3%A9gimen-fiscal). */
-      tax_system?: string
+      tax_system?: string | null
       /**
        * Format: email
        * Dirección de correo electrónico al cual enviar las facturas generadas.
        */
       email?: string
       /** Teléfono del cliente. */
-      phone?: string
+      phone?: string | null
       /** Uso de CFDI por defecto. */
       default_invoice_use?: string
     }
+    /** Omite los parámetros para eliminar un borrador. Los documentos emitidos requieren motivo; los motivos 01 y 04 también requieren substitution. */
+    CancellationQueryInput:
+      | {
+          /** @enum {string} */
+          motive: '01' | '04'
+          /** ID de Facturapi o UUID del documento sustituto. */
+          substitution: string
+        }
+      | {
+          /** @enum {string} */
+          motive: '02' | '03'
+          substitution?: string
+        }
+      | {
+          motive?: never
+          substitution?: never
+        }
     /**
      * Customer with edit link
      * La información del cliente puede estar incompleta cuando createEditLink=true. Los campos enviados deben conservar formatos válidos.
      */
-    CustomerCreateWithEditLinkInput: components['schemas']['CustomerProperties']
-    /** Customer */
-    CustomerCreateInput: components['schemas']['CustomerCommonProperties'] & {
-      legal_name: components['schemas']['CustomerCommonProperties']['legal_name']
-      address: components['schemas']['CommonAddressProperties'] & {
-        /** Si el país es México ("MEX"), contiene el nombre del Estado o Entidad Federativa. Para extranjeros contiene el código de Estado de acuerdo al estándar [ISO 3166-2](https://en.wikipedia.org/wiki/ISO_3166-2), que puedes consultar en nuestro [Catálogo de Estados](https://dashboard.facturapi.io/catalogs/state). */
-        state?: string
-        /**
-         * Código de país acorde al estándar [ISO 3166-1 alpha-3](https://en.wikipedia.org/wiki/ISO_3166-1_alpha-3), del [Catálogo de Países](https://dashboard.facturapi.io/catalogs/country).
-         * @default MEX
-         */
-        country?: string
-      }
+    CustomerCreateWithEditLinkInput: components['schemas']['CustomerProperties'] & {
+      /** Si se envía, debe ser un régimen fiscal válido. Omitirlo permite guardar información fiscal incompleta. */
+      tax_system?: string
     }
+    CustomerCreateCommonInput: {
+      /** Nombre Fiscal o Razón Social del cliente. *sin* el régimen societario (ej.: S.A. de C.V.). */
+      legal_name: string
+      /**
+       * Format: email
+       * Dirección de correo electrónico al cual enviar las facturas generadas.
+       */
+      email?: string
+      /** Teléfono del cliente. */
+      phone?: string | null
+      /** Uso de CFDI por defecto. */
+      default_invoice_use?: string
+    }
+    CustomerNationalAddressInput: WithRequired<
+      components['schemas']['CommonAddressProperties'],
+      'zip'
+    > & {
+      state?: string
+      /**
+       * @default MEX
+       * @constant
+       */
+      country?: 'MEX'
+    }
+    CustomerForeignAddressInput: components['schemas']['CommonAddressProperties'] & {
+      /** Código ISO 3166-1 alpha-3 distinto de MEX. Es necesario para aplicar las reglas de cliente extranjero. */
+      country: string
+      state?: string
+    }
+    /**
+     * Cliente nacional
+     * País MEX, u omitido. Requiere razón social, RFC, régimen fiscal y código postal. Los RFC genéricos usan CustomerGenericCreateInput.
+     */
+    CustomerNationalCreateInput: components['schemas']['CustomerCreateCommonInput'] & {
+      /** En clientes de México contiene el RFC del cliente. Para extranjeros es opcional y representa el número de registro de identificación tributaria, es decir, el equivalente al RFC en el país del cliente. */
+      tax_id: string
+      /** Requerido para clientes nacionales. Clave del régimen fiscal del cliente, del catálogo de [Regímenes Fiscales](#r%C3%A9gimen-fiscal). */
+      tax_system: string
+      address: components['schemas']['CustomerNationalAddressInput']
+    }
+    /**
+     * Cliente extranjero
+     * Requiere razón social y domicilio con un país explícito distinto de MEX. El identificador fiscal y el código postal son opcionales; el régimen fiscal predeterminado es 616.
+     */
+    CustomerForeignCreateInput: components['schemas']['CustomerCreateCommonInput'] & {
+      /** En clientes de México contiene el RFC del cliente. Para extranjeros es opcional y representa el número de registro de identificación tributaria, es decir, el equivalente al RFC en el país del cliente. */
+      tax_id?: string | null
+      /**
+       * Los clientes extranjeros usan 616. Omitirlo, enviar null o una cadena vacía usa el valor predeterminado.
+       * @default 616
+       * @enum {string|null}
+       */
+      tax_system?: '616' | null | ''
+      address: components['schemas']['CustomerForeignAddressInput']
+    }
+    /**
+     * RFC genérico
+     * RFC de público en general XAXX010101000 o RFC genérico extranjero XEXX010101000. Requiere razón social y RFC. El régimen fiscal predeterminado es 616. Si se envía domicilio mexicano, requiere código postal.
+     */
+    CustomerGenericCreateInput: components['schemas']['CustomerCreateCommonInput'] & {
+      /** @enum {string} */
+      tax_id: 'XAXX010101000' | 'XEXX010101000'
+      /**
+       * @default 616
+       * @enum {string}
+       */
+      tax_system?: '616'
+      address?:
+        | components['schemas']['CustomerNationalAddressInput']
+        | components['schemas']['CustomerForeignAddressInput']
+    }
+    /**
+     * Customer
+     * Los campos requeridos dependen del país y del RFC. Omitir el país equivale a México. Con createEditLink=true se usa CustomerCreateWithEditLinkInput.
+     */
+    CustomerCreateInput:
+      | components['schemas']['CustomerNationalCreateInput']
+      | components['schemas']['CustomerForeignCreateInput']
+      | components['schemas']['CustomerGenericCreateInput']
     /** Product */
     LineItemProductInput: components['schemas']['ProductProperties']
     /** Product */
@@ -5749,7 +5835,16 @@ export interface components {
       /** Condiciones de pago */
       conditions?: string
     } & components['schemas']['InvoiceableCommonInput']
-    GlobalInvoiceInput: {
+    /** Las fechas son opcionales al seleccionar por periodo. Al enviar receipts se requieren from y to. La periodicidad predeterminada viene de la configuración de la organización. */
+    GlobalInvoiceInput:
+      | (components['schemas']['GlobalInvoiceInputProperties'] & {
+          receipts?: never
+        })
+      | WithRequired<
+          components['schemas']['GlobalInvoiceInputProperties'],
+          'receipts' | 'from' | 'to'
+        >
+    GlobalInvoiceInputProperties: {
       /**
        * Fecha inicial de los recibos que se incluirán en la factura global.
        *     Por default, este valor es el inicio del último periodo (día, semana,
@@ -5772,7 +5867,7 @@ export interface components {
        *     Si se omite, se utiliza la periodicidad configurada en los recibos de la organización.
        * @enum {string}
        */
-      periodicity: 'day' | 'week' | 'fortnight' | 'month' | 'two_months'
+      periodicity?: 'day' | 'week' | 'fortnight' | 'month' | 'two_months'
       /**
        * Clave que representa el mes o bimestre de la factura. Consulta
        *     los posibles valores en el [catálogo de Meses y Bimestres](#meses-y-bimestres).
@@ -5789,7 +5884,7 @@ export interface components {
       series?: string
       /** Fecha de emisión de la factura. Si se omite, se utiliza la fecha final (`to`), limitada a la fecha y hora actuales. */
       date?: components['schemas']['DateOrDateTime']
-      /** description: Código que representa la forma de pago, de acuerdo al [catálogo del SAT](#forma-de-pago). Si se incluye, los recibos se agruparán y se crearán la factura global por la forma de pago. */
+      /** Código que representa la forma de pago, de acuerdo al [catálogo del SAT](#forma-de-pago). Si se incluye, los recibos se agruparán y se crearán la factura global por la forma de pago. */
       payment_form?: string
       /** Recibos a incluir en la factura global. Si se incluye este parámetro, los parámetros `from` y `to` serán requeridos y tendrán que cumplir con el campo `periodicity`. */
       receipts?: string[]
@@ -7518,7 +7613,7 @@ export interface operations {
         /**
          * Si pasas el valor `true`, se generará un enlace para que el cliente pueda editar
          *     su información fiscal. Este enlace estará disponible en el campo "edit_link", será
-         *     válido por 7 días y sólo se podrá usar una vez.
+         *     válido por 3 días y sólo se podrá usar una vez.
          *     Además, pasar el valor `true` desactivará la validación de información fiscal con el SAT,
          *     permitiendo crear clientes con información incompleta.
          *     Con `true`, el body sigue `CustomerCreateWithEditLinkInput`; en otro caso sigue `CustomerCreateInput`.
@@ -7589,7 +7684,7 @@ export interface operations {
         /**
          * Si pasas el valor `true`, se generará un enlace para que el cliente pueda editar
          *     su información fiscal. Este enlace estará disponible en el campo "edit_link", será
-         *     válido por 7 días y sólo se podrá usar una vez. Pasar el valor `true` al editar
+         *     válido por 3 días y sólo se podrá usar una vez. Pasar el valor `true` al editar
          *     **no** desactivará la validación de información fiscal con el SAT.
          */
         createEditLink?: boolean
@@ -8049,9 +8144,10 @@ export interface operations {
   }
   cancelInvoice: {
     parameters: {
-      query: {
+      query?: {
         /**
-         * Clave que representa el motivo de la cancelación de la factura.
+         * Requerido para documentos emitidos; omite los parámetros para eliminar un borrador.
+         *     Clave que representa el motivo de la cancelación de la factura.
          *
          *     - `01`: **Comprobante emitido con errores con relación**. Cuando la
          *       factura contiene algún error en las cantidades, claves o cualquier otro dato y ya
@@ -8064,11 +8160,12 @@ export interface operations {
          *     - `04`: **Operación nominativa relacionada en la factura global**. Cuando se requiere cancelar
          *       una factura al público en general porque el cliente solicita su comprobante.
          */
-        motive: '01' | '02' | '03' | '04'
+        motive?: '01' | '02' | '03' | '04'
         /**
          * ID de la factura que sustituye a la factura que se está cancelando.
          *
          *     Puedes usar el ID de Facturapi o el folio fiscal (UUID).
+         *     Requerido para los motivos 01 y 04. Eliminar un borrador no requiere parámetros de consulta.
          */
         substitution?: string
       }
@@ -9148,6 +9245,7 @@ export interface operations {
         /**
          * ID de la retención que sustituye a la retención que se está cancelando
          *     Puedes usar el ID de Facturapi o el folio fiscal (UUID).
+         *     Requerido para los motivos 01 y 04. Eliminar un borrador no requiere parámetros de consulta.
          */
         substitution?: string
       }

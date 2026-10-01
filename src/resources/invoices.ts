@@ -6,6 +6,7 @@ import type {
   OperationResponse,
 } from '../generated/contracts'
 import { operationDatePlans } from '../generated/dates'
+import type { components as InputComponents } from '../generated/input'
 export default class Invoices {
   constructor(public client: WrapperClient) {}
   /**
@@ -131,7 +132,8 @@ export default class Invoices {
    *
    * @param id - ID de la factura a cancelar
    * @param params - Parámetros de consulta.
-   * @param params.motive - Clave que representa el motivo de la cancelación de la factura.
+   * @param params.motive - Requerido para documentos emitidos; omite los parámetros para eliminar un borrador.
+   * Clave que representa el motivo de la cancelación de la factura.
    *
    * - `01`: **Comprobante emitido con errores con relación**. Cuando la
    *   factura contiene algún error en las cantidades, claves o cualquier otro dato y ya
@@ -144,11 +146,16 @@ export default class Invoices {
    * - `04`: **Operación nominativa relacionada en la factura global**. Cuando se requiere cancelar
    *   una factura al público en general porque el cliente solicita su comprobante.
    *
+   * @param params.substitution - ID de la factura que sustituye a la factura que se está cancelando.
+   *
+   * Puedes usar el ID de Facturapi o el folio fiscal (UUID).
+   * Requerido para los motivos 01 y 04. Eliminar un borrador no requiere parámetros de consulta.
+   *
    * @returns Solicitud de cancelación exitosa
    */
   cancel(
     id: string,
-    params: OperationQuery<'cancelInvoice'>,
+    params?: InputComponents['schemas']['CancellationQueryInput'] | null,
   ): Promise<OperationResponse<'cancelInvoice'>> {
     if (!id) return Promise.reject(new Error('id is required'))
 

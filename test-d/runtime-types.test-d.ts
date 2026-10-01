@@ -15,6 +15,10 @@ import Facturapi, {
   Invoice,
   InvoiceDraft,
   CustomerInfo,
+  CancelInvoiceOptions,
+  CustomerNationalCreateInput,
+  CustomerForeignCreateInput,
+  CustomerGenericCreateInput,
   InvoiceCreateInput,
   InvoiceNominaEditInput,
   NominaPercepcionInput,
@@ -418,3 +422,134 @@ expectError(
 )
 expectError(client.customers.create({ address: { zip: '83200' } }))
 expectError(client.customers.create({ email: 123 }, { createEditLink: true }))
+
+// Country and RFC variants preserve the requirements of customer creation.
+client.customers.create({
+  legal_name: 'Cliente nacional',
+  tax_id: 'ABC101010111',
+  tax_system: '601',
+  address: { zip: '83200' },
+})
+client.customers.create({
+  legal_name: 'Foreign customer',
+  address: { country: 'USA' },
+})
+client.customers.create({
+  legal_name: 'Foreign customer',
+  tax_id: null,
+  tax_system: null,
+  address: { country: 'USA' },
+})
+client.customers.create({
+  legal_name: 'PUBLICO EN GENERAL',
+  tax_id: 'XAXX010101000',
+})
+expectNotAssignable<CustomerNationalCreateInput>({
+  legal_name: 'Cliente',
+  tax_system: '601',
+  address: { zip: '83200' },
+})
+expectNotAssignable<CustomerNationalCreateInput>({
+  legal_name: 'Cliente',
+  tax_id: 'ABC101010111',
+  address: { zip: '83200' },
+})
+expectNotAssignable<CustomerNationalCreateInput>({
+  legal_name: 'Cliente',
+  tax_id: 'ABC101010111',
+  tax_system: '601',
+  address: {},
+})
+expectNotAssignable<CustomerForeignCreateInput>({
+  legal_name: 'Foreign',
+  tax_system: '601',
+  address: { country: 'USA' },
+})
+expectNotAssignable<CustomerGenericCreateInput>({
+  legal_name: 'Publico',
+  tax_id: 'XAXX010101000',
+  tax_system: '601',
+})
+expectError(client.customers.create({ legal_name: 'Foreign', address: {} }))
+
+// A default period needs no fields; explicit receipt selection needs both dates.
+client.receipts.createGlobalInvoice({})
+client.receipts.createGlobalInvoice({
+  receipts: ['rec_ejemplo'],
+  from: '2026-01-01',
+  to: new Date(),
+})
+expectError(client.receipts.createGlobalInvoice({ receipts: ['rec_ejemplo'] }))
+expectError(
+  client.receipts.createGlobalInvoice({
+    receipts: ['rec_ejemplo'],
+    from: new Date(),
+  }),
+)
+
+// Draft deletion needs no query; replacement motives need a substitution.
+client.invoices.cancel('inv_ejemplo')
+client.retentions.cancel('ret_ejemplo')
+client.invoices.cancel('inv_ejemplo', { motive: '02' })
+client.retentions.cancel('ret_ejemplo', { motive: '03' })
+client.invoices.cancel('inv_ejemplo', {
+  motive: '01',
+  substitution: 'inv_sustituto',
+})
+client.retentions.cancel('ret_ejemplo', {
+  motive: '04',
+  substitution: 'ret_sustituto',
+})
+expectError(client.invoices.cancel('inv_ejemplo', { motive: '01' }))
+expectError(client.invoices.cancel('inv_ejemplo', { motive: '04' }))
+expectError(client.retentions.cancel('ret_ejemplo', { motive: '01' }))
+expectError(client.retentions.cancel('ret_ejemplo', { motive: '04' }))
+expectError(
+  client.invoices.cancel('inv_ejemplo', { substitution: 'inv_sustituto' }),
+)
+expectError(
+  client.customers.create({
+    legal_name: undefined,
+    address: { country: 'USA' },
+  }),
+)
+expectNotAssignable<CustomerNationalCreateInput>({
+  legal_name: 'Cliente',
+  tax_id: 'ABC101010111',
+  tax_system: undefined,
+  address: { zip: '83200' },
+})
+expectNotAssignable<CustomerNationalCreateInput>({
+  legal_name: 'Cliente',
+  tax_id: 'ABC101010111',
+  tax_system: '601',
+  address: { zip: undefined },
+})
+expectError(
+  client.receipts.createGlobalInvoice({
+    receipts: ['rec_ejemplo'],
+    from: undefined,
+    to: undefined,
+  }),
+)
+
+// Existing public aliases use the same conditional contract as the method.
+expectNotAssignable<CancelInvoiceOptions>({ motive: '01' })
+expectAssignable<CancelInvoiceOptions>({
+  motive: '04',
+  substitution: 'inv_sustituto',
+})
+declare const customerWithIncompleteFiscalInfo: Customer
+expectType<string | null | undefined>(customerWithIncompleteFiscalInfo.tax_id)
+expectType<string | null | undefined>(
+  customerWithIncompleteFiscalInfo.tax_system,
+)
+expectType<string | null | undefined>(customerWithIncompleteFiscalInfo.phone)
+expectType<Date | null | undefined>(
+  customerWithIncompleteFiscalInfo.edit_link_expires_at,
+)
+client.customers.create({ tax_id: null }, { createEditLink: true })
+client.customers.update('cus_ejemplo', { phone: null })
+expectError(
+  client.customers.create({ tax_system: null }, { createEditLink: true }),
+)
