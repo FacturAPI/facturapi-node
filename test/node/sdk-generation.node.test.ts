@@ -142,6 +142,27 @@ it('documents SDK arguments, binary returns and absolute links from the public s
     'https://docs.facturapi.io/docs/guides/invoices',
   )
   expect(documentation).toContain('https://docs.facturapi.io/api/#tag/invoice')
+  expect(
+    methodDocumentation(
+      spec,
+      {
+        ...operation,
+        responses: {
+          200: {
+            description: 'Objeto con un enlace temporal y metadatos.',
+            content: {
+              'application/json': {
+                schema: { $ref: '#/components/schemas/SignedDownloadUrl' },
+              },
+            },
+          },
+        },
+      },
+      resolveOperationBinding(spec, operation),
+    ),
+  ).toContain(
+    '@returns Objeto SignedDownloadUrl con url, expires_at, content_type y filename.',
+  )
 })
 
 it('resolves moving refs once and reads the pinned commit while preserving schema property names', async () => {

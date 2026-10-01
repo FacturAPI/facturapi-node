@@ -245,7 +245,7 @@ export default class Receipts {
   /**
    * Obtener URL del preview de factura de recibos
    *
-   * Devuelve una URL temporal para el preview PDF de una factura construida con los recibos seleccionados.
+   * Devuelve un objeto con los metadatos del archivo y una URL temporal para el preview PDF de una factura construida con los recibos seleccionados.
    *
    * @param data - Datos de la solicitud.
    * @returns Objeto SignedDownloadUrl con url, expires_at, content_type y filename.
@@ -329,7 +329,7 @@ export default class Receipts {
   /**
    * Obtener enlace de descarga
    *
-   * Devuelve un enlace temporal para descargar el recibo digital en PDF, sin que el archivo pase por tu servidor.
+   * Devuelve un objeto con los metadatos del archivo y un enlace temporal para descargar el recibo digital en PDF, sin que el archivo pase por tu servidor.
    *
    * El enlace da acceso a ese archivo mientras siga vigente: trátalo como una credencial y no lo almacenes.
    *

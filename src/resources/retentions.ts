@@ -250,7 +250,7 @@ export default class Retentions {
   /**
    * Obtener enlace de descarga
    *
-   * Devuelve un enlace temporal para descargar la retención en PDF, XML o ambos en un archivo comprimido ZIP, sin que el archivo pase por tu servidor.
+   * Devuelve un objeto con los metadatos del archivo y un enlace temporal para descargar la retención en PDF, XML o ambos en un archivo comprimido ZIP, sin que el archivo pase por tu servidor.
    *
    * El enlace da acceso a ese archivo mientras siga vigente: trátalo como una credencial y no lo almacenes.
    *
@@ -271,7 +271,7 @@ export default class Retentions {
   /**
    * Obtener enlace de descarga
    *
-   * Devuelve un enlace temporal para descargar la retención en PDF, XML o ambos en un archivo comprimido ZIP, sin que el archivo pase por tu servidor.
+   * Devuelve un objeto con los metadatos del archivo y un enlace temporal para descargar la retención en PDF, XML o ambos en un archivo comprimido ZIP, sin que el archivo pase por tu servidor.
    *
    * El enlace da acceso a ese archivo mientras siga vigente: trátalo como una credencial y no lo almacenes.
    *
@@ -292,7 +292,7 @@ export default class Retentions {
   /**
    * Obtener enlace de descarga
    *
-   * Devuelve un enlace temporal para descargar la retención en PDF, XML o ambos en un archivo comprimido ZIP, sin que el archivo pase por tu servidor.
+   * Devuelve un objeto con los metadatos del archivo y un enlace temporal para descargar la retención en PDF, XML o ambos en un archivo comprimido ZIP, sin que el archivo pase por tu servidor.
    *
    * El enlace da acceso a ese archivo mientras siga vigente: trátalo como una credencial y no lo almacenes.
    *

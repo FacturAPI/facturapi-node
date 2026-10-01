@@ -241,7 +241,7 @@ export default class Invoices {
   /**
    * Obtener enlace de descarga
    *
-   * Devuelve un enlace temporal para descargar la factura en PDF, XML o ambos en un archivo comprimido ZIP, sin que el archivo pase por tu servidor.
+   * Devuelve un objeto con los metadatos del archivo y un enlace temporal para descargar la factura en PDF, XML o ambos en un archivo comprimido ZIP, sin que el archivo pase por tu servidor.
    *
    * El enlace da acceso a ese archivo mientras siga vigente: trátalo como una credencial y no lo almacenes.
    *
@@ -262,7 +262,7 @@ export default class Invoices {
   /**
    * Obtener enlace de descarga
    *
-   * Devuelve un enlace temporal para descargar la factura en PDF, XML o ambos en un archivo comprimido ZIP, sin que el archivo pase por tu servidor.
+   * Devuelve un objeto con los metadatos del archivo y un enlace temporal para descargar la factura en PDF, XML o ambos en un archivo comprimido ZIP, sin que el archivo pase por tu servidor.
    *
    * El enlace da acceso a ese archivo mientras siga vigente: trátalo como una credencial y no lo almacenes.
    *
@@ -283,7 +283,7 @@ export default class Invoices {
   /**
    * Obtener enlace de descarga
    *
-   * Devuelve un enlace temporal para descargar la factura en PDF, XML o ambos en un archivo comprimido ZIP, sin que el archivo pase por tu servidor.
+   * Devuelve un objeto con los metadatos del archivo y un enlace temporal para descargar la factura en PDF, XML o ambos en un archivo comprimido ZIP, sin que el archivo pase por tu servidor.
    *
    * El enlace da acceso a ese archivo mientras siga vigente: trátalo como una credencial y no lo almacenes.
    *
@@ -396,7 +396,7 @@ export default class Invoices {
   /**
    * Obtener URL de descarga del ZIP mensual
    *
-   * Devuelve una URL temporal para descargar el ZIP de una solicitud terminada sin que el archivo viaje a través de tu servidor.
+   * Devuelve un objeto con los metadatos del archivo y una URL temporal para descargar el ZIP de una solicitud terminada sin que el archivo viaje a través de tu servidor.
    *
    * La URL permite acceder únicamente a ese archivo mientras sea válida: trátala como una credencial y no la almacenes. Requiere una llave de API de organización en ambiente Live, una suscripción activa y permiso para leer facturas.
    *
@@ -461,7 +461,7 @@ export default class Invoices {
   /**
    * Obtener enlace del acuse de cancelación
    *
-   * Devuelve un enlace temporal para descargar en XML o PDF el acuse emitido por el SAT al solicitar la cancelación mediante Facturapi. El acuse contiene el resultado inmediato de la solicitud y no necesariamente acredita que el CFDI ya esté cancelado; consulta el estado de la factura para confirmar el desenlace.
+   * Devuelve un objeto con los metadatos del archivo y un enlace temporal para descargar en XML o PDF el acuse emitido por el SAT al solicitar la cancelación mediante Facturapi. El acuse contiene el resultado inmediato de la solicitud y no necesariamente acredita que el CFDI ya esté cancelado; consulta el estado de la factura para confirmar el desenlace.
    *
    * El enlace da acceso a ese archivo mientras siga vigente: trátalo como una credencial y no lo almacenes.
    *
@@ -487,7 +487,7 @@ export default class Invoices {
   /**
    * Obtener enlace del acuse de cancelación
    *
-   * Devuelve un enlace temporal para descargar en XML o PDF el acuse emitido por el SAT al solicitar la cancelación mediante Facturapi. El acuse contiene el resultado inmediato de la solicitud y no necesariamente acredita que el CFDI ya esté cancelado; consulta el estado de la factura para confirmar el desenlace.
+   * Devuelve un objeto con los metadatos del archivo y un enlace temporal para descargar en XML o PDF el acuse emitido por el SAT al solicitar la cancelación mediante Facturapi. El acuse contiene el resultado inmediato de la solicitud y no necesariamente acredita que el CFDI ya esté cancelado; consulta el estado de la factura para confirmar el desenlace.
    *
    * El enlace da acceso a ese archivo mientras siga vigente: trátalo como una credencial y no lo almacenes.
    *
@@ -632,7 +632,7 @@ export default class Invoices {
   /**
    * Obtener URL del preview PDF de factura
    *
-   * Devuelve una URL temporal para el preview PDF de una factura sin timbrar.
+   * Devuelve un objeto con los metadatos del archivo y una URL temporal para el preview PDF de una factura sin timbrar.
    *
    * @param body - Datos de la solicitud.
    * @returns Objeto SignedDownloadUrl con url, expires_at, content_type y filename.

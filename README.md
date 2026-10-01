@@ -241,4 +241,14 @@ pnpm test
 pnpm run lint
 ```
 
+### Explora los tipos y el autocompletado
+
+Abre [`playground/index.mts`](playground/index.mts) en VSCode y pasa el cursor sobre los métodos y respuestas, o modifica las entradas para probar el autocompletado. El archivo importa el paquete desde el build local, con los mismos exports y declaraciones que se publican en npm. Sus funciones no se ejecutan automáticamente ni hacen llamadas al abrir el archivo.
+
+```sh
+pnpm playground:check
+```
+
+El comando actualiza el build y comprueba los ejemplos. Vuelve a ejecutarlo después de cambiar el SDK; las comprobaciones normales de tipos también incluyen el playground.
+
 El proyecto se distribuye bajo la [licencia MIT](LICENSE).

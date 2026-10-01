@@ -27,13 +27,14 @@
     "test:web": "vitest run --config vitest.web.config.mts",
     "test:browser": "pnpm run build && playwright test",
     "test:unit": "pnpm run test:node && pnpm run test:web",
-    "test:types": "tsd && tsc --ignoreConfig --noEmit --module NodeNext --moduleResolution NodeNext --target ES2022 test-d/package-exports.mts test-d/package-exports.cts && tsc --ignoreConfig --noEmit --module commonjs --moduleResolution node10 --ignoreDeprecations 6.0 --target ES2022 test-d/legacy-package-exports.cts",
+    "test:types": "tsd && tsc --ignoreConfig --noEmit --module NodeNext --moduleResolution NodeNext --target ES2022 test-d/package-exports.mts test-d/package-exports.cts && tsc --ignoreConfig --noEmit --module commonjs --moduleResolution node10 --ignoreDeprecations 6.0 --target ES2022 test-d/legacy-package-exports.cts && tsc --project playground",
     "test": "pnpm run build && pnpm run test:unit && pnpm run test:types && pnpm run test:compat",
     "ci": "pnpm run test",
     "test:compat": "node --test test/compat/*.test.cjs test/compat/*.test.mjs",
     "generate:sdk": "node scripts/generate-sdk.mjs",
     "generate:sdk:check": "node scripts/generate-sdk.mjs --check",
-    "sync:openapi": "node scripts/sync-openapi.mjs"
+    "sync:openapi": "node scripts/sync-openapi.mjs",
+    "playground:check": "pnpm run build && tsc --project playground"
   },
   "engines": {
     "node": ">=18.0.0",

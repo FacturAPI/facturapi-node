@@ -599,7 +599,7 @@ export interface paths {
     put?: never
     /**
      * Obtener URL del preview PDF de factura
-     * @description Devuelve una URL temporal para el preview PDF de una factura sin timbrar.
+     * @description Devuelve un objeto con los metadatos del archivo y una URL temporal para el preview PDF de una factura sin timbrar.
      */
     post: operations['previewInvoicePdfUrl']
     delete?: never
@@ -637,7 +637,7 @@ export interface paths {
     }
     /**
      * Obtener enlace de descarga
-     * @description Devuelve un enlace temporal para descargar la factura en PDF, XML o ambos en un archivo comprimido ZIP, sin que el archivo pase por tu servidor.
+     * @description Devuelve un objeto con los metadatos del archivo y un enlace temporal para descargar la factura en PDF, XML o ambos en un archivo comprimido ZIP, sin que el archivo pase por tu servidor.
      *
      *     El enlace da acceso a ese archivo mientras siga vigente: trátalo como una credencial y no lo almacenes.
      */
@@ -679,7 +679,7 @@ export interface paths {
     }
     /**
      * Obtener enlace del acuse de cancelación
-     * @description Devuelve un enlace temporal para descargar en XML o PDF el acuse emitido por el SAT al solicitar la cancelación mediante Facturapi. El acuse contiene el resultado inmediato de la solicitud y no necesariamente acredita que el CFDI ya esté cancelado; consulta el estado de la factura para confirmar el desenlace.
+     * @description Devuelve un objeto con los metadatos del archivo y un enlace temporal para descargar en XML o PDF el acuse emitido por el SAT al solicitar la cancelación mediante Facturapi. El acuse contiene el resultado inmediato de la solicitud y no necesariamente acredita que el CFDI ya esté cancelado; consulta el estado de la factura para confirmar el desenlace.
      *
      *     El enlace da acceso a ese archivo mientras siga vigente: trátalo como una credencial y no lo almacenes.
      */
@@ -797,7 +797,7 @@ export interface paths {
     }
     /**
      * Obtener URL de descarga del ZIP mensual
-     * @description Devuelve una URL temporal para descargar el ZIP de una solicitud terminada sin que el archivo viaje a través de tu servidor.
+     * @description Devuelve un objeto con los metadatos del archivo y una URL temporal para descargar el ZIP de una solicitud terminada sin que el archivo viaje a través de tu servidor.
      *
      *     La URL permite acceder únicamente a ese archivo mientras sea válida: trátala como una credencial y no la almacenes. Requiere una llave de API de organización en ambiente Live, una suscripción activa y permiso para leer facturas.
      */
@@ -958,7 +958,7 @@ export interface paths {
     put?: never
     /**
      * Obtener URL del preview de factura de recibos
-     * @description Devuelve una URL temporal para el preview PDF de una factura construida con los recibos seleccionados.
+     * @description Devuelve un objeto con los metadatos del archivo y una URL temporal para el preview PDF de una factura construida con los recibos seleccionados.
      */
     post: operations['previewToInvoiceFromReceiptsUrl']
     delete?: never
@@ -1024,7 +1024,7 @@ export interface paths {
     }
     /**
      * Obtener enlace de descarga
-     * @description Devuelve un enlace temporal para descargar el recibo digital en PDF, sin que el archivo pase por tu servidor.
+     * @description Devuelve un objeto con los metadatos del archivo y un enlace temporal para descargar el recibo digital en PDF, sin que el archivo pase por tu servidor.
      *
      *     El enlace da acceso a ese archivo mientras siga vigente: trátalo como una credencial y no lo almacenes.
      */
@@ -1201,7 +1201,7 @@ export interface paths {
     }
     /**
      * Obtener enlace de descarga
-     * @description Devuelve un enlace temporal para descargar la retención en PDF, XML o ambos en un archivo comprimido ZIP, sin que el archivo pase por tu servidor.
+     * @description Devuelve un objeto con los metadatos del archivo y un enlace temporal para descargar la retención en PDF, XML o ambos en un archivo comprimido ZIP, sin que el archivo pase por tu servidor.
      *
      *     El enlace da acceso a ese archivo mientras siga vigente: trátalo como una credencial y no lo almacenes.
      */
@@ -8279,7 +8279,7 @@ export interface operations {
     }
     requestBody: components['requestBodies']['InvoiceEdit']
     responses: {
-      /** @description URL temporal de descarga para el preview PDF. */
+      /** @description Objeto con una URL temporal de descarga, su fecha de expiración, el tipo de contenido y el nombre del archivo. */
       200: {
         headers: {
           [name: string]: unknown
@@ -8337,7 +8337,7 @@ export interface operations {
     }
     requestBody?: never
     responses: {
-      /** @description Enlace temporal de descarga del comprobante CFDI en el formato solicitado */
+      /** @description Objeto con una URL temporal de descarga, su fecha de expiración, el tipo de contenido y el nombre del archivo. */
       200: {
         headers: {
           [name: string]: unknown
@@ -8397,7 +8397,7 @@ export interface operations {
     }
     requestBody?: never
     responses: {
-      /** @description Enlace temporal de descarga del acuse de cancelación en el formato solicitado */
+      /** @description Objeto con una URL temporal de descarga, su fecha de expiración, el tipo de contenido y el nombre del archivo. */
       200: {
         headers: {
           [name: string]: unknown
@@ -8593,7 +8593,7 @@ export interface operations {
     }
     requestBody?: never
     responses: {
-      /** @description URL temporal de descarga para el archivo ZIP generado. */
+      /** @description Objeto con una URL temporal de descarga, su fecha de expiración, el tipo de contenido y el nombre del archivo. */
       200: {
         headers: {
           [name: string]: unknown
@@ -8861,7 +8861,7 @@ export interface operations {
     }
     requestBody: components['requestBodies']['ReceiptPreviewToInvoice']
     responses: {
-      /** @description URL temporal de descarga para el preview PDF. */
+      /** @description Objeto con una URL temporal de descarga, su fecha de expiración, el tipo de contenido y el nombre del archivo. */
       200: {
         headers: {
           [name: string]: unknown
@@ -8941,7 +8941,7 @@ export interface operations {
     }
     requestBody?: never
     responses: {
-      /** @description Enlace temporal de descarga del recibo digital en formato PDF */
+      /** @description Objeto con una URL temporal de descarga, su fecha de expiración, el tipo de contenido y el nombre del archivo. */
       200: {
         headers: {
           [name: string]: unknown
@@ -9267,7 +9267,7 @@ export interface operations {
     }
     requestBody?: never
     responses: {
-      /** @description Enlace temporal de descarga de la retención en el formato solicitado */
+      /** @description Objeto con una URL temporal de descarga, su fecha de expiración, el tipo de contenido y el nombre del archivo. */
       200: {
         headers: {
           [name: string]: unknown
