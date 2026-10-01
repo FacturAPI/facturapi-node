@@ -17,6 +17,8 @@ export default class Webhooks {
    * Utiliza esta llamada para recibir notificaciones de eventos asíncronos a la API.
    * Los webhooks de ambiente test y ambiente live son independientes.
    *
+   * @param data - Datos de la solicitud.
+   * @returns Nuevo objeto `Webhook` creado
    */
   create(
     data: OperationBody<'createWebhook'>,
@@ -35,6 +37,9 @@ export default class Webhooks {
    * Listar webhooks
    *
    * Retorna una lista de webhooks creados previamente para la organización.
+   *
+   * @param params - Parámetros de consulta.
+   * @returns Resultado de la búsqueda
    */
   list(
     params: OperationQuery<'listWebhooks'>,
@@ -50,6 +55,9 @@ export default class Webhooks {
    * Obtener webhook por ID
    *
    * Regresa el objeto "Webhook" relacionado al `id` especificado.
+   *
+   * @param id - ID del objeto a obtener
+   * @returns Objeto `Webhook`
    */
   retrieve(id: string): Promise<OperationResponse<'getWebhook'>> {
     if (!id) return Promise.reject(new Error('id is required'))
@@ -64,6 +72,10 @@ export default class Webhooks {
    * Editar webhook
    *
    * Actualiza la información de un Webhook existente con los parámetros que envíes en la petición.
+   *
+   * @param id - ID del objeto a editar
+   * @param data - Datos de la solicitud.
+   * @returns Objeto `Webhook` editado correctamente
    */
   update(
     id: string,
@@ -81,6 +93,9 @@ export default class Webhooks {
    * Eliminar Webhook
    *
    * Elimina el webhook pertenciente a la organización.
+   *
+   * @param id - ID del objeto a eliminar
+   * @returns Objeto `Webhook` eliminado correctamente
    */
   del(id: string): Promise<OperationResponse<'deleteWebhook'>> {
     if (!id) return Promise.reject(new Error('id is required'))
@@ -91,6 +106,16 @@ export default class Webhooks {
     )
   }
 
+  /**
+   * Valida la firma del webhook y devuelve el evento con sus fechas como Date.
+   * Usa criptografía local cuando está disponible; en otros entornos consulta la API.
+   * @param data - Datos para verificar el evento.
+   * @param data.secret - Secreto del webhook.
+   * @param data.signature - Firma recibida en el encabezado Facturapi-Signature.
+   * @param data.payload - Preferentemente, el cuerpo original como texto o bytes. También acepta un evento como objeto.
+   * @returns Evento validado, siempre como objeto.
+   * @throws Si la firma es inválida o el payload no se puede interpretar como JSON.
+   */
   validateSignature<T extends ApiEventType = any>(data: {
     secret: string
     signature: string

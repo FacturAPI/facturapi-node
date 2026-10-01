@@ -1,5 +1,6 @@
 {
   "repository": "FacturAPI/facturapi-docs",
-  "revision": "dc42f9d92f70af309552333390e649cdf2bebd71",
-  "path": "website/openapi_v2.yaml"
+  "ref": "docs/sdk-generation-contract-audit",
+  "path": "website/openapi_v2.yaml",
+  "sha256": "864fde318dd2b0fc4a19e61258121757afcae0938665c88681342caced20c643"
 }

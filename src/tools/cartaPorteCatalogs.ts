@@ -13,6 +13,9 @@ export default class CartaPorteCatalogs {
    *
    * Devuelve entradas del catálogo de aerolíneas que coinciden con la consulta. Usado para el complemento Carta Porte.
    *
+   * @param params - Parámetros de consulta.
+   * @param params.q - Prefijo para buscar en `key`, `airline_name` o `icao_designator`.
+   * @returns Búsqueda exitosa
    */
   searchAirTransportCodes(
     params: OperationQuery<'searchCartaPorteAirTransportCodes'> | null,
@@ -30,6 +33,10 @@ export default class CartaPorteCatalogs {
    * Buscar configuraciones de autotransporte
    *
    * Devuelve configuraciones de transporte (p. ej., camión/semirremolque).
+   *
+   * @param params - Parámetros de consulta.
+   * @param params.q - Prefijo para buscar en `key` o `description`.
+   * @returns Búsqueda exitosa
    */
   searchTransportConfigs(
     params: OperationQuery<'searchCartaPorteTransportConfigs'> | null,
@@ -47,6 +54,10 @@ export default class CartaPorteCatalogs {
    * Buscar derechos de paso
    *
    * Devuelve derechos de paso ferroviarios que coinciden con la consulta.
+   *
+   * @param params - Parámetros de consulta.
+   * @param params.q - Prefijo para buscar en `key`, `right_of_passage` o `concessionaire`.
+   * @returns Búsqueda exitosa
    */
   searchRightsOfPassage(
     params: OperationQuery<'searchCartaPorteRightsOfPassage'> | null,
@@ -64,6 +75,10 @@ export default class CartaPorteCatalogs {
    * Buscar documentos aduaneros
    *
    * Devuelve tipos de documentos aduaneros.
+   *
+   * @param params - Parámetros de consulta.
+   * @param params.q - Prefijo para buscar en `key` o `description`.
+   * @returns Búsqueda exitosa
    */
   searchCustomsDocuments(
     params: OperationQuery<'searchCartaPorteCustomsDocuments'> | null,
@@ -81,6 +96,10 @@ export default class CartaPorteCatalogs {
    * Buscar tipos de empaque
    *
    * Devuelve tipos de empaque para mercancías.
+   *
+   * @param params - Parámetros de consulta.
+   * @param params.q - Prefijo para buscar en `key` o `description`.
+   * @returns Búsqueda exitosa
    */
   searchPackagingTypes(
     params: OperationQuery<'searchCartaPortePackagingTypes'> | null,
@@ -98,6 +117,10 @@ export default class CartaPorteCatalogs {
    * Buscar tipos de remolque
    *
    * Devuelve tipos de remolque/semirremolque.
+   *
+   * @param params - Parámetros de consulta.
+   * @param params.q - Prefijo para buscar en `key` o `description`.
+   * @returns Búsqueda exitosa
    */
   searchTrailerTypes(
     params: OperationQuery<'searchCartaPorteTrailerTypes'> | null,
@@ -115,6 +138,10 @@ export default class CartaPorteCatalogs {
    * Buscar materiales peligrosos
    *
    * Devuelve entradas del catálogo de materiales peligrosos.
+   *
+   * @param params - Parámetros de consulta.
+   * @param params.q - Prefijo para buscar en `key`, `description` o `class_division`.
+   * @returns Búsqueda exitosa
    */
   searchHazardousMaterials(
     params: OperationQuery<'searchCartaPorteHazardousMaterials'> | null,
@@ -132,6 +159,10 @@ export default class CartaPorteCatalogs {
    * Buscar autorizaciones navales
    *
    * Devuelve códigos de autorización naval (solo `key`).
+   *
+   * @param params - Parámetros de consulta.
+   * @param params.q - Prefijo para buscar en `key`.
+   * @returns Búsqueda exitosa
    */
   searchNavalAuthorizations(
     params: OperationQuery<'searchCartaPorteNavalAuthorizations'> | null,
@@ -149,6 +180,10 @@ export default class CartaPorteCatalogs {
    * Buscar estaciones/puertos
    *
    * Devuelve entradas de estaciones aéreas/marítimas/terrestres.
+   *
+   * @param params - Parámetros de consulta.
+   * @param params.q - Prefijo para buscar en `key`, `description` o `iata_designator`.
+   * @returns Búsqueda exitosa
    */
   searchPortStations(
     params: OperationQuery<'searchCartaPortePortStations'> | null,
@@ -166,6 +201,10 @@ export default class CartaPorteCatalogs {
    * Buscar contenedores marítimos
    *
    * Devuelve tipos de contenedores marítimos.
+   *
+   * @param params - Parámetros de consulta.
+   * @param params.q - Prefijo para buscar en `key` o `description`.
+   * @returns Búsqueda exitosa
    */
   searchMarineContainers(
     params: OperationQuery<'searchCartaPorteMarineContainers'> | null,

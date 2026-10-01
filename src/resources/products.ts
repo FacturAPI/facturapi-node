@@ -18,6 +18,8 @@ export default class Products {
    * Te en cuenta que los productos que crees en ambiente _Test_ **no se
    * comparten** con el ambiente _Live_.
    *
+   * @param data - Datos de la solicitud.
+   * @returns Nuevo objeto `Product` creado
    */
   create(
     data: OperationBody<'createProduct'>,
@@ -36,6 +38,9 @@ export default class Products {
    * Listar productos
    *
    * Regresa una lista paginada de todos los productos de una organización o realiza una búsqueda de acuerdo a parámetros
+   *
+   * @param params - Parámetros de consulta.
+   * @returns Resultado de la búsqueda
    */
   list(
     params?: OperationQuery<'listProducts'> | null,
@@ -51,6 +56,9 @@ export default class Products {
    * Obtener producto por ID
    *
    * Regresa el objeto `Product` relacionado al `id` especificado.
+   *
+   * @param id - ID del objeto a obtener
+   * @returns Objeto `Product`
    */
   retrieve(id: string): Promise<OperationResponse<'getProduct'>> {
     if (!id) return Promise.reject(new Error('id is required'))
@@ -65,6 +73,10 @@ export default class Products {
    * Editar producto
    *
    * Actualiza la información de un producto existente, asignando los valores de los parámetros enviados. Los parámetros que no se envíen en la petición no se modificarán.
+   *
+   * @param id - ID del objeto a editar
+   * @param data - Datos de la solicitud.
+   * @returns Objeto `Product` editado correctamente
    */
   update(
     id: string,
@@ -82,6 +94,9 @@ export default class Products {
    * Eliminar producto
    *
    * Elimina el producto de tu organización. Las facturas asociadas al producto **no** se eliminarán.
+   *
+   * @param id - ID del objeto a eliminar
+   * @returns Objeto `Product` eliminado correctamente
    */
   del(id: string): Promise<OperationResponse<'deleteProduct'>> {
     if (!id) return Promise.reject(new Error('id is required'))

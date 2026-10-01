@@ -18,6 +18,8 @@ export default class Receipts {
    * visitar para llenar sus datos fiscales en un micrositio con el branding
    * de la organización.
    *
+   * @param data - Datos de la solicitud.
+   * @returns Nuevo objeto `Receipt` creado
    */
   create(
     data: OperationBody<'createReceipt'>,
@@ -36,6 +38,9 @@ export default class Receipts {
    * Listar recibos
    *
    * Regresa una lista paginada de todos los recibos de una organización o realiza una búsqueda de acuerdo a parámetros
+   *
+   * @param params - Parámetros de consulta.
+   * @returns Resultado de la búsqueda
    */
   list(
     params?: OperationQuery<'listReceipts'> | null,
@@ -51,6 +56,9 @@ export default class Receipts {
    * Obtener recibo por ID
    *
    * Regresa el objeto 'Receipt' relacionado al `id` especificado.
+   *
+   * @param id - ID del objeto a obtener
+   * @returns Objeto `Receipt`
    */
   retrieve(id: string): Promise<OperationResponse<'getReceipt'>> {
     if (!id) return Promise.reject(new Error('id is required'))
@@ -74,6 +82,9 @@ export default class Receipts {
    *
    * Una vez facturado, el `status` del recibo cambiará a `"invoiced_to_customer"`.
    *
+   * @param id - ID del recibo a facturar
+   * @param data - Datos de la solicitud.
+   * @returns Nuevo objeto `Invoice` creado
    */
   invoice(
     id: string,
@@ -104,6 +115,8 @@ export default class Receipts {
    * contiene más, puedes enviar `limit_to_max_receipts: true` y repetir la solicitud
    * con el mismo periodo hasta recibir `null`.
    *
+   * @param data - Datos de la solicitud.
+   * @returns Nuevo objeto `Invoice` creado, o `null` si no hay recibos abiertos en el periodo
    */
   createGlobalInvoice(
     data: OperationBody<'createGlobalInvoice'>,
@@ -118,14 +131,62 @@ export default class Receipts {
     )
   }
 
+  /**
+   * Facturar múltiples recibos
+   *
+   * Crea una sola factura a partir de múltiples recibos seleccionados por su `key`.
+   *
+   * Si envías `customer`, ese cliente se usará como receptor de la factura y
+   * sobrescribirá el cliente asignado a los recibos incluidos. Si omites
+   * `customer`, todos los recibos deben tener asignado el mismo cliente.
+   * También se validará el campo `address` de los recibos incluidos.
+   *
+   * Si `dry_run` es `true`, no crea la factura y regresa un resumen de vista previa.
+   * El `dry_run` valida las mismas reglas que la creación real, pero no persiste cambios.
+   *
+   * @param data - Datos de la solicitud.
+   * @returns Objeto `Invoice` creado u objeto resumen cuando `dry_run=true`
+   */
   toInvoice(
     data: OperationBody<'createToInvoiceFromReceipts'> & { dry_run: true },
   ): Promise<OutputComponents['schemas']['ToInvoiceSummary']>
 
+  /**
+   * Facturar múltiples recibos
+   *
+   * Crea una sola factura a partir de múltiples recibos seleccionados por su `key`.
+   *
+   * Si envías `customer`, ese cliente se usará como receptor de la factura y
+   * sobrescribirá el cliente asignado a los recibos incluidos. Si omites
+   * `customer`, todos los recibos deben tener asignado el mismo cliente.
+   * También se validará el campo `address` de los recibos incluidos.
+   *
+   * Si `dry_run` es `true`, no crea la factura y regresa un resumen de vista previa.
+   * El `dry_run` valida las mismas reglas que la creación real, pero no persiste cambios.
+   *
+   * @param data - Datos de la solicitud.
+   * @returns Objeto `Invoice` creado u objeto resumen cuando `dry_run=true`
+   */
   toInvoice(
     data: OperationBody<'createToInvoiceFromReceipts'> & { dry_run?: false },
   ): Promise<OutputComponents['schemas']['Invoice']>
 
+  /**
+   * Facturar múltiples recibos
+   *
+   * Crea una sola factura a partir de múltiples recibos seleccionados por su `key`.
+   *
+   * Si envías `customer`, ese cliente se usará como receptor de la factura y
+   * sobrescribirá el cliente asignado a los recibos incluidos. Si omites
+   * `customer`, todos los recibos deben tener asignado el mismo cliente.
+   * También se validará el campo `address` de los recibos incluidos.
+   *
+   * Si `dry_run` es `true`, no crea la factura y regresa un resumen de vista previa.
+   * El `dry_run` valida las mismas reglas que la creación real, pero no persiste cambios.
+   *
+   * @param data - Datos de la solicitud.
+   * @returns Objeto `Invoice` creado u objeto resumen cuando `dry_run=true`
+   */
   toInvoice(
     data: OperationBody<'createToInvoiceFromReceipts'>,
   ): Promise<OperationResponse<'createToInvoiceFromReceipts'>>
@@ -143,6 +204,8 @@ export default class Receipts {
    * Si `dry_run` es `true`, no crea la factura y regresa un resumen de vista previa.
    * El `dry_run` valida las mismas reglas que la creación real, pero no persiste cambios.
    *
+   * @param data - Datos de la solicitud.
+   * @returns Objeto `Invoice` creado u objeto resumen cuando `dry_run=true`
    */
   toInvoice(
     data: OperationBody<'createToInvoiceFromReceipts'>,
@@ -164,6 +227,8 @@ export default class Receipts {
    * La vista previa valida las mismas reglas de cliente que la creación real:
    * si omites `customer`, todos los recibos deben tener asignado el mismo cliente.
    *
+   * @param data - Datos de la solicitud.
+   * @returns Archivo como stream en Node.js o Blob en el navegador.
    */
   previewToInvoicePdf(
     data: OperationBody<'previewToInvoiceFromReceipts'>,
@@ -181,6 +246,9 @@ export default class Receipts {
    * Obtener URL del preview de factura de recibos
    *
    * Devuelve una URL temporal para el preview PDF de una factura construida con los recibos seleccionados.
+   *
+   * @param data - Datos de la solicitud.
+   * @returns URL temporal de descarga para el preview PDF.
    */
   previewToInvoicePdfUrl(
     data: OperationBody<'previewToInvoiceFromReceiptsUrl'>,
@@ -201,6 +269,8 @@ export default class Receipts {
    *
    * Una vez cancelado, el recibo no podrá ser facturado.
    *
+   * @param id - ID del recibo a cancelar
+   * @returns Objeto 'Receipt' cancelado exitosamente
    */
   cancel(id: string): Promise<OperationResponse<'cancelReceipt'>> {
     if (!id) return Promise.reject(new Error('id is required'))
@@ -219,6 +289,9 @@ export default class Receipts {
    * El correo enviado estará personalizado con el logotipo y los colores de la organización que lo creó,
    * e incluirá un botón para facturar el recibo, así con el recibo en formato PDF adjunto al mensaje.
    *
+   * @param id - ID del objeto a obtener
+   * @param data - Datos de la solicitud.
+   * @returns Objeto genérico de respuesta
    */
   sendByEmail(
     id: string,
@@ -240,6 +313,9 @@ export default class Receipts {
    * Descargar PDF
    *
    * Descarga el recibo digital en formato PDF.
+   *
+   * @param id - ID del objeto a descargar
+   * @returns Archivo como stream en Node.js o Blob en el navegador.
    */
   downloadPdf(id: string): Promise<OperationResponse<'downloadReceiptPdf'>> {
     if (!id) return Promise.reject(new Error('id is required'))
@@ -257,6 +333,8 @@ export default class Receipts {
    *
    * El enlace da acceso a ese archivo mientras siga vigente: trátalo como una credencial y no lo almacenes.
    *
+   * @param id - ID del objeto a descargar
+   * @returns Enlace temporal de descarga del recibo digital en formato PDF
    */
   downloadPdfUrl(
     id: string,
@@ -274,6 +352,9 @@ export default class Receipts {
    *
    * Asigna o reasigna un cliente existente (por ID) a un recibo, o crea uno nuevo enviando el objeto del cliente.
    *
+   * @param id - ID del recibo a actualizar
+   * @param data - Datos de la solicitud.
+   * @returns Objeto `Receipt` actualizado
    */
   updateCustomer(
     id: string,

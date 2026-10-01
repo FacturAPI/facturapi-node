@@ -1,5 +1,4 @@
 # Keep generated artifacts tracked, but collapse their diffs on GitHub.
-openapi/facturapi.json linguist-generated=true
 src/generated/contracts.ts linguist-generated=true
 src/generated/dates.ts linguist-generated=true
 src/generated/input.ts linguist-generated=true

@@ -25,6 +25,9 @@ export default class Customers {
    * Por último, ten en cuenta que los clientes que crees en ambiente _Test_ **no se
    * comparten** con el ambiente _Live_.
    *
+   * @param data - Datos de la solicitud.
+   * @param params - Parámetros de consulta.
+   * @returns Un objeto `Customer` con la misma información ya existía Nuevo objeto `Customer` creado
    */
   create(
     data: OperationBody<'createCustomer'>,
@@ -45,6 +48,9 @@ export default class Customers {
    * Listar clientes
    *
    * Regresa una lista paginada de todos los clientes de una organización o realiza una búsqueda de acuerdo a parámetros
+   *
+   * @param params - Parámetros de consulta.
+   * @returns Resultado de la búsqueda
    */
   list(
     params?: OperationQuery<'listCustomers'> | null,
@@ -63,6 +69,9 @@ export default class Customers {
    * Obtener cliente por ID
    *
    * Regresa el objeto 'Customer' relacionado al `id` especificado.
+   *
+   * @param id - ID del objeto a obtener
+   * @returns Objeto `Customer`
    */
   retrieve(id: string): Promise<OperationResponse<'getCustomer'>> {
     if (!id) return Promise.reject(new Error('id is required'))
@@ -77,6 +86,11 @@ export default class Customers {
    * Editar cliente
    *
    * Actualiza la información de un cliente existente, asignando los valores de los parámetros enviados. Los parámetros que no se envíen en la petición no se modificarán.
+   *
+   * @param id - ID del objeto a editar
+   * @param data - Datos de la solicitud.
+   * @param params - Parámetros de consulta.
+   * @returns Objeto `Customer` editado correctamente
    */
   update(
     id: string,
@@ -100,6 +114,9 @@ export default class Customers {
    * Eliminar cliente
    *
    * Elimina el cliente de tu organización. Las facturas asociadas al cliente **no** se eliminarán.
+   *
+   * @param id - ID del objeto a eliminar
+   * @returns Objeto `Customer` eliminado correctamente
    */
   del(id: string): Promise<OperationResponse<'deleteCustomer'>> {
     if (!id) return Promise.reject(new Error('id is required'))
@@ -123,6 +140,8 @@ export default class Customers {
    *   antes de realizar dichas operaciones.
    * :::
    *
+   * @param id - ID del objeto `Customer` a validar
+   * @returns Resultado de la validación
    */
   validateTaxInfo(
     id: string,
@@ -142,6 +161,9 @@ export default class Customers {
    *
    * Este enlace estará disponible en el campo `edit_link`, será válido por 7 días y sólo se podrá usar una vez.
    *
+   * @param id - ID del objeto `Customer` a editar
+   * @param options - Datos de la solicitud.
+   * @returns Enlace de edición enviado correctamente
    */
   sendEditLinkByEmail(
     id: string,

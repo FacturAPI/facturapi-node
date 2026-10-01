@@ -17,14 +17,14 @@ export default class Organizations {
    *
    * Después de crear la organización y antes de poder emitir facturas con
    * la organización, deberás de terminar de configurarla llamando a los
-   * métodos de [Actualizar datos fiscales](#tag/organization/operation/editOrganizationLegal) y
-   * [Subir certificados (CSD)](#tag/organization/operation/uploadOrganizationCertificate)
+   * métodos de [Actualizar datos fiscales](https://docs.facturapi.io/api/#tag/organization/operation/editOrganizationLegal) y
+   * [Subir certificados (CSD)](https://docs.facturapi.io/api/#tag/organization/operation/uploadOrganizationCertificate)
    *
    *
    * Después de crear la organización y antes de poder emitir facturas con
    * la organización, deberás de terminar de configurarla llamando a los
-   * métodos de [Actualizar datos fiscales](#tag/organization/operation/editOrganizationLegal) y
-   * [Subir certificados (CSD)](#tag/organization/operation/uploadOrganizationCertificate),
+   * métodos de [Actualizar datos fiscales](https://docs.facturapi.io/api/#tag/organization/operation/editOrganizationLegal) y
+   * [Subir certificados (CSD)](https://docs.facturapi.io/api/#tag/organization/operation/uploadOrganizationCertificate),
    * además de firmar la Carta Manifiesto que autoriza a nuestro PAC a timbrar facturas;
    * puedes hacerlo en [tu dashboard](https://dashboard.facturapi.io/settings/manifiesto)
    * o en [nuestro portal público](https://www.facturapi.io/manifiesto). También puedes incrustar
@@ -33,6 +33,8 @@ export default class Organizations {
    * Recuerda que los folios de tu suscripción podrán ser consumidos por
    * cualquiera de las organizaciones registradas bajo tu cuenta.
    *
+   * @param data - Datos de la solicitud.
+   * @returns Nuevo objeto `Organization` creado
    */
   create(
     data: OperationBody<'createOrganization'>,
@@ -51,6 +53,9 @@ export default class Organizations {
    * Listar organizaciones
    *
    * Regresa una lista paginada de todas las organizationes registradas bajo tu cuenta, o realiza una búsqueda de acuerdo a parámetros.
+   *
+   * @param params - Parámetros de consulta.
+   * @returns Resultado de la búsqueda
    */
   list(
     params?: OperationQuery<'listOrganizations'> | null,
@@ -69,6 +74,9 @@ export default class Organizations {
    * Obtener organización por ID
    *
    * Regresa el objeto 'Organization' relacionado al `id` especificado.
+   *
+   * @param id - ID de la organización
+   * @returns Objeto `Organization`
    */
   retrieve(id: string): Promise<OperationResponse<'getOrganization'>> {
     if (!id) return Promise.reject(new Error('id is required'))
@@ -88,6 +96,9 @@ export default class Organizations {
    * `tax_id` se asigna automáticamente al subir los Certificados de Sello
    * Digital.
    *
+   * @param id - ID de la organización
+   * @param data - Datos de la solicitud.
+   * @returns Objeto `Organization` modificado
    */
   updateLegal(
     id: string,
@@ -110,6 +121,9 @@ export default class Organizations {
    *
    * Actualiza la información relacionada con la identidad o branding de la organización.
    *
+   * @param id - ID de la organización
+   * @param data - Datos de la solicitud.
+   * @returns Objeto `Organization` modificado
    */
   updateCustomization(
     id: string,
@@ -133,6 +147,9 @@ export default class Organizations {
    * Para activar la generación automática de facturas globales, la organización
    * debe tener contratado ese feature.
    *
+   * @param id - ID de la organización
+   * @param data - Datos de la solicitud.
+   * @returns Objeto `Organization` modificado
    */
   updateReceiptSettings(
     id: string,
@@ -161,6 +178,9 @@ export default class Organizations {
    *
    * `https://factura.space/{DOMAIN}/{RECEIPT_KEY}`
    *
+   * @param id - ID de la organización
+   * @param data - Datos de la solicitud.
+   * @returns Objeto `Organization` modificado
    */
   updateDomain(
     id: string,
@@ -182,6 +202,9 @@ export default class Organizations {
    * Revisar dominio disponible
    *
    * Revisa si un identificador está disponible para elegir como dominio para el portal de autofactura.
+   *
+   * @param data - Parámetros de consulta.
+   * @returns Información de disponibilidad de dominio
    */
   checkDomainIsAvailable(
     data: OperationQuery<'checkDomainAvailability'>,
@@ -208,6 +231,15 @@ export default class Organizations {
    * Si la organización ya tiene un logotipo, esta llamada reemplaza el
    * logotipo anterior.
    *
+   * @param id - ID de la organización
+   * @param file - Contenido binario del archivo con la imagen que se usará como
+   * logotipo. Formatos soportados:
+   * - jpg
+   * - png
+   * - svg
+   *
+   * Acepta Blob, File, ArrayBuffer, Uint8Array o un stream de Node.js.
+   * @returns Objeto `Organization` modificado
    */
   async uploadLogo(
     id: string,
@@ -244,6 +276,13 @@ export default class Organizations {
    * Al actualizar tus certificados se leerá el RFC y asignará
    * automáticamente a `legal.tax_id`.
    *
+   * @param id - ID de la organización
+   * @param cerFile - Contenido binario del archivo con extensión `.cer` del certificado CSD.
+   * Acepta Blob, File, ArrayBuffer, Uint8Array o un stream de Node.js.
+   * @param keyFile - Contenido binario del archivo con extensión `.key` del certificado CSD.
+   * Acepta Blob, File, ArrayBuffer, Uint8Array o un stream de Node.js.
+   * @param password - Contraseña de la llave del certificado.
+   * @returns Objeto `Organization` modificado
    */
   async uploadCertificate(
     id: string,
@@ -280,6 +319,8 @@ export default class Organizations {
    *
    * Esto no afecta a las facturas ya emitidas, pero no podrás emitir nuevas facturas hasta que subas nuevos certificados.
    *
+   * @param id - ID de la organización
+   * @returns Objeto `Organization` modificado
    */
   deleteCertificate(
     id: string,
@@ -301,6 +342,8 @@ export default class Organizations {
    * ya no podrás acceder a sus recursos, tales como clientes, productos,
    * facturas, recibos o retenciones.
    *
+   * @param id - ID del objeto a eliminar
+   * @returns Objeto `Organization` eliminado correctamente
    */
   del(id: string): Promise<OperationResponse<'deleteOrganization'>> {
     if (!id) return Promise.reject(new Error('id is required'))
@@ -315,6 +358,9 @@ export default class Organizations {
    * Obtener Test Api Key
    *
    * Obtiene la llave secreta de ambiente Test de la organización.
+   *
+   * @param id - ID de la organización
+   * @returns Test API Key
    */
   getTestApiKey(id: string): Promise<OperationResponse<'getTestApiKey'>> {
     if (!id) return Promise.reject(new Error('id is required'))
@@ -330,6 +376,8 @@ export default class Organizations {
    *
    * Renueva la llave secreta de ambiente Test de la organización e invalida inmediatamente la anterior.
    *
+   * @param id - ID de la organización
+   * @returns Test API Key
    */
   renewTestApiKey(id: string): Promise<OperationResponse<'renewTestApiKey'>> {
     if (!id) return Promise.reject(new Error('id is required'))
@@ -345,6 +393,8 @@ export default class Organizations {
    *
    * Listar llaves secretas de ambiente Live de la organización.
    *
+   * @param id - ID de la organización
+   * @returns Live API Key
    */
   listLiveApiKeys(id: string): Promise<OperationResponse<'listLiveApiKeys'>> {
     if (!id) return Promise.reject(new Error('id is required'))
@@ -362,6 +412,8 @@ export default class Organizations {
    * Esta operación no invalida las llaves generadas previamente. El endpoint usa `PUT`
    * por compatibilidad histórica, pero su comportamiento es crear una nueva llave.
    *
+   * @param id - ID de la organización
+   * @returns Live API Key
    */
   renewLiveApiKey(id: string): Promise<OperationResponse<'renewLiveApiKey'>> {
     if (!id) return Promise.reject(new Error('id is required'))
@@ -377,6 +429,9 @@ export default class Organizations {
    *
    * Revocar Live Api Key de tu organización.
    *
+   * @param organizationId - ID de la organización
+   * @param apiKeyId - ID de la llave secreta a eliminar
+   * @returns Live API Key
    */
   deleteLiveApiKey(
     organizationId: string,
@@ -397,6 +452,8 @@ export default class Organizations {
    *
    * Listado de series creadas para la personalización de organización. La cual lleva control de foliaje para cada tipo de factura si está asignada en las personalización de organización.
    *
+   * @param organization_id - ID de la organización
+   * @returns Listado de objetos `Series` creadas previamente
    */
   listSeriesGroup(
     organization_id: string,
@@ -416,6 +473,9 @@ export default class Organizations {
    * Crea una nueva serie de folios para la organización.
    * Las series son útiles para llevar un control de los folios emitidos para cada tipo de factura.
    *
+   * @param organization_id - ID de la organización
+   * @param seriesData - Datos de la solicitud.
+   * @returns Nuevo objeto de la `Serie` creada
    */
   createSeriesGroup(
     organization_id: string,
@@ -439,6 +499,10 @@ export default class Organizations {
    *
    * Edita el número de foliaje de la serie en ambientes Test y Live de la organización.
    *
+   * @param organization_id - ID de la organización
+   * @param seriesName - Nombre de la serie
+   * @param data - Datos de la solicitud.
+   * @returns Objeto `Serie` editada
    */
   updateSeriesGroup(
     organization_id: string,
@@ -464,6 +528,9 @@ export default class Organizations {
    *
    * Asigna una serie predeterminada para el tipo de comprobante indicado.
    *
+   * @param organization_id - ID de la organización
+   * @param data - Datos de la solicitud.
+   * @returns Serie predeterminada actualizada
    */
   updateDefaultSeries(
     organization_id: string,
@@ -487,6 +554,9 @@ export default class Organizations {
    *
    * Elimina la serie previamente creada
    *
+   * @param organization_id - ID de la organización
+   * @param seriesName - Nombre de la serie
+   * @returns Objeto `Serie` eliminado
    */
   deleteSeriesGroup(
     organization_id: string,
@@ -507,6 +577,7 @@ export default class Organizations {
    *
    * Retorna el detalle de la organización actualmente autenticada.
    *
+   * @returns Objeto `Organization`
    */
   me(): Promise<OperationResponse<'meOrganization'>> {
     return this.client.request<OperationResponse<'meOrganization'>>(
@@ -520,6 +591,9 @@ export default class Organizations {
    *
    * Actualiza la configuración del portal de autofactura de la organización.
    *
+   * @param id - ID de la organización
+   * @param data - Datos de la solicitud.
+   * @returns Objeto `Organization` modificado
    */
   updateSelfInvoiceSettings(
     id: string,
@@ -540,6 +614,9 @@ export default class Organizations {
    * Listar usuarios con acceso a organización
    *
    * Regresa un arreglo con los usuarios que actualmente tienen acceso a la organización, incluyendo al propietario. Este endpoint no está paginado.
+   *
+   * @param organizationId - ID de la organización
+   * @returns Lista de accesos de usuarios dentro de la organización, incluyendo accesos implícitos como el del propietario
    */
   listTeamAccess(
     organizationId: string,
@@ -557,6 +634,10 @@ export default class Organizations {
    * Obtener acceso de usuario
    *
    * Regresa el detalle del acceso del usuario dentro de la organización usando su `access_id`, incluyendo accesos implícitos como el del propietario.
+   *
+   * @param organizationId - ID de la organización
+   * @param accessId - ID del acceso
+   * @returns Detalle del acceso del usuario dentro de la organización, incluyendo accesos implícitos como el del propietario
    */
   retrieveTeamAccess(
     organizationId: string,
@@ -574,6 +655,11 @@ export default class Organizations {
 
   /**
    * Reasignar rol a usuario
+   *
+   * @param organizationId - ID de la organización
+   * @param accessId - ID del acceso
+   * @param role - role
+   * @returns Acceso del usuario actualizado con el nuevo rol
    */
   updateTeamAccessRole(
     organizationId: string,
@@ -598,6 +684,10 @@ export default class Organizations {
 
   /**
    * Eliminar usuario con acceso
+   *
+   * @param organizationId - ID de la organización
+   * @param accessId - ID del acceso
+   * @returns Usuario removido de la organización
    */
   removeTeamAccess(
     organizationId: string,
@@ -622,6 +712,9 @@ export default class Organizations {
    * Listar invitaciones enviadas
    *
    * Regresa invitaciones enviadas desde la organización.
+   *
+   * @param organizationId - ID de la organización
+   * @returns Lista de invitaciones enviadas y aún vigentes para la organización
    */
   listSentTeamInvites(
     organizationId: string,
@@ -645,6 +738,9 @@ export default class Organizations {
    * Cada organización puede invitar a un usuario sin costo adicional. A partir del segundo usuario invitado, cada usuario adicional tendrá un costo mensual. Este cargo se aplica automáticamente cuando el usuario acepta la invitación.
    * Puedes consultar el precio vigente en nuestra [página de precios](https://www.facturapi.io/pricing).
    *
+   * @param organizationId - ID de la organización
+   * @param data - Datos de la solicitud.
+   * @returns Invitación creada o actualizada para el correo solicitado
    */
   inviteUserToTeam(
     organizationId: string,
@@ -666,6 +762,10 @@ export default class Organizations {
    * Cancelar invitación enviada
    *
    * Elimina una invitación pendiente de la organización.
+   *
+   * @param organizationId - ID de la organización
+   * @param inviteKey - Clave pública de la invitación.
+   * @returns Invitación cancelada
    */
   cancelTeamInvite(
     organizationId: string,
@@ -690,6 +790,8 @@ export default class Organizations {
    * Listar invitaciones recibidas
    *
    * Regresa las invitaciones recibidas para el usuario autenticado.
+   *
+   * @returns Lista de invitaciones recibidas por el usuario autenticado
    */
   listReceivedTeamInvites(): Promise<
     OperationResponse<'listPendingOrganizationInvites'>
@@ -706,6 +808,10 @@ export default class Organizations {
    * Responder invitación
    *
    * Acepta o rechaza una invitación usando su `invite_key`.
+   *
+   * @param inviteKey - Clave pública de la invitación.
+   * @param data - Datos de la solicitud.
+   * @returns Invitación aceptada o rechazada exitosamente
    */
   respondTeamInvite(
     inviteKey: string,
@@ -725,6 +831,9 @@ export default class Organizations {
 
   /**
    * Listar roles de organización
+   *
+   * @param organizationId - ID de la organización
+   * @returns Lista de roles
    */
   listTeamRoles(
     organizationId: string,
@@ -742,6 +851,9 @@ export default class Organizations {
 
   /**
    * Listar plantillas de roles
+   *
+   * @param organizationId - ID de la organización
+   * @returns Plantillas disponibles
    */
   listTeamRoleTemplates(
     organizationId: string,
@@ -762,6 +874,9 @@ export default class Organizations {
 
   /**
    * Listar operaciones de permisos
+   *
+   * @param organizationId - ID de la organización
+   * @returns Lista de códigos de operación
    */
   listTeamRoleOperations(
     organizationId: string,
@@ -782,6 +897,10 @@ export default class Organizations {
 
   /**
    * Obtener rol de organización
+   *
+   * @param organizationId - ID de la organización
+   * @param roleId - ID del rol
+   * @returns Detalle del rol
    */
   retrieveTeamRole(
     organizationId: string,
@@ -804,6 +923,10 @@ export default class Organizations {
 
   /**
    * Crear rol de organización
+   *
+   * @param organizationId - ID de la organización
+   * @param data - Datos de la solicitud.
+   * @returns Rol creado
    */
   createTeamRole(
     organizationId: string,
@@ -823,6 +946,11 @@ export default class Organizations {
 
   /**
    * Actualizar rol de organización
+   *
+   * @param organizationId - ID de la organización
+   * @param roleId - ID del rol
+   * @param data - Datos de la solicitud.
+   * @returns Rol actualizado
    */
   updateTeamRole(
     organizationId: string,
@@ -847,6 +975,10 @@ export default class Organizations {
 
   /**
    * Eliminar rol de organización
+   *
+   * @param organizationId - ID de la organización
+   * @param roleId - ID del rol
+   * @returns Rol eliminado
    */
   deleteTeamRole(
     organizationId: string,
@@ -876,6 +1008,13 @@ export default class Organizations {
    * solo necesitas cargar el Certificado de Sello Digital (CSD). La FIEL es
    * necesaria para utilizar la descarga masiva de CFDI.
    *
+   * @param id - ID de la organización. También puedes usar `me` con la Live Secret Key de la organización.
+   * @param cerFile - Contenido binario del archivo con extensión `.cer` de la e.firma (FIEL).
+   * Acepta Blob, File, ArrayBuffer, Uint8Array o un stream de Node.js.
+   * @param keyFile - Contenido binario del archivo con extensión `.key` de la e.firma (FIEL).
+   * Acepta Blob, File, ArrayBuffer, Uint8Array o un stream de Node.js.
+   * @param password - Contraseña de la llave privada de la e.firma (FIEL).
+   * @returns Objeto `Organization` modificado
    */
   async uploadFiel(
     id: string,

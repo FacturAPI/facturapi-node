@@ -18,6 +18,8 @@ export default class Retentions {
    * incompleta. Facturapi asignará `is_ready_to_stamp: true` únicamente cuando
    * el borrador tenga todos los datos requeridos para timbrarse.
    *
+   * @param data - Datos de la solicitud.
+   * @returns Nuevo objeto `Retention` creado
    */
   create(
     data: OperationBody<'createRetention'>,
@@ -36,6 +38,9 @@ export default class Retentions {
    * Listar retenciones
    *
    * Regresa una lista paginada de todas las retenciones de una organización o realiza una búsqueda de acuerdo a parámetros
+   *
+   * @param params - Parámetros de consulta.
+   * @returns Resultado de la búsqueda
    */
   list(
     params?: OperationQuery<'listRetentions'> | null,
@@ -54,6 +59,9 @@ export default class Retentions {
    * Obtener retención por ID
    *
    * Regresa el objeto 'Retention' relacionado al `id` especificado.
+   *
+   * @param id - ID del objeto a obtener
+   * @returns Objeto `Retention`
    */
   retrieve(id: string): Promise<OperationResponse<'getRetention'>> {
     if (!id) return Promise.reject(new Error('id is required'))
@@ -74,6 +82,9 @@ export default class Retentions {
    * Si el status de la retención es `draft`, este método la eliminará de la
    * base de datos sin llamar al SAT/PAC y sin requerir parámetros de cancelación.
    *
+   * @param id - ID de la retención a cancelar
+   * @param params - Parámetros de consulta.
+   * @returns Objeto `Retention` cancelado exitosamente
    */
   cancel(
     id: string,
@@ -102,6 +113,9 @@ export default class Retentions {
    * edición. Si la retención ya no está en status `draft`, la llamada regresará
    * un error.
    *
+   * @param id - ID de la retención a editar
+   * @param data - Datos de la solicitud.
+   * @returns Objeto `Retention` editado correctamente
    */
   updateDraft(
     id: string,
@@ -127,6 +141,8 @@ export default class Retentions {
    * Facturapi validará el borrador como una retención completa antes de timbrarlo.
    * Si el borrador está incompleto o no es válido, la llamada regresará un error.
    *
+   * @param id - ID de la retención a timbrar
+   * @returns Objeto `Retention` timbrado correctamente
    */
   stampDraft(id: string): Promise<OperationResponse<'stampDraftRetention'>> {
     if (!id) return Promise.reject(new Error('id is required'))
@@ -143,6 +159,8 @@ export default class Retentions {
    * Crea una copia en borrador de la retención especificada. La copia no conserva
    * campos propios del timbrado, cancelación, idempotencia o identidad externa.
    *
+   * @param id - ID de la retención a copiar
+   * @returns Nuevo objeto `Retention` con status `draft`.
    */
   copyToDraft(id: string): Promise<OperationResponse<'copyToDraftRetention'>> {
     if (!id) return Promise.reject(new Error('id is required'))
@@ -157,6 +175,10 @@ export default class Retentions {
    * Enviar retención por correo electrónico
    *
    * Envía un correo electrónico a la dirección de tu cliente, con los archivos XML y PDF adjuntos al mensaje.
+   *
+   * @param id - ID del objeto a obtener
+   * @param data - Datos de la solicitud.
+   * @returns Objeto genérico de respuesta
    */
   sendByEmail(
     id: string,
@@ -178,6 +200,9 @@ export default class Retentions {
    * Descargar retención
    *
    * Descarga una retención en PDF, XML o ambos en un archivo comprimido ZIP.
+   *
+   * @param id - ID del objeto a descargar
+   * @returns Archivo como stream en Node.js o Blob en el navegador.
    */
   downloadPdf(id: string): Promise<OperationResponse<'downloadRetention'>> {
     if (!id) return Promise.reject(new Error('id is required'))
@@ -192,6 +217,9 @@ export default class Retentions {
    * Descargar retención
    *
    * Descarga una retención en PDF, XML o ambos en un archivo comprimido ZIP.
+   *
+   * @param id - ID del objeto a descargar
+   * @returns Archivo como stream en Node.js o Blob en el navegador.
    */
   downloadXml(id: string): Promise<OperationResponse<'downloadRetention'>> {
     if (!id) return Promise.reject(new Error('id is required'))
@@ -206,6 +234,9 @@ export default class Retentions {
    * Descargar retención
    *
    * Descarga una retención en PDF, XML o ambos en un archivo comprimido ZIP.
+   *
+   * @param id - ID del objeto a descargar
+   * @returns Archivo como stream en Node.js o Blob en el navegador.
    */
   downloadZip(id: string): Promise<OperationResponse<'downloadRetention'>> {
     if (!id) return Promise.reject(new Error('id is required'))
@@ -223,6 +254,8 @@ export default class Retentions {
    *
    * El enlace da acceso a ese archivo mientras siga vigente: trátalo como una credencial y no lo almacenes.
    *
+   * @param id - ID del objeto a descargar
+   * @returns Enlace temporal de descarga de la retención en el formato solicitado
    */
   downloadPdfUrl(
     id: string,
@@ -242,6 +275,8 @@ export default class Retentions {
    *
    * El enlace da acceso a ese archivo mientras siga vigente: trátalo como una credencial y no lo almacenes.
    *
+   * @param id - ID del objeto a descargar
+   * @returns Enlace temporal de descarga de la retención en el formato solicitado
    */
   downloadXmlUrl(
     id: string,
@@ -261,6 +296,8 @@ export default class Retentions {
    *
    * El enlace da acceso a ese archivo mientras siga vigente: trátalo como una credencial y no lo almacenes.
    *
+   * @param id - ID del objeto a descargar
+   * @returns Enlace temporal de descarga de la retención en el formato solicitado
    */
   downloadZipUrl(
     id: string,

@@ -13,8 +13,11 @@ export default class Invoices {
    *
    * Crea una nueva Factura. Si la factura es creada en ambiente Live, ésta será **timbrada y enviada al SAT**.
    *
-   * Revisa e infórmate sobre el [rescate de CFDI en intermitencias (Status 202)](/docs/guides/invoices/intermitencias).
+   * Revisa e infórmate sobre el [rescate de CFDI en intermitencias (Status 202)](https://docs.facturapi.io/docs/guides/invoices/intermitencias).
    *
+   * @param body - Datos de la solicitud.
+   * @param params - Parámetros de consulta.
+   * @returns Nuevo objeto `Invoice` creado Solicitud aceptada; Facturapi intentará recuperar el CFDI hasta cinco veces, una cada 10 minutos
    */
   create(
     body: OperationBody<'createInvoice'>,
@@ -38,6 +41,8 @@ export default class Invoices {
    *
    * Por defecto, los resultados se ordenan por fecha de emisión, usando el campo `date` de forma descendente.
    *
+   * @param params - Parámetros de consulta.
+   * @returns Resultado de la búsqueda
    */
   list(
     params?: OperationQuery<'listInvoices'> | null,
@@ -53,6 +58,9 @@ export default class Invoices {
    * Obtener factura por ID
    *
    * Regresa el objeto 'Invoice' relacionado al `id` especificado.
+   *
+   * @param id - ID del objeto a obtener
+   * @returns Objeto `Invoice`
    */
   retrieve(id: string): Promise<OperationResponse<'getInvoice'>> {
     if (!id) return Promise.reject(new Error('id is required'))
@@ -72,12 +80,16 @@ export default class Invoices {
    * prorrateado al monto que se pretende pagar.
    *
    * El valor de retorno está listo para usarse como elemento de `related_documents` al
-   * [crear una factura de tipo Pago](#tag/invoice/operation/createInvoice).
+   * [crear una factura de tipo Pago](https://docs.facturapi.io/api/#tag/invoice/operation/createInvoice).
    *
    * El parámetro `amount` debe expresarse en la divisa de la factura y no puede exceder el saldo
    * pendiente (`amount_due`). Cuando el pago se recibe en otra divisa, convierte el monto antes de
    * llamar este método.
    *
+   * @param id - ID de la factura de ingreso (método de pago PPD) que se desea pagar
+   * @param params - Parámetros de consulta.
+   * @param params.amount - Monto que se paga de esta factura, expresado en la divisa de la factura. No puede exceder el saldo pendiente.
+   * @returns Resumen del documento relacionado
    */
   paymentSummary(
     id: string,
@@ -106,7 +118,7 @@ export default class Invoices {
    * - Que la llamada sea satisfactoria y regrese un objeto `invoice` con la propiedad `status: "canceled"`.
    * - Que la llamada sea satisfactoria, pero que la cancelación requiera de confirmación de parte de tu cliente, en cuyo caso se obtendrá como respuesta el objeto `invoice` con las propiedades `status: "valid"` y `cancellation_status: "pending"`.
    *
-   * En el tercer escenario, el valor de `cancellation_status` será actualizado automáticamente por Facturapi cuando tu cliente acepte, rechace o deje expirar la solicitud, de tal manera que al consultar una factura (usando [Obtener Factura](#tag/invoice/operation/getInvoice)), la propiedad `cancellation_status` reflejará el estado más reciente de la solicitud.
+   * En el tercer escenario, el valor de `cancellation_status` será actualizado automáticamente por Facturapi cuando tu cliente acepte, rechace o deje expirar la solicitud, de tal manera que al consultar una factura (usando [Obtener Factura](https://docs.facturapi.io/api/#tag/invoice/operation/getInvoice)), la propiedad `cancellation_status` reflejará el estado más reciente de la solicitud.
    *
    * Consulta los valores posibles de `cancellation_status` más abajo.
    *
@@ -116,6 +128,22 @@ export default class Invoices {
    *
    * Si el status de la factura es `canceled`, este método regresará un error.
    *
+   * @param id - ID de la factura a cancelar
+   * @param params - Parámetros de consulta.
+   * @param params.motive - Clave que representa el motivo de la cancelación de la factura.
+   *
+   * - `01`: **Comprobante emitido con errores con relación**. Cuando la
+   *   factura contiene algún error en las cantidades, claves o cualquier otro dato y ya
+   *   se ha emitido el comprobante que la sustituye, el cual deberá indicarse por medio
+   *   del atributo `substitution`.
+   * - `02`: **Comprobante emitido con errores sin relación**. Cuando la
+   *   factura contiene algún error en las cantidades, claves o cualquier otro dato y no
+   *   se requiere relacionar con otra factura.
+   * - `03`: **No se llevó a cabo la operación**. Cuando la venta o transacción no se concretó.
+   * - `04`: **Operación nominativa relacionada en la factura global**. Cuando se requiere cancelar
+   *   una factura al público en general porque el cliente solicita su comprobante.
+   *
+   * @returns Solicitud de cancelación exitosa
    */
   cancel(
     id: string,
@@ -137,6 +165,10 @@ export default class Invoices {
    * Enviar factura por correo electrónico
    *
    * Envía un correo electrónico a la dirección de tu cliente, con los archivos XML y PDF adjuntos al mensaje.
+   *
+   * @param id - ID del objeto a obtener
+   * @param options - Datos de la solicitud.
+   * @returns Objeto genérico de respuesta
    */
   sendByEmail(
     id: string,
@@ -158,6 +190,9 @@ export default class Invoices {
    * Descargar factura
    *
    * Descarga tu Factura en PDF, XML o ambos en un archivo comprimido ZIP.
+   *
+   * @param id - ID del objeto a descargar
+   * @returns Archivo como stream en Node.js o Blob en el navegador.
    */
   downloadPdf(id: string): Promise<OperationResponse<'downloadInvoice'>> {
     if (!id) return Promise.reject(new Error('id is required'))
@@ -172,6 +207,9 @@ export default class Invoices {
    * Descargar factura
    *
    * Descarga tu Factura en PDF, XML o ambos en un archivo comprimido ZIP.
+   *
+   * @param id - ID del objeto a descargar
+   * @returns Archivo como stream en Node.js o Blob en el navegador.
    */
   downloadXml(id: string): Promise<OperationResponse<'downloadInvoice'>> {
     if (!id) return Promise.reject(new Error('id is required'))
@@ -186,6 +224,9 @@ export default class Invoices {
    * Descargar factura
    *
    * Descarga tu Factura en PDF, XML o ambos en un archivo comprimido ZIP.
+   *
+   * @param id - ID del objeto a descargar
+   * @returns Archivo como stream en Node.js o Blob en el navegador.
    */
   downloadZip(id: string): Promise<OperationResponse<'downloadInvoice'>> {
     if (!id) return Promise.reject(new Error('id is required'))
@@ -203,6 +244,8 @@ export default class Invoices {
    *
    * El enlace da acceso a ese archivo mientras siga vigente: trátalo como una credencial y no lo almacenes.
    *
+   * @param id - ID del objeto a descargar
+   * @returns Enlace temporal de descarga del comprobante CFDI en el formato solicitado
    */
   downloadPdfUrl(
     id: string,
@@ -222,6 +265,8 @@ export default class Invoices {
    *
    * El enlace da acceso a ese archivo mientras siga vigente: trátalo como una credencial y no lo almacenes.
    *
+   * @param id - ID del objeto a descargar
+   * @returns Enlace temporal de descarga del comprobante CFDI en el formato solicitado
    */
   downloadXmlUrl(
     id: string,
@@ -241,6 +286,8 @@ export default class Invoices {
    *
    * El enlace da acceso a ese archivo mientras siga vigente: trátalo como una credencial y no lo almacenes.
    *
+   * @param id - ID del objeto a descargar
+   * @returns Enlace temporal de descarga del comprobante CFDI en el formato solicitado
    */
   downloadZipUrl(
     id: string,
@@ -264,6 +311,8 @@ export default class Invoices {
    *
    * Este método requiere una llave de API de organización en ambiente Live, una suscripción activa y permiso para leer facturas. Las llaves de ambiente Test regresan HTTP 402.
    *
+   * @param data - Datos de la solicitud.
+   * @returns Solicitud de ZIP creada o recuperada correctamente.
    */
   createZipRequest(
     data: OperationBody<'createInvoiceZipRequest'>,
@@ -285,6 +334,8 @@ export default class Invoices {
    *
    * Este método requiere una llave de API de organización en ambiente Live, una suscripción activa y permiso para leer facturas.
    *
+   * @param params - Parámetros de consulta.
+   * @returns Resultado paginado de solicitudes de ZIP.
    */
   listZipRequests(
     params?: OperationQuery<'listInvoiceZipRequests'> | null,
@@ -306,6 +357,8 @@ export default class Invoices {
    *
    * Requiere una llave de API de organización en ambiente Live, una suscripción activa y permiso para leer facturas.
    *
+   * @param id - Identificador de la solicitud de ZIP.
+   * @returns Solicitud de ZIP recuperada correctamente.
    */
   retrieveZipRequest(
     id: string,
@@ -325,6 +378,8 @@ export default class Invoices {
    *
    * Requiere una llave de API de organización en ambiente Live, una suscripción activa y permiso para leer facturas.
    *
+   * @param id - Identificador de la solicitud de ZIP.
+   * @returns Archivo como stream en Node.js o Blob en el navegador.
    */
   downloadZipRequest(
     id: string,
@@ -344,6 +399,8 @@ export default class Invoices {
    *
    * La URL permite acceder únicamente a ese archivo mientras sea válida: trátala como una credencial y no la almacenes. Requiere una llave de API de organización en ambiente Live, una suscripción activa y permiso para leer facturas.
    *
+   * @param id - Identificador de la solicitud de ZIP.
+   * @returns URL temporal de descarga para el archivo ZIP generado.
    */
   downloadZipRequestUrl(
     id: string,
@@ -362,6 +419,9 @@ export default class Invoices {
    * Descargar acuse de cancelación
    *
    * Descarga en XML o PDF el acuse emitido por el SAT al solicitar la cancelación mediante Facturapi. El acuse contiene el resultado inmediato de la solicitud y no necesariamente acredita que el CFDI ya esté cancelado; consulta el estado de la factura para confirmar el desenlace.
+   *
+   * @param id - ID del objeto a obtener
+   * @returns Archivo como stream en Node.js o Blob en el navegador.
    */
   downloadCancellationReceiptXml(
     id: string,
@@ -380,6 +440,9 @@ export default class Invoices {
    * Descargar acuse de cancelación
    *
    * Descarga en XML o PDF el acuse emitido por el SAT al solicitar la cancelación mediante Facturapi. El acuse contiene el resultado inmediato de la solicitud y no necesariamente acredita que el CFDI ya esté cancelado; consulta el estado de la factura para confirmar el desenlace.
+   *
+   * @param id - ID del objeto a obtener
+   * @returns Archivo como stream en Node.js o Blob en el navegador.
    */
   downloadCancellationReceiptPdf(
     id: string,
@@ -401,6 +464,8 @@ export default class Invoices {
    *
    * El enlace da acceso a ese archivo mientras siga vigente: trátalo como una credencial y no lo almacenes.
    *
+   * @param id - ID del objeto a descargar
+   * @returns Enlace temporal de descarga del acuse de cancelación en el formato solicitado
    */
   downloadCancellationReceiptPdfUrl(
     id: string,
@@ -425,6 +490,8 @@ export default class Invoices {
    *
    * El enlace da acceso a ese archivo mientras siga vigente: trátalo como una credencial y no lo almacenes.
    *
+   * @param id - ID del objeto a descargar
+   * @returns Enlace temporal de descarga del acuse de cancelación en el formato solicitado
    */
   downloadCancellationReceiptXmlUrl(
     id: string,
@@ -454,6 +521,9 @@ export default class Invoices {
    * validación mínima requerida para ser timbrada; de lo contrario, el campo
    * `is_ready_to_stamp` será `false`.
    *
+   * @param id - ID del objeto a editar
+   * @param data - Datos de la solicitud.
+   * @returns Objeto `Invoice` editado correctamente
    */
   updateDraft(
     id: string,
@@ -480,8 +550,11 @@ export default class Invoices {
    * deberá ser `true`. De otra forma, la llamada regresará un error.
    *
    * Este método no permite editar la factura, sólo timbrarla. Si necesitas editar información
-   * en la factura antes de timbrarla, usa el método [Editar Borrador de Factura](#tag/invoice/operation/editDraftInvoice).
+   * en la factura antes de timbrarla, usa el método [Editar Borrador de Factura](https://docs.facturapi.io/api/#tag/invoice/operation/editDraftInvoice).
    *
+   * @param id - ID del objeto a timbrar
+   * @param params - Parámetros de consulta.
+   * @returns Objeto `Invoice` timbrado correctamente
    */
   stampDraft(
     id: string,
@@ -502,10 +575,11 @@ export default class Invoices {
   /**
    * Actualizar status de factura
    *
-   *
    * Consulta el status de una factura timbrada en el SAT y actualiza el objeto invoice
    * con La información más reciente.
    *
+   * @param id - ID del objeto invoice a actualizar
+   * @returns Objeto `Invoice` actualizado
    */
   updateStatus(id: string): Promise<OperationResponse<'updateInvoiceStatus'>> {
     if (!id) return Promise.reject(new Error('id is required'))
@@ -521,6 +595,8 @@ export default class Invoices {
    *
    * Crea una copia en borrador de la factura especificada.
    *
+   * @param id - ID de la factura a copiar
+   * @returns Nuevo objeto `Invoice` con status `draft`.
    */
   copyToDraft(id: string): Promise<OperationResponse<'copyToDraftInvoice'>> {
     if (!id) return Promise.reject(new Error('id is required'))
@@ -535,6 +611,9 @@ export default class Invoices {
    * Vista previa de factura en PDF
    *
    * Genera una vista previa en PDF de una factura sin timbrar ni guardar en la organización.
+   *
+   * @param body - Datos de la solicitud.
+   * @returns Archivo como stream en Node.js o Blob en el navegador.
    */
   previewPdf(
     body: OperationBody<'previewInvoicePdf'>,
@@ -553,6 +632,9 @@ export default class Invoices {
    * Obtener URL del preview PDF de factura
    *
    * Devuelve una URL temporal para el preview PDF de una factura sin timbrar.
+   *
+   * @param body - Datos de la solicitud.
+   * @returns URL temporal de descarga para el preview PDF.
    */
   previewPdfUrl(
     body: OperationBody<'previewInvoicePdfUrl'>,

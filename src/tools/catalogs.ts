@@ -12,6 +12,9 @@ export default class Catalogs {
    * Clave Producto/Servicio
    *
    * Busca en el catálogo Productos/Servicios del SAT, el cual contiene la clave a incluir en la factura.
+   *
+   * @param params - Parámetros de consulta.
+   * @returns Resultado de la búsqueda
    */
   searchProducts(
     params: OperationQuery<'searchProducts'> | null,
@@ -30,6 +33,9 @@ export default class Catalogs {
    * Unidades de medida
    *
    * Busca en el catálogo de Unidades de Medida del SAT.
+   *
+   * @param params - Parámetros de consulta.
+   * @returns Resultado de la búsqueda
    */
   searchUnits(
     params: OperationQuery<'searchUnits'> | null,

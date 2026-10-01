@@ -25,6 +25,8 @@ export default class Tools {
    * Adicionalmente puedes consultar la propiedad data para ver los valores
    * en bruto de la consulta al SAT.
    *
+   * @param taxId - taxId
+   * @returns Resultado de la validación
    */
   validateTaxId(
     taxId: OperationQuery<'validateTaxId'>['tax_id'],
@@ -43,6 +45,8 @@ export default class Tools {
    * Health check (Pulso)
    *
    * Comprueba que la API está disponible. Este endpoint requiere una llave secreta de API.
+   *
+   * @returns La API está operando con normalidad.
    */
   checkApiHealth(): Promise<OperationResponse<'checkApiHealth'>> {
     return this.client.request<OperationResponse<'checkApiHealth'>>(`/check`, {

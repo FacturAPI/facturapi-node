@@ -6,10 +6,15 @@ import ts from 'typescript'
 import prettier from 'prettier'
 import { compileDatePlans } from './sdk/date-plans.mjs'
 import { resolveOperationBinding } from './sdk/operation-bindings.mjs'
+import { readSpecification } from './sdk/openapi-source.mjs'
+import { methodDocumentation } from './sdk/documentation.mjs'
 
 const root = new URL('../', import.meta.url)
-const spec = JSON.parse(
-  await readFile(new URL('openapi/facturapi.json', root), 'utf8'),
+const { spec } = await readSpecification(
+  JSON.parse(await readFile(new URL('openapi/source.json', root), 'utf8')),
+  process.argv.includes('--file')
+    ? process.argv[process.argv.indexOf('--file') + 1]
+    : undefined,
 )
 const resources = JSON.parse(
   await readFile(new URL('scripts/sdk/resources.json', root), 'utf8'),
@@ -173,7 +178,17 @@ for (const [name, resource] of Object.entries(resources)) {
         `import { validateSignature } from '../runtime/webhooks';`,
       )
       methods.push(
-        `validateSignature<T extends ApiEventType = any>(data: { secret: string; signature: string; payload: string | Uint8Array | ArrayBuffer | ApiEventPayload<T> }): Promise<ApiEvent<T>> { return validateSignature(this.client, data); }`,
+        `/**
+ * Valida la firma del webhook y devuelve el evento con sus fechas como Date.
+ * Usa criptografía local cuando está disponible; en otros entornos consulta la API.
+ * @param data - Datos para verificar el evento.
+ * @param data.secret - Secreto del webhook.
+ * @param data.signature - Firma recibida en el encabezado Facturapi-Signature.
+ * @param data.payload - Preferentemente, el cuerpo original como texto o bytes. También acepta un evento como objeto.
+ * @returns Evento validado, siempre como objeto.
+ * @throws Si la firma es inválida o el payload no se puede interpretar como JSON.
+ */
+validateSignature<T extends ApiEventType = any>(data: { secret: string; signature: string; payload: string | Uint8Array | ArrayBuffer | ApiEventPayload<T> }): Promise<ApiEvent<T>> { return validateSignature(this.client, data); }`,
       )
       continue
     }
@@ -269,6 +284,7 @@ for (const [name, resource] of Object.entries(resources)) {
           `if (!${argument}) return Promise.reject(new Error('${argument} is required'));`,
       )
       .join('\n')
+    const documentation = methodDocumentation(spec, operation, entry)
     if (entry.responseByFlag) {
       imports.push(
         `import type { components as OutputComponents } from '../generated/output';`,
@@ -284,24 +300,15 @@ for (const [name, resource] of Object.entries(resources)) {
           'Missing response variant schema.',
         )
         methods.push(
-          `${entry.name}(${entry.responseByFlag.argument}: OperationBody<'${entry.operation}'> & { ${entry.responseByFlag.property}${flag === 'false' ? '?' : ''}: ${flag} }): Promise<OutputComponents['schemas']['${entry.responseByFlag[flag]}']>;`,
+          `${documentation}${entry.name}(${entry.responseByFlag.argument}: OperationBody<'${entry.operation}'> & { ${entry.responseByFlag.property}${flag === 'false' ? '?' : ''}: ${flag} }): Promise<OutputComponents['schemas']['${entry.responseByFlag[flag]}']>;`,
         )
       }
       methods.push(
-        `${entry.name}(${argumentsList.join(', ')}): Promise<OperationResponse<'${entry.operation}'>>;`,
+        `${documentation}${entry.name}(${argumentsList.join(', ')}): Promise<OperationResponse<'${entry.operation}'>>;`,
       )
     }
-    const documentation = [operation.summary, operation.description]
-      .filter(Boolean)
-      .join('\n\n')
-      .replaceAll('*/', '* /')
     methods.push(
-      `/**\n${documentation
-        .split('\n')
-        .map((line) => ` * ${line}`)
-        .join(
-          '\n',
-        )}\n */\n${entry.extension ? 'async ' : ''}${entry.name}(${argumentsList.join(', ')}): Promise<OperationResponse<'${entry.operation}'>> { ${guard}\n${setup}\nreturn this.client.request<OperationResponse<'${entry.operation}'>>(\`${path}\`, {${options.join(', ')}}); }`,
+      `${documentation}${entry.extension ? 'async ' : ''}${entry.name}(${argumentsList.join(', ')}): Promise<OperationResponse<'${entry.operation}'>> { ${guard}\n${setup}\nreturn this.client.request<OperationResponse<'${entry.operation}'>>(\`${path}\`, {${options.join(', ')}}); }`,
     )
   }
   outputs.set(
