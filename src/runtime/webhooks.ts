@@ -30,6 +30,19 @@ function toArrayBuffer(bytes: Uint8Array): ArrayBuffer {
   ) as ArrayBuffer
 }
 
+function parseEvent<T extends ApiEventType>(payload: string): ApiEvent<T> {
+  let event: unknown
+  try {
+    event = JSON.parse(payload)
+  } catch {
+    throw new Error('Invalid webhook event JSON')
+  }
+  return deserializeResponseDates(
+    event,
+    componentDatePlans.ApiEvent,
+  ) as ApiEvent<T>
+}
+
 export async function validateSignature<T extends ApiEventType = any>(
   client: WrapperClient,
   data: {
@@ -47,8 +60,6 @@ export async function validateSignature<T extends ApiEventType = any>(
     payloadString = new TextDecoder().decode(payload)
   } else if (payload instanceof ArrayBuffer) {
     payloadString = new TextDecoder().decode(new Uint8Array(payload))
-  } else if (typeof Buffer !== 'undefined' && Buffer.isBuffer(payload)) {
-    payloadString = payload.toString('utf8')
   } else if (typeof payload === 'object') {
     payloadString = JSON.stringify(payload)
   } else {
@@ -76,10 +87,7 @@ export async function validateSignature<T extends ApiEventType = any>(
       if (!isValid) {
         throw new Error('Invalid signature')
       }
-      return deserializeResponseDates(
-        JSON.parse(payloadString),
-        componentDatePlans.ApiEvent,
-      ) as ApiEvent<T>
+      return parseEvent<T>(payloadString)
     }
   }
 
@@ -107,10 +115,7 @@ export async function validateSignature<T extends ApiEventType = any>(
     if (!isValid) {
       throw new Error('Invalid signature')
     }
-    return deserializeResponseDates(
-      JSON.parse(payloadString),
-      componentDatePlans.ApiEvent,
-    ) as ApiEvent<T>
+    return parseEvent<T>(payloadString)
   }
 
   // Fallback for runtimes without local crypto support (e.g. some RN setups)
@@ -121,8 +126,5 @@ export async function validateSignature<T extends ApiEventType = any>(
       payload: payloadString,
     },
   })
-  return deserializeResponseDates(
-    JSON.parse(payloadString),
-    componentDatePlans.ApiEvent,
-  ) as ApiEvent<T>
+  return parseEvent<T>(payloadString)
 }

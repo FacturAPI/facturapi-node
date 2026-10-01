@@ -292,9 +292,6 @@ export const createWrapper = (
       // The operation's generated contract owns the response type at this HTTP boundary.
       return (await responseInterceptor(response, datePlan)) as T
     },
-    get(url: string, options?: { params?: Record<string, any> | null }) {
-      return this.request(url, { method: 'GET', ...options })
-    },
     post(
       url: string,
       options?: {
@@ -304,19 +301,6 @@ export const createWrapper = (
       },
     ) {
       return this.request(url, { method: 'POST', ...options })
-    },
-    put(
-      url: string,
-      options?: {
-        body?: any
-        formData?: UniversalFormData
-        params?: Record<string, any> | null
-      },
-    ) {
-      return this.request(url, { method: 'PUT', ...options })
-    },
-    delete(url: string, options?: { params?: Record<string, any> | null }) {
-      return this.request(url, { method: 'DELETE', ...options })
     },
   }
 

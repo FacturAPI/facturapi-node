@@ -246,7 +246,7 @@ export default class Invoices {
    * El enlace da acceso a ese archivo mientras siga vigente: trátalo como una credencial y no lo almacenes.
    *
    * @param id - ID del objeto a descargar
-   * @returns Enlace temporal de descarga del comprobante CFDI en el formato solicitado
+   * @returns Objeto SignedDownloadUrl con url, expires_at, content_type y filename.
    */
   downloadPdfUrl(
     id: string,
@@ -267,7 +267,7 @@ export default class Invoices {
    * El enlace da acceso a ese archivo mientras siga vigente: trátalo como una credencial y no lo almacenes.
    *
    * @param id - ID del objeto a descargar
-   * @returns Enlace temporal de descarga del comprobante CFDI en el formato solicitado
+   * @returns Objeto SignedDownloadUrl con url, expires_at, content_type y filename.
    */
   downloadXmlUrl(
     id: string,
@@ -288,7 +288,7 @@ export default class Invoices {
    * El enlace da acceso a ese archivo mientras siga vigente: trátalo como una credencial y no lo almacenes.
    *
    * @param id - ID del objeto a descargar
-   * @returns Enlace temporal de descarga del comprobante CFDI en el formato solicitado
+   * @returns Objeto SignedDownloadUrl con url, expires_at, content_type y filename.
    */
   downloadZipUrl(
     id: string,
@@ -401,7 +401,7 @@ export default class Invoices {
    * La URL permite acceder únicamente a ese archivo mientras sea válida: trátala como una credencial y no la almacenes. Requiere una llave de API de organización en ambiente Live, una suscripción activa y permiso para leer facturas.
    *
    * @param id - Identificador de la solicitud de ZIP.
-   * @returns URL temporal de descarga para el archivo ZIP generado.
+   * @returns Objeto SignedDownloadUrl con url, expires_at, content_type y filename.
    */
   downloadZipRequestUrl(
     id: string,
@@ -466,7 +466,7 @@ export default class Invoices {
    * El enlace da acceso a ese archivo mientras siga vigente: trátalo como una credencial y no lo almacenes.
    *
    * @param id - ID del objeto a descargar
-   * @returns Enlace temporal de descarga del acuse de cancelación en el formato solicitado
+   * @returns Objeto SignedDownloadUrl con url, expires_at, content_type y filename.
    */
   downloadCancellationReceiptPdfUrl(
     id: string,
@@ -492,7 +492,7 @@ export default class Invoices {
    * El enlace da acceso a ese archivo mientras siga vigente: trátalo como una credencial y no lo almacenes.
    *
    * @param id - ID del objeto a descargar
-   * @returns Enlace temporal de descarga del acuse de cancelación en el formato solicitado
+   * @returns Objeto SignedDownloadUrl con url, expires_at, content_type y filename.
    */
   downloadCancellationReceiptXmlUrl(
     id: string,
@@ -635,7 +635,7 @@ export default class Invoices {
    * Devuelve una URL temporal para el preview PDF de una factura sin timbrar.
    *
    * @param body - Datos de la solicitud.
-   * @returns URL temporal de descarga para el preview PDF.
+   * @returns Objeto SignedDownloadUrl con url, expires_at, content_type y filename.
    */
   previewPdfUrl(
     body: OperationBody<'previewInvoicePdfUrl'>,

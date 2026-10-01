@@ -74,18 +74,26 @@ export function methodDocumentation(spec, operation, entry) {
       (content) => dereference(content.schema)?.format === 'binary',
     ),
   )
+  const signedDownload = responses.some((response) =>
+    Object.values(response.content || {}).some(
+      (content) =>
+        content.schema?.$ref === '#/components/schemas/SignedDownloadUrl',
+    ),
+  )
   lines.push(
     `@returns ${
       binary
         ? 'Archivo como stream en Node.js o Blob en el navegador.'
-        : responses
-            .filter((response) => response.description)
-            .map((response) =>
-              responses.length > 1
-                ? `${response.status}: ${response.description}`
-                : response.description,
-            )
-            .join('\n')
+        : signedDownload
+          ? 'Objeto SignedDownloadUrl con url, expires_at, content_type y filename.'
+          : responses
+              .filter((response) => response.description)
+              .map((response) =>
+                responses.length > 1
+                  ? `${response.status}: ${response.description}`
+                  : response.description,
+              )
+              .join('\n')
     }`,
   )
   return (

@@ -390,3 +390,13 @@ expectType<Promise<number | undefined>>(
 expectType<Promise<string | null | undefined>>(
   client.invoices.list({ after: 'token' }).then((result) => result.next_cursor),
 )
+
+declare const paymentSummary: Awaited<
+  ReturnType<typeof client.invoices.paymentSummary>
+>
+expectAssignable<PagoComplementData['related_documents'][number]>(
+  paymentSummary,
+)
+expectNotAssignable<
+  PagoComplementData['related_documents'][number]['taxability']
+>(1)

@@ -255,7 +255,7 @@ export default class Retentions {
    * El enlace da acceso a ese archivo mientras siga vigente: trátalo como una credencial y no lo almacenes.
    *
    * @param id - ID del objeto a descargar
-   * @returns Enlace temporal de descarga de la retención en el formato solicitado
+   * @returns Objeto SignedDownloadUrl con url, expires_at, content_type y filename.
    */
   downloadPdfUrl(
     id: string,
@@ -276,7 +276,7 @@ export default class Retentions {
    * El enlace da acceso a ese archivo mientras siga vigente: trátalo como una credencial y no lo almacenes.
    *
    * @param id - ID del objeto a descargar
-   * @returns Enlace temporal de descarga de la retención en el formato solicitado
+   * @returns Objeto SignedDownloadUrl con url, expires_at, content_type y filename.
    */
   downloadXmlUrl(
     id: string,
@@ -297,7 +297,7 @@ export default class Retentions {
    * El enlace da acceso a ese archivo mientras siga vigente: trátalo como una credencial y no lo almacenes.
    *
    * @param id - ID del objeto a descargar
-   * @returns Enlace temporal de descarga de la retención en el formato solicitado
+   * @returns Objeto SignedDownloadUrl con url, expires_at, content_type y filename.
    */
   downloadZipUrl(
     id: string,

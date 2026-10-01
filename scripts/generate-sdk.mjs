@@ -1,6 +1,6 @@
 import assert from 'node:assert/strict'
 import { readFile, writeFile, mkdir } from 'node:fs/promises'
-import { resolve } from 'node:path'
+import { fileURLToPath } from 'node:url'
 import openapiTS, { astToString } from 'openapi-typescript'
 import ts from 'typescript'
 import prettier from 'prettier'
@@ -360,7 +360,7 @@ assert.equal(
 // TypeScript resolves all schema references and unions for the Date compiler.
 await mkdir(new URL('src/generated/', root), { recursive: true })
 const plans = compileDatePlans(
-  resolve(new URL('src/generated/output.ts', root).pathname),
+  fileURLToPath(new URL('src/generated/output.ts', root)),
   outputs.get('src/generated/output.ts'),
 )
 outputs.set(
@@ -370,7 +370,7 @@ outputs.set(
 )
 for (const [filename, content] of outputs) {
   const formatted = await prettier.format(content, {
-    ...(await prettier.resolveConfig(new URL(filename, root).pathname)),
+    ...(await prettier.resolveConfig(fileURLToPath(new URL(filename, root)))),
     filepath: filename,
   })
   if (process.argv.includes('--check')) {

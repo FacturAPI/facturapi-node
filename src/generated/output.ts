@@ -432,6 +432,298 @@ export interface paths {
     patch?: never
     trace?: never
   }
+  '/invoices/{invoice_id}': {
+    parameters: {
+      query?: never
+      header?: never
+      path?: never
+      cookie?: never
+    }
+    /**
+     * Obtener factura por ID
+     * @description Regresa el objeto 'Invoice' relacionado al `id` especificado.
+     */
+    get: operations['getInvoice']
+    /**
+     * Editar borrador de factura
+     * @description Actualiza la información de una factura con status `draft`, asignando
+     *     los valores de los parámetros enviados. Los parámetros que no se envíen
+     *     en la petición no se modificarán.
+     *
+     *     En el objeto `invoice` de respuesta, Facturapi asignará automáticamente
+     *     el campo `is_ready_to_stamp` con el valor `true` si la factura pasa la
+     *     validación mínima requerida para ser timbrada; de lo contrario, el campo
+     *     `is_ready_to_stamp` será `false`.
+     */
+    put: operations['updateDraftInvoice']
+    post?: never
+    /**
+     * Cancelar factura
+     * @description Realiza una solicitud de cancelación de factura ante el SAT, soportando el esquema de cancelación 2022.
+     *
+     *     Al usar este método pueden ocurrir 3 posibles resultados:
+     *
+     *     - Que la llamada regrese un error con la explicación de por qué no se pudo cancelar.
+     *     - Que la llamada sea satisfactoria y regrese un objeto `invoice` con la propiedad `status: "canceled"`.
+     *     - Que la llamada sea satisfactoria, pero que la cancelación requiera de confirmación de parte de tu cliente, en cuyo caso se obtendrá como respuesta el objeto `invoice` con las propiedades `status: "valid"` y `cancellation_status: "pending"`.
+     *
+     *     En el tercer escenario, el valor de `cancellation_status` será actualizado automáticamente por Facturapi cuando tu cliente acepte, rechace o deje expirar la solicitud, de tal manera que al consultar una factura (usando [Obtener Factura](#tag/invoice/operation/getInvoice)), la propiedad `cancellation_status` reflejará el estado más reciente de la solicitud.
+     *
+     *     Consulta los valores posibles de `cancellation_status` más abajo.
+     *
+     *     Después de la cancelación la factura ya no tendrá validez, el objeto cambiará su `status` a `"canceled"` y seguirá estando disponible para futuras consultas.
+     *
+     *     Si el status de la factura es `draft`, este método la eliminará de la base de datos.
+     *
+     *     Si el status de la factura es `canceled`, este método regresará un error.
+     */
+    delete: operations['cancelInvoice']
+    options?: never
+    head?: never
+    patch?: never
+    trace?: never
+  }
+  '/invoices/{invoice_id}/copy': {
+    parameters: {
+      query?: never
+      header?: never
+      path?: never
+      cookie?: never
+    }
+    get?: never
+    put?: never
+    /**
+     * Copiar a borrador
+     * @description Crea una copia en borrador de la factura especificada.
+     */
+    post: operations['copyToDraftInvoice']
+    delete?: never
+    options?: never
+    head?: never
+    patch?: never
+    trace?: never
+  }
+  '/invoices/{invoice_id}/stamp': {
+    parameters: {
+      query?: never
+      header?: never
+      path?: never
+      cookie?: never
+    }
+    get?: never
+    put?: never
+    /**
+     * Timbrar borrador de factura
+     * @description Timbra una factura con status `draft` y la envía al SAT para su validación.
+     *
+     *     Al usar este método, el valor del campo `is_ready_to_stamp` (asignado por Facturapi)
+     *     deberá ser `true`. De otra forma, la llamada regresará un error.
+     *
+     *     Este método no permite editar la factura, sólo timbrarla. Si necesitas editar información
+     *     en la factura antes de timbrarla, usa el método [Editar Borrador de Factura](#tag/invoice/operation/editDraftInvoice).
+     */
+    post: operations['stampDraftInvoice']
+    delete?: never
+    options?: never
+    head?: never
+    patch?: never
+    trace?: never
+  }
+  '/invoices/{invoice_id}/status': {
+    parameters: {
+      query?: never
+      header?: never
+      path?: never
+      cookie?: never
+    }
+    get?: never
+    /**
+     * Actualizar status de factura
+     * @description Consulta el status de una factura timbrada en el SAT y actualiza el objeto invoice
+     *     con La información más reciente.
+     */
+    put: operations['updateInvoiceStatus']
+    post?: never
+    delete?: never
+    options?: never
+    head?: never
+    patch?: never
+    trace?: never
+  }
+  '/invoices/{invoice_id}/payment-summary': {
+    parameters: {
+      query?: never
+      header?: never
+      path?: never
+      cookie?: never
+    }
+    /**
+     * Resumen de pago
+     * @description Devuelve la información necesaria para agregar esta factura como documento relacionado en un
+     *     Comprobante de Pago (complemento de pago): el número de parcialidad que corresponde según el
+     *     historial de pagos, el saldo anterior (`last_balance`) y el desglose de impuestos de la factura
+     *     prorrateado al monto que se pretende pagar.
+     *
+     *     El valor de retorno está listo para usarse como elemento de `related_documents` al
+     *     [crear una factura de tipo Pago](#tag/invoice/operation/createInvoice).
+     *
+     *     El parámetro `amount` debe expresarse en la divisa de la factura y no puede exceder el saldo
+     *     pendiente (`amount_due`). Cuando el pago se recibe en otra divisa, convierte el monto antes de
+     *     llamar este método.
+     */
+    get: operations['getInvoicePaymentSummary']
+    put?: never
+    post?: never
+    delete?: never
+    options?: never
+    head?: never
+    patch?: never
+    trace?: never
+  }
+  '/invoices/preview/pdf': {
+    parameters: {
+      query?: never
+      header?: never
+      path?: never
+      cookie?: never
+    }
+    get?: never
+    put?: never
+    /**
+     * Vista previa de factura en PDF
+     * @description Genera una vista previa en PDF de una factura sin timbrar ni guardar en la organización.
+     */
+    post: operations['previewInvoicePdf']
+    delete?: never
+    options?: never
+    head?: never
+    patch?: never
+    trace?: never
+  }
+  '/invoices/preview/pdf/download-url': {
+    parameters: {
+      query?: never
+      header?: never
+      path?: never
+      cookie?: never
+    }
+    get?: never
+    put?: never
+    /**
+     * Obtener URL del preview PDF de factura
+     * @description Devuelve una URL temporal para el preview PDF de una factura sin timbrar.
+     */
+    post: operations['previewInvoicePdfUrl']
+    delete?: never
+    options?: never
+    head?: never
+    patch?: never
+    trace?: never
+  }
+  '/invoices/{invoice_id}/{format}': {
+    parameters: {
+      query?: never
+      header?: never
+      path?: never
+      cookie?: never
+    }
+    /**
+     * Descargar factura
+     * @description Descarga tu Factura en PDF, XML o ambos en un archivo comprimido ZIP.
+     */
+    get: operations['downloadInvoice']
+    put?: never
+    post?: never
+    delete?: never
+    options?: never
+    head?: never
+    patch?: never
+    trace?: never
+  }
+  '/invoices/{invoice_id}/download-url/{format}': {
+    parameters: {
+      query?: never
+      header?: never
+      path?: never
+      cookie?: never
+    }
+    /**
+     * Obtener enlace de descarga
+     * @description Devuelve un enlace temporal para descargar la factura en PDF, XML o ambos en un archivo comprimido ZIP, sin que el archivo pase por tu servidor.
+     *
+     *     El enlace da acceso a ese archivo mientras siga vigente: trátalo como una credencial y no lo almacenes.
+     */
+    get: operations['getInvoiceDownloadUrl']
+    put?: never
+    post?: never
+    delete?: never
+    options?: never
+    head?: never
+    patch?: never
+    trace?: never
+  }
+  '/invoices/{invoice_id}/cancellation_receipt/{format}': {
+    parameters: {
+      query?: never
+      header?: never
+      path?: never
+      cookie?: never
+    }
+    /**
+     * Descargar acuse de cancelación
+     * @description Descarga en XML o PDF el acuse emitido por el SAT al solicitar la cancelación mediante Facturapi. El acuse contiene el resultado inmediato de la solicitud y no necesariamente acredita que el CFDI ya esté cancelado; consulta el estado de la factura para confirmar el desenlace.
+     */
+    get: operations['downloadCancellationReceiptXml']
+    put?: never
+    post?: never
+    delete?: never
+    options?: never
+    head?: never
+    patch?: never
+    trace?: never
+  }
+  '/invoices/{invoice_id}/cancellation_receipt/download-url/{format}': {
+    parameters: {
+      query?: never
+      header?: never
+      path?: never
+      cookie?: never
+    }
+    /**
+     * Obtener enlace del acuse de cancelación
+     * @description Devuelve un enlace temporal para descargar en XML o PDF el acuse emitido por el SAT al solicitar la cancelación mediante Facturapi. El acuse contiene el resultado inmediato de la solicitud y no necesariamente acredita que el CFDI ya esté cancelado; consulta el estado de la factura para confirmar el desenlace.
+     *
+     *     El enlace da acceso a ese archivo mientras siga vigente: trátalo como una credencial y no lo almacenes.
+     */
+    get: operations['getCancellationReceiptDownloadUrl']
+    put?: never
+    post?: never
+    delete?: never
+    options?: never
+    head?: never
+    patch?: never
+    trace?: never
+  }
+  '/invoices/{invoice_id}/email': {
+    parameters: {
+      query?: never
+      header?: never
+      path?: never
+      cookie?: never
+    }
+    get?: never
+    put?: never
+    /**
+     * Enviar factura por correo electrónico
+     * @description Envía un correo electrónico a la dirección de tu cliente, con los archivos XML y PDF adjuntos al mensaje.
+     */
+    post: operations['sendInvoiceByEmail']
+    delete?: never
+    options?: never
+    head?: never
+    patch?: never
+    trace?: never
+  }
   '/invoices/zip-requests': {
     parameters: {
       query?: never
@@ -530,254 +822,6 @@ export interface paths {
     patch?: never
     trace?: never
   }
-  '/invoices/preview/pdf': {
-    parameters: {
-      query?: never
-      header?: never
-      path?: never
-      cookie?: never
-    }
-    get?: never
-    put?: never
-    /**
-     * Vista previa de factura en PDF
-     * @description Genera una vista previa en PDF de una factura sin timbrar ni guardar en la organización.
-     */
-    post: operations['previewInvoicePdf']
-    delete?: never
-    options?: never
-    head?: never
-    patch?: never
-    trace?: never
-  }
-  '/invoices/preview/pdf/download-url': {
-    parameters: {
-      query?: never
-      header?: never
-      path?: never
-      cookie?: never
-    }
-    get?: never
-    put?: never
-    /**
-     * Obtener URL del preview PDF de factura
-     * @description Devuelve una URL temporal para el preview PDF de una factura sin timbrar.
-     */
-    post: operations['previewInvoicePdfUrl']
-    delete?: never
-    options?: never
-    head?: never
-    patch?: never
-    trace?: never
-  }
-  '/invoices/{invoice_id}': {
-    parameters: {
-      query?: never
-      header?: never
-      path?: never
-      cookie?: never
-    }
-    /**
-     * Obtener factura por ID
-     * @description Regresa el objeto 'Invoice' relacionado al `id` especificado.
-     */
-    get: operations['getInvoice']
-    /**
-     * Editar borrador de factura
-     * @description Actualiza la información de una factura con status `draft`, asignando
-     *     los valores de los parámetros enviados. Los parámetros que no se envíen
-     *     en la petición no se modificarán.
-     *
-     *     En el objeto `invoice` de respuesta, Facturapi asignará automáticamente
-     *     el campo `is_ready_to_stamp` con el valor `true` si la factura pasa la
-     *     validación mínima requerida para ser timbrada; de lo contrario, el campo
-     *     `is_ready_to_stamp` será `false`.
-     */
-    put: operations['updateDraftInvoice']
-    post?: never
-    /**
-     * Cancelar factura
-     * @description Realiza una solicitud de cancelación de factura ante el SAT, soportando el esquema de cancelación 2022.
-     *
-     *     Al usar este método pueden ocurrir 3 posibles resultados:
-     *
-     *     - Que la llamada regrese un error con la explicación de por qué no se pudo cancelar.
-     *     - Que la llamada sea satisfactoria y regrese un objeto `invoice` con la propiedad `status: "canceled"`.
-     *     - Que la llamada sea satisfactoria, pero que la cancelación requiera de confirmación de parte de tu cliente, en cuyo caso se obtendrá como respuesta el objeto `invoice` con las propiedades `status: "valid"` y `cancellation_status: "pending"`.
-     *
-     *     En el tercer escenario, el valor de `cancellation_status` será actualizado automáticamente por Facturapi cuando tu cliente acepte, rechace o deje expirar la solicitud, de tal manera que al consultar una factura (usando [Obtener Factura](#tag/invoice/operation/getInvoice)), la propiedad `cancellation_status` reflejará el estado más reciente de la solicitud.
-     *
-     *     Consulta los valores posibles de `cancellation_status` más abajo.
-     *
-     *     Después de la cancelación la factura ya no tendrá validez, el objeto cambiará su `status` a `"canceled"` y seguirá estando disponible para futuras consultas.
-     *
-     *     Si el status de la factura es `draft`, este método la eliminará de la base de datos.
-     *
-     *     Si el status de la factura es `canceled`, este método regresará un error.
-     */
-    delete: operations['cancelInvoice']
-    options?: never
-    head?: never
-    patch?: never
-    trace?: never
-  }
-  '/invoices/{invoice_id}/copy': {
-    parameters: {
-      query?: never
-      header?: never
-      path?: never
-      cookie?: never
-    }
-    get?: never
-    put?: never
-    /**
-     * Copiar a borrador
-     * @description Crea una copia en borrador de la factura especificada.
-     */
-    post: operations['copyToDraftInvoice']
-    delete?: never
-    options?: never
-    head?: never
-    patch?: never
-    trace?: never
-  }
-  '/invoices/{invoice_id}/stamp': {
-    parameters: {
-      query?: never
-      header?: never
-      path?: never
-      cookie?: never
-    }
-    get?: never
-    put?: never
-    /**
-     * Timbrar borrador de factura
-     * @description Timbra una factura con status `draft` y la envía al SAT para su validación.
-     *
-     *     Al usar este método, el valor del campo `is_ready_to_stamp` (asignado por Facturapi)
-     *     deberá ser `true`. De otra forma, la llamada regresará un error.
-     *
-     *     Este método no permite editar la factura, sólo timbrarla. Si necesitas editar información
-     *     en la factura antes de timbrarla, usa el método [Editar Borrador de Factura](#tag/invoice/operation/editDraftInvoice).
-     */
-    post: operations['stampDraftInvoice']
-    delete?: never
-    options?: never
-    head?: never
-    patch?: never
-    trace?: never
-  }
-  '/invoices/{invoice_id}/cancellation_receipt/{format}': {
-    parameters: {
-      query?: never
-      header?: never
-      path?: never
-      cookie?: never
-    }
-    /**
-     * Descargar acuse de cancelación
-     * @description Descarga en XML o PDF el acuse emitido por el SAT al solicitar la cancelación mediante Facturapi. El acuse contiene el resultado inmediato de la solicitud y no necesariamente acredita que el CFDI ya esté cancelado; consulta el estado de la factura para confirmar el desenlace.
-     */
-    get: operations['downloadCancellationReceiptXml']
-    put?: never
-    post?: never
-    delete?: never
-    options?: never
-    head?: never
-    patch?: never
-    trace?: never
-  }
-  '/invoices/{invoice_id}/payment-summary': {
-    parameters: {
-      query?: never
-      header?: never
-      path?: never
-      cookie?: never
-    }
-    /**
-     * Resumen de pago
-     * @description Devuelve la información necesaria para agregar esta factura como documento relacionado en un
-     *     Comprobante de Pago (complemento de pago): el número de parcialidad que corresponde según el
-     *     historial de pagos, el saldo anterior (`last_balance`) y el desglose de impuestos de la factura
-     *     prorrateado al monto que se pretende pagar.
-     *
-     *     El valor de retorno está listo para usarse como elemento de `related_documents` al
-     *     [crear una factura de tipo Pago](#tag/invoice/operation/createInvoice).
-     *
-     *     El parámetro `amount` debe expresarse en la divisa de la factura y no puede exceder el saldo
-     *     pendiente (`amount_due`). Cuando el pago se recibe en otra divisa, convierte el monto antes de
-     *     llamar este método.
-     */
-    get: operations['getInvoicePaymentSummary']
-    put?: never
-    post?: never
-    delete?: never
-    options?: never
-    head?: never
-    patch?: never
-    trace?: never
-  }
-  '/invoices/{invoice_id}/{format}': {
-    parameters: {
-      query?: never
-      header?: never
-      path?: never
-      cookie?: never
-    }
-    /**
-     * Descargar factura
-     * @description Descarga tu Factura en PDF, XML o ambos en un archivo comprimido ZIP.
-     */
-    get: operations['downloadInvoice']
-    put?: never
-    post?: never
-    delete?: never
-    options?: never
-    head?: never
-    patch?: never
-    trace?: never
-  }
-  '/invoices/{invoice_id}/email': {
-    parameters: {
-      query?: never
-      header?: never
-      path?: never
-      cookie?: never
-    }
-    get?: never
-    put?: never
-    /**
-     * Enviar factura por correo electrónico
-     * @description Envía un correo electrónico a la dirección de tu cliente, con los archivos XML y PDF adjuntos al mensaje.
-     */
-    post: operations['sendInvoiceByEmail']
-    delete?: never
-    options?: never
-    head?: never
-    patch?: never
-    trace?: never
-  }
-  '/invoices/{invoice_id}/status': {
-    parameters: {
-      query?: never
-      header?: never
-      path?: never
-      cookie?: never
-    }
-    get?: never
-    /**
-     * Actualizar status de factura
-     * @description Consulta el status de una factura timbrada en el SAT y actualiza el objeto invoice
-     *     con La información más reciente.
-     */
-    put: operations['updateInvoiceStatus']
-    post?: never
-    delete?: never
-    options?: never
-    head?: never
-    patch?: never
-    trace?: never
-  }
   '/receipts': {
     parameters: {
       query?: never
@@ -831,49 +875,6 @@ export interface paths {
      *     Una vez cancelado, el recibo no podrá ser facturado.
      */
     delete: operations['cancelReceipt']
-    options?: never
-    head?: never
-    patch?: never
-    trace?: never
-  }
-  '/receipts/{receipt_id}/pdf': {
-    parameters: {
-      query?: never
-      header?: never
-      path?: never
-      cookie?: never
-    }
-    /**
-     * Descargar PDF
-     * @description Descarga el recibo digital en formato PDF.
-     */
-    get: operations['downloadReceiptPdf']
-    put?: never
-    post?: never
-    delete?: never
-    options?: never
-    head?: never
-    patch?: never
-    trace?: never
-  }
-  '/receipts/{receipt_id}/email': {
-    parameters: {
-      query?: never
-      header?: never
-      path?: never
-      cookie?: never
-    }
-    get?: never
-    put?: never
-    /**
-     * Enviar recibo por correo electrónico
-     * @description Envía un correo electrónico a la dirección de tu cliente.
-     *
-     *     El correo enviado estará personalizado con el logotipo y los colores de la organización que lo creó,
-     *     e incluirá un botón para facturar el recibo, así con el recibo en formato PDF adjunto al mensaje.
-     */
-    post: operations['sendReceiptByEmail']
-    delete?: never
     options?: never
     head?: never
     patch?: never
@@ -1000,6 +1001,71 @@ export interface paths {
      *     con el mismo periodo hasta recibir `null`.
      */
     post: operations['createGlobalInvoice']
+    delete?: never
+    options?: never
+    head?: never
+    patch?: never
+    trace?: never
+  }
+  '/receipts/{receipt_id}/pdf': {
+    parameters: {
+      query?: never
+      header?: never
+      path?: never
+      cookie?: never
+    }
+    /**
+     * Descargar PDF
+     * @description Descarga el recibo digital en formato PDF.
+     */
+    get: operations['downloadReceiptPdf']
+    put?: never
+    post?: never
+    delete?: never
+    options?: never
+    head?: never
+    patch?: never
+    trace?: never
+  }
+  '/receipts/{receipt_id}/download-url/pdf': {
+    parameters: {
+      query?: never
+      header?: never
+      path?: never
+      cookie?: never
+    }
+    /**
+     * Obtener enlace de descarga
+     * @description Devuelve un enlace temporal para descargar el recibo digital en PDF, sin que el archivo pase por tu servidor.
+     *
+     *     El enlace da acceso a ese archivo mientras siga vigente: trátalo como una credencial y no lo almacenes.
+     */
+    get: operations['getReceiptDownloadUrl']
+    put?: never
+    post?: never
+    delete?: never
+    options?: never
+    head?: never
+    patch?: never
+    trace?: never
+  }
+  '/receipts/{receipt_id}/email': {
+    parameters: {
+      query?: never
+      header?: never
+      path?: never
+      cookie?: never
+    }
+    get?: never
+    put?: never
+    /**
+     * Enviar recibo por correo electrónico
+     * @description Envía un correo electrónico a la dirección de tu cliente.
+     *
+     *     El correo enviado estará personalizado con el logotipo y los colores de la organización que lo creó,
+     *     e incluirá un botón para facturar el recibo, así con el recibo en formato PDF adjunto al mensaje.
+     */
+    post: operations['sendReceiptByEmail']
     delete?: never
     options?: never
     head?: never
@@ -1138,6 +1204,28 @@ export interface paths {
     patch?: never
     trace?: never
   }
+  '/retentions/{retention_id}/download-url/{format}': {
+    parameters: {
+      query?: never
+      header?: never
+      path?: never
+      cookie?: never
+    }
+    /**
+     * Obtener enlace de descarga
+     * @description Devuelve un enlace temporal para descargar la retención en PDF, XML o ambos en un archivo comprimido ZIP, sin que el archivo pase por tu servidor.
+     *
+     *     El enlace da acceso a ese archivo mientras siga vigente: trátalo como una credencial y no lo almacenes.
+     */
+    get: operations['getRetentionDownloadUrl']
+    put?: never
+    post?: never
+    delete?: never
+    options?: never
+    head?: never
+    patch?: never
+    trace?: never
+  }
   '/retentions/{retention_id}/email': {
     parameters: {
       query?: never
@@ -1215,6 +1303,32 @@ export interface paths {
     put?: never
     post?: never
     delete?: never
+    options?: never
+    head?: never
+    patch?: never
+    trace?: never
+  }
+  '/organizations/{organization_id}': {
+    parameters: {
+      query?: never
+      header?: never
+      path?: never
+      cookie?: never
+    }
+    /**
+     * Obtener organización por ID
+     * @description Regresa el objeto 'Organization' relacionado al `id` especificado.
+     */
+    get: operations['getOrganization']
+    put?: never
+    post?: never
+    /**
+     * Eliminar organización
+     * @description Elimina la organización de tu cuenta de Facturapi. Una vez eliminada,
+     *     ya no podrás acceder a sus recursos, tales como clientes, productos,
+     *     facturas, recibos o retenciones.
+     */
+    delete: operations['deleteOrganization']
     options?: never
     head?: never
     patch?: never
@@ -1430,32 +1544,6 @@ export interface paths {
     put: operations['editOrganizationDomain']
     post?: never
     delete?: never
-    options?: never
-    head?: never
-    patch?: never
-    trace?: never
-  }
-  '/organizations/{organization_id}': {
-    parameters: {
-      query?: never
-      header?: never
-      path?: never
-      cookie?: never
-    }
-    /**
-     * Obtener organización por ID
-     * @description Regresa el objeto 'Organization' relacionado al `id` especificado.
-     */
-    get: operations['getOrganization']
-    put?: never
-    post?: never
-    /**
-     * Eliminar organización
-     * @description Elimina la organización de tu cuenta de Facturapi. Una vez eliminada,
-     *     ya no podrás acceder a sus recursos, tales como clientes, productos,
-     *     facturas, recibos o retenciones.
-     */
-    delete: operations['deleteOrganization']
     options?: never
     head?: never
     patch?: never
@@ -1984,94 +2072,6 @@ export interface paths {
     patch?: never
     trace?: never
   }
-  '/invoices/{invoice_id}/download-url/{format}': {
-    parameters: {
-      query?: never
-      header?: never
-      path?: never
-      cookie?: never
-    }
-    /**
-     * Obtener enlace de descarga
-     * @description Devuelve un enlace temporal para descargar la factura en PDF, XML o ambos en un archivo comprimido ZIP, sin que el archivo pase por tu servidor.
-     *
-     *     El enlace da acceso a ese archivo mientras siga vigente: trátalo como una credencial y no lo almacenes.
-     */
-    get: operations['getInvoiceDownloadUrl']
-    put?: never
-    post?: never
-    delete?: never
-    options?: never
-    head?: never
-    patch?: never
-    trace?: never
-  }
-  '/invoices/{invoice_id}/cancellation_receipt/download-url/{format}': {
-    parameters: {
-      query?: never
-      header?: never
-      path?: never
-      cookie?: never
-    }
-    /**
-     * Obtener enlace del acuse de cancelación
-     * @description Devuelve un enlace temporal para descargar en XML o PDF el acuse emitido por el SAT al solicitar la cancelación mediante Facturapi. El acuse contiene el resultado inmediato de la solicitud y no necesariamente acredita que el CFDI ya esté cancelado; consulta el estado de la factura para confirmar el desenlace.
-     *
-     *     El enlace da acceso a ese archivo mientras siga vigente: trátalo como una credencial y no lo almacenes.
-     */
-    get: operations['getCancellationReceiptDownloadUrl']
-    put?: never
-    post?: never
-    delete?: never
-    options?: never
-    head?: never
-    patch?: never
-    trace?: never
-  }
-  '/receipts/{receipt_id}/download-url/pdf': {
-    parameters: {
-      query?: never
-      header?: never
-      path?: never
-      cookie?: never
-    }
-    /**
-     * Obtener enlace de descarga
-     * @description Devuelve un enlace temporal para descargar el recibo digital en PDF, sin que el archivo pase por tu servidor.
-     *
-     *     El enlace da acceso a ese archivo mientras siga vigente: trátalo como una credencial y no lo almacenes.
-     */
-    get: operations['getReceiptDownloadUrl']
-    put?: never
-    post?: never
-    delete?: never
-    options?: never
-    head?: never
-    patch?: never
-    trace?: never
-  }
-  '/retentions/{retention_id}/download-url/{format}': {
-    parameters: {
-      query?: never
-      header?: never
-      path?: never
-      cookie?: never
-    }
-    /**
-     * Obtener enlace de descarga
-     * @description Devuelve un enlace temporal para descargar la retención en PDF, XML o ambos en un archivo comprimido ZIP, sin que el archivo pase por tu servidor.
-     *
-     *     El enlace da acceso a ese archivo mientras siga vigente: trátalo como una credencial y no lo almacenes.
-     */
-    get: operations['getRetentionDownloadUrl']
-    put?: never
-    post?: never
-    delete?: never
-    options?: never
-    head?: never
-    patch?: never
-    trace?: never
-  }
 }
 export interface webhooks {
   'invoice.global_invoice_created': {
@@ -2253,8 +2253,6 @@ export interface components {
         type: 'invoice'
         object: components['schemas']['Invoice']
       }
-      /** @description Mensajes relacionados con el recurso asociado al evento. */
-      related_resource_messages?: components['schemas']['RelatedResourceMessage'][]
     } & {
       /**
        * @description discriminator enum property added by openapi-typescript
@@ -2369,9 +2367,12 @@ export interface components {
       | components['schemas']['ReceiptSelfInvoiceCompleteEvent']
       | components['schemas']['ReceiptStatusUpdatedEvent']
       | components['schemas']['CustomerEditLinkCompletedEvent']
-    /** @description Enlace temporal de descarga de un archivo. */
+    /** @description Objeto con un enlace temporal de descarga y los metadatos del archivo. */
     SignedDownloadUrl: {
-      /** @description Enlace de descarga. Da acceso al archivo mientras siga vigente. */
+      /**
+       * Format: uri
+       * @description Enlace de descarga. Da acceso al archivo mientras siga vigente.
+       */
       url: string
       /**
        * Format: date-time
@@ -2423,6 +2424,8 @@ export interface components {
       livemode: boolean
       /** @description ID de la organización a la que pertenece el evento */
       organization: string
+      /** @description Mensajes relacionados con el recurso asociado al evento. */
+      related_resource_messages?: components['schemas']['RelatedResourceMessage'][]
     }
     DateRange: {
       /**
@@ -4244,12 +4247,12 @@ export interface components {
        * Format: date-time
        * @description Fecha de expiración del enlace de edición.
        */
-      edit_link_expires_at?: Date | null
+      edit_link_expires_at?: Date
       /**
        * Format: date-time
        * @description Fecha en la que la información fiscal fue validado por el SAT.
        */
-      sat_validated_at?: Date | null
+      sat_validated_at?: Date
     }
     CustomerProperties: components['schemas']['CustomerCommonProperties'] & {
       address?: components['schemas']['CommonAddressProperties'] & {
@@ -4545,7 +4548,7 @@ export interface components {
         /** @description Opcionalmente se puede incluir el número de folio del documento relacionado. */
         folio_number?: number
         /** @description Opcionalmente se puede incluir la serie del documento relacionado. */
-        series?: string
+        series?: string | null
       }[]
       /**
        * @description Código de la moneda, acorde al estándar [ISO 4217](https://es.wikipedia.org/wiki/ISO_4217).
@@ -6335,8 +6338,8 @@ export interface components {
         /** Format: date-time */
         scheduled_for?: Date
       } | null
-      domain?: string | null
-      custom_domain?: string | null
+      domain?: string
+      custom_domain?: string
     }
     OrganizationDeleteCerts: {
       /**
@@ -7993,215 +7996,6 @@ export interface operations {
       500: components['responses']['UnexpectedError']
     }
   }
-  listInvoiceZipRequests: {
-    parameters: {
-      query?: {
-        /** @description Año a filtrar. Debe enviarse junto con `month`. */
-        year?: number
-        /** @description Mes a filtrar. Debe enviarse junto con `year`. */
-        month?: number
-        /** @description Status de la solicitud. */
-        status?: components['schemas']['InvoiceZipRequestStatus']
-        /** @description Filtra facturas emitidas o recibidas. */
-        issuer_type?: components['schemas']['IssuingType']
-        /** @description Filtra por un tipo de factura o por un arreglo normalizado exacto. */
-        invoice_types?: components['schemas']['InvoiceZipRequestInvoiceType'][]
-        /** @description Página de resultados, empezando en 1. */
-        page?: number
-        /** @description Número del 1 al 100 que representa la cantidad máxima de resultados a regresar con motivos de paginación. */
-        limit?: components['parameters']['SearchLimit']
-      }
-      header?: never
-      path?: never
-      cookie?: never
-    }
-    requestBody?: never
-    responses: {
-      /** @description Resultado paginado de solicitudes de ZIP. */
-      200: {
-        headers: {
-          [name: string]: unknown
-        }
-        content: {
-          'application/json': components['schemas']['InvoiceZipRequestSearchResult']
-        }
-      }
-      400: components['responses']['BadRequest']
-      401: components['responses']['Unauthenticated']
-      402: components['responses']['InvoiceZipRequestAccessRequired']
-      429: components['responses']['RateLimited']
-      500: components['responses']['UnexpectedError']
-    }
-  }
-  createInvoiceZipRequest: {
-    parameters: {
-      query?: never
-      header?: never
-      path?: never
-      cookie?: never
-    }
-    requestBody: {
-      content: {
-        'application/json': components['schemas']['InvoiceZipRequestCreateInput']
-      }
-    }
-    responses: {
-      /** @description Solicitud de ZIP creada o recuperada correctamente. */
-      200: {
-        headers: {
-          [name: string]: unknown
-        }
-        content: {
-          'application/json': components['schemas']['InvoiceZipRequest']
-        }
-      }
-      400: components['responses']['BadRequest']
-      401: components['responses']['Unauthenticated']
-      402: components['responses']['InvoiceZipRequestAccessRequired']
-      404: components['responses']['InvoiceZipRequestNoInvoices']
-      429: components['responses']['RateLimited']
-      500: components['responses']['UnexpectedError']
-    }
-  }
-  retrieveInvoiceZipRequest: {
-    parameters: {
-      query?: never
-      header?: never
-      path: {
-        /** @description Identificador de la solicitud de ZIP. */
-        id: components['parameters']['InvoiceZipRequestId']
-      }
-      cookie?: never
-    }
-    requestBody?: never
-    responses: {
-      /** @description Solicitud de ZIP recuperada correctamente. */
-      200: {
-        headers: {
-          [name: string]: unknown
-        }
-        content: {
-          'application/json': components['schemas']['InvoiceZipRequest']
-        }
-      }
-      400: components['responses']['BadRequest']
-      401: components['responses']['Unauthenticated']
-      402: components['responses']['InvoiceZipRequestAccessRequired']
-      404: components['responses']['InvoiceZipRequestNotFound']
-      429: components['responses']['RateLimited']
-      500: components['responses']['UnexpectedError']
-    }
-  }
-  downloadInvoiceZipRequest: {
-    parameters: {
-      query?: never
-      header?: never
-      path: {
-        /** @description Identificador de la solicitud de ZIP. */
-        id: components['parameters']['InvoiceZipRequestId']
-      }
-      cookie?: never
-    }
-    requestBody?: never
-    responses: {
-      /** @description Archivo ZIP generado. */
-      200: {
-        headers: {
-          /** @description Nombre sugerido con formato `attachment; filename="YYYY-MM.zip"`. */
-          'Content-Disposition'?: string
-          [name: string]: unknown
-        }
-        content: {
-          'application/zip': BinaryDownload
-        }
-      }
-      400: components['responses']['BadRequest']
-      401: components['responses']['Unauthenticated']
-      402: components['responses']['InvoiceZipRequestAccessRequired']
-      404: components['responses']['InvoiceZipRequestNotFound']
-      409: components['responses']['InvoiceZipRequestNotReady']
-      429: components['responses']['RateLimited']
-      500: components['responses']['UnexpectedError']
-    }
-  }
-  getInvoiceZipRequestDownloadUrl: {
-    parameters: {
-      query?: never
-      header?: never
-      path: {
-        /** @description Identificador de la solicitud de ZIP. */
-        id: components['parameters']['InvoiceZipRequestId']
-      }
-      cookie?: never
-    }
-    requestBody?: never
-    responses: {
-      /** @description URL temporal de descarga para el archivo ZIP generado. */
-      200: {
-        headers: {
-          [name: string]: unknown
-        }
-        content: {
-          'application/json': components['schemas']['SignedDownloadUrl']
-        }
-      }
-      400: components['responses']['BadRequest']
-      401: components['responses']['Unauthenticated']
-      402: components['responses']['InvoiceZipRequestAccessRequired']
-      404: components['responses']['InvoiceZipRequestNotFound']
-      409: components['responses']['InvoiceZipRequestNotReady']
-      429: components['responses']['RateLimited']
-      500: components['responses']['UnexpectedError']
-    }
-  }
-  previewInvoicePdf: {
-    parameters: {
-      query?: never
-      header?: never
-      path?: never
-      cookie?: never
-    }
-    requestBody: components['requestBodies']['InvoiceEdit']
-    responses: {
-      /** @description El archivo PDF de la factura */
-      200: {
-        headers: {
-          [name: string]: unknown
-        }
-        content: {
-          'application/pdf': BinaryDownload
-        }
-      }
-      400: components['responses']['BadRequest']
-      401: components['responses']['Unauthenticated']
-      429: components['responses']['RateLimited']
-      500: components['responses']['UnexpectedError']
-    }
-  }
-  previewInvoicePdfUrl: {
-    parameters: {
-      query?: never
-      header?: never
-      path?: never
-      cookie?: never
-    }
-    requestBody: components['requestBodies']['InvoiceEdit']
-    responses: {
-      /** @description URL temporal de descarga para el preview PDF. */
-      200: {
-        headers: {
-          [name: string]: unknown
-        }
-        content: {
-          'application/json': components['schemas']['SignedDownloadUrl']
-        }
-      }
-      400: components['responses']['BadRequest']
-      401: components['responses']['Unauthenticated']
-      429: components['responses']['RateLimited']
-      500: components['responses']['UnexpectedError']
-    }
-  }
   getInvoice: {
     parameters: {
       query?: never
@@ -8368,27 +8162,25 @@ export interface operations {
       500: components['responses']['UnexpectedError']
     }
   }
-  downloadCancellationReceiptXml: {
+  updateInvoiceStatus: {
     parameters: {
       query?: never
       header?: never
       path: {
-        /** @description ID del objeto a obtener */
+        /** @description ID del objeto invoice a actualizar */
         invoice_id: string
-        /** @description Formato del archivo de descarga */
-        format: 'xml' | 'pdf'
       }
       cookie?: never
     }
     requestBody?: never
     responses: {
-      /** @description Archivo del acuse de recibo de cancelación */
+      /** @description Objeto `Invoice` actualizado */
       200: {
         headers: {
           [name: string]: unknown
         }
         content: {
-          'application/octet-stream': BinaryDownload
+          'application/json': components['schemas']['Invoice']
         }
       }
       400: components['responses']['BadRequest']
@@ -8438,15 +8230,21 @@ export interface operations {
             /** @description Impuestos de la factura prorrateados al monto pagado */
             taxes: {
               /** @description Base del impuesto prorrateada al monto pagado */
-              base?: number
+              base: number
               /** @description Tasa o cuota del impuesto */
-              rate?: number
-              /** @description Tipo de impuesto (IVA, ISR, etc.) */
-              type?: string
-              /** @description Tipo de factor (Tasa, Exento, etc.) */
-              factor?: string
+              rate: number
+              /**
+               * @description Tipo de impuesto (IVA, ISR, etc.)
+               * @enum {string}
+               */
+              type: 'IVA' | 'ISR' | 'IEPS'
+              /**
+               * @description Tipo de factor (Tasa, Exento, etc.)
+               * @enum {string}
+               */
+              factor: 'Tasa' | 'Cuota' | 'Exento'
               /** @description Indica si se trata de una retención */
-              withholding?: boolean
+              withholding: boolean
             }[]
           }
         }
@@ -8454,6 +8252,54 @@ export interface operations {
       400: components['responses']['BadRequest']
       401: components['responses']['Unauthenticated']
       404: components['responses']['NotFound']
+      429: components['responses']['RateLimited']
+      500: components['responses']['UnexpectedError']
+    }
+  }
+  previewInvoicePdf: {
+    parameters: {
+      query?: never
+      header?: never
+      path?: never
+      cookie?: never
+    }
+    requestBody: components['requestBodies']['InvoiceEdit']
+    responses: {
+      /** @description El archivo PDF de la factura */
+      200: {
+        headers: {
+          [name: string]: unknown
+        }
+        content: {
+          'application/pdf': BinaryDownload
+        }
+      }
+      400: components['responses']['BadRequest']
+      401: components['responses']['Unauthenticated']
+      429: components['responses']['RateLimited']
+      500: components['responses']['UnexpectedError']
+    }
+  }
+  previewInvoicePdfUrl: {
+    parameters: {
+      query?: never
+      header?: never
+      path?: never
+      cookie?: never
+    }
+    requestBody: components['requestBodies']['InvoiceEdit']
+    responses: {
+      /** @description URL temporal de descarga para el preview PDF. */
+      200: {
+        headers: {
+          [name: string]: unknown
+        }
+        content: {
+          'application/json': components['schemas']['SignedDownloadUrl']
+        }
+      }
+      400: components['responses']['BadRequest']
+      401: components['responses']['Unauthenticated']
       429: components['responses']['RateLimited']
       500: components['responses']['UnexpectedError']
     }
@@ -8483,6 +8329,96 @@ export interface operations {
       }
       400: components['responses']['BadRequest']
       401: components['responses']['Unauthenticated']
+      429: components['responses']['RateLimited']
+      500: components['responses']['UnexpectedError']
+    }
+  }
+  getInvoiceDownloadUrl: {
+    parameters: {
+      query?: never
+      header?: never
+      path: {
+        /** @description ID del objeto a descargar */
+        invoice_id: string
+        /** @description Formato del archivo de descarga */
+        format: 'pdf' | 'xml' | 'zip'
+      }
+      cookie?: never
+    }
+    requestBody?: never
+    responses: {
+      /** @description Enlace temporal de descarga del comprobante CFDI en el formato solicitado */
+      200: {
+        headers: {
+          [name: string]: unknown
+        }
+        content: {
+          'application/json': components['schemas']['SignedDownloadUrl']
+        }
+      }
+      400: components['responses']['BadRequest']
+      401: components['responses']['Unauthenticated']
+      404: components['responses']['NotFound']
+      409: components['responses']['Conflict']
+      429: components['responses']['RateLimited']
+      500: components['responses']['UnexpectedError']
+    }
+  }
+  downloadCancellationReceiptXml: {
+    parameters: {
+      query?: never
+      header?: never
+      path: {
+        /** @description ID del objeto a obtener */
+        invoice_id: string
+        /** @description Formato del archivo de descarga */
+        format: 'xml' | 'pdf'
+      }
+      cookie?: never
+    }
+    requestBody?: never
+    responses: {
+      /** @description Archivo del acuse de recibo de cancelación */
+      200: {
+        headers: {
+          [name: string]: unknown
+        }
+        content: {
+          'application/octet-stream': BinaryDownload
+        }
+      }
+      400: components['responses']['BadRequest']
+      401: components['responses']['Unauthenticated']
+      429: components['responses']['RateLimited']
+      500: components['responses']['UnexpectedError']
+    }
+  }
+  getCancellationReceiptDownloadUrl: {
+    parameters: {
+      query?: never
+      header?: never
+      path: {
+        /** @description ID del objeto a descargar */
+        invoice_id: string
+        /** @description Formato del acuse de cancelación */
+        format: 'xml' | 'pdf'
+      }
+      cookie?: never
+    }
+    requestBody?: never
+    responses: {
+      /** @description Enlace temporal de descarga del acuse de cancelación en el formato solicitado */
+      200: {
+        headers: {
+          [name: string]: unknown
+        }
+        content: {
+          'application/json': components['schemas']['SignedDownloadUrl']
+        }
+      }
+      400: components['responses']['BadRequest']
+      401: components['responses']['Unauthenticated']
+      404: components['responses']['NotFound']
       429: components['responses']['RateLimited']
       500: components['responses']['UnexpectedError']
     }
@@ -8524,29 +8460,163 @@ export interface operations {
       500: components['responses']['UnexpectedError']
     }
   }
-  updateInvoiceStatus: {
+  listInvoiceZipRequests: {
     parameters: {
-      query?: never
-      header?: never
-      path: {
-        /** @description ID del objeto invoice a actualizar */
-        invoice_id: string
+      query?: {
+        /** @description Año a filtrar. Debe enviarse junto con `month`. */
+        year?: number
+        /** @description Mes a filtrar. Debe enviarse junto con `year`. */
+        month?: number
+        /** @description Status de la solicitud. */
+        status?: components['schemas']['InvoiceZipRequestStatus']
+        /** @description Filtra facturas emitidas o recibidas. */
+        issuer_type?: components['schemas']['IssuingType']
+        /** @description Filtra por un tipo de factura o por un arreglo normalizado exacto. */
+        invoice_types?: components['schemas']['InvoiceZipRequestInvoiceType'][]
+        /** @description Página de resultados, empezando en 1. */
+        page?: number
+        /** @description Número del 1 al 100 que representa la cantidad máxima de resultados a regresar con motivos de paginación. */
+        limit?: components['parameters']['SearchLimit']
       }
+      header?: never
+      path?: never
       cookie?: never
     }
     requestBody?: never
     responses: {
-      /** @description Objeto `Invoice` actualizado */
+      /** @description Resultado paginado de solicitudes de ZIP. */
       200: {
         headers: {
           [name: string]: unknown
         }
         content: {
-          'application/json': components['schemas']['Invoice']
+          'application/json': components['schemas']['InvoiceZipRequestSearchResult']
         }
       }
       400: components['responses']['BadRequest']
       401: components['responses']['Unauthenticated']
+      402: components['responses']['InvoiceZipRequestAccessRequired']
+      429: components['responses']['RateLimited']
+      500: components['responses']['UnexpectedError']
+    }
+  }
+  createInvoiceZipRequest: {
+    parameters: {
+      query?: never
+      header?: never
+      path?: never
+      cookie?: never
+    }
+    requestBody: {
+      content: {
+        'application/json': components['schemas']['InvoiceZipRequestCreateInput']
+      }
+    }
+    responses: {
+      /** @description Solicitud de ZIP creada o recuperada correctamente. */
+      200: {
+        headers: {
+          [name: string]: unknown
+        }
+        content: {
+          'application/json': components['schemas']['InvoiceZipRequest']
+        }
+      }
+      400: components['responses']['BadRequest']
+      401: components['responses']['Unauthenticated']
+      402: components['responses']['InvoiceZipRequestAccessRequired']
+      404: components['responses']['InvoiceZipRequestNoInvoices']
+      429: components['responses']['RateLimited']
+      500: components['responses']['UnexpectedError']
+    }
+  }
+  retrieveInvoiceZipRequest: {
+    parameters: {
+      query?: never
+      header?: never
+      path: {
+        /** @description Identificador de la solicitud de ZIP. */
+        id: components['parameters']['InvoiceZipRequestId']
+      }
+      cookie?: never
+    }
+    requestBody?: never
+    responses: {
+      /** @description Solicitud de ZIP recuperada correctamente. */
+      200: {
+        headers: {
+          [name: string]: unknown
+        }
+        content: {
+          'application/json': components['schemas']['InvoiceZipRequest']
+        }
+      }
+      400: components['responses']['BadRequest']
+      401: components['responses']['Unauthenticated']
+      402: components['responses']['InvoiceZipRequestAccessRequired']
+      404: components['responses']['InvoiceZipRequestNotFound']
+      429: components['responses']['RateLimited']
+      500: components['responses']['UnexpectedError']
+    }
+  }
+  downloadInvoiceZipRequest: {
+    parameters: {
+      query?: never
+      header?: never
+      path: {
+        /** @description Identificador de la solicitud de ZIP. */
+        id: components['parameters']['InvoiceZipRequestId']
+      }
+      cookie?: never
+    }
+    requestBody?: never
+    responses: {
+      /** @description Archivo ZIP generado. */
+      200: {
+        headers: {
+          /** @description Nombre sugerido con formato `attachment; filename="YYYY-MM.zip"`. */
+          'Content-Disposition'?: string
+          [name: string]: unknown
+        }
+        content: {
+          'application/zip': BinaryDownload
+        }
+      }
+      400: components['responses']['BadRequest']
+      401: components['responses']['Unauthenticated']
+      402: components['responses']['InvoiceZipRequestAccessRequired']
+      404: components['responses']['InvoiceZipRequestNotFound']
+      409: components['responses']['InvoiceZipRequestNotReady']
+      429: components['responses']['RateLimited']
+      500: components['responses']['UnexpectedError']
+    }
+  }
+  getInvoiceZipRequestDownloadUrl: {
+    parameters: {
+      query?: never
+      header?: never
+      path: {
+        /** @description Identificador de la solicitud de ZIP. */
+        id: components['parameters']['InvoiceZipRequestId']
+      }
+      cookie?: never
+    }
+    requestBody?: never
+    responses: {
+      /** @description URL temporal de descarga para el archivo ZIP generado. */
+      200: {
+        headers: {
+          [name: string]: unknown
+        }
+        content: {
+          'application/json': components['schemas']['SignedDownloadUrl']
+        }
+      }
+      400: components['responses']['BadRequest']
+      401: components['responses']['Unauthenticated']
+      402: components['responses']['InvoiceZipRequestAccessRequired']
+      404: components['responses']['InvoiceZipRequestNotFound']
+      409: components['responses']['InvoiceZipRequestNotReady']
       429: components['responses']['RateLimited']
       500: components['responses']['UnexpectedError']
     }
@@ -8708,70 +8778,6 @@ export interface operations {
       500: components['responses']['UnexpectedError']
     }
   }
-  downloadReceiptPdf: {
-    parameters: {
-      query?: never
-      header?: never
-      path: {
-        /** @description ID del objeto a descargar */
-        receipt_id: string
-      }
-      cookie?: never
-    }
-    requestBody?: never
-    responses: {
-      /** @description Archivo del recibo digital en formato PDF */
-      200: {
-        headers: {
-          [name: string]: unknown
-        }
-        content: {
-          'application/octet-stream': BinaryDownload
-        }
-      }
-      400: components['responses']['BadRequest']
-      401: components['responses']['Unauthenticated']
-      429: components['responses']['RateLimited']
-      500: components['responses']['UnexpectedError']
-    }
-  }
-  sendReceiptByEmail: {
-    parameters: {
-      query?: never
-      header?: never
-      path: {
-        /** @description ID del objeto a obtener */
-        receipt_id: string
-      }
-      cookie?: never
-    }
-    requestBody?: {
-      content: {
-        'application/json': {
-          /** @description Dirección de correo electrónico a enviar el recibo digital. */
-          email: string | string[]
-        }
-      }
-    }
-    responses: {
-      /** @description Objeto genérico de respuesta */
-      200: {
-        headers: {
-          [name: string]: unknown
-        }
-        content: {
-          'application/json': {
-            /** @description Indica si el correo fue enviado exitosamente */
-            ok: boolean
-          }
-        }
-      }
-      400: components['responses']['BadRequest']
-      401: components['responses']['Unauthenticated']
-      429: components['responses']['RateLimited']
-      500: components['responses']['UnexpectedError']
-    }
-  }
   invoiceReceipt: {
     parameters: {
       query?: never
@@ -8902,6 +8908,98 @@ export interface operations {
       400: components['responses']['BadRequest']
       401: components['responses']['Unauthenticated']
       404: components['responses']['NotFound']
+      429: components['responses']['RateLimited']
+      500: components['responses']['UnexpectedError']
+    }
+  }
+  downloadReceiptPdf: {
+    parameters: {
+      query?: never
+      header?: never
+      path: {
+        /** @description ID del objeto a descargar */
+        receipt_id: string
+      }
+      cookie?: never
+    }
+    requestBody?: never
+    responses: {
+      /** @description Archivo del recibo digital en formato PDF */
+      200: {
+        headers: {
+          [name: string]: unknown
+        }
+        content: {
+          'application/octet-stream': BinaryDownload
+        }
+      }
+      400: components['responses']['BadRequest']
+      401: components['responses']['Unauthenticated']
+      429: components['responses']['RateLimited']
+      500: components['responses']['UnexpectedError']
+    }
+  }
+  getReceiptDownloadUrl: {
+    parameters: {
+      query?: never
+      header?: never
+      path: {
+        /** @description ID del objeto a descargar */
+        receipt_id: string
+      }
+      cookie?: never
+    }
+    requestBody?: never
+    responses: {
+      /** @description Enlace temporal de descarga del recibo digital en formato PDF */
+      200: {
+        headers: {
+          [name: string]: unknown
+        }
+        content: {
+          'application/json': components['schemas']['SignedDownloadUrl']
+        }
+      }
+      400: components['responses']['BadRequest']
+      401: components['responses']['Unauthenticated']
+      404: components['responses']['NotFound']
+      429: components['responses']['RateLimited']
+      500: components['responses']['UnexpectedError']
+    }
+  }
+  sendReceiptByEmail: {
+    parameters: {
+      query?: never
+      header?: never
+      path: {
+        /** @description ID del objeto a obtener */
+        receipt_id: string
+      }
+      cookie?: never
+    }
+    requestBody?: {
+      content: {
+        'application/json': {
+          /** @description Dirección de correo electrónico a enviar el recibo digital. */
+          email: string | string[]
+        }
+      }
+    }
+    responses: {
+      /** @description Objeto genérico de respuesta */
+      200: {
+        headers: {
+          [name: string]: unknown
+        }
+        content: {
+          'application/json': {
+            /** @description Indica si el correo fue enviado exitosamente */
+            ok: boolean
+          }
+        }
+      }
+      400: components['responses']['BadRequest']
+      401: components['responses']['Unauthenticated']
       429: components['responses']['RateLimited']
       500: components['responses']['UnexpectedError']
     }
@@ -9165,6 +9263,37 @@ export interface operations {
       500: components['responses']['UnexpectedError']
     }
   }
+  getRetentionDownloadUrl: {
+    parameters: {
+      query?: never
+      header?: never
+      path: {
+        /** @description ID del objeto a descargar */
+        retention_id: string
+        /** @description Formato del archivo de descarga */
+        format: 'pdf' | 'xml' | 'zip'
+      }
+      cookie?: never
+    }
+    requestBody?: never
+    responses: {
+      /** @description Enlace temporal de descarga de la retención en el formato solicitado */
+      200: {
+        headers: {
+          [name: string]: unknown
+        }
+        content: {
+          'application/json': components['schemas']['SignedDownloadUrl']
+        }
+      }
+      400: components['responses']['BadRequest']
+      401: components['responses']['Unauthenticated']
+      404: components['responses']['NotFound']
+      409: components['responses']['Conflict']
+      429: components['responses']['RateLimited']
+      500: components['responses']['UnexpectedError']
+    }
+  }
   sendRetentionByEmail: {
     parameters: {
       query?: never
@@ -9288,6 +9417,60 @@ export interface operations {
       400: components['responses']['BadRequest']
       401: components['responses']['Unauthenticated']
       404: components['responses']['NotFound']
+      429: components['responses']['RateLimited']
+      500: components['responses']['UnexpectedError']
+    }
+  }
+  getOrganization: {
+    parameters: {
+      query?: never
+      header?: never
+      path: {
+        /** @description ID de la organización */
+        organization_id: string
+      }
+      cookie?: never
+    }
+    requestBody?: never
+    responses: {
+      /** @description Objeto `Organization` */
+      200: {
+        headers: {
+          [name: string]: unknown
+        }
+        content: {
+          'application/json': components['schemas']['Organization']
+        }
+      }
+      400: components['responses']['BadRequest']
+      401: components['responses']['Unauthenticated']
+      429: components['responses']['RateLimited']
+      500: components['responses']['UnexpectedError']
+    }
+  }
+  deleteOrganization: {
+    parameters: {
+      query?: never
+      header?: never
+      path: {
+        /** @description ID del objeto a eliminar */
+        organization_id: string
+      }
+      cookie?: never
+    }
+    requestBody?: never
+    responses: {
+      /** @description Objeto `Organization` eliminado correctamente */
+      200: {
+        headers: {
+          [name: string]: unknown
+        }
+        content: {
+          'application/json': components['schemas']['Organization']
+        }
+      }
+      400: components['responses']['BadRequest']
+      401: components['responses']['Unauthenticated']
       429: components['responses']['RateLimited']
       500: components['responses']['UnexpectedError']
     }
@@ -9569,60 +9752,6 @@ export interface operations {
       400: components['responses']['BadRequest']
       401: components['responses']['Unauthenticated']
       404: components['responses']['NotFound']
-      429: components['responses']['RateLimited']
-      500: components['responses']['UnexpectedError']
-    }
-  }
-  getOrganization: {
-    parameters: {
-      query?: never
-      header?: never
-      path: {
-        /** @description ID de la organización */
-        organization_id: string
-      }
-      cookie?: never
-    }
-    requestBody?: never
-    responses: {
-      /** @description Objeto `Organization` */
-      200: {
-        headers: {
-          [name: string]: unknown
-        }
-        content: {
-          'application/json': components['schemas']['Organization']
-        }
-      }
-      400: components['responses']['BadRequest']
-      401: components['responses']['Unauthenticated']
-      429: components['responses']['RateLimited']
-      500: components['responses']['UnexpectedError']
-    }
-  }
-  deleteOrganization: {
-    parameters: {
-      query?: never
-      header?: never
-      path: {
-        /** @description ID del objeto a eliminar */
-        organization_id: string
-      }
-      cookie?: never
-    }
-    requestBody?: never
-    responses: {
-      /** @description Objeto `Organization` eliminado correctamente */
-      200: {
-        headers: {
-          [name: string]: unknown
-        }
-        content: {
-          'application/json': components['schemas']['Organization']
-        }
-      }
-      400: components['responses']['BadRequest']
-      401: components['responses']['Unauthenticated']
       429: components['responses']['RateLimited']
       500: components['responses']['UnexpectedError']
     }
@@ -10695,126 +10824,6 @@ export interface operations {
       400: components['responses']['BadRequest']
       401: components['responses']['Unauthenticated']
       404: components['responses']['NotFound']
-      429: components['responses']['RateLimited']
-      500: components['responses']['UnexpectedError']
-    }
-  }
-  getInvoiceDownloadUrl: {
-    parameters: {
-      query?: never
-      header?: never
-      path: {
-        /** @description ID del objeto a descargar */
-        invoice_id: string
-        /** @description Formato del archivo de descarga */
-        format: 'pdf' | 'xml' | 'zip'
-      }
-      cookie?: never
-    }
-    requestBody?: never
-    responses: {
-      /** @description Enlace temporal de descarga del comprobante CFDI en el formato solicitado */
-      200: {
-        headers: {
-          [name: string]: unknown
-        }
-        content: {
-          'application/json': components['schemas']['SignedDownloadUrl']
-        }
-      }
-      400: components['responses']['BadRequest']
-      401: components['responses']['Unauthenticated']
-      404: components['responses']['NotFound']
-      409: components['responses']['Conflict']
-      429: components['responses']['RateLimited']
-      500: components['responses']['UnexpectedError']
-    }
-  }
-  getCancellationReceiptDownloadUrl: {
-    parameters: {
-      query?: never
-      header?: never
-      path: {
-        /** @description ID del objeto a descargar */
-        invoice_id: string
-        /** @description Formato del acuse de cancelación */
-        format: 'xml' | 'pdf'
-      }
-      cookie?: never
-    }
-    requestBody?: never
-    responses: {
-      /** @description Enlace temporal de descarga del acuse de cancelación en el formato solicitado */
-      200: {
-        headers: {
-          [name: string]: unknown
-        }
-        content: {
-          'application/json': components['schemas']['SignedDownloadUrl']
-        }
-      }
-      400: components['responses']['BadRequest']
-      401: components['responses']['Unauthenticated']
-      404: components['responses']['NotFound']
-      429: components['responses']['RateLimited']
-      500: components['responses']['UnexpectedError']
-    }
-  }
-  getReceiptDownloadUrl: {
-    parameters: {
-      query?: never
-      header?: never
-      path: {
-        /** @description ID del objeto a descargar */
-        receipt_id: string
-      }
-      cookie?: never
-    }
-    requestBody?: never
-    responses: {
-      /** @description Enlace temporal de descarga del recibo digital en formato PDF */
-      200: {
-        headers: {
-          [name: string]: unknown
-        }
-        content: {
-          'application/json': components['schemas']['SignedDownloadUrl']
-        }
-      }
-      400: components['responses']['BadRequest']
-      401: components['responses']['Unauthenticated']
-      404: components['responses']['NotFound']
-      429: components['responses']['RateLimited']
-      500: components['responses']['UnexpectedError']
-    }
-  }
-  getRetentionDownloadUrl: {
-    parameters: {
-      query?: never
-      header?: never
-      path: {
-        /** @description ID del objeto a descargar */
-        retention_id: string
-        /** @description Formato del archivo de descarga */
-        format: 'pdf' | 'xml' | 'zip'
-      }
-      cookie?: never
-    }
-    requestBody?: never
-    responses: {
-      /** @description Enlace temporal de descarga de la retención en el formato solicitado */
-      200: {
-        headers: {
-          [name: string]: unknown
-        }
-        content: {
-          'application/json': components['schemas']['SignedDownloadUrl']
-        }
-      }
-      400: components['responses']['BadRequest']
-      401: components['responses']['Unauthenticated']
-      404: components['responses']['NotFound']
-      409: components['responses']['Conflict']
       429: components['responses']['RateLimited']
       500: components['responses']['UnexpectedError']
     }

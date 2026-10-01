@@ -633,6 +633,17 @@ describe('runtime compatibility (node)', () => {
         payload,
       }),
     ).rejects.toThrow('Invalid signature')
+
+    await expect(
+      client.webhooks.validateSignature({
+        secret,
+        payload: 'invalid-json-example',
+        signature: crypto
+          .createHmac('sha256', secret)
+          .update('invalid-json-example')
+          .digest('hex'),
+      }),
+    ).rejects.toThrow(/^Invalid webhook event JSON$/)
   })
 
   it('hydrates dates in locally validated webhook events', async () => {
