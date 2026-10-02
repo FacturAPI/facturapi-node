@@ -124,6 +124,129 @@ export default class Customers {
   }
 
   /**
+   * Crear cliente
+   *
+   * País MEX, u omitido. Requiere razón social, RFC, régimen fiscal y código postal. Los RFC genéricos usan CustomerGenericCreateInput.
+   *
+   * Registra un nuevo cliente en Facturapi.
+   *
+   * Esta llamada valida que los datos fiscales coincidan con
+   * los registros del SAT para ese RFC, de lo contrario, la llamada
+   * devolverá un error indicando el problema.
+   *
+   * Una vez creado el cliente y obtenido un objeto de respuesta,
+   * te recomendamos guardar el ID en tu base de datos junto a la información
+   * de tu cliente. Posteriormente, puedes llamar al endpoint de Crear Factura
+   * pasando el ID del cliente en lugar de repetir la información.
+   *
+   * Por último, ten en cuenta que los clientes que crees en ambiente _Test_ **no se
+   * comparten** con el ambiente _Live_.
+   *
+   * Este método conserva los campos requeridos de su variante. Para crear un cliente con datos incompletos, usa create(data, { createEditLink: true }).
+   *
+   * @param data - Datos de la solicitud.
+   * @param params - Parámetros de consulta.
+   * @returns 200: Un objeto `Customer` con la misma información ya existía
+   * 201: Nuevo objeto `Customer` creado
+   */
+  createNational(
+    data: InputComponents['schemas']['CustomerNationalCreateInput'],
+    params?: OperationQuery<'createCustomer'> | null,
+  ): Promise<OperationResponse<'createCustomer'>> {
+    return this.client.request<OperationResponse<'createCustomer'>>(
+      `/customers`,
+      {
+        method: 'POST',
+        datePlan: operationDatePlans.createCustomer,
+        body: data,
+        params: params,
+      },
+    )
+  }
+
+  /**
+   * Crear cliente
+   *
+   * Requiere razón social y domicilio con un país explícito distinto de MEX. El identificador fiscal y el código postal son opcionales; el régimen fiscal predeterminado es 616.
+   *
+   * Registra un nuevo cliente en Facturapi.
+   *
+   * Esta llamada valida que los datos fiscales coincidan con
+   * los registros del SAT para ese RFC, de lo contrario, la llamada
+   * devolverá un error indicando el problema.
+   *
+   * Una vez creado el cliente y obtenido un objeto de respuesta,
+   * te recomendamos guardar el ID en tu base de datos junto a la información
+   * de tu cliente. Posteriormente, puedes llamar al endpoint de Crear Factura
+   * pasando el ID del cliente en lugar de repetir la información.
+   *
+   * Por último, ten en cuenta que los clientes que crees en ambiente _Test_ **no se
+   * comparten** con el ambiente _Live_.
+   *
+   * Este método conserva los campos requeridos de su variante. Para crear un cliente con datos incompletos, usa create(data, { createEditLink: true }).
+   *
+   * @param data - Datos de la solicitud.
+   * @param params - Parámetros de consulta.
+   * @returns 200: Un objeto `Customer` con la misma información ya existía
+   * 201: Nuevo objeto `Customer` creado
+   */
+  createForeign(
+    data: InputComponents['schemas']['CustomerForeignCreateInput'],
+    params?: OperationQuery<'createCustomer'> | null,
+  ): Promise<OperationResponse<'createCustomer'>> {
+    return this.client.request<OperationResponse<'createCustomer'>>(
+      `/customers`,
+      {
+        method: 'POST',
+        datePlan: operationDatePlans.createCustomer,
+        body: data,
+        params: params,
+      },
+    )
+  }
+
+  /**
+   * Crear cliente
+   *
+   * RFC de público en general XAXX010101000 o RFC genérico extranjero XEXX010101000. Requiere razón social y RFC. El régimen fiscal predeterminado es 616. Si se envía domicilio mexicano, requiere código postal.
+   *
+   * Registra un nuevo cliente en Facturapi.
+   *
+   * Esta llamada valida que los datos fiscales coincidan con
+   * los registros del SAT para ese RFC, de lo contrario, la llamada
+   * devolverá un error indicando el problema.
+   *
+   * Una vez creado el cliente y obtenido un objeto de respuesta,
+   * te recomendamos guardar el ID en tu base de datos junto a la información
+   * de tu cliente. Posteriormente, puedes llamar al endpoint de Crear Factura
+   * pasando el ID del cliente en lugar de repetir la información.
+   *
+   * Por último, ten en cuenta que los clientes que crees en ambiente _Test_ **no se
+   * comparten** con el ambiente _Live_.
+   *
+   * Este método conserva los campos requeridos de su variante. Para crear un cliente con datos incompletos, usa create(data, { createEditLink: true }).
+   *
+   * @param data - Datos de la solicitud.
+   * @param params - Parámetros de consulta.
+   * @returns 200: Un objeto `Customer` con la misma información ya existía
+   * 201: Nuevo objeto `Customer` creado
+   */
+  createGeneric(
+    data: InputComponents['schemas']['CustomerGenericCreateInput'],
+    params?: OperationQuery<'createCustomer'> | null,
+  ): Promise<OperationResponse<'createCustomer'>> {
+    return this.client.request<OperationResponse<'createCustomer'>>(
+      `/customers`,
+      {
+        method: 'POST',
+        datePlan: operationDatePlans.createCustomer,
+        body: data,
+        params: params,
+      },
+    )
+  }
+
+  /**
    * Listar clientes
    *
    * Regresa una lista paginada de todos los clientes de una organización o realiza una búsqueda de acuerdo a parámetros

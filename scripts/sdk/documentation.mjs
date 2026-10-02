@@ -17,7 +17,13 @@ export function methodDocumentation(spec, operation, entry) {
   ].map(dereference)
   const body = dereference(operation.requestBody)
   const bodySchema = dereference(Object.values(body?.content || {})[0]?.schema)
-  const prose = [operation.summary, operation.description]
+  const prose = [
+    operation.summary,
+    entry.bodySchema && spec.components.schemas[entry.bodySchema].description,
+    operation.description,
+    entry.bodySchema &&
+      'Este método conserva los campos requeridos de su variante. Para crear un cliente con datos incompletos, usa create(data, { createEditLink: true }).',
+  ]
     .filter(Boolean)
     .map((text) => text.trim())
   const lines = []

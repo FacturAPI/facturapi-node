@@ -132,6 +132,29 @@ try {
 
 Usa `error.code` y los detalles de validación para decidir cómo responder; evita depender del texto del mensaje. Consulta la [referencia de errores](https://docs.facturapi.io/docs/getting-started/errors).
 
+### Crear clientes con tipos específicos
+
+Elige el método que corresponde a tu cliente para ver sus campos requeridos en el autocompletado:
+
+```ts
+await facturapi.customers.createNational({
+  legal_name: 'EMPRESA DE EJEMPLO',
+  tax_id: 'ABC101010111',
+  tax_system: '601',
+  address: { zip: '83200' },
+})
+await facturapi.customers.createForeign({
+  legal_name: 'Example Company',
+  address: { country: 'USA' },
+})
+await facturapi.customers.createGeneric({
+  legal_name: 'PUBLICO EN GENERAL',
+  tax_id: 'XAXX010101000',
+})
+```
+
+Los tres métodos usan la misma operación de la API. `create()` sigue disponible si decides el caso dinámicamente, o si quieres guardar datos incompletos con `{ createEditLink: true }`. Las validaciones siguen siendo responsabilidad de la API.
+
 ## Qué puedes integrar
 
 | Necesitas…                                | Recurso o guía                                                                                                      |

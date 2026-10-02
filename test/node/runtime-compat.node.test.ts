@@ -259,6 +259,52 @@ describe('runtime compatibility (node)', () => {
     ).toEqual(new Date(timestamp))
   })
 
+  it('uses the customer creation endpoint for each explicit input variant', async () => {
+    const client = createClient()
+    const timestamp = '2026-09-17T12:00:00.000Z'
+    const inputs = [
+      {
+        legal_name: 'Cliente',
+        tax_id: 'ABC101010111',
+        tax_system: '601',
+        address: { zip: '83200' },
+      },
+      { legal_name: 'Foreign', address: { country: 'USA' } },
+      { legal_name: 'Publico', tax_id: 'XAXX010101000' },
+    ]
+    globalThis.fetch = vi.fn(async (url, options) => {
+      expect(new URL(String(url)).pathname).toBe('/v2/customers')
+      expect(options?.method).toBe('POST')
+      return Response.json({ id: 'cus_ejemplo', created_at: timestamp })
+    }) as typeof fetch
+    const responses = [
+      await client.customers.createNational({
+        legal_name: 'Cliente',
+        tax_id: 'ABC101010111',
+        tax_system: '601',
+        address: { zip: '83200' },
+      }),
+      await client.customers.createForeign({
+        legal_name: 'Foreign',
+        address: { country: 'USA' },
+      }),
+      await client.customers.createGeneric({
+        legal_name: 'Publico',
+        tax_id: 'XAXX010101000',
+      }),
+    ]
+    expect(
+      responses.every(
+        (customer) =>
+          customer.created_at?.getTime() === new Date(timestamp).getTime(),
+      ),
+    ).toBe(true)
+    for (const [index, call] of vi
+      .mocked(globalThis.fetch)
+      .mock.calls.entries())
+      expect(JSON.parse(String(call[1]?.body))).toEqual(inputs[index])
+  })
+
   it('hydrates dates across resource responses without changing SAT stamp text', async () => {
     const client = createClient()
     const timestamp = '2026-09-17T12:00:00.000Z'

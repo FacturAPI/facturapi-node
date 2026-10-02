@@ -10,6 +10,18 @@
           "true": "CustomerCreateWithEditLinkInput"
         }
       },
+      "createNational": {
+        "operation": "createCustomer",
+        "bodySchema": "CustomerNationalCreateInput"
+      },
+      "createForeign": {
+        "operation": "createCustomer",
+        "bodySchema": "CustomerForeignCreateInput"
+      },
+      "createGeneric": {
+        "operation": "createCustomer",
+        "bodySchema": "CustomerGenericCreateInput"
+      },
       "list": "listCustomers",
       "retrieve": "getCustomer",
       "update": "editCustomer",

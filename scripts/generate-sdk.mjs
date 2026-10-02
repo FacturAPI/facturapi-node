@@ -204,12 +204,16 @@ validateSignature<T extends ApiEventType = any>(data: { secret: string; signatur
       operation: operationId,
     }
     used.add(entry.operation)
-    if (entry.querySchema) {
+    for (const [schema, source] of [
+      ['bodySchema', entry.body],
+      ['querySchema', entry.hasQuery],
+    ]) {
+      if (!entry[schema]) continue
       assert(
-        spec.components.schemas[entry.querySchema],
-        'Missing query schema.',
+        spec.components.schemas[entry[schema]],
+        `Missing ${schema} schema.`,
       )
-      assert(entry.hasQuery, 'A query schema requires query parameters.')
+      assert(source, `${schema} requires its HTTP argument.`)
       imports.push(
         `import type { components as InputComponents } from '../generated/input';`,
       )
@@ -229,6 +233,8 @@ validateSignature<T extends ApiEventType = any>(data: { secret: string; signatur
             : source === 'params' && entry.hasQuery
               ? `OperationQuery<'${entry.operation}'>${argument.nullable ? ' | null' : ''}`
               : 'Record<string, unknown> | null'
+      if (source === 'body' && entry.bodySchema)
+        type = `InputComponents['schemas']['${entry.bodySchema}']`
       if (source === 'params' && entry.querySchema)
         type = `InputComponents['schemas']['${entry.querySchema}']${argument.nullable ? ' | null' : ''}`
       for (const [property, binding] of Object.entries(entry.body || {}))

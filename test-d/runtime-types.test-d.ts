@@ -553,3 +553,68 @@ client.customers.update('cus_ejemplo', { phone: null })
 expectError(
   client.customers.create({ tax_system: null }, { createEditLink: true }),
 )
+
+// Explicit creation methods select their own contract without narrowing a free country string.
+client.customers.createNational({
+  legal_name: 'Cliente',
+  tax_id: 'ABC101010111',
+  tax_system: '601',
+  address: { zip: '83200' },
+})
+client.customers.createForeign({
+  legal_name: 'Foreign',
+  address: { country: 'USA' },
+})
+client.customers.createForeign({
+  legal_name: 'Foreign',
+  address: { country: 'MEX' },
+})
+client.customers.createGeneric({
+  legal_name: 'Publico',
+  tax_id: 'XAXX010101000',
+})
+client.customers.createGeneric({
+  legal_name: 'Generic foreign',
+  tax_id: 'XEXX010101000',
+})
+expectError(
+  client.customers.createNational({
+    legal_name: 'Cliente',
+    tax_system: '601',
+    address: { country: 'MEX', zip: '83200' },
+  }),
+)
+expectError(
+  client.customers.createNational({
+    legal_name: 'Cliente',
+    tax_id: 'ABC101010111',
+    address: { zip: '83200' },
+  }),
+)
+expectError(
+  client.customers.createNational({
+    legal_name: 'Cliente',
+    tax_id: 'ABC101010111',
+    tax_system: '601',
+    address: {},
+  }),
+)
+expectError(
+  client.customers.createForeign({ legal_name: 'Foreign', address: {} }),
+)
+expectError(
+  client.customers.createGeneric({
+    legal_name: 'Cliente',
+    tax_id: 'ABC101010111',
+  }),
+)
+expectError(
+  client.customers.createGeneric({
+    legal_name: 'Publico',
+    tax_id: 'XAXX010101000',
+    tax_system: '601',
+  }),
+)
+// Incomplete creation remains an explicit option of the general method.
+expectError(client.customers.createNational({}, { createEditLink: true }))
+client.customers.create({}, { createEditLink: true })
