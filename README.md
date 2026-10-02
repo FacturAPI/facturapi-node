@@ -8,6 +8,16 @@ Integra facturación electrónica en México desde JavaScript o TypeScript. Crea
 
 [Documentación](https://docs.facturapi.io) · [Referencia de la API](https://docs.facturapi.io/api/) · [Crear una cuenta](https://www.facturapi.io/register) · [Changelog](CHANGELOG.md)
 
+## Qué ganas con v6 ✨
+
+- **Autocompletado para tus peticiones y respuestas.** Consulta la descripción de los campos, argumentos y resultados desde el editor, sin salir de tu código.
+- **Tipos que acompañan tu flujo.** Distinguen tipos de CFDI, borradores y complementos, y señalan campos requeridos según el caso. Las validaciones siguen en la API.
+- **Clientes con entradas específicas.** Usa `createNational`, `createForeign` o `createGeneric` para ver los campos de cada caso; `create` sigue disponible.
+- **Fechas de respuesta listas para usar.** Los timestamps llegan como objetos `Date`, también al validar eventos de webhook. Las fechas de calendario y del timbre SAT conservan su texto.
+- **Imports para tu proyecto.** ESM y CommonJS incluyen sus tipos; `require('facturapi')` devuelve directamente el constructor.
+
+¿Ya usas el SDK? Revisa [cómo actualizar desde v3, v4 o v5](#actualizar-desde-v3-v4-o-v5), incluidos los casos que no requieren cambios.
+
 ## Tu primera factura de prueba 🚀
 
 Vamos a crear una factura de prueba. Necesitas Node.js 18 o superior y la **Test Secret Key de una organización**, que encontrarás en tu cuenta de Facturapi. Guárdala en la variable de entorno `FACTURAPI_KEY`.
@@ -64,7 +74,7 @@ Elige la forma de importar que ya usas en tu proyecto. Con ESM o TypeScript:
 import Facturapi, { InvoiceType, type Invoice } from 'facturapi'
 ```
 
-Con CommonJS, desde el SDK 6:
+Con CommonJS:
 
 ```js
 const Facturapi = require('facturapi')
@@ -183,8 +193,8 @@ Puedes pasar directamente a v6; no necesitas instalar las versiones intermedias.
 
 | Tu versión | Qué revisar                                                     |
 | ---------- | --------------------------------------------------------------- |
-| 5.x        | Fechas e imports                                                |
-| 4.x        | Fechas e imports, y tipos de respuesta                          |
+| 5.x        | Fechas, imports y tipos de entrada                               |
+| 4.x        | Lo anterior y tipos de respuesta                                 |
 | 3.x        | Los tres apartados, incluidos los métodos renombrados y Node.js |
 
 ### ✅ Cuándo puedes actualizar sin cambiar tu código
@@ -200,7 +210,7 @@ También puedes conservar:
 
 Actualiza la dependencia con `npm install facturapi@^6` (o el equivalente de tu gestor) y ejecuta las pruebas de tu integración. Si usas TypeScript, comprueba también la compilación: sus tipos ahora describen más casos reales de la respuesta.
 
-### Desde v5: fechas e imports
+### Desde v5: fechas, imports y tipos de entrada
 
 **Fechas de respuesta.** Los campos de fecha como `created_at`, `date` y `expires_at` ahora son objetos `Date` en ejecución, incluso donde versiones anteriores ya los declaraban como `Date` en TypeScript. Esto también aplica al evento que devuelve `webhooks.validateSignature`.
 
@@ -221,6 +231,12 @@ Si ya usabas métodos de `Date`, o no leías esos campos, no necesitas adaptarlo
 **TypeScript.** Las entradas ahora describen los campos que acepta la API. Si tus objetos ya cumplen ese contrato, no necesitas cambiar las llamadas. Corrige los campos desconocidos o de otro tipo que antes pasaban por `Record<string, any>`; las fechas de entrada siguen aceptando strings ISO y objetos `Date`. Los tipos de respuesta también reflejan campos opcionales: por ejemplo, `property_tax_account` puede faltar y las fechas de un rol pueden ser `null`.
 
 Los tipos de CFDI distinguen emisión, borrador y edición; cada complemento relaciona su `type` con la estructura de `data`. En nómina, las entradas usan las claves del catálogo de percepciones publicado: `019` requiere `horas_extra`, y el origen de recursos `IM` requiere `monto_recurso_propio`. Si incluyes autotransporte de Carta Porte, completa su vehículo y seguro de responsabilidad civil. Estas relaciones ayudan a detectar errores al compilar; la API sigue siendo responsable de validar los datos.
+
+**Clientes.** No necesitas reemplazar `customers.create()`: los métodos `createNational()`, `createForeign()` y `createGeneric()` son opcionales. Para crear datos incompletos, usa `customers.create(data, { createEditLink: true })`. El flag debe ser literalmente `true` para que TypeScript seleccione esa entrada; un boolean dinámico conserva los campos del contrato normal. Los métodos específicos conservan sus campos requeridos aunque envíes ese flag.
+
+**Cancelaciones.** Cuando uses los motivos `01` o `04`, incluye `substitution`. Los motivos `02` y `03` no lo requieren. Para eliminar un borrador, puedes seguir llamando a `cancel(id)` sin parámetros.
+
+**Recibos.** `receipts.toInvoice(data)` distingue la factura creada del resumen devuelto con `dry_run: true`. Si el flag es dinámico, comprueba qué respuesta recibiste antes de acceder a campos exclusivos de una factura. En `createGlobalInvoice()`, si proporcionas `receipts`, incluye `from` y `to`; si tu petición ya los incluía, no necesitas cambiarla.
 
 Si consultabas `invoice.cancellation`, usa `invoice.cancellation_status` para el estado y `invoice.canceled_at` para la fecha de cancelación. En solicitudes de ZIP, utiliza las fechas documentadas como `created_at` y `scheduled_at`; `updated_at` no forma parte de esa respuesta.
 
