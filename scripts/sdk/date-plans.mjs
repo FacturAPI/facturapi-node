@@ -34,6 +34,19 @@ export function compileDatePlans(filename, content) {
           !(variant.flags & (ts.TypeFlags.Null | ts.TypeFlags.Undefined)),
       )
       if (variants.length === 1) return compile(variants[0])
+      if (
+        variants.some((variant) => variant.symbol?.name === 'Date') &&
+        variants.every(
+          (variant) =>
+            variant.symbol?.name === 'Date' ||
+            variant.flags & ts.TypeFlags.StringLike,
+        )
+      ) {
+        const id = nodes.length
+        visited.set(type, id)
+        nodes.push({ kind: 'date-time' })
+        return id
+      }
     }
     if (
       type.flags &
@@ -149,7 +162,11 @@ export function compileDatePlans(filename, content) {
     }),
   )
   // Retain only branches that can reach a Date, including recursive types.
-  const active = new Set([1])
+  const active = new Set(
+    nodes.flatMap((node, id) =>
+      node.kind === 'date' || node.kind === 'date-time' ? [id] : [],
+    ),
+  )
   for (let changed = true; changed;) {
     changed = false
     nodes.forEach((node, id) => {

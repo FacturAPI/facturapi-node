@@ -110,7 +110,17 @@ describe('runtime compatibility (node)', () => {
           },
           complements: [
             { type: 'pago', data: [{ date: '2026-09-17T12:00:00.000Z' }] },
-            { type: 'nomina', data: { fecha_pago: '2026-09-17' } },
+            {
+              type: 'nomina',
+              data: {
+                fecha_pago:
+                  options?.method === 'POST'
+                    ? '2026-09-17T06:00:00.000Z'
+                    : '2026-09-17',
+                fecha_inicial_pago: '2026-09-17T06:00:00.000Z',
+                fecha_final_pago: '2026-09-17T00:00:00-06:00',
+              },
+            },
             {
               type: 'custom',
               data: '<Example date="2026-09-17T12:00:00.000Z"/>',
@@ -143,6 +153,14 @@ describe('runtime compatibility (node)', () => {
         ?.data.fecha_pago,
     ).toBe('2026-09-17')
     expect(
+      invoice.complements?.find((complement) => complement.type === 'nomina')
+        ?.data.fecha_inicial_pago,
+    ).toEqual(new Date('2026-09-17T06:00:00.000Z'))
+    expect(
+      invoice.complements?.find((complement) => complement.type === 'nomina')
+        ?.data.fecha_final_pago,
+    ).toEqual(new Date('2026-09-17T06:00:00.000Z'))
+    expect(
       invoice.complements?.find((complement) => complement.type === 'custom')
         ?.data,
     ).toBe('<Example date="2026-09-17T12:00:00.000Z"/>')
@@ -163,6 +181,10 @@ describe('runtime compatibility (node)', () => {
     expect(created.created_at).toEqual(new Date('2026-09-17T12:00:00.000Z'))
     expect(created.date).toEqual(new Date('2026-09-17T11:00:00.000Z'))
     expect(created.stamp?.date).toBe('2026-09-17T06:59:16')
+    expect(
+      created.complements?.find((complement) => complement.type === 'nomina')
+        ?.data.fecha_pago,
+    ).toEqual(new Date('2026-09-17T06:00:00.000Z'))
   })
 
   it('serializes payroll Date values as ISO timestamps and preserves date strings', async () => {

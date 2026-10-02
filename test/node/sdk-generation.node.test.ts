@@ -16,6 +16,7 @@ it('discovers new date fields, dictionaries and recursive models without a date-
       schemas: {
         FutureModel: {
           new_timestamp: Date | null;
+          calendar_or_timestamp: string | Date | null;
           calendar: Record<string, Date>;
           children?: components['schemas']['FutureModel'][];
           metadata?: Record<string, unknown>;
@@ -31,6 +32,9 @@ it('discovers new date fields, dictionaries and recursive models without a date-
   )
   const model = plans.nodes[plans.operations.getFutureModel]
   expect(plans.nodes[model.properties.new_timestamp]).toEqual({ kind: 'date' })
+  expect(plans.nodes[model.properties.calendar_or_timestamp]).toEqual({
+    kind: 'date-time',
+  })
   expect(plans.nodes[model.properties.calendar]).toEqual({
     kind: 'object',
     properties: {},

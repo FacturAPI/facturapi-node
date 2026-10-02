@@ -1,7 +1,7 @@
 import { datePlans } from '../generated/dates'
 
 export type DatePlan =
-  | { kind: 'none' | 'date' }
+  | { kind: 'none' | 'date' | 'date-time' }
   | { kind: 'object'; properties: Record<string, number>; additional?: number }
   | { kind: 'array'; items: number }
   | {
@@ -15,8 +15,9 @@ const isoDate =
 export function deserializeResponseDates(value: unknown, planId = 0): unknown {
   const plan: DatePlan = datePlans[planId]
   if (!plan || !value || value instanceof Date) return value
-  if (plan.kind === 'date') {
+  if (plan.kind === 'date' || plan.kind === 'date-time') {
     if (typeof value !== 'string' || !isoDate.test(value)) return value
+    if (plan.kind === 'date-time' && !value.includes('T')) return value
     const date = new Date(value)
     return Number.isNaN(date.getTime()) ? value : date
   }

@@ -3,13 +3,7 @@ import type { DatePlan } from '../runtime/dates'
 export const datePlans: DatePlan[] = [
   { kind: 'none' },
   { kind: 'date' },
-  {
-    kind: 'union',
-    variants: [
-      { plan: 0, match: {} },
-      { plan: 1, match: {} },
-    ],
-  },
+  { kind: 'date-time' },
   {
     kind: 'object',
     properties: { created_at: 1, related_resource_messages: 4, data: 6 },
@@ -46,14 +40,7 @@ export const datePlans: DatePlan[] = [
       receptor: 16,
     },
   },
-  {
-    kind: 'union',
-    variants: [
-      { plan: 0, match: {} },
-      { plan: 0, match: {} },
-      { plan: 1, match: {} },
-    ],
-  },
+  { kind: 'date-time' },
   { kind: 'object', properties: { fecha_inicio_rel_laboral: 15 } },
   {
     kind: 'object',
