@@ -1,22 +1,12 @@
-# Facturapi para Node.js y TypeScript
+# Facturapi para JavaScript y TypeScript
 
 [![npm](https://img.shields.io/npm/v/facturapi)](https://www.npmjs.com/package/facturapi)
 [![CI](https://github.com/FacturAPI/facturapi-node/actions/workflows/ci.yml/badge.svg)](https://github.com/FacturAPI/facturapi-node/actions/workflows/ci.yml)
 [![Licencia MIT](https://img.shields.io/badge/license-MIT-blue)](LICENSE)
 
-Integra facturación electrónica en México desde JavaScript o TypeScript. Crea CFDI, entrega sus archivos PDF y XML y administra clientes, productos y organizaciones con el SDK oficial de [Facturapi](https://www.facturapi.io).
+Integra facturación electrónica en México desde Node.js o navegadores, con JavaScript o TypeScript. Crea CFDI, entrega sus archivos PDF y XML y administra clientes, productos y organizaciones con el SDK oficial de [Facturapi](https://www.facturapi.io).
 
 [Documentación](https://docs.facturapi.io) · [Referencia de la API](https://docs.facturapi.io/api/) · [Crear una cuenta](https://www.facturapi.io/register) · [Changelog](CHANGELOG.md)
-
-## Qué ganas con v6 ✨
-
-- **Autocompletado para tus peticiones y respuestas.** Consulta la descripción de los campos, argumentos y resultados desde el editor, sin salir de tu código.
-- **Tipos que acompañan tu flujo.** Distinguen tipos de CFDI, borradores y complementos, y señalan campos requeridos según el caso. Las validaciones siguen en la API.
-- **Clientes con entradas específicas.** Usa `createNational`, `createForeign` o `createGeneric` para ver los campos de cada caso; `create` sigue disponible.
-- **Fechas de respuesta listas para usar.** Los timestamps llegan como objetos `Date`, también al validar eventos de webhook. Las fechas de calendario y del timbre SAT conservan su texto.
-- **Imports para tu proyecto.** ESM y CommonJS incluyen sus tipos; `require('facturapi')` devuelve directamente el constructor.
-
-¿Ya usas el SDK? Revisa [cómo actualizar desde v3, v4 o v5](#actualizar-desde-v3-v4-o-v5), incluidos los casos que no requieren cambios.
 
 ## Tu primera factura de prueba 🚀
 

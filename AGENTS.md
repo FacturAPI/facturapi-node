@@ -26,3 +26,5 @@
 - Run `pnpm generate:sdk:check`, `pnpm test`, `pnpm lint`, and browser tests for generation changes. Cover input strings/Date values, nullable dates, complement discriminants, opaque metadata/XML, and additions to the contract.
 - This repository is public. Never copy private implementation sources, paths, identifiers, diagnostics, or planning context into generated files, tests, commits, PR descriptions, or review replies.
 - Keep the source commit metadata and generated sources tracked; do not commit a downloaded spec. Mark generated artifacts with `linguist-generated` in `.gitattributes` so reviews focus on the generator, bindings, runtime, and tests; keep handwritten configuration visible. Update the attributes when adding generated output files.
+
+- Describe current SDK capabilities in the README without release announcements or version comparisons outside the migration guide. Put release improvements in the changelog. The SDK supports Node.js and browsers; keep titles and summaries accurate for both.
