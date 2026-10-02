@@ -51,7 +51,7 @@ describe('runtime compatibility (web simulation)', () => {
           },
         },
         async json() {
-          return { id: 'inv_123' }
+          return { id: 'inv_123', created_at: '2026-09-17T12:00:00.000Z' }
         },
         async text() {
           return ''
@@ -59,7 +59,9 @@ describe('runtime compatibility (web simulation)', () => {
       } as unknown as Response
     }) as typeof fetch
 
-    await client.invoices.retrieve('inv_123')
+    expect((await client.invoices.retrieve('inv_123')).created_at).toEqual(
+      new Date('2026-09-17T12:00:00.000Z'),
+    )
   })
 
   it('sends custom headers in web-like runtime', async () => {

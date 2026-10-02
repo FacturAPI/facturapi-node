@@ -1,10 +1,10 @@
 {
   "name": "facturapi",
-  "version": "5.1.0",
+  "version": "6.0.0",
   "description": "SDK oficial de Facturapi para Node.js y navegadores. Integra facturaci\u00f3n electr\u00f3nica en M\u00e9xico (CFDI) de forma simple y obt\u00e9n una perspectiva fiscal completa de tu operaci\u00f3n, con b\u00fasquedas indexadas, env\u00edo de documentos y trazabilidad.",
-  "main": "dist/index.cjs.js",
-  "module": "dist/index.es.js",
-  "types": "dist/index.d.ts",
+  "main": "dist/index.cjs",
+  "module": "dist/index.mjs",
+  "types": "dist/index.d.cts",
   "sideEffects": false,
   "files": [
     "dist",
@@ -16,25 +16,29 @@
     "access": "public",
     "provenance": true
   },
-  "packageManager": "pnpm@11.9.0",
+  "packageManager": "pnpm@12.6.0",
   "scripts": {
-    "precommit": "lint-staged",
-    "build": "vite build && tsc --emitDeclarationOnly",
+    "build": "vite build && tsc --noEmit && rolldown -c && node scripts/commonjs-types.mjs",
     "lint": "eslint .",
     "lint:fix": "eslint . --fix",
     "format": "prettier . --write",
     "format:check": "prettier . --check",
-    "test:node": "vitest run --config vitest.node.config.ts",
-    "test:web": "vitest run --config vitest.web.config.ts",
+    "test:node": "vitest run --config vitest.node.config.mts",
+    "test:web": "vitest run --config vitest.web.config.mts",
     "test:browser": "pnpm run build && playwright test",
     "test:unit": "pnpm run test:node && pnpm run test:web",
-    "test:types": "tsd",
-    "test": "pnpm run build && pnpm run test:unit && pnpm run test:types",
-    "ci": "pnpm run test"
+    "test:types": "tsd --files test-d/runtime-types.test-d.ts && tsc --ignoreConfig --noEmit --module NodeNext --moduleResolution NodeNext --target ES2022 test-d/package-exports.mts test-d/package-exports.cts && tsc --ignoreConfig --noEmit --module commonjs --moduleResolution node10 --ignoreDeprecations 6.0 --target ES2022 test-d/legacy-package-exports.cts && tsc --project playground",
+    "test": "pnpm run build && pnpm run test:unit && pnpm run test:types && pnpm run test:compat",
+    "ci": "pnpm run test",
+    "test:compat": "node --test test/compat/*.test.cjs test/compat/*.test.mjs",
+    "generate:sdk": "node scripts/generate-sdk.mjs",
+    "generate:sdk:check": "node scripts/generate-sdk.mjs --check",
+    "sync:openapi": "node scripts/sync-openapi.mjs",
+    "playground:check": "pnpm run build && tsc --project playground"
   },
   "engines": {
     "node": ">=18.0.0",
-    "pnpm": ">=11.9.0"
+    "pnpm": ">=12.6.0"
   },
   "repository": {
     "type": "git",
@@ -66,33 +70,37 @@
     "url": "https://github.com/facturapi/facturapi-node/issues"
   },
   "homepage": "https://github.com/facturapi/facturapi-node#readme",
-  "lint-staged": {
-    "*.{js,cjs,mjs,ts}": [
-      "prettier --write",
-      "eslint --fix"
-    ],
-    "*.{json,md,yml,yaml,css}": [
-      "prettier --write"
-    ]
-  },
   "devDependencies": {
     "@eslint/js": "^10.0.1",
-    "@playwright/test": "1.61.0",
-    "@rollup/plugin-commonjs": "^29.0.3",
-    "@rollup/plugin-node-resolve": "^16.0.3",
-    "@rollup/plugin-replace": "^6.0.3",
-    "@types/node": "^26.0.0",
-    "eslint": "^10.5.0",
+    "@playwright/test": "1.63.0",
+    "@types/node": "^26.6.3",
+    "eslint": "^10.11.0",
     "eslint-config-prettier": "^10.1.8",
-    "globals": "^17.7.0",
-    "husky": "^9.1.7",
-    "jsdom": "^29.1.1",
-    "lint-staged": "^17.0.8",
-    "prettier": "^3.8.4",
+    "globals": "^17.12.0",
+    "js-yaml": "5.4.2",
+    "jsdom": "^30.1.1",
+    "openapi-typescript": "7.13.0",
+    "prettier": "^3.9.9",
+    "rolldown": "^1.2.11",
+    "rolldown-plugin-dts": "^0.28.6",
     "tsd": "^0.33.0",
     "typescript": "^6.0.3",
-    "typescript-eslint": "^8.62.0",
-    "vite": "8.0.16",
-    "vitest": "^4.1.9"
+    "typescript-eslint": "^8.70.1",
+    "vite": "8.3.1",
+    "vitest": "^5.0.2"
+  },
+  "exports": {
+    ".": {
+      "import": {
+        "types": "./dist/index.d.mts",
+        "default": "./dist/index.mjs"
+      },
+      "require": {
+        "types": "./dist/index.d.cts",
+        "default": "./dist/index.cjs"
+      },
+      "default": "./dist/index.mjs"
+    },
+    "./package.json": "./package.json"
   }
 }

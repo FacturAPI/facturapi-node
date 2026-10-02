@@ -77,12 +77,16 @@ describe('runtime compatibility (node)', () => {
     await client.organizations.me()
   })
 
-  it('parses JSON responses and sends auth header', async () => {
+  it('parses retrieved and created invoice responses and sends auth headers', async () => {
     const client = createClient()
 
     globalThis.fetch = vi.fn(async (url, options) => {
-      expect(url).toBe('https://api.test.local/v2/invoices/inv_123')
-      expect(options?.method).toBe('GET')
+      expect(url).toBe(
+        options?.method === 'POST'
+          ? 'https://api.test.local/v2/invoices'
+          : 'https://api.test.local/v2/invoices/inv_123',
+      )
+      expect(['GET', 'POST']).toContain(options?.method)
       expect(getHeader(options?.headers, 'Authorization')).toBe(
         'Bearer sk_test_123',
       )
@@ -94,6 +98,34 @@ describe('runtime compatibility (node)', () => {
         JSON.stringify({
           id: 'inv_123',
           object: 'invoice',
+          created_at: '2026-09-17T12:00:00.000Z',
+          date: '2026-09-17T11:00:00.000Z',
+          canceled_at: '2026-09-17T12:59:16.000Z',
+          stamp: {
+            date: '2026-09-17T06:59:16',
+          },
+          metadata: {
+            date: '2026-09-17T12:00:00.000Z',
+            expires_at: '2026-09-18T12:00:00.000Z',
+          },
+          complements: [
+            { type: 'pago', data: [{ date: '2026-09-17T12:00:00.000Z' }] },
+            {
+              type: 'nomina',
+              data: {
+                fecha_pago:
+                  options?.method === 'POST'
+                    ? '2026-09-17T06:00:00.000Z'
+                    : '2026-09-17',
+                fecha_inicial_pago: '2026-09-17T06:00:00.000Z',
+                fecha_final_pago: '2026-09-17T00:00:00-06:00',
+              },
+            },
+            {
+              type: 'custom',
+              data: '<Example date="2026-09-17T12:00:00.000Z"/>',
+            },
+          ],
         }),
         {
           status: 200,
@@ -104,6 +136,83 @@ describe('runtime compatibility (node)', () => {
 
     const invoice = await client.invoices.retrieve('inv_123')
     expect(invoice.id).toBe('inv_123')
+    expect(invoice.created_at).toEqual(new Date('2026-09-17T12:00:00.000Z'))
+    expect(invoice.date).toEqual(new Date('2026-09-17T11:00:00.000Z'))
+    expect(invoice.canceled_at).toEqual(new Date('2026-09-17T12:59:16.000Z'))
+    expect(invoice.stamp?.date).toBe('2026-09-17T06:59:16')
+    expect((invoice as any).metadata.date).toBe('2026-09-17T12:00:00.000Z')
+    expect((invoice as any).metadata.expires_at).toBe(
+      '2026-09-18T12:00:00.000Z',
+    )
+    expect(
+      invoice.complements?.find((complement) => complement.type === 'pago')
+        ?.data[0].date,
+    ).toEqual(new Date('2026-09-17T12:00:00.000Z'))
+    expect(
+      invoice.complements?.find((complement) => complement.type === 'nomina')
+        ?.data.fecha_pago,
+    ).toBe('2026-09-17')
+    expect(
+      invoice.complements?.find((complement) => complement.type === 'nomina')
+        ?.data.fecha_inicial_pago,
+    ).toEqual(new Date('2026-09-17T06:00:00.000Z'))
+    expect(
+      invoice.complements?.find((complement) => complement.type === 'nomina')
+        ?.data.fecha_final_pago,
+    ).toEqual(new Date('2026-09-17T06:00:00.000Z'))
+    expect(
+      invoice.complements?.find((complement) => complement.type === 'custom')
+        ?.data,
+    ).toBe('<Example date="2026-09-17T12:00:00.000Z"/>')
+    const created = await client.invoices.create({
+      customer: 'cus_123',
+      payment_form: '28',
+      items: [
+        {
+          quantity: 1,
+          product: {
+            description: 'Ejemplo',
+            product_key: '60131324',
+            price: 100,
+          },
+        },
+      ],
+    })
+    expect(created.created_at).toEqual(new Date('2026-09-17T12:00:00.000Z'))
+    expect(created.date).toEqual(new Date('2026-09-17T11:00:00.000Z'))
+    expect(created.stamp?.date).toBe('2026-09-17T06:59:16')
+    expect(
+      created.complements?.find((complement) => complement.type === 'nomina')
+        ?.data.fecha_pago,
+    ).toEqual(new Date('2026-09-17T06:00:00.000Z'))
+  })
+
+  it('serializes payroll Date values as ISO timestamps and preserves date strings', async () => {
+    const client = createClient()
+    globalThis.fetch = vi.fn(async (_url, options) => {
+      expect(JSON.parse(options?.body as string).complements[0].data).toEqual({
+        fecha_pago: '2026-09-17T06:00:00.000Z',
+        fecha_inicial_pago: '2026-09-01',
+        fecha_final_pago: '2026-09-17T00:00:00-06:00',
+      })
+      return new Response(JSON.stringify({ id: 'inv_123', status: 'draft' }), {
+        headers: { 'content-type': 'application/json' },
+      })
+    }) as typeof fetch
+    await client.invoices.create({
+      type: 'N',
+      status: 'draft',
+      complements: [
+        {
+          type: 'nomina',
+          data: {
+            fecha_pago: new Date('2026-09-17T00:00:00-06:00'),
+            fecha_inicial_pago: '2026-09-01',
+            fecha_final_pago: '2026-09-17T00:00:00-06:00',
+          },
+        },
+      ],
+    })
   })
 
   it('checks domain availability via GET query params', async () => {
@@ -129,6 +238,158 @@ describe('runtime compatibility (node)', () => {
     })
 
     expect(result.available).toBe(true)
+  })
+
+  it('hydrates organization access, invite, role, and API key timestamps', async () => {
+    const client = createClient()
+    const timestamp = '2026-09-17T12:00:00.000Z'
+    globalThis.fetch = vi.fn(async (url) =>
+      Response.json(
+        String(url).endsWith('/team')
+          ? [{ id: 'access_123', created_at: timestamp, updated_at: timestamp }]
+          : String(url).endsWith('/team/invites')
+            ? [
+                {
+                  id: 'invite_123',
+                  created_at: timestamp,
+                  expires_at: timestamp,
+                },
+              ]
+            : String(url).endsWith('/team/roles')
+              ? [
+                  {
+                    id: 'role_123',
+                    created_at: timestamp,
+                    updated_at: timestamp,
+                  },
+                ]
+              : [{ id: 'key_123', created_at: timestamp }],
+      ),
+    ) as typeof fetch
+
+    const access = await client.organizations.listTeamAccess('org_123')
+    expect(access[0].created_at).toEqual(new Date(timestamp))
+    expect(access[0].updated_at).toEqual(new Date(timestamp))
+    const invites = await client.organizations.listSentTeamInvites('org_123')
+    expect(invites[0].created_at).toEqual(new Date(timestamp))
+    expect(invites[0].expires_at).toEqual(new Date(timestamp))
+    const roles = await client.organizations.listTeamRoles('org_123')
+    expect(roles[0].created_at).toEqual(new Date(timestamp))
+    expect(roles[0].updated_at).toEqual(new Date(timestamp))
+    expect(
+      (await client.organizations.listLiveApiKeys('org_123'))[0].created_at,
+    ).toEqual(new Date(timestamp))
+  })
+
+  it('uses the customer creation endpoint for each explicit input variant', async () => {
+    const client = createClient()
+    const timestamp = '2026-09-17T12:00:00.000Z'
+    const inputs = [
+      {
+        legal_name: 'Cliente',
+        tax_id: 'ABC101010111',
+        tax_system: '601',
+        address: { zip: '83200' },
+      },
+      { legal_name: 'Foreign', address: { country: 'USA' } },
+      { legal_name: 'Publico', tax_id: 'XAXX010101000' },
+    ]
+    globalThis.fetch = vi.fn(async (url, options) => {
+      expect(new URL(String(url)).pathname).toBe('/v2/customers')
+      expect(options?.method).toBe('POST')
+      return Response.json({ id: 'cus_ejemplo', created_at: timestamp })
+    }) as typeof fetch
+    const responses = [
+      await client.customers.createNational({
+        legal_name: 'Cliente',
+        tax_id: 'ABC101010111',
+        tax_system: '601',
+        address: { zip: '83200' },
+      }),
+      await client.customers.createForeign({
+        legal_name: 'Foreign',
+        address: { country: 'USA' },
+      }),
+      await client.customers.createGeneric({
+        legal_name: 'Publico',
+        tax_id: 'XAXX010101000',
+      }),
+    ]
+    expect(
+      responses.every(
+        (customer) =>
+          customer.created_at?.getTime() === new Date(timestamp).getTime(),
+      ),
+    ).toBe(true)
+    for (const [index, call] of vi
+      .mocked(globalThis.fetch)
+      .mock.calls.entries())
+      expect(JSON.parse(String(call[1]?.body))).toEqual(inputs[index])
+  })
+
+  it('hydrates dates across resource responses without changing SAT stamp text', async () => {
+    const client = createClient()
+    const timestamp = '2026-09-17T12:00:00.000Z'
+    const responses: Record<string, unknown> = {
+      '/v2/customers/cus_123': {
+        created_at: timestamp,
+        sat_validated_at: timestamp,
+        edit_link_expires_at: timestamp,
+      },
+      '/v2/products/prod_123': { created_at: timestamp },
+      '/v2/receipts/rec_123': {
+        created_at: timestamp,
+        date: timestamp,
+        expires_at: timestamp,
+      },
+      '/v2/retentions/ret_123': {
+        created_at: timestamp,
+        fecha_exp: timestamp,
+        stamp: { date: '2026-09-17T06:00:00' },
+      },
+      '/v2/organizations/me': {
+        created_at: timestamp,
+        certificate: { updated_at: timestamp, expires_at: timestamp },
+        pending_add_ons_update: { add_ons: [], scheduled_for: timestamp },
+      },
+      '/v2/webhooks/wh_123': { created_at: timestamp },
+      '/v2/invoices/zip-requests/zip_123': {
+        created_at: timestamp,
+        scheduled_at: timestamp,
+      },
+    }
+    globalThis.fetch = vi.fn(async (url) =>
+      Response.json(responses[new URL(String(url)).pathname]),
+    ) as typeof fetch
+
+    const customer = await client.customers.retrieve('cus_123')
+    expect(customer.created_at).toEqual(new Date(timestamp))
+    expect(customer.sat_validated_at).toEqual(new Date(timestamp))
+    expect(customer.edit_link_expires_at).toEqual(new Date(timestamp))
+    expect((await client.products.retrieve('prod_123')).created_at).toEqual(
+      new Date(timestamp),
+    )
+    const receipt = await client.receipts.retrieve('rec_123')
+    expect(receipt.created_at).toEqual(new Date(timestamp))
+    expect(receipt.date).toEqual(new Date(timestamp))
+    expect(receipt.expires_at).toEqual(new Date(timestamp))
+    const retention = await client.retentions.retrieve('ret_123')
+    expect(retention.created_at).toEqual(new Date(timestamp))
+    expect(retention.fecha_exp).toEqual(new Date(timestamp))
+    expect(retention.stamp?.date).toBe('2026-09-17T06:00:00')
+    const organization = await client.organizations.me()
+    expect(organization.created_at).toEqual(new Date(timestamp))
+    expect(organization.certificate.updated_at).toEqual(new Date(timestamp))
+    expect(organization.certificate.expires_at).toEqual(new Date(timestamp))
+    expect(organization.pending_add_ons_update?.scheduled_for).toEqual(
+      new Date(timestamp),
+    )
+    expect((await client.webhooks.retrieve('wh_123')).created_at).toEqual(
+      new Date(timestamp),
+    )
+    const zipRequest = await client.invoices.retrieveZipRequest('zip_123')
+    expect(zipRequest.created_at).toEqual(new Date(timestamp))
+    expect(zipRequest.scheduled_at).toEqual(new Date(timestamp))
   })
 
   it('posts multiple receipts to invoice payload to receipts endpoint', async () => {
@@ -168,9 +429,7 @@ describe('runtime compatibility (node)', () => {
     }
 
     globalThis.fetch = vi.fn(async (url, options) => {
-      expect(url).toBe(
-        'https://api.test.local/v2/receipts/to-invoice/preview',
-      )
+      expect(url).toBe('https://api.test.local/v2/receipts/to-invoice/preview')
       expect(options?.method).toBe('POST')
       expect(getHeader(options?.headers, 'Authorization')).toBe(
         'Bearer sk_test_123',
@@ -442,10 +701,61 @@ describe('runtime compatibility (node)', () => {
         payload,
       }),
     ).rejects.toThrow('Invalid signature')
+
+    await expect(
+      client.webhooks.validateSignature({
+        secret,
+        payload: 'invalid-json-example',
+        signature: crypto
+          .createHmac('sha256', secret)
+          .update('invalid-json-example')
+          .digest('hex'),
+      }),
+    ).rejects.toThrow(/^Invalid webhook event JSON$/)
+  })
+
+  it('hydrates dates in locally validated webhook events', async () => {
+    const client = createClient()
+    const secret = 'whsec_test_dates'
+    const payload = JSON.stringify({
+      type: 'invoice.status_updated',
+      created_at: '2026-09-17T12:00:00.000Z',
+      data: {
+        type: 'invoice',
+        object: {
+          created_at: '2026-09-17T11:00:00.000Z',
+          canceled_at: '2026-09-17T12:59:16.000Z',
+          stamp: { date: '2026-09-17T06:59:16' },
+        },
+      },
+    })
+
+    const event = await client.webhooks.validateSignature({
+      secret,
+      signature: crypto
+        .createHmac('sha256', secret)
+        .update(payload)
+        .digest('hex'),
+      payload,
+    })
+
+    expect(event.created_at).toEqual(new Date('2026-09-17T12:00:00.000Z'))
+    expect(event.data.object.created_at).toEqual(
+      new Date('2026-09-17T11:00:00.000Z'),
+    )
+    expect(event.data.object.canceled_at).toEqual(
+      new Date('2026-09-17T12:59:16.000Z'),
+    )
+    expect(event.data.object.stamp?.date).toBe('2026-09-17T06:59:16')
   })
 
   it('falls back to API validation when local crypto is unavailable', async () => {
     const client = createClient()
+    const payload = JSON.stringify({
+      id: 'evt_remote_123',
+      type: 'invoice.status_updated',
+      created_at: '2026-09-30T12:00:00.000Z',
+    })
     const originalBuffer = (globalThis as any).Buffer
     const cryptoDescriptor = Object.getOwnPropertyDescriptor(
       globalThis,
@@ -465,6 +775,11 @@ describe('runtime compatibility (node)', () => {
       expect(getHeader(options?.headers, 'Authorization')).toBe(
         'Bearer sk_test_123',
       )
+      expect(JSON.parse(options?.body as string)).toEqual({
+        secret: 'whsec_test',
+        signature: 'deadbeef',
+        payload,
+      })
       return {
         ok: true,
         headers: {
@@ -475,10 +790,7 @@ describe('runtime compatibility (node)', () => {
           },
         },
         async json() {
-          return {
-            id: 'evt_remote_123',
-            type: 'invoice.created',
-          }
+          return payload
         },
         async text() {
           return ''
@@ -487,13 +799,16 @@ describe('runtime compatibility (node)', () => {
     }) as typeof fetch
 
     try {
-      const event = await client.webhooks.validateSignature({
-        secret: 'whsec_test',
-        signature: 'deadbeef',
-        payload: '{"id":"evt_remote_123","type":"invoice.created"}',
-      })
-      expect(event.id).toBe('evt_remote_123')
-      expect(event.type).toBe('invoice.created')
+      for (const eventPayload of [payload, JSON.parse(payload)]) {
+        const event = await client.webhooks.validateSignature({
+          secret: 'whsec_test',
+          signature: 'deadbeef',
+          payload: eventPayload,
+        })
+        expect(event.id).toBe('evt_remote_123')
+        expect(event.type).toBe('invoice.status_updated')
+        expect(event.created_at).toEqual(new Date('2026-09-30T12:00:00.000Z'))
+      }
     } finally {
       ;(globalThis as any).Buffer = originalBuffer
       if (cryptoDescriptor) {

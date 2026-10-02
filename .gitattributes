@@ -1,0 +1,25 @@
+# Keep generated artifacts tracked, but collapse their diffs on GitHub.
+src/generated/contracts.ts linguist-generated=true
+src/generated/dates.ts linguist-generated=true
+src/generated/input.ts linguist-generated=true
+src/generated/models.ts linguist-generated=true
+src/generated/output.ts linguist-generated=true
+src/resources/customers.ts linguist-generated=true
+src/resources/invoices.ts linguist-generated=true
+src/resources/organizations.ts linguist-generated=true
+src/resources/products.ts linguist-generated=true
+src/resources/receipts.ts linguist-generated=true
+src/resources/retentions.ts linguist-generated=true
+src/tools/cartaPorteCatalogs.ts linguist-generated=true
+src/tools/catalogs.ts linguist-generated=true
+src/tools/comercioExteriorCatalogs.ts linguist-generated=true
+src/tools/tools.ts linguist-generated=true
+src/tools/webhooks.ts linguist-generated=true
+src/types/common.ts linguist-generated=true
+src/types/complements.ts linguist-generated=true
+src/types/customer.ts linguist-generated=true
+src/types/invoice.ts linguist-generated=true
+src/types/organization.ts linguist-generated=true
+src/types/product.ts linguist-generated=true
+src/types/receipt.ts linguist-generated=true
+src/types/retention.ts linguist-generated=true

@@ -1,6 +1,5 @@
-import { Receipt } from './receipt';
-import { Invoice } from './invoice';
-import { Customer } from './customer';
+import type { components } from '../generated/output'
+import type { components as Input } from '../generated/input'
 
 export enum ApiEventType {
   RECEIPT_SELF_INVOICE_COMPLETE = 'receipt.self_invoice_complete',
@@ -18,49 +17,21 @@ export enum ApiEventDataType {
   CUSTOMER = 'customer',
 }
 
-type ApiEventTypeMap = {
-  [ApiEventType.RECEIPT_SELF_INVOICE_COMPLETE]: ApiEventDataType.RECEIPT;
-  [ApiEventType.INVOICE_CANCELLATION_STATUS_UPDATED]: ApiEventDataType.INVOICE;
-  [ApiEventType.RECEIPT_STATUS_UPDATED]: ApiEventDataType.RECEIPT;
-  [ApiEventType.GLOBAL_INVOICE]: ApiEventDataType.INVOICE;
-  [ApiEventType.INVOICES_STATUS_UPDATED]: ApiEventDataType.INVOICE;
-  [ApiEventType.INVOICES_CREATED_FROM_DASHBOARD]: ApiEventDataType.INVOICE;
-  [ApiEventType.CUSTOMER_EDIT_LINK_COMPLETED]: ApiEventDataType.CUSTOMER;
-  '': '';
-};
-
-type ApiEventDataTypeMap = {
-  [ApiEventDataType.RECEIPT]: Receipt;
-  [ApiEventDataType.INVOICE]: Invoice;
-  [ApiEventDataType.CUSTOMER]: Customer;
-  '': any;
-};
-
 export enum WebhookEndpointStatus {
   ENABLED = 'enabled',
   DISABLED = 'disabled',
 }
 
-export interface Webhook {
-  created_at: Date;
-  organization: string;
-  livemode: boolean;
-  enabled_events: (ApiEventType | '*')[];
-  description?: string;
-  url: string;
-  secret?: string;
-  status: WebhookEndpointStatus;
-}
-
-export interface ApiEventData<T extends ApiEventDataType | '' = ''> {
-  type: T;
-  object: ApiEventDataTypeMap[T];
-}
-
-export interface ApiEvent<T extends ApiEventType | '' = ''> {
-  created_at: Date;
-  organization: string;
-  livemode: boolean;
-  type: T extends '' ? ApiEventType : T;
-  data: ApiEventData<ApiEventTypeMap[T]>;
-}
+export type Webhook = components['schemas']['Webhook']
+export type ApiEvent<T extends ApiEventType | '' = ''> = Extract<
+  components['schemas']['ApiEvent'],
+  { type: T extends '' ? `${ApiEventType}` : `${T}` }
+>
+export type ApiEventData<T extends ApiEventDataType | '' = ''> = Extract<
+  ApiEvent['data'],
+  { type: T extends '' ? `${ApiEventDataType}` : `${T}` }
+>
+export type ApiEventPayload<T extends ApiEventType | '' = ''> = Extract<
+  Input['schemas']['ApiEvent'],
+  { type: T extends '' ? `${ApiEventType}` : `${T}` }
+>

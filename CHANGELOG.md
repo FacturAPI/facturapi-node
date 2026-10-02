@@ -5,6 +5,27 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](http://keepachangelog.com/en/1.0.0/)
 and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.html).
 
+## [6.0.0] Unreleased
+
+### Breaking
+
+- Response timestamps are consistently returned as `Date` objects. SAT stamp timestamps and calendar dates remain strings.
+- Request and response types now follow the API contract, with more precise CFDI and complement inputs. TypeScript integrations may need adjustments; see the [migration guide from v3, v4, and v5](README.md#actualizar-desde-v3-v4-o-v5).
+- Import from `facturapi`; direct imports into internal package files such as `facturapi/dist/...` are no longer supported.
+
+### Fixed
+
+- Correct request typing for partial product updates and native Node.js file uploads.
+- Webhook signature validation consistently returns parsed events with converted dates in Node.js and browsers.
+
+### Added
+
+- Autocompletion and editor documentation for request fields, method arguments, and responses across SDK operations.
+- More precise input types for CFDI variants, drafts, structured complements, and customer creation. Related fields are checked by TypeScript in supported cases, helping catch incomplete or incompatible inputs before sending a request.
+- Receipt invoicing distinguishes invoice creation from `dry_run` summaries in its return types.
+- Methods to create national, foreign, and generic RFC customers with specific input types; assign receipt customers; upload FIEL certificates; and check API health.
+- CommonJS supports `const Facturapi = require('facturapi')` directly, while retaining `.default` compatibility. CommonJS and ESM include matching TypeScript definitions.
+
 ## [5.1.0] 2026-09-12
 
 ### Added

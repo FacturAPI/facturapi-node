@@ -59,6 +59,7 @@ describe('signed download URLs', () => {
         expect.objectContaining({
           content_type: contentType,
           filename: `invoice.${format}`,
+          expires_at: new Date('2030-01-01T00:00:00.000Z'),
         }),
       )
     },

@@ -1,0 +1,588 @@
+{
+  "customers": {
+    "className": "Customers",
+    "directory": "resources",
+    "methods": {
+      "create": {
+        "operation": "createCustomer",
+        "bodyByQueryFlag": {
+          "property": "createEditLink",
+          "true": "CustomerCreateWithEditLinkInput"
+        }
+      },
+      "createNational": {
+        "operation": "createCustomer",
+        "bodySchema": "CustomerNationalCreateInput"
+      },
+      "createForeign": {
+        "operation": "createCustomer",
+        "bodySchema": "CustomerForeignCreateInput"
+      },
+      "createGeneric": {
+        "operation": "createCustomer",
+        "bodySchema": "CustomerGenericCreateInput"
+      },
+      "list": "listCustomers",
+      "retrieve": "getCustomer",
+      "update": "editCustomer",
+      "del": "deleteCustomer",
+      "validateTaxInfo": "validateCustomerTaxInfo",
+      "sendEditLinkByEmail": {
+        "operation": "sendEditLinkByEmail",
+        "argumentNames": {
+          "body": "options"
+        },
+        "optional": {
+          "options": false
+        }
+      }
+    }
+  },
+  "invoices": {
+    "className": "Invoices",
+    "directory": "resources",
+    "methods": {
+      "create": {
+        "operation": "createInvoice",
+        "argumentNames": {
+          "body": "body"
+        }
+      },
+      "list": "listInvoices",
+      "retrieve": "getInvoice",
+      "paymentSummary": "getInvoicePaymentSummary",
+      "cancel": {
+        "operation": "cancelInvoice",
+        "querySchema": "CancellationQueryInput"
+      },
+      "sendByEmail": {
+        "operation": "sendInvoiceByEmail",
+        "argumentNames": {
+          "body": "options"
+        }
+      },
+      "downloadPdf": {
+        "operation": "downloadInvoice",
+        "path": {
+          "format": "pdf"
+        }
+      },
+      "downloadXml": {
+        "operation": "downloadInvoice",
+        "path": {
+          "format": "xml"
+        }
+      },
+      "downloadZip": {
+        "operation": "downloadInvoice",
+        "path": {
+          "format": "zip"
+        }
+      },
+      "downloadPdfUrl": {
+        "operation": "getInvoiceDownloadUrl",
+        "path": {
+          "format": "pdf"
+        }
+      },
+      "downloadXmlUrl": {
+        "operation": "getInvoiceDownloadUrl",
+        "path": {
+          "format": "xml"
+        }
+      },
+      "downloadZipUrl": {
+        "operation": "getInvoiceDownloadUrl",
+        "path": {
+          "format": "zip"
+        }
+      },
+      "createZipRequest": "createInvoiceZipRequest",
+      "listZipRequests": "listInvoiceZipRequests",
+      "retrieveZipRequest": "retrieveInvoiceZipRequest",
+      "downloadZipRequest": "downloadInvoiceZipRequest",
+      "downloadZipRequestUrl": "getInvoiceZipRequestDownloadUrl",
+      "downloadCancellationReceiptXml": {
+        "operation": "downloadCancellationReceiptXml",
+        "path": {
+          "format": "xml"
+        }
+      },
+      "downloadCancellationReceiptPdf": {
+        "operation": "downloadCancellationReceiptXml",
+        "path": {
+          "format": "pdf"
+        }
+      },
+      "downloadCancellationReceiptPdfUrl": {
+        "operation": "getCancellationReceiptDownloadUrl",
+        "path": {
+          "format": "pdf"
+        }
+      },
+      "downloadCancellationReceiptXmlUrl": {
+        "operation": "getCancellationReceiptDownloadUrl",
+        "path": {
+          "format": "xml"
+        }
+      },
+      "updateDraft": "updateDraftInvoice",
+      "stampDraft": "stampDraftInvoice",
+      "updateStatus": "updateInvoiceStatus",
+      "copyToDraft": "copyToDraftInvoice",
+      "previewPdf": {
+        "operation": "previewInvoicePdf",
+        "argumentNames": {
+          "body": "body"
+        }
+      },
+      "previewPdfUrl": {
+        "operation": "previewInvoicePdfUrl",
+        "argumentNames": {
+          "body": "body"
+        }
+      }
+    }
+  },
+  "organizations": {
+    "className": "Organizations",
+    "directory": "resources",
+    "methods": {
+      "create": "createOrganization",
+      "list": "listOrganizations",
+      "retrieve": "getOrganization",
+      "updateLegal": "editOrganizationLegal",
+      "updateCustomization": "editOrganizationCustomization",
+      "updateReceiptSettings": "editOrganizationReceiptsSettings",
+      "updateDomain": "editOrganizationDomain",
+      "checkDomainIsAvailable": {
+        "operation": "checkDomainAvailability",
+        "argumentNames": {
+          "query": "data"
+        }
+      },
+      "uploadLogo": {
+        "operation": "uploadOrganizationLogo",
+        "extension": "uploadLogo",
+        "arguments": [
+          {
+            "name": "id",
+            "optional": false,
+            "type": "string"
+          },
+          {
+            "name": "file",
+            "optional": false,
+            "type": "BinaryInput"
+          }
+        ]
+      },
+      "uploadCertificate": {
+        "operation": "uploadOrganizationCertificate",
+        "extension": "uploadCertificate",
+        "arguments": [
+          {
+            "name": "id",
+            "optional": false,
+            "type": "string"
+          },
+          {
+            "name": "cerFile",
+            "optional": false,
+            "type": "BinaryInput"
+          },
+          {
+            "name": "keyFile",
+            "optional": false,
+            "type": "BinaryInput"
+          },
+          {
+            "name": "password",
+            "optional": false,
+            "type": "string"
+          }
+        ]
+      },
+      "deleteCertificate": "deleteOrganizationCertificate",
+      "del": "deleteOrganization",
+      "getTestApiKey": "getTestApiKey",
+      "renewTestApiKey": "renewTestApiKey",
+      "listLiveApiKeys": "listLiveApiKeys",
+      "renewLiveApiKey": "renewLiveApiKey",
+      "deleteLiveApiKey": {
+        "operation": "deleteLiveApiKey",
+        "argumentNames": {
+          "id": "apiKeyId"
+        }
+      },
+      "listSeriesGroup": {
+        "operation": "getSeriesGroup",
+        "argumentNames": {
+          "organization_id": "organization_id"
+        }
+      },
+      "createSeriesGroup": {
+        "operation": "createSeriesGroup",
+        "argumentNames": {
+          "organization_id": "organization_id",
+          "body": "seriesData"
+        }
+      },
+      "updateSeriesGroup": {
+        "operation": "updateSeriesGroup",
+        "argumentNames": {
+          "organization_id": "organization_id"
+        }
+      },
+      "updateDefaultSeries": {
+        "operation": "updateDefaultSeries",
+        "argumentNames": {
+          "organization_id": "organization_id"
+        }
+      },
+      "deleteSeriesGroup": {
+        "operation": "deleteSeriesGroup",
+        "argumentNames": {
+          "organization_id": "organization_id"
+        }
+      },
+      "me": "meOrganization",
+      "updateSelfInvoiceSettings": "editOrganizationSelfInvoiceSettings",
+      "listTeamAccess": {
+        "operation": "getOrganizationTeam",
+        "argumentNames": {
+          "organization_id": "organizationId"
+        }
+      },
+      "retrieveTeamAccess": "getOrganizationTeamUser",
+      "updateTeamAccessRole": {
+        "operation": "updateOrganizationTeamUserRole",
+        "body": {
+          "role": {
+            "argument": "role"
+          }
+        },
+        "arguments": [
+          {
+            "name": "organizationId",
+            "optional": false,
+            "type": "string"
+          },
+          {
+            "name": "accessId",
+            "optional": false,
+            "type": "string"
+          },
+          {
+            "name": "role",
+            "optional": false,
+            "type": "string"
+          }
+        ]
+      },
+      "removeTeamAccess": "removeOrganizationUserAccess",
+      "listSentTeamInvites": {
+        "operation": "listOrganizationTeamInvites",
+        "argumentNames": {
+          "organization_id": "organizationId"
+        }
+      },
+      "inviteUserToTeam": {
+        "operation": "createOrganizationTeamInvite",
+        "argumentNames": {
+          "organization_id": "organizationId"
+        }
+      },
+      "cancelTeamInvite": "deleteOrganizationTeamInvite",
+      "listReceivedTeamInvites": "listPendingOrganizationInvites",
+      "respondTeamInvite": {
+        "operation": "respondOrganizationInvite",
+        "argumentNames": {
+          "invite_key": "inviteKey"
+        }
+      },
+      "listTeamRoles": {
+        "operation": "listOrganizationPermissionRoles",
+        "argumentNames": {
+          "organization_id": "organizationId"
+        }
+      },
+      "listTeamRoleTemplates": {
+        "operation": "listOrganizationPermissionRoleTemplates",
+        "argumentNames": {
+          "organization_id": "organizationId"
+        }
+      },
+      "listTeamRoleOperations": {
+        "operation": "listOrganizationPermissionOperations",
+        "argumentNames": {
+          "organization_id": "organizationId"
+        }
+      },
+      "retrieveTeamRole": "getOrganizationPermissionRole",
+      "createTeamRole": {
+        "operation": "createOrganizationPermissionRole",
+        "argumentNames": {
+          "organization_id": "organizationId"
+        }
+      },
+      "updateTeamRole": "updateOrganizationPermissionRole",
+      "deleteTeamRole": "deleteOrganizationPermissionRole",
+      "uploadFiel": {
+        "operation": "uploadOrganizationFiel",
+        "extension": "uploadCertificate",
+        "arguments": [
+          {
+            "name": "id",
+            "optional": false,
+            "type": "string"
+          },
+          {
+            "name": "cerFile",
+            "optional": false,
+            "type": "BinaryInput"
+          },
+          {
+            "name": "keyFile",
+            "optional": false,
+            "type": "BinaryInput"
+          },
+          {
+            "name": "password",
+            "optional": false,
+            "type": "string"
+          }
+        ]
+      }
+    }
+  },
+  "products": {
+    "className": "Products",
+    "directory": "resources",
+    "methods": {
+      "create": "createProduct",
+      "list": "listProducts",
+      "retrieve": "getProduct",
+      "update": "editProduct",
+      "del": "deleteProduct"
+    }
+  },
+  "receipts": {
+    "className": "Receipts",
+    "directory": "resources",
+    "methods": {
+      "create": "createReceipt",
+      "list": "listReceipts",
+      "retrieve": "getReceipt",
+      "invoice": "invoiceReceipt",
+      "createGlobalInvoice": "createGlobalInvoice",
+      "toInvoice": {
+        "operation": "createToInvoiceFromReceipts",
+        "responseByFlag": {
+          "argument": "data",
+          "property": "dry_run",
+          "true": "ToInvoiceSummary",
+          "false": "Invoice"
+        }
+      },
+      "previewToInvoicePdf": "previewToInvoiceFromReceipts",
+      "previewToInvoicePdfUrl": "previewToInvoiceFromReceiptsUrl",
+      "cancel": "cancelReceipt",
+      "sendByEmail": "sendReceiptByEmail",
+      "downloadPdf": "downloadReceiptPdf",
+      "downloadPdfUrl": "getReceiptDownloadUrl",
+      "updateCustomer": "assignReceiptCustomer"
+    }
+  },
+  "retentions": {
+    "className": "Retentions",
+    "directory": "resources",
+    "methods": {
+      "create": "createRetention",
+      "list": "listRetentions",
+      "retrieve": "getRetention",
+      "cancel": {
+        "operation": "cancelRetention",
+        "querySchema": "CancellationQueryInput",
+        "nullable": {
+          "params": false
+        }
+      },
+      "updateDraft": "updateDraftRetention",
+      "stampDraft": "stampDraftRetention",
+      "copyToDraft": "copyToDraftRetention",
+      "sendByEmail": "sendRetentionByEmail",
+      "downloadPdf": {
+        "operation": "downloadRetention",
+        "path": {
+          "format": "pdf"
+        }
+      },
+      "downloadXml": {
+        "operation": "downloadRetention",
+        "path": {
+          "format": "xml"
+        }
+      },
+      "downloadZip": {
+        "operation": "downloadRetention",
+        "path": {
+          "format": "zip"
+        }
+      },
+      "downloadPdfUrl": {
+        "operation": "getRetentionDownloadUrl",
+        "path": {
+          "format": "pdf"
+        }
+      },
+      "downloadXmlUrl": {
+        "operation": "getRetentionDownloadUrl",
+        "path": {
+          "format": "xml"
+        }
+      },
+      "downloadZipUrl": {
+        "operation": "getRetentionDownloadUrl",
+        "path": {
+          "format": "zip"
+        }
+      }
+    }
+  },
+  "cartaPorteCatalogs": {
+    "className": "CartaPorteCatalogs",
+    "directory": "tools",
+    "methods": {
+      "searchAirTransportCodes": {
+        "operation": "searchCartaPorteAirTransportCodes",
+        "nullable": {
+          "params": true
+        }
+      },
+      "searchTransportConfigs": {
+        "operation": "searchCartaPorteTransportConfigs",
+        "nullable": {
+          "params": true
+        }
+      },
+      "searchRightsOfPassage": {
+        "operation": "searchCartaPorteRightsOfPassage",
+        "nullable": {
+          "params": true
+        }
+      },
+      "searchCustomsDocuments": {
+        "operation": "searchCartaPorteCustomsDocuments",
+        "nullable": {
+          "params": true
+        }
+      },
+      "searchPackagingTypes": {
+        "operation": "searchCartaPortePackagingTypes",
+        "nullable": {
+          "params": true
+        }
+      },
+      "searchTrailerTypes": {
+        "operation": "searchCartaPorteTrailerTypes",
+        "nullable": {
+          "params": true
+        }
+      },
+      "searchHazardousMaterials": {
+        "operation": "searchCartaPorteHazardousMaterials",
+        "nullable": {
+          "params": true
+        }
+      },
+      "searchNavalAuthorizations": {
+        "operation": "searchCartaPorteNavalAuthorizations",
+        "nullable": {
+          "params": true
+        }
+      },
+      "searchPortStations": {
+        "operation": "searchCartaPortePortStations",
+        "nullable": {
+          "params": true
+        }
+      },
+      "searchMarineContainers": {
+        "operation": "searchCartaPorteMarineContainers",
+        "nullable": {
+          "params": true
+        }
+      }
+    }
+  },
+  "catalogs": {
+    "className": "Catalogs",
+    "directory": "tools",
+    "methods": {
+      "searchProducts": {
+        "operation": "searchProducts",
+        "optional": {
+          "params": false
+        }
+      },
+      "searchUnits": {
+        "operation": "searchUnits",
+        "optional": {
+          "params": false
+        }
+      }
+    }
+  },
+  "comercioExteriorCatalogs": {
+    "className": "ComercioExteriorCatalogs",
+    "directory": "tools",
+    "methods": {
+      "searchTariffFractions": "searchComercioExteriorTariffFractions"
+    }
+  },
+  "tools": {
+    "className": "Tools",
+    "directory": "tools",
+    "methods": {
+      "validateTaxId": {
+        "operation": "validateTaxId",
+        "params": {
+          "tax_id": {
+            "argument": "taxId"
+          }
+        },
+        "arguments": [
+          {
+            "name": "taxId",
+            "optional": false,
+            "type": "string"
+          }
+        ]
+      },
+      "checkApiHealth": "checkApiHealth"
+    }
+  },
+  "webhooks": {
+    "className": "Webhooks",
+    "directory": "tools",
+    "methods": {
+      "create": "createWebhook",
+      "list": {
+        "operation": "listWebhooks",
+        "optional": {
+          "params": false
+        },
+        "nullable": {
+          "params": false
+        }
+      },
+      "retrieve": "getWebhook",
+      "update": "editWebhook",
+      "del": "deleteWebhook",
+      "validateSignature": {
+        "extension": "validateSignature"
+      }
+    }
+  }
+}
