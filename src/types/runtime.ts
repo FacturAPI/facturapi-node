@@ -7,4 +7,4 @@ export interface NodeLikeReadableStream {
 
 export type BinaryDownload = Blob | NodeLikeReadableStream
 export type BinaryInput =
-  Blob | File | ArrayBuffer | Uint8Array | NodeLikeReadableStream
+  Blob | File | ArrayBuffer | Uint8Array | Pick<NodeLikeReadableStream, 'on'>

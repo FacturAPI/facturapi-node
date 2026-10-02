@@ -27,5 +27,7 @@
   "#/components/schemas/OrganizationReceiptsInput/properties/periodicity": "InvoicingPeriod",
   "#/components/schemas/OrganizationSeriesDefaultInput/properties/type": "InvoiceType",
   "#/components/schemas/ReceiptInvoiceSummaryTax/properties/factor": "TaxFactor",
-  "#/components/schemas/IepsMode": "IepsMode"
+  "#/components/schemas/IepsMode": "IepsMode",
+  "#/paths/~1invoices~1{invoice_id}~1payment-summary/get/responses/200/content/application~1json/schema/properties/taxes/items/properties/type": "TaxType",
+  "#/paths/~1invoices~1{invoice_id}~1payment-summary/get/responses/200/content/application~1json/schema/properties/taxes/items/properties/factor": "TaxFactor"
 }

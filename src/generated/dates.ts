@@ -514,6 +514,7 @@ export const componentDatePlans = {
   Product: 64,
   ProductSearchResult: 65,
   ProductProperties: 0,
+  ProductEditableProperties: 0,
   ProductEgresoProperties: 0,
   PaymentInput: 48,
   CustomerInfo: 0,

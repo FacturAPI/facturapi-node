@@ -58,7 +58,10 @@ for (const [pointer, name] of Object.entries(enumBindings)) {
   const schema = pointer
     .slice(2)
     .split('/')
-    .reduce((value, key) => value?.[key], spec)
+    .reduce(
+      (value, key) => value?.[key.replaceAll('~1', '/').replaceAll('~0', '~')],
+      spec,
+    )
   const enumeration = enums.find((enumeration) => enumeration.name === name)
   assert(
     schema?.enum &&

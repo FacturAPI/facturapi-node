@@ -15,6 +15,7 @@ and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.
 
 ### Fixed
 
+- Correct request typing for partial product updates and native Node.js file uploads.
 - Webhook signature validation consistently returns parsed events with converted dates in Node.js and browsers.
 
 ### Added

@@ -4239,7 +4239,7 @@ export interface components {
        * Format: date-time
        * Fecha en la que la información fiscal fue validado por el SAT.
        */
-      sat_validated_at?: Date | string
+      sat_validated_at?: Date | string | null
     }
     CustomerProperties: components['schemas']['CustomerCommonProperties'] & {
       address?: components['schemas']['CommonAddressProperties'] & {
@@ -4430,13 +4430,17 @@ export interface components {
     ProductSearchResult: components['schemas']['SearchResult'] & {
       data: components['schemas']['Product'][]
     }
-    ProductProperties: {
+    ProductProperties: WithRequired<
+      components['schemas']['ProductEditableProperties'],
+      'description' | 'product_key' | 'price'
+    >
+    ProductEditableProperties: {
       /** Descripción del bien o servicio como aparecerá en la factura. */
-      description: string
+      description?: string
       /** Clave de producto/servicio, del catálogo del SAT. Nosotros te proporcionamos una manera más conveniente de encontrarlo utilizando nuestra [herramienta de búsqueda de claves](https://dashboard.facturapi.io/catalogs/productKey). */
-      product_key: string
+      product_key?: string
       /** Precio por unidad del bien o servicio. Este valor representará el precio con IVA incluido o sin él, dependiendo del valor de `tax_included`. */
-      price: number
+      price?: number
       /**
        * - `true`: Indica que todos los impuestos aplicables están incluidos en el precio (atributo price) y se desglosarán automáticamente al emitir la factura.
        *     - `false`: Indica que el atributo price no incluye impuestos, por lo que aquellos impuestos a aplicar se sumarán en el precio final.
@@ -6976,7 +6980,7 @@ export interface components {
     }
     ProductEdit: {
       content: {
-        'application/json': components['schemas']['ProductProperties']
+        'application/json': components['schemas']['ProductEditableProperties']
       }
     }
     InvoiceCreate: {

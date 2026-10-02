@@ -240,6 +240,8 @@ export type Parts = Output['schemas']['Parts']
 export type PartInput = Input['schemas']['PartInput']
 export type ProductSearchResult = Output['schemas']['ProductSearchResult']
 export type ProductProperties = Output['schemas']['ProductProperties']
+export type ProductEditableProperties =
+  Output['schemas']['ProductEditableProperties']
 export type ProductEgresoProperties =
   Output['schemas']['ProductEgresoProperties']
 export type PaymentInput = Input['schemas']['PaymentInput']

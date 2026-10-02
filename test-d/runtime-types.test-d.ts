@@ -618,3 +618,22 @@ expectError(
 // Incomplete creation remains an explicit option of the general method.
 expectError(client.customers.createNational({}, { createEditLink: true }))
 client.customers.create({}, { createEditLink: true })
+
+// Updating a product does not require resending its creation fields.
+client.products.update('prod_ejemplo', { price: 456.7 })
+client.products.update('prod_ejemplo', { description: 'Actualizado' })
+expectError(
+  client.products.update('prod_ejemplo', { email: 'jdoe@example.com' }),
+)
+expectError(client.products.create({ price: 456.7 }))
+
+// Native Node streams are valid upload inputs without casts.
+import type { ReadStream } from 'node:fs'
+declare const nativeReadStream: ReadStream
+client.organizations.uploadLogo('org_ejemplo', nativeReadStream)
+client.organizations.uploadCertificate(
+  'org_ejemplo',
+  nativeReadStream,
+  nativeReadStream,
+  'example-password',
+)
