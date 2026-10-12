@@ -304,6 +304,7 @@ expectAssignable<TaxFactor>(TaxFactor.EXENTO)
 
 declare const invoiceItem: InvoiceItem
 expectType<string[] | undefined>(invoiceItem.property_tax_account)
+expectAssignable<unknown[]>(invoiceItem.product.taxes)
 
 declare const invoice: Invoice
 expectType<Date>(invoice.created_at)
@@ -326,6 +327,7 @@ expectType<string>(receipt.key)
 declare const customer: Customer
 expectType<Date>(customer.created_at)
 expectType<string | undefined>(customer.email)
+expectType<string>(customer.organization)
 expectType<Date | null | undefined>(customer.sat_validated_at)
 expectType<Date | null | undefined>(customer.edit_link_expires_at)
 declare const product: Product

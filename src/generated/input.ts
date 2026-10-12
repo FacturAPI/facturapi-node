@@ -4266,7 +4266,7 @@ export interface components {
         /** Format: email */
         email?: string
         /** ID de la organización a la que pertenece este recurso. */
-        organization?: string
+        organization: string
         curp?: string
         external_id?: string
       }
@@ -4448,6 +4448,7 @@ export interface components {
       sku?: string
     }
     InvoiceItemProduct: {
+      taxes: components['schemas']['BaseTax'][]
       /** ID del producto base. Sólo presente si se utilizó como base un objeto `Product` guardado previamente. */
       id?: string
     } & components['schemas']['ProductProperties']
