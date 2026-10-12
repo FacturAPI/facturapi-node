@@ -214,6 +214,7 @@ export type Customer = Output['schemas']['Customer']
 export type CustomerSearchResult = Output['schemas']['CustomerSearchResult']
 export type CustomerNonEditableProperties =
   Output['schemas']['CustomerNonEditableProperties']
+export type CustomerEditableInput = Input['schemas']['CustomerEditableInput']
 export type CustomerUpdateInput = Input['schemas']['CustomerUpdateInput']
 export type CustomerProperties = Output['schemas']['CustomerProperties']
 export type CustomerCommonProperties =

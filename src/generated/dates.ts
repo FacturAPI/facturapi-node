@@ -482,6 +482,7 @@ export const componentDatePlans = {
   Customer: 31,
   CustomerSearchResult: 62,
   CustomerNonEditableProperties: 64,
+  CustomerEditableInput: 0,
   CustomerUpdateInput: 0,
   CustomerProperties: 0,
   CustomerCommonProperties: 0,
