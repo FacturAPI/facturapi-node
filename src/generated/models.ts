@@ -37,11 +37,12 @@ export type LocalTax = Output['schemas']['LocalTax']
 export type BaseTax = Output['schemas']['BaseTax']
 export type IepsTax = Output['schemas']['IepsTax']
 export type Stamp = Output['schemas']['Stamp']
-export type LineItem = Output['schemas']['LineItem']
+export type InvoiceItem = Output['schemas']['InvoiceItem']
 export type ThirdPartyInput = Input['schemas']['ThirdPartyInput']
-export type LineItemInput = Input['schemas']['LineItemInput']
-export type LineItemEgresoInput = Input['schemas']['LineItemEgresoInput']
-export type LineItemTrasladoInput = Input['schemas']['LineItemTrasladoInput']
+export type InvoiceItemInput = Input['schemas']['InvoiceItemInput']
+export type InvoiceItemEgresoInput = Input['schemas']['InvoiceItemEgresoInput']
+export type InvoiceItemTrasladoInput =
+  Input['schemas']['InvoiceItemTrasladoInput']
 export type HidroYPetroComplementInput =
   Input['schemas']['HidroYPetroComplementInput']
 export type IeduComplementInput = Input['schemas']['IeduComplementInput']
@@ -233,12 +234,13 @@ export type CustomerForeignCreateInput =
 export type CustomerGenericCreateInput =
   Input['schemas']['CustomerGenericCreateInput']
 export type CustomerCreateInput = Input['schemas']['CustomerCreateInput']
-export type LineItemProductInput = Input['schemas']['LineItemProductInput']
-export type LineItemProductEgresoInput =
-  Input['schemas']['LineItemProductEgresoInput']
-export type LineItemTrasladoProductInput =
-  Input['schemas']['LineItemTrasladoProductInput']
-export type LineItemProduct = Output['schemas']['LineItemProduct']
+export type InvoiceItemProductInput =
+  Input['schemas']['InvoiceItemProductInput']
+export type InvoiceItemProductEgresoInput =
+  Input['schemas']['InvoiceItemProductEgresoInput']
+export type InvoiceItemProductTrasladoInput =
+  Input['schemas']['InvoiceItemProductTrasladoInput']
+export type InvoiceItemProduct = Output['schemas']['InvoiceItemProduct']
 export type Parts = Output['schemas']['Parts']
 export type PartInput = Input['schemas']['PartInput']
 export type Product = Output['schemas']['Product']

@@ -4,8 +4,7 @@
     "InvoiceItemPart": "Output['Parts']",
     "InvoiceItemThirdParty": "Input['ThirdPartyInput']",
     "Tax": "Output['BaseTax'] | Output['IepsTax']",
-    "ProductInfo": "Output['LineItemProduct']",
-    "InvoiceItem": "Output['LineItem']",
+    "ProductInfo": "Output['InvoiceItemProduct']",
     "XmlNamespace": "Output['NamespaceProperties']",
     "GenericResponse": "Output['OkResponse']",
     "SendEmailBody": "OperationBody<'sendInvoiceByEmail'>"

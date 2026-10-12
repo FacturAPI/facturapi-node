@@ -2754,7 +2754,7 @@ export interface components {
       /** Sello digital del timbre fiscal digital. */
       sat_signature?: string
     }
-    LineItem: {
+    InvoiceItem: {
       /** Cuentas prediales de este concepto. */
       property_tax_account?: string[]
       /** Cantidad de unidades incluidas del mismo concepto. */
@@ -2762,7 +2762,7 @@ export interface components {
       /** Monto total de descuento aplicado a este concepto. */
       discount?: number
       /** Objeto con información del producto o servicio facturado. */
-      product?: components['schemas']['LineItemProduct']
+      product?: components['schemas']['InvoiceItemProduct']
       /** Objeto con información de las partes de la factura. */
       parts?: components['schemas']['Parts'][]
     }
@@ -2782,10 +2782,10 @@ export interface components {
       zip?: string
     }
     /**
-     * LineItem
+     * InvoiceItem
      * Conceptos incluidos en el documento
      */
-    LineItemInput: {
+    InvoiceItemInput: {
       /**
        * Cantidad de unidades incluidas del mismo concepto.
        * @default 1
@@ -2797,7 +2797,7 @@ export interface components {
        */
       discount?: number
       /** Objeto con información del producto o servicio facturado. */
-      product: components['schemas']['LineItemProductInput'] | string
+      product: components['schemas']['InvoiceItemProductInput'] | string
       parts?: components['schemas']['PartInput'][]
       /** Números de pedimento asociados a este concepto. */
       customs_keys?: string[]
@@ -2812,10 +2812,10 @@ export interface components {
       property_tax_account?: string[]
     }
     /**
-     * LineItem
+     * InvoiceItem
      * Conceptos incluidos en el documento
      */
-    LineItemEgresoInput: {
+    InvoiceItemEgresoInput: {
       /**
        * Cantidad de unidades incluidas del mismo concepto.
        * @default 1
@@ -2827,7 +2827,7 @@ export interface components {
        */
       discount?: number
       /** Objeto con información del producto o servicio facturado. */
-      product: components['schemas']['LineItemProductEgresoInput'] | string
+      product: components['schemas']['InvoiceItemProductEgresoInput'] | string
       parts?: components['schemas']['PartInput'][]
       /** Números de pedimento asociados a este concepto. */
       customs_keys?: string[]
@@ -2840,17 +2840,17 @@ export interface components {
         components['schemas']['ThirdPartyInput']
     }
     /**
-     * LineItem
+     * InvoiceItem
      * Conceptos incluidos en el documento
      */
-    LineItemTrasladoInput: {
+    InvoiceItemTrasladoInput: {
       /**
        * Cantidad de unidades incluidas del mismo concepto.
        * @default 1
        */
       quantity?: number
       /** Objeto con información del producto o servicio facturado. */
-      product: components['schemas']['LineItemTrasladoProductInput'] | string
+      product: components['schemas']['InvoiceItemProductTrasladoInput'] | string
       /** Números de pedimento asociados a este concepto. */
       customs_keys?: string[]
       /**
@@ -4420,11 +4420,11 @@ export interface components {
       | components['schemas']['CustomerForeignCreateInput']
       | components['schemas']['CustomerGenericCreateInput']
     /** Product */
-    LineItemProductInput: components['schemas']['ProductProperties']
+    InvoiceItemProductInput: components['schemas']['ProductProperties']
     /** Product */
-    LineItemProductEgresoInput: components['schemas']['ProductEgresoInput']
+    InvoiceItemProductEgresoInput: components['schemas']['ProductEgresoInput']
     /** Product */
-    LineItemTrasladoProductInput: {
+    InvoiceItemProductTrasladoInput: {
       /** Descripción del bien o servicio como aparecerá en la factura. */
       description: string
       /** Clave de producto/servicio, del catálogo del SAT. Nosotros te proporcionamos una manera más conveniente de encontrarlo utilizando nuestra [herramienta de búsqueda de claves](https://dashboard.facturapi.io/catalogs/productKey). */
@@ -4443,7 +4443,7 @@ export interface components {
       /** Identificador de uso interno designado por la empresa. Puede tener cualquier valor. */
       sku?: string
     }
-    LineItemProduct: {
+    InvoiceItemProduct: {
       /** ID del producto base. Sólo presente si se utilizó como base un objeto `Product` guardado previamente. */
       id?: string
     } & components['schemas']['ProductProperties']
@@ -4476,7 +4476,10 @@ export interface components {
     ProductSearchResult: components['schemas']['SearchResult'] & {
       data: components['schemas']['Product'][]
     }
-    ProductCreateInput: components['schemas']['ProductProperties']
+    ProductCreateInput: WithRequired<
+      components['schemas']['ProductCommonProperties'],
+      'description' | 'product_key' | 'price'
+    >
     ProductProperties: WithRequired<
       components['schemas']['ProductCommonProperties'],
       'description' | 'product_key' | 'price'
@@ -4908,7 +4911,7 @@ export interface components {
        */
       is_ready_to_stamp?: boolean
       /** Conceptos incluidos en el comprobante */
-      items?: components['schemas']['LineItem'][]
+      items?: components['schemas']['InvoiceItem'][]
       /** Documentos relacionados con la factura. */
       related_documents?: components['schemas']['RelatedDocument'][]
       /**
@@ -5019,7 +5022,7 @@ export interface components {
       /** Código que representa la forma de pago, de acuerdo al [catálogo del SAT](#forma-de-pago). */
       payment_form?: string
       /** Conceptos incluidos en el comprobante */
-      items?: components['schemas']['LineItem'][]
+      items?: components['schemas']['InvoiceItem'][]
       /** Documentos relacionados con la factura. */
       related_documents?: components['schemas']['RelatedDocument'][]
       /** Código de la moneda, acorde al estándar [ISO 4217](https://es.wikipedia.org/wiki/ISO_4217). */
@@ -5404,7 +5407,7 @@ export interface components {
        *     El número máximo de elementos que puedes incluir en una factura es de 5,000. Si necesitas
        *     emitir una factura con más de 5,000 conceptos, puedes dividir la transacción en varias facturas.
        */
-      items: components['schemas']['LineItemInput'][]
+      items: components['schemas']['InvoiceItemInput'][]
       /** Código que representa la forma de pago, de acuerdo al [catálogo del SAT](#forma-de-pago). */
       payment_form: string
       /**
@@ -5509,7 +5512,7 @@ export interface components {
        *     El número máximo de elementos que puedes incluir en el comprobante es de 5,000. Si necesitas
        *     emitir un comprobante con más de 5,000 conceptos, puedes dividir la transacción en varios comprobantes.
        */
-      items: components['schemas']['LineItemEgresoInput'][]
+      items: components['schemas']['InvoiceItemEgresoInput'][]
       /**
        * Código de Uso CFDI según el catálogo del SAT. Puedes ver los códigos en [esta tabla](#uso-cfdi), o utilizar las constantes incluidas en nuestras librerías.
        * @default G02
@@ -5570,7 +5573,7 @@ export interface components {
        *     El número máximo de elementos que puedes incluir en un comprobante es de 5,000. Si necesitas
        *     emitir un comprobante con más de 5,000 conceptos, puedes dividir la transacción en varios comprobantes.
        */
-      items: components['schemas']['LineItemTrasladoInput'][]
+      items: components['schemas']['InvoiceItemTrasladoInput'][]
       /**
        * Complementos a incluir en el comprobante. Puedes incluir cualquier complemento en
        *     el comprobante si tú mismo construyes el nodo XML del complemento y usas el tipo
@@ -5615,7 +5618,7 @@ export interface components {
        *     El número máximo de elementos que puedes incluir en una factura es de 5,000. Si necesitas
        *     emitir una factura con más de 5,000 conceptos, puedes dividir la transacción en varias facturas.
        */
-      items?: components['schemas']['LineItemInput'][]
+      items?: components['schemas']['InvoiceItemInput'][]
       /** Código que representa la forma de pago, de acuerdo al [catálogo del SAT](#forma-de-pago). */
       payment_form?: string | null
       /**
@@ -5707,7 +5710,7 @@ export interface components {
        *     El número máximo de elementos que puedes incluir en el comprobante es de 5,000. Si necesitas
        *     emitir un comprobante con más de 5,000 conceptos, puedes dividir la transacción en varios comprobantes.
        */
-      items?: components['schemas']['LineItemEgresoInput'][]
+      items?: components['schemas']['InvoiceItemEgresoInput'][]
       /** Código de Uso CFDI según el catálogo del SAT. Puedes ver los códigos en [esta tabla](#uso-cfdi), o utilizar las constantes incluidas en nuestras librerías. */
       use?: string
       /** Código de la moneda, acorde al estándar [ISO 4217](https://es.wikipedia.org/wiki/ISO_4217). */
@@ -5763,7 +5766,7 @@ export interface components {
        *     El número máximo de elementos que puedes incluir en un comprobante es de 5,000. Si necesitas
        *     emitir un comprobante con más de 5,000 conceptos, puedes dividir la transacción en varios comprobantes.
        */
-      items?: components['schemas']['LineItemTrasladoInput'][]
+      items?: components['schemas']['InvoiceItemTrasladoInput'][]
       /**
        * Complementos a incluir en el comprobante. Puedes incluir cualquier complemento en
        *     el comprobante si tú mismo construyes el nodo XML del complemento y usas el tipo
@@ -5826,7 +5829,7 @@ export interface components {
       /** Autogenerado. Identificador único alfanumérico corto, útil para acceder a la autofactura desde tu micrositio en factura.space */
       key?: string
       /** Conceptos incluidos en el recibo */
-      items?: components['schemas']['LineItem'][]
+      items?: components['schemas']['InvoiceItem'][]
       /** Identificador que puedes usar para relacionar este recibo con tus registros para después buscar por este número. */
       external_id?: string
       /** Identificador único que puedes usar para evitar duplicados al reintentar una petición. Puede ser cualquier cadena de texto, mientras sea única para cada documento. */
@@ -5845,7 +5848,7 @@ export interface components {
        *     El número máximo de elementos que puedes incluir en un recibo es de 5,000. Si necesitas
        *     emitir una recibo con más de 5,000 conceptos, prueba dividir la transacción en varios recibos.
        */
-      items: components['schemas']['LineItemInput'][]
+      items: components['schemas']['InvoiceItemInput'][]
     } & components['schemas']['ReceiptCommonProperties'] & {
         /**
          * Identificador único que puedes usar para evitar duplicados al reintentar una petición. Puede ser cualquier cadena de texto, mientras sea única para cada documento.
