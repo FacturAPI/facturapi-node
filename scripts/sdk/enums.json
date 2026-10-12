@@ -15,8 +15,6 @@
   "#/components/schemas/InvoiceProperties/properties/type": "InvoiceType",
   "#/components/schemas/InvoiceProperties/properties/payment_method": "PaymentMethod",
   "#/components/schemas/InvoiceProperties/properties/global/properties/periodicity": "GlobalInvoicePeriodicity",
-  "#/components/schemas/InvoiceDraftProperties/properties/cancellation_status": "CancellationStatus",
-  "#/components/schemas/InvoiceDraftProperties/properties/type": "InvoiceType",
   "#/components/schemas/InvoiceIngresoInput/allOf/0/properties/payment_method": "PaymentMethod",
   "#/components/schemas/InvoiceIngresoInput/allOf/0/properties/global/properties/periodicity": "GlobalInvoicePeriodicity",
   "#/components/schemas/InvoiceIngresoEditInput/allOf/0/properties/payment_method": "PaymentMethod",

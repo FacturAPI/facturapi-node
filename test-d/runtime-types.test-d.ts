@@ -39,6 +39,7 @@ import Facturapi, {
   CartaPorteAutotransporte,
   InvoiceItem,
   InvoiceType,
+  InvoiceStatus,
   IssuingType,
   NodeLikeReadableStream,
   Organization,
@@ -308,13 +309,19 @@ declare const invoice: Invoice
 expectType<Date>(invoice.created_at)
 expectType<Date | null>(invoice.date)
 expectType<Date | null | undefined>(invoice.canceled_at)
-expectError(invoice.cancellation)
+expectType<Date | undefined>(invoice.cancellation?.requested_at)
+expectType<Date | undefined>(invoice.cancellation?.canceled_at)
+expectType<number>(invoice.total)
+expectType<InvoiceStatus>(invoice.status)
+expectType<string[] | undefined>(invoiceItem.customs_keys)
 expectType<string | undefined>(invoice.stamp?.date)
 
 declare const receipt: Receipt
 expectType<Date>(receipt.created_at)
 expectType<Date>(receipt.date)
 expectType<Date>(receipt.expires_at)
+expectType<number>(receipt.total)
+expectType<string>(receipt.key)
 
 declare const customer: Customer
 expectType<Date>(customer.created_at)
@@ -327,6 +334,7 @@ expectType<Date>(organization.created_at)
 expectType<Date | undefined>(organization.certificate.expires_at)
 expectType<Date | undefined>(organization.pending_add_ons_update?.scheduled_for)
 declare const draftResponse: InvoiceDraft
+expectType<InvoiceStatus>(draftResponse.status)
 expectAssignable<InvoiceDraft['customer']>(null)
 expectType<CustomerInfo | null | undefined>(draftResponse.customer)
 expectError(

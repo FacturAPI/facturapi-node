@@ -101,6 +101,11 @@ describe('runtime compatibility (node)', () => {
           created_at: '2026-09-17T12:00:00.000Z',
           date: '2026-09-17T11:00:00.000Z',
           canceled_at: '2026-09-17T12:59:16.000Z',
+          cancellation: {
+            status: 'accepted',
+            requested_at: '2026-09-17T12:50:00.000Z',
+            canceled_at: '2026-09-17T12:59:16.000Z',
+          },
           stamp: {
             date: '2026-09-17T06:59:16',
           },
@@ -139,6 +144,12 @@ describe('runtime compatibility (node)', () => {
     expect(invoice.created_at).toEqual(new Date('2026-09-17T12:00:00.000Z'))
     expect(invoice.date).toEqual(new Date('2026-09-17T11:00:00.000Z'))
     expect(invoice.canceled_at).toEqual(new Date('2026-09-17T12:59:16.000Z'))
+    expect(invoice.cancellation?.requested_at).toEqual(
+      new Date('2026-09-17T12:50:00.000Z'),
+    )
+    expect(invoice.cancellation?.canceled_at).toEqual(
+      new Date('2026-09-17T12:59:16.000Z'),
+    )
     expect(invoice.stamp?.date).toBe('2026-09-17T06:59:16')
     expect((invoice as any).metadata.date).toBe('2026-09-17T12:00:00.000Z')
     expect((invoice as any).metadata.expires_at).toBe(

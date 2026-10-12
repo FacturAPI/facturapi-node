@@ -267,6 +267,7 @@ export type InvoiceZipRequest = Output['schemas']['InvoiceZipRequest']
 export type InvoiceZipRequestSearchResult =
   Output['schemas']['InvoiceZipRequestSearchResult']
 export type Invoice = Output['schemas']['Invoice']
+export type InvoiceCancellation = Output['schemas']['InvoiceCancellation']
 export type InvoiceDraft = Output['schemas']['InvoiceDraft']
 export type InvoiceSearchResult = Output['schemas']['InvoiceSearchResult']
 export type InvoiceProperties = Output['schemas']['InvoiceProperties']
