@@ -242,8 +242,8 @@ export type ProductSearchResult = Output['schemas']['ProductSearchResult']
 export type ProductCreateInput = Input['schemas']['ProductCreateInput']
 export type ProductProperties = Output['schemas']['ProductProperties']
 export type ProductUpdateInput = Input['schemas']['ProductUpdateInput']
-export type ProductEditableProperties =
-  Output['schemas']['ProductEditableProperties']
+export type ProductCommonProperties =
+  Output['schemas']['ProductCommonProperties']
 export type ProductEgresoInput = Input['schemas']['ProductEgresoInput']
 export type PaymentInput = Input['schemas']['PaymentInput']
 export type CustomerComercioExterior =
@@ -285,8 +285,8 @@ export type InvoiceTrasladoEditInput =
   Input['schemas']['InvoiceTrasladoEditInput']
 export type ReceiptProperties = Output['schemas']['ReceiptProperties']
 export type ReceiptInput = Input['schemas']['ReceiptInput']
-export type ReceiptEditableProperties =
-  Output['schemas']['ReceiptEditableProperties']
+export type ReceiptCommonProperties =
+  Output['schemas']['ReceiptCommonProperties']
 export type ReceiptAssignCustomerInput =
   Input['schemas']['ReceiptAssignCustomerInput']
 export type ReceiptSearchResult = Output['schemas']['ReceiptSearchResult']

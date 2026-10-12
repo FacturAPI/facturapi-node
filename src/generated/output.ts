@@ -4491,11 +4491,11 @@ export interface components {
     }
     ProductCreateInput: components['schemas']['ProductProperties']
     ProductProperties: WithRequired<
-      components['schemas']['ProductEditableProperties'],
+      components['schemas']['ProductCommonProperties'],
       'description' | 'product_key' | 'price'
     >
-    ProductUpdateInput: components['schemas']['ProductEditableProperties']
-    ProductEditableProperties: {
+    ProductUpdateInput: components['schemas']['ProductCommonProperties']
+    ProductCommonProperties: {
       /** Descripción del bien o servicio como aparecerá en la factura. */
       description?: string
       /** Clave de producto/servicio, del catálogo del SAT. Nosotros te proporcionamos una manera más conveniente de encontrarlo utilizando nuestra [herramienta de búsqueda de claves](https://dashboard.facturapi.io/catalogs/productKey). */
@@ -5841,7 +5841,7 @@ export interface components {
       external_id?: string
       /** Identificador único que puedes usar para evitar duplicados al reintentar una petición. Puede ser cualquier cadena de texto, mientras sea única para cada documento. */
       idempotency_key?: string
-    } & components['schemas']['ReceiptEditableProperties']
+    } & components['schemas']['ReceiptCommonProperties']
     ReceiptInput: {
       /** Cliente asociado al recibo. Puedes enviar el ID de un cliente existente o un objeto de cliente para crearlo. */
       customer?: string | components['schemas']['CustomerCreateInput']
@@ -5856,14 +5856,14 @@ export interface components {
        *     emitir una recibo con más de 5,000 conceptos, prueba dividir la transacción en varios recibos.
        */
       items: components['schemas']['LineItemInput'][]
-    } & components['schemas']['ReceiptEditableProperties'] & {
+    } & components['schemas']['ReceiptCommonProperties'] & {
         /**
          * Identificador único que puedes usar para evitar duplicados al reintentar una petición. Puede ser cualquier cadena de texto, mientras sea única para cada documento.
          *     Si se deja en blanco, no se tomará en cuenta.
          */
         idempotency_key?: string
       }
-    ReceiptEditableProperties: {
+    ReceiptCommonProperties: {
       /**
        * Format: date-time
        * Fecha de emisión del recibo. Por defecto se utiliza la fecha actual.
