@@ -12,15 +12,11 @@ export type Address = Output['CommonAddressProperties']
 export type InvoiceItemPart = Output['Parts']
 export type InvoiceItemThirdParty = Input['ThirdPartyInput']
 export type Tax = Output['BaseTax'] | Output['IepsTax']
-export type LocalTax = Output['LocalTax']
 export type ProductInfo = Output['LineItemProduct']
-export type CustomerInfo = Output['CustomerInfo']
 export type InvoiceItem = Output['LineItem']
 export type XmlNamespace = Output['NamespaceProperties']
-export type RelatedDocument = Output['RelatedDocument']
 export type GenericResponse = Output['OkResponse']
 export type SendEmailBody = OperationBody<'sendInvoiceByEmail'>
-export type SignedDownloadUrl = Output['SignedDownloadUrl']
 export * from './runtime'
 export type SearchResult<T> = Output['SearchResult'] & { data: T[] }
 export type PageSearchParams = ({ pagination?: 'page' } | { page: number }) &

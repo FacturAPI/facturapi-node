@@ -4,28 +4,19 @@
     "InvoiceItemPart": "Output['Parts']",
     "InvoiceItemThirdParty": "Input['ThirdPartyInput']",
     "Tax": "Output['BaseTax'] | Output['IepsTax']",
-    "LocalTax": "Output['LocalTax']",
     "ProductInfo": "Output['LineItemProduct']",
-    "CustomerInfo": "Output['CustomerInfo']",
     "InvoiceItem": "Output['LineItem']",
     "XmlNamespace": "Output['NamespaceProperties']",
-    "RelatedDocument": "Output['RelatedDocument']",
     "GenericResponse": "Output['OkResponse']",
-    "SendEmailBody": "OperationBody<'sendInvoiceByEmail'>",
-    "SignedDownloadUrl": "Output['SignedDownloadUrl']"
+    "SendEmailBody": "OperationBody<'sendInvoiceByEmail'>"
   },
   "customer": {
     "TaxInfoValidation": "OperationResponse<'validateCustomerTaxInfo'>",
-    "TaxInfoValidationError": "TaxInfoValidation['errors'][number]",
-    "Customer": "Output['Customer']"
-  },
-  "product": {
-    "Product": "Output['Product']"
+    "TaxInfoValidationError": "TaxInfoValidation['errors'][number]"
   },
   "invoice": {
     "GlobalInfo": "NonNullable<Output['InvoiceProperties']['global']>",
     "InvoiceComplement": "NonNullable<Output['InvoiceProperties']['complements']>[number]",
-    "Invoice": "Output['Invoice']",
     "CancelInvoiceOptions": "Input['CancellationQueryInput']",
     "CreateZipRequestData": "OperationBody<'createInvoiceZipRequest'>",
     "ListZipRequestsParams": "OperationQuery<'listInvoiceZipRequests'>",
@@ -38,23 +29,15 @@
     "Series": "Output['OrganizationSeriesGroup']",
     "OrganizationDefaultSeriesUpdateInput": "Input['OrganizationSeriesDefaultInput']",
     "ApiKeys": "OperationResponse<'listLiveApiKeys'>[number]",
-    "OrganizationUserAccess": "Output['OrganizationUserAccess']",
-    "OrganizationInvite": "Output['OrganizationInvite']",
-    "OrganizationInviteCreateInput": "Input['OrganizationInviteCreateInput']",
     "OrganizationInviteResponseInput": "Input['OrganizationInviteRespondInput']",
     "OrganizationTeamRole": "Output['OrganizationPermissionRole']",
     "OrganizationTeamRoleCreateInput": "Input['OrganizationPermissionRoleCreateInput']",
     "OrganizationTeamRoleUpdateInput": "Input['OrganizationPermissionRoleUpdateInput']",
-    "OrganizationTeamRoleTemplate": "Output['OrganizationPermissionRoleTemplate']",
-    "Organization": "Output['Organization']"
+    "OrganizationTeamRoleTemplate": "Output['OrganizationPermissionRoleTemplate']"
   },
   "receipt": {
-    "Receipt": "Output['Receipt']",
     "ReceiptsToInvoiceInput": "Input['ToInvoiceInput']",
     "PreviewReceiptsToInvoicePdfInput": "Input['ToInvoicePreviewInput']"
-  },
-  "retention": {
-    "Retention": "Output['Retention']"
   },
   "complements": {
     "PagoComplementData": "Output['PaymentProperties']",

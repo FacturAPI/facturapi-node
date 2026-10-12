@@ -8,6 +8,5 @@ import type {
 } from '../generated/contracts'
 type Input = InputComponents['schemas']
 type Output = OutputComponents['schemas']
-export type Receipt = Output['Receipt']
 export type ReceiptsToInvoiceInput = Input['ToInvoiceInput']
 export type PreviewReceiptsToInvoicePdfInput = Input['ToInvoicePreviewInput']

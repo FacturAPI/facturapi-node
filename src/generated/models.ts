@@ -16,6 +16,7 @@ export type ReceiptStatusUpdatedEvent =
   Output['schemas']['ReceiptStatusUpdatedEvent']
 export type CustomerEditLinkCompletedEvent =
   Output['schemas']['CustomerEditLinkCompletedEvent']
+export type SignedDownloadUrl = Output['schemas']['SignedDownloadUrl']
 export type SearchKeyDescriptionResult =
   Output['schemas']['SearchKeyDescriptionResult']
 export type RelatedResourceMessage = Output['schemas']['RelatedResourceMessage']
@@ -32,6 +33,7 @@ export type ProductCatalogSearchResult =
   Output['schemas']['ProductCatalogSearchResult']
 export type UnitCatalogSearchResult =
   Output['schemas']['UnitCatalogSearchResult']
+export type LocalTax = Output['schemas']['LocalTax']
 export type BaseTax = Output['schemas']['BaseTax']
 export type IepsTax = Output['schemas']['IepsTax']
 export type Stamp = Output['schemas']['Stamp']
@@ -207,6 +209,7 @@ export type WebhookSearchResult = Output['schemas']['WebhookSearchResult']
 export type WebhookProperties = Output['schemas']['WebhookProperties']
 export type WebhookCreateInput = Input['schemas']['WebhookCreateInput']
 export type WebhookUpdateInput = Input['schemas']['WebhookUpdateInput']
+export type Customer = Output['schemas']['Customer']
 export type CustomerSearchResult = Output['schemas']['CustomerSearchResult']
 export type CustomerNonEditableProperties =
   Output['schemas']['CustomerNonEditableProperties']
@@ -238,6 +241,7 @@ export type LineItemTrasladoProductInput =
 export type LineItemProduct = Output['schemas']['LineItemProduct']
 export type Parts = Output['schemas']['Parts']
 export type PartInput = Input['schemas']['PartInput']
+export type Product = Output['schemas']['Product']
 export type ProductSearchResult = Output['schemas']['ProductSearchResult']
 export type ProductCreateInput = Input['schemas']['ProductCreateInput']
 export type ProductProperties = Output['schemas']['ProductProperties']
@@ -246,9 +250,11 @@ export type ProductCommonProperties =
   Output['schemas']['ProductCommonProperties']
 export type ProductEgresoInput = Input['schemas']['ProductEgresoInput']
 export type PaymentInput = Input['schemas']['PaymentInput']
+export type CustomerInfo = Output['schemas']['CustomerInfo']
 export type CustomerComercioExterior =
   Output['schemas']['CustomerComercioExterior']
 export type RelatedDocumentInput = Input['schemas']['RelatedDocumentInput']
+export type RelatedDocument = Output['schemas']['RelatedDocument']
 export type InvoiceZipRequestStatus =
   Output['schemas']['InvoiceZipRequestStatus']
 export type InvoiceZipRequestInvoiceType =
@@ -258,6 +264,7 @@ export type InvoiceZipRequestCreateInput =
 export type InvoiceZipRequest = Output['schemas']['InvoiceZipRequest']
 export type InvoiceZipRequestSearchResult =
   Output['schemas']['InvoiceZipRequestSearchResult']
+export type Invoice = Output['schemas']['Invoice']
 export type InvoiceDraft = Output['schemas']['InvoiceDraft']
 export type InvoiceSearchResult = Output['schemas']['InvoiceSearchResult']
 export type InvoiceProperties = Output['schemas']['InvoiceProperties']
@@ -283,6 +290,7 @@ export type InvoicePagoEditInput = Input['schemas']['InvoicePagoEditInput']
 export type InvoiceNominaEditInput = Input['schemas']['InvoiceNominaEditInput']
 export type InvoiceTrasladoEditInput =
   Input['schemas']['InvoiceTrasladoEditInput']
+export type Receipt = Output['schemas']['Receipt']
 export type ReceiptProperties = Output['schemas']['ReceiptProperties']
 export type ReceiptInput = Input['schemas']['ReceiptInput']
 export type ReceiptCommonProperties =
@@ -299,6 +307,7 @@ export type ToInvoicePreviewInput = Input['schemas']['ToInvoicePreviewInput']
 export type ToInvoiceSummary = Output['schemas']['ToInvoiceSummary']
 export type ReceiptInvoiceSummaryTax =
   Output['schemas']['ReceiptInvoiceSummaryTax']
+export type Retention = Output['schemas']['Retention']
 export type RetentionReadOnlyProperties =
   Output['schemas']['RetentionReadOnlyProperties']
 export type RetentionProperties = Output['schemas']['RetentionProperties']
@@ -308,6 +317,7 @@ export type RetentionUpdateInput = Input['schemas']['RetentionUpdateInput']
 export type OrganizationAddress = Output['schemas']['OrganizationAddress']
 export type OrganizationSearchResult =
   Output['schemas']['OrganizationSearchResult']
+export type Organization = Output['schemas']['Organization']
 export type OrganizationDeleteCerts =
   Output['schemas']['OrganizationDeleteCerts']
 export type OrganizationCreateInput =
@@ -334,6 +344,7 @@ export type OrganizationSeriesDefaultInput =
 export type OrganizationSeriesGroup =
   Output['schemas']['OrganizationSeriesGroup']
 export type OkResponse = Output['schemas']['OkResponse']
+export type OrganizationInvite = Output['schemas']['OrganizationInvite']
 export type OrganizationInviteList = Output['schemas']['OrganizationInviteList']
 export type OrganizationPermissionRole =
   Output['schemas']['OrganizationPermissionRole']
@@ -345,8 +356,11 @@ export type OrganizationPermissionRoleTemplateList =
   Output['schemas']['OrganizationPermissionRoleTemplateList']
 export type OrganizationPermissionOperationList =
   Output['schemas']['OrganizationPermissionOperationList']
+export type OrganizationUserAccess = Output['schemas']['OrganizationUserAccess']
 export type OrganizationUserAccessList =
   Output['schemas']['OrganizationUserAccessList']
+export type OrganizationInviteCreateInput =
+  Input['schemas']['OrganizationInviteCreateInput']
 export type OrganizationInviteRespondInput =
   Input['schemas']['OrganizationInviteRespondInput']
 export type OrganizationPermissionRoleCreateInput =

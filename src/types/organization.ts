@@ -12,10 +12,6 @@ export type Series = Output['OrganizationSeriesGroup']
 export type OrganizationDefaultSeriesUpdateInput =
   Input['OrganizationSeriesDefaultInput']
 export type ApiKeys = OperationResponse<'listLiveApiKeys'>[number]
-export type OrganizationUserAccess = Output['OrganizationUserAccess']
-export type OrganizationInvite = Output['OrganizationInvite']
-export type OrganizationInviteCreateInput =
-  Input['OrganizationInviteCreateInput']
 export type OrganizationInviteResponseInput =
   Input['OrganizationInviteRespondInput']
 export type OrganizationTeamRole = Output['OrganizationPermissionRole']
@@ -25,4 +21,3 @@ export type OrganizationTeamRoleUpdateInput =
   Input['OrganizationPermissionRoleUpdateInput']
 export type OrganizationTeamRoleTemplate =
   Output['OrganizationPermissionRoleTemplate']
-export type Organization = Output['Organization']

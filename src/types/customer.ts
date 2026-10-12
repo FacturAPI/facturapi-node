@@ -10,4 +10,3 @@ type Input = InputComponents['schemas']
 type Output = OutputComponents['schemas']
 export type TaxInfoValidation = OperationResponse<'validateCustomerTaxInfo'>
 export type TaxInfoValidationError = TaxInfoValidation['errors'][number]
-export type Customer = Output['Customer']
