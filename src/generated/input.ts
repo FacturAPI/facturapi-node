@@ -4288,28 +4288,6 @@ export interface components {
        */
       sat_validated_at?: Date | string | null
     }
-    CustomerEditableInput: {
-      legal_name?: components['schemas']['CustomerCommonProperties']['legal_name']
-      tax_id?: components['schemas']['CustomerCommonProperties']['tax_id']
-      /**
-       * Format: email
-       * Correo electrónico del cliente. Un valor null se trata como omitido.
-       */
-      email?: string | null
-      phone?: components['schemas']['CustomerCommonProperties']['phone']
-      default_invoice_use?: components['schemas']['CustomerCommonProperties']['default_invoice_use']
-      address?: components['schemas']['CommonAddressProperties'] & {
-        state?: string
-        /**
-         * Código de país ISO 3166-1 alpha-3.
-         * @default MEX
-         */
-        country?: string
-      }
-    }
-    CustomerUpdateInput: components['schemas']['CustomerEditableInput'] & {
-      tax_system?: components['schemas']['CustomerCommonProperties']['tax_system']
-    }
     CustomerProperties: components['schemas']['CustomerCommonProperties'] & {
       address?: components['schemas']['CommonAddressProperties'] & {
         /** Si el país es México ("MEX"), contiene el nombre del Estado o Entidad Federativa. Para extranjeros contiene el código de Estado de acuerdo al estándar [ISO 3166-2](https://en.wikipedia.org/wiki/ISO_3166-2), que puedes consultar en nuestro [Catálogo de Estados](https://dashboard.facturapi.io/catalogs/state). */
@@ -4337,6 +4315,33 @@ export interface components {
       phone?: string | null
       /** Uso de CFDI por defecto. */
       default_invoice_use?: string
+    }
+    CustomerEditableInput: {
+      /** Nombre Fiscal o Razón Social del cliente. *sin* el régimen societario (ej.: S.A. de C.V.). */
+      legal_name?: string
+      /** En clientes de México contiene el RFC del cliente. Para extranjeros es opcional y representa el número de registro de identificación tributaria, es decir, el equivalente al RFC en el país del cliente. */
+      tax_id?: string | null
+      /**
+       * Format: email
+       * Correo electrónico del cliente. Un valor null se trata como omitido.
+       */
+      email?: string | null
+      /** Teléfono del cliente. */
+      phone?: string | null
+      /** Uso de CFDI por defecto. */
+      default_invoice_use?: string
+      address?: components['schemas']['CommonAddressProperties'] & {
+        state?: string
+        /**
+         * Código de país ISO 3166-1 alpha-3.
+         * @default MEX
+         */
+        country?: string
+      }
+    }
+    CustomerUpdateInput: components['schemas']['CustomerEditableInput'] & {
+      /** Requerido para clientes nacionales. Clave del régimen fiscal del cliente, del catálogo de [Regímenes Fiscales](#r%C3%A9gimen-fiscal). */
+      tax_system?: string | null
     }
     /** Omite los parámetros para eliminar un borrador. Los documentos emitidos requieren motivo; los motivos 01 y 04 también requieren substitution. */
     CancellationQueryInput:
@@ -4368,7 +4373,7 @@ export interface components {
       legal_name: string
       /**
        * Format: email
-       * Dirección de correo electrónico al cual enviar las facturas generadas.
+       * Correo electrónico del cliente. Un valor null se trata como omitido.
        */
       email?: string | null
       /** Teléfono del cliente. */
@@ -7838,8 +7843,8 @@ export interface operations {
     requestBody?: {
       content: {
         'application/json': {
-          /** Correo electrónico del cliente. Si no se proporciona, se usará el correo electrónico del cliente. */
-          email?: string
+          /** Correo electrónico de destino. Si se omite o es null, se usa el correo electrónico del cliente. */
+          email?: string | null
         }
       }
     }

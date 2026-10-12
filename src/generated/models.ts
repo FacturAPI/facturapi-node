@@ -214,11 +214,11 @@ export type Customer = Output['schemas']['Customer']
 export type CustomerSearchResult = Output['schemas']['CustomerSearchResult']
 export type CustomerNonEditableProperties =
   Output['schemas']['CustomerNonEditableProperties']
-export type CustomerEditableInput = Input['schemas']['CustomerEditableInput']
-export type CustomerUpdateInput = Input['schemas']['CustomerUpdateInput']
 export type CustomerProperties = Output['schemas']['CustomerProperties']
 export type CustomerCommonProperties =
   Output['schemas']['CustomerCommonProperties']
+export type CustomerEditableInput = Input['schemas']['CustomerEditableInput']
+export type CustomerUpdateInput = Input['schemas']['CustomerUpdateInput']
 export type CancellationQueryInput = Input['schemas']['CancellationQueryInput']
 export type CustomerCreateWithEditLinkInput =
   Input['schemas']['CustomerCreateWithEditLinkInput']

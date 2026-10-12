@@ -430,6 +430,7 @@ expectNotAssignable<
 // Incomplete customer information is accepted only when an edit link is requested.
 client.customers.create({}, { createEditLink: true })
 client.customers.create({ email: null }, { createEditLink: true })
+client.customers.sendEditLinkByEmail('cus_ejemplo', { email: null })
 client.customers.create(
   { email: 'cliente@example.com' },
   { createEditLink: true },
