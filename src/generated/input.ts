@@ -4907,9 +4907,9 @@ export interface components {
       total: number
       /**
        * Format: uuid
-       * Folio fiscal de la factura, asignado por el SAT.
+       * Folio fiscal de la factura, asignado por el SAT. En borradores sin timbrar puede ser null o estar omitido.
        */
-      uuid?: string
+      uuid?: string | null
       /** Número de folio autoincremental para control interno y sin validez fiscal. */
       folio_number?: number
       /** Serie. Caracteres designados por la empresa para control interno y sin validez fiscal. En el PDF se imprime junto al número de folio. */
@@ -4919,7 +4919,7 @@ export interface components {
       /** Identificador único que puedes usar para evitar duplicados al reintentar una petición. Puede ser cualquier cadena de texto, mientras sea única para cada documento. */
       idempotency_key?: string
       /** Código que representa la forma de pago, de acuerdo al [catálogo del SAT](#forma-de-pago). */
-      payment_form?: string
+      payment_form?: string | null
       /** Total del complemento de Pago cuando la factura es tipo P. */
       total_payment_amount?: number
       /** Total del monto pagado convertido de la moneda de pago a Pesos Mexicanos. */
@@ -4980,10 +4980,9 @@ export interface components {
       issuer_type?: components['schemas']['IssuingType']
       cfdi_version?: number
       issuer_info?: components['schemas']['CustomerInfo']
-      /** @enum {string} */
-      payment_method?: 'PUE' | 'PPD'
+      payment_method?: ('PUE' | 'PPD') | null
       use?: string
-      amount_due?: number
+      amount_due: number
       /** Format: uri */
       verification_carta_porte?: string
       conditions?: string
@@ -4995,84 +4994,7 @@ export interface components {
         year: number
       }
     }
-    InvoiceDraftProperties: {
-      /** Estado actual de la factura. */
-      status: components['schemas']['InvoiceProperties']['status']
-      cancellation?: components['schemas']['InvoiceCancellation']
-      /** Estado actual de la solicitud de cancelación, en caso de haberla realizado. Puedes leer más a detalle en la sección de [Cancelar Factura](#tag/invoice/operation/deleteInvoice)). */
-      cancellation_status: components['schemas']['InvoiceProperties']['cancellation_status']
-      /**
-       * Format: uri
-       * Dirección URL para verificar el estado del CFDI en el portal del SAT. Este link es el mismo que aparece en el código QR, en el PDF de la factura.
-       */
-      verification_url?: string
-      /**
-       * Format: date-time
-       * Fecha de timbrado del comprobante en formato ISO8601 (UTC String). Si el estado es `draft`, este campo es nulo.
-       */
-      date: Date | string | null
-      address?: components['schemas']['CommonAddressProperties'] & {
-        /** Nombre del Estado o Entidad Federativa. */
-        state?: string
-      }
-      /** Tipo de comprobante. Puede tener los valores `"I"`: Ingreso, `"P"`: Pago, `"E"`: Egreso, `"N"`: Nómina, `"T"`: Traslado. */
-      type: components['schemas']['InvoiceProperties']['type']
-      /** Cliente de la factura. Es null cuando el borrador no tiene cliente. */
-      customer?: components['schemas']['CustomerInfo'] | null
-      /** Monto total facturado. */
-      total: number
-      /**
-       * Format: uuid
-       * Folio fiscal asignado por el SAT. En un borrador sin timbrar, este campo es null o se omite.
-       */
-      uuid?: string | null
-      /** Número de folio autoincremental para control interno y sin validez fiscal. */
-      folio_number?: number
-      /** Serie. Caracteres designados por la empresa para control interno y sin validez fiscal. En el PDF se imprime junto al número de folio. */
-      series?: string
-      /** Identificador que puedes usar para relacionar esta factura con tus registros para después buscar por este número. */
-      external_id?: string
-      /** Identificador único que puedes usar para evitar duplicados al reintentar una petición. Puede ser cualquier cadena de texto, mientras sea única para cada documento. */
-      idempotency_key?: string
-      /** Código que representa la forma de pago, de acuerdo al [catálogo del SAT](#forma-de-pago). */
-      payment_form?: string
-      /** Conceptos incluidos en el comprobante */
-      items: components['schemas']['InvoiceItem'][]
-      /** Documentos relacionados con la factura. */
-      related_documents?: components['schemas']['RelatedDocument'][]
-      /** Código de la moneda, acorde al estándar [ISO 4217](https://es.wikipedia.org/wiki/ISO_4217). */
-      currency: string
-      /** Tipo de cambio conforme a la moneda usada. Representa el número de pesos mexicanos que equivalen a una unidad de la divisa señalada en el atributo `currency`. */
-      exchange: number
-      /**
-       * Complementos a incluir en la factura.
-       * @default []
-       */
-      complements?: components['schemas']['InvoiceComplementProperties'][]
-      /**
-       * Format: html
-       * En caso de que necesites incluir más información en el PDF, este campo te permite insertar código HTML con tu propio contenido.
-       */
-      pdf_custom_section?: string
-      /**
-       * Format: xml
-       * Código XML con la Addenda que se necesite agregar a la factura.
-       */
-      addenda?: string
-      /** Namespaces a insertar en el nodo raíz de la factura. Requerido en `addenda`. */
-      namespaces?: components['schemas']['NamespaceProperties'][]
-      /**
-       * Este campo es asignado automáticamente por Facturapi. Indica si una factura
-       *     con status `draft` está completa y lista para intentar timbrarse. Si el valor es `true`, puedes
-       *     intentar timbrar la factura con el método [Timbrar Factura]('#/operation/stampInvoice').
-       *     Si el valor es `false`, debes usar el método [Actualizar Factura]('#/operation/updateDraftInvoice')
-       *     para completar los campos faltantes.
-       *
-       *     En una factura con status diferente a `draft`, este campo siempre será `false`.
-       */
-      is_ready_to_stamp?: boolean
-      stamp?: components['schemas']['Stamp'] | null
-    }
+    InvoiceDraftProperties: components['schemas']['InvoiceProperties']
     InvoiceableCommonInput: {
       /** Número de folio asignado por la empresa para control interno. Si se omite, se asignará el valor autoincremental de la organización. */
       folio_number?: number

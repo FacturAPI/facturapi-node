@@ -13,7 +13,7 @@
   "#/components/schemas/InvoiceProperties/properties/status": "InvoiceStatus",
   "#/components/schemas/InvoiceProperties/properties/cancellation_status": "CancellationStatus",
   "#/components/schemas/InvoiceProperties/properties/type": "InvoiceType",
-  "#/components/schemas/InvoiceProperties/properties/payment_method": "PaymentMethod",
+  "#/components/schemas/InvoiceProperties/properties/payment_method/anyOf/0": "PaymentMethod",
   "#/components/schemas/InvoiceProperties/properties/global/properties/periodicity": "GlobalInvoicePeriodicity",
   "#/components/schemas/InvoiceIngresoInput/allOf/0/properties/payment_method": "PaymentMethod",
   "#/components/schemas/InvoiceIngresoInput/allOf/0/properties/global/properties/periodicity": "GlobalInvoicePeriodicity",

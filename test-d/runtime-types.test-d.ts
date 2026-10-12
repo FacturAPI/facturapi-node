@@ -335,6 +335,9 @@ expectType<Date | undefined>(organization.certificate.expires_at)
 expectType<Date | undefined>(organization.pending_add_ons_update?.scheduled_for)
 declare const draftResponse: InvoiceDraft
 expectType<InvoiceStatus>(draftResponse.status)
+expectAssignable<Invoice>(draftResponse)
+expectType<number>(invoice.amount_due)
+expectType<string | null | undefined>(invoice.uuid)
 expectAssignable<InvoiceDraft['customer']>(null)
 expectType<CustomerInfo | null | undefined>(draftResponse.customer)
 expectError(
