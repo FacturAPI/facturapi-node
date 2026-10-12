@@ -6126,14 +6126,14 @@ export interface components {
         /** Colección de impuestos retenidos. */
         imp_retenidos?: {
           /** Base del impuesto retenido. */
-          base?: number
+          base_ret?: number
           /**
            * Clave del tipo de impuesto retenido, del catálogo del SAT.
            * @enum {string}
            */
           impuesto?: 'IVA' | 'ISR'
           /** Importe del impuesto retenido */
-          monto?: number
+          monto_ret?: number
           /**
            * - `01`: Pago definitivo IVA
            *     - `02`: Pago definitivo IEPS
