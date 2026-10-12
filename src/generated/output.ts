@@ -4331,7 +4331,7 @@ export interface components {
     }
     CustomerEditableInput: {
       /** Nombre Fiscal o Razón Social del cliente. *sin* el régimen societario (ej.: S.A. de C.V.). */
-      legal_name?: string
+      legal_name?: string | null
       /** En clientes de México contiene el RFC del cliente. Para extranjeros es opcional y representa el número de registro de identificación tributaria, es decir, el equivalente al RFC en el país del cliente. */
       tax_id?: string | null
       /**
@@ -4341,16 +4341,31 @@ export interface components {
       email?: string | null
       /** Teléfono del cliente. */
       phone?: string | null
+      external_id?: string | null
       /** Uso de CFDI por defecto. */
-      default_invoice_use?: string
-      address?: components['schemas']['CommonAddressProperties'] & {
-        state?: string
+      default_invoice_use?: string | null
+      address?: {
+        /** Nombre de la calle */
+        street?: string | null
+        /** Número exterior. */
+        exterior?: string | null
+        /** Número interior. */
+        interior?: string | null
+        /** Colonia */
+        neighborhood?: string | null
+        /** Ciudad */
+        city?: string | null
+        /** Municipio o delegación */
+        municipality?: string | null
+        /** Código postal */
+        zip?: string
+        state?: string | null
         /**
-         * Código de país ISO 3166-1 alpha-3.
+         * ISO 3166-1 alpha-3.
          * @default MEX
          */
-        country?: string
-      }
+        country?: string | null
+      } | null
     }
     CustomerUpdateInput: components['schemas']['CustomerEditableInput'] & {
       /** Requerido para clientes nacionales. Clave del régimen fiscal del cliente, del catálogo de [Regímenes Fiscales](#r%C3%A9gimen-fiscal). */
@@ -4375,11 +4390,47 @@ export interface components {
         }
     /**
      * Customer with edit link
-     * La información del cliente puede estar incompleta cuando createEditLink=true. Los campos enviados deben conservar formatos válidos.
+     * La información del cliente puede estar incompleta cuando createEditLink=true. Los campos opcionales con valor null se tratan como omitidos. Los valores no nulos deben conservar formatos válidos.
      */
-    CustomerCreateWithEditLinkInput: components['schemas']['CustomerEditableInput'] & {
-      /** Si se envía, debe ser un régimen fiscal válido. Omitirlo permite guardar información fiscal incompleta. */
-      tax_system?: string
+    CustomerCreateWithEditLinkInput: {
+      /** Nombre Fiscal o Razón Social del cliente. *sin* el régimen societario (ej.: S.A. de C.V.). */
+      legal_name?: string | null
+      /** En clientes de México contiene el RFC del cliente. Para extranjeros es opcional y representa el número de registro de identificación tributaria, es decir, el equivalente al RFC en el país del cliente. */
+      tax_id?: string | null
+      /**
+       * Format: email
+       * Correo electrónico del cliente. Un valor null se trata como omitido.
+       */
+      email?: string | null
+      /** Teléfono del cliente. */
+      phone?: string | null
+      external_id?: string | null
+      /** Uso de CFDI por defecto. */
+      default_invoice_use?: string | null
+      address?: {
+        /** Nombre de la calle */
+        street?: string | null
+        /** Número exterior. */
+        exterior?: string | null
+        /** Número interior. */
+        interior?: string | null
+        /** Colonia */
+        neighborhood?: string | null
+        /** Ciudad */
+        city?: string | null
+        /** Municipio o delegación */
+        municipality?: string | null
+        /** Código postal */
+        zip?: string | null
+        state?: string | null
+        /**
+         * ISO 3166-1 alpha-3.
+         * @default MEX
+         */
+        country?: string | null
+      } | null
+      /** Requerido para clientes nacionales. Clave del régimen fiscal del cliente, del catálogo de [Regímenes Fiscales](#r%C3%A9gimen-fiscal). */
+      tax_system?: string | null
     }
     CustomerCreateCommonInput: {
       /** Nombre Fiscal o Razón Social del cliente. *sin* el régimen societario (ej.: S.A. de C.V.). */

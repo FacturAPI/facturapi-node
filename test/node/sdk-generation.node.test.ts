@@ -184,23 +184,24 @@ it('documents SDK arguments, binary returns and absolute links from the public s
   )
 })
 
-it('resolves moving refs once and reads the pinned commit while preserving schema property names', async () => {
+it('resolves moving refs once and reads merged YAML properties from the pinned commit', async () => {
   const content = Buffer.from(
-    JSON.stringify({
-      openapi: '3.1.0',
-      info: { title: 'Test', version: '1' },
-      paths: {},
-      components: {
-        schemas: {
-          Future: {
-            type: 'object',
-            properties: {
-              example: { type: 'string', description: 'A real field.' },
-            },
-          },
-        },
-      },
-    }),
+    `openapi: 3.1.0
+info: { title: Test, version: '1' }
+paths: {}
+components:
+  schemas:
+    Shared:
+      type: object
+      properties: &shared
+        example: { type: string, description: A real field. }
+        code: { type: string, enum: ['01'] }
+    Future:
+      type: object
+      properties:
+        <<: *shared
+        example: { type: string, description: Overridden field. }
+`,
   )
   const revision = 'a'.repeat(40)
   const fetch = vi.fn(async (url: string) => {
@@ -228,6 +229,11 @@ it('resolves moving refs once and reads the pinned commit while preserving schem
     expect(source.revision).toBe(revision)
     const spec = await readSpecification(source)
     expect(spec.components.schemas.Future.properties.example).toBeDefined()
+    expect(spec.components.schemas.Future.properties.example.description).toBe(
+      'Overridden field.',
+    )
+    expect(spec.components.schemas.Future.properties.code.enum).toEqual(['01'])
+    expect(spec.components.schemas.Future.properties).not.toHaveProperty('<<')
     expect(fetch).toHaveBeenCalledTimes(2)
     expect(await resolveRevision(source.repository, revision)).toBe(revision)
     expect(fetch).toHaveBeenCalledTimes(2)

@@ -574,9 +574,15 @@ expectType<Date | null | undefined>(
 )
 client.customers.create({ tax_id: null }, { createEditLink: true })
 client.customers.update('cus_ejemplo', { phone: null })
-expectError(
-  client.customers.create({ tax_system: null }, { createEditLink: true }),
+client.customers.create(
+  { legal_name: null, tax_system: null, external_id: null, address: null },
+  { createEditLink: true },
 )
+client.customers.create(
+  { address: { zip: null, state: null, country: null } },
+  { createEditLink: true },
+)
+client.customers.update('cus_ejemplo', { legal_name: null, address: null })
 
 // Explicit creation methods select their own contract without narrowing a free country string.
 client.customers.createNational({

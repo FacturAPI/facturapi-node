@@ -1,4 +1,9 @@
-import Facturapi, { PaymentForm, type InvoiceCreateInput } from 'facturapi'
+import Facturapi, {
+  InvoiceComplementType,
+  InvoiceType,
+  PaymentForm,
+  type InvoiceCreateInput,
+} from 'facturapi'
 
 const facturapi = new Facturapi('sk_test_solo_editor')
 
@@ -14,11 +19,11 @@ export const ingreso = {
 } satisfies InvoiceCreateInput
 
 export const pago = {
-  type: 'P',
+  type: InvoiceType.PAGO,
   customer: 'cus_ejemplo',
   complements: [
     {
-      type: 'pago',
+      type: InvoiceComplementType.PAGO,
       data: {
         payment_form: '28',
         related_documents: [

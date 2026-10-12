@@ -38,7 +38,9 @@ export async function readSpecification(source) {
     `Could not read the public specification: HTTP ${response.status}`,
   )
   const content = Buffer.from(await response.arrayBuffer())
-  const spec = yaml.load(content.toString('utf8'))
+  const spec = yaml.load(content.toString('utf8'), {
+    schema: yaml.CORE_SCHEMA.withTags(yaml.mergeTag),
+  })
   assert(spec.openapi === '3.1.0', 'Expected the public OpenAPI 3.1 contract.')
   const presentation = new Set([
     'x-codeSamples',
