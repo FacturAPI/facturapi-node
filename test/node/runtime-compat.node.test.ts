@@ -215,6 +215,32 @@ describe('runtime compatibility (node)', () => {
     })
   })
 
+  it('searches payroll catalogs through the generated resource', async () => {
+    const client = createClient()
+    globalThis.fetch = vi.fn(async (url, options) => {
+      expect(new URL(String(url)).pathname).toMatch(
+        /^\/v2\/catalogs\/(deductions|perceptions)$/,
+      )
+      expect(new URL(String(url)).searchParams.get('q')).toBe('001')
+      expect(new URL(String(url)).searchParams.get('page')).toBe('0')
+      expect(options?.method).toBe('GET')
+      return Response.json({ data: [{ key: '001', description: 'Example' }] })
+    }) as typeof fetch
+    expect(
+      (await client.nominaCatalogs.searchDeductions({ q: '001', page: 0 }))
+        .data[0].key,
+    ).toBe('001')
+    expect(
+      (await client.nominaCatalogs.searchPerceptions({ q: '001', page: 0 }))
+        .data[0].key,
+    ).toBe('001')
+    expect(
+      vi
+        .mocked(globalThis.fetch)
+        .mock.calls.map(([url]) => new URL(String(url)).pathname),
+    ).toEqual(['/v2/catalogs/deductions', '/v2/catalogs/perceptions'])
+  })
+
   it('checks domain availability via GET query params', async () => {
     const client = createClient()
 

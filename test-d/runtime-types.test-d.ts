@@ -20,6 +20,14 @@ import Facturapi, {
   CustomerForeignCreateInput,
   CustomerGenericCreateInput,
   InvoiceCreateInput,
+  InvoiceCommonInput,
+  InvoiceCommonEditInput,
+  InvoiceDraftCommonInput,
+  GlobalInvoiceCommonInput,
+  WebhookUpdateInput,
+  DateRangeInput,
+  NamespaceInput,
+  NominaSubContratacionInput,
   InvoiceNominaEditInput,
   NominaPercepcionInput,
   NominaEntidadSncfInput,
@@ -637,3 +645,32 @@ client.organizations.uploadCertificate(
   nativeReadStream,
   'example-password',
 )
+
+// Public input helpers preserve the same date representations as method inputs.
+expectAssignable<InvoiceCommonInput>({ date: '2026-01-01T00:00:00Z' })
+expectAssignable<InvoiceCommonEditInput>({ date: '2026-01-01T00:00:00Z' })
+expectAssignable<InvoiceDraftCommonInput>({ date: '2026-01-01T00:00:00Z' })
+expectAssignable<GlobalInvoiceCommonInput>({
+  from: '2026-01-01',
+  to: new Date(),
+})
+expectAssignable<DateRangeInput>({
+  gte: '2026-01-01T00:00:00Z',
+  lt: new Date(),
+})
+declare const webhookUpdate: WebhookUpdateInput
+client.webhooks.update('hook_ejemplo', webhookUpdate)
+expectAssignable<NamespaceInput>({
+  prefix: 'example',
+  uri: 'https://example.com',
+  schema_location: 'https://example.com/schema.xsd',
+})
+expectNotAssignable<NamespaceInput>({ prefix: 'example' })
+expectAssignable<NominaSubContratacionInput>({
+  rfc_labora: 'ABC101010111',
+  porcentaje_tiempo: 100,
+})
+expectNotAssignable<NominaSubContratacionInput>({ rfc_labora: 'ABC101010111' })
+
+client.nominaCatalogs.searchDeductions({ q: '001', page: 0, limit: 10 })
+client.nominaCatalogs.searchPerceptions({ q: '001' })

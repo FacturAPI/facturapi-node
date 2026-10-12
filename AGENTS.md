@@ -28,3 +28,5 @@
 - Keep the source commit metadata and generated sources tracked; do not commit a downloaded spec. Mark generated artifacts with `linguist-generated` in `.gitattributes` so reviews focus on the generator, bindings, runtime, and tests; keep handwritten configuration visible. Update the attributes when adding generated output files.
 
 - Describe current SDK capabilities in the README without release announcements ; version references are appropriate when they explain verified compatibility or when a capability became available. Put release improvements in the changelog. The SDK supports Node.js and browsers; keep titles and summaries accurate for both.
+
+- Input schema names end in `Input`, including reusable input fragments. Keep intentionally shared shapes neutral. Correct inconsistent schema names in the public spec instead of adding direction guesses or per-schema patches to the generator; preserve published SDK aliases in `scripts/sdk/models.json`.

@@ -3,6 +3,7 @@ import Products from './resources/products';
 import Invoices from './resources/invoices';
 import Organizations from './resources/organizations';
 import Catalogs from './tools/catalogs';
+import NominaCatalogs from './tools/nominaCatalogs';
 import Receipts from './resources/receipts';
 import Retentions from './resources/retentions';
 import Webhooks from './tools/webhooks';
@@ -41,6 +42,7 @@ export default class Facturapi {
   invoices: Invoices;
   organizations: Organizations;
   catalogs: Catalogs;
+  nominaCatalogs: NominaCatalogs;
   cartaPorteCatalogs: CartaPorteCatalogs;
   comercioExteriorCatalogs: ComercioExteriorCatalogs;
   receipts: Receipts;
@@ -202,6 +204,7 @@ export default class Facturapi {
     this.invoices = new Invoices(this._wrapper);
     this.organizations = new Organizations(this._wrapper);
     this.catalogs = new Catalogs(this._wrapper);
+    this.nominaCatalogs = new NominaCatalogs(this._wrapper);
     this.cartaPorteCatalogs = new CartaPorteCatalogs(this._wrapper);
     this.comercioExteriorCatalogs = new ComercioExteriorCatalogs(this._wrapper);
     this.receipts = new Receipts(this._wrapper);

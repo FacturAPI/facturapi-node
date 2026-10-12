@@ -12,6 +12,7 @@ src/resources/receipts.ts linguist-generated=true
 src/resources/retentions.ts linguist-generated=true
 src/tools/cartaPorteCatalogs.ts linguist-generated=true
 src/tools/catalogs.ts linguist-generated=true
+src/tools/nominaCatalogs.ts linguist-generated=true
 src/tools/comercioExteriorCatalogs.ts linguist-generated=true
 src/tools/tools.ts linguist-generated=true
 src/tools/webhooks.ts linguist-generated=true

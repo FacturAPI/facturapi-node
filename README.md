@@ -164,7 +164,7 @@ Los tres métodos usan la misma operación de la API. `create()` sigue disponibl
 | Ofrecer autofactura con recibos digitales | `facturapi.receipts` · [Guía de recibos](https://docs.facturapi.io/docs/guides/receipts)                            |
 | Administrar emisores y certificados       | `facturapi.organizations` · [Configuración](https://docs.facturapi.io/docs/getting-started/organization-onboarding) |
 | Emitir retenciones                        | `facturapi.retentions` · [Guía de retenciones](https://docs.facturapi.io/docs/guides/invoices/retencion)            |
-| Consultar catálogos del SAT               | `facturapi.catalogs`, `facturapi.cartaPorteCatalogs` y `facturapi.comercioExteriorCatalogs`                         |
+| Consultar catálogos del SAT               | `facturapi.catalogs`, `facturapi.nominaCatalogs`, `facturapi.cartaPorteCatalogs` y `facturapi.comercioExteriorCatalogs`                         |
 | Recibir eventos y validar firmas          | `facturapi.webhooks` · [Referencia de la API](https://docs.facturapi.io/api/)                                       |
 
 ## Compatibilidad

@@ -2,7 +2,7 @@
   "common": {
     "Address": "Output['CommonAddressProperties']",
     "InvoiceItemPart": "Output['Parts']",
-    "InvoiceItemThirdParty": "Output['ThirdParty']",
+    "InvoiceItemThirdParty": "Input['ThirdPartyInput']",
     "Tax": "Output['BaseTax'] | Output['IepsTax']",
     "LocalTax": "Output['LocalTax']",
     "ProductInfo": "Output['LineItemProduct']",

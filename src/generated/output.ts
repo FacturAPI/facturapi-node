@@ -13,6 +13,46 @@ import type { GlobalInvoicePeriodicity } from '../enums'
 import type { ReceiptStatus } from '../enums'
 import type { InvoicingPeriod } from '../enums'
 export interface paths {
+  '/catalogs/deductions': {
+    parameters: {
+      query?: never
+      header?: never
+      path?: never
+      cookie?: never
+    }
+    /**
+     * Buscar tipos de deducción de nómina
+     * Devuelve tipos de deducción que coinciden con la consulta.
+     */
+    get: operations['searchNominaDeductions']
+    put?: never
+    post?: never
+    delete?: never
+    options?: never
+    head?: never
+    patch?: never
+    trace?: never
+  }
+  '/catalogs/perceptions': {
+    parameters: {
+      query?: never
+      header?: never
+      path?: never
+      cookie?: never
+    }
+    /**
+     * Buscar tipos de percepción de nómina
+     * Devuelve tipos de percepción que coinciden con la consulta.
+     */
+    get: operations['searchNominaPerceptions']
+    put?: never
+    post?: never
+    delete?: never
+    options?: never
+    head?: never
+    patch?: never
+    trace?: never
+  }
   '/catalogs/cartaporte/3.1/air-transport-codes': {
     parameters: {
       query?: never
@@ -2427,7 +2467,7 @@ export interface components {
       /** Mensajes relacionados con el recurso asociado al evento. */
       related_resource_messages?: components['schemas']['RelatedResourceMessage'][]
     }
-    DateRange: {
+    DateRangeInput: {
       /**
        * Greater than
        * Format: date-time
@@ -2742,7 +2782,7 @@ export interface components {
      *
      *     Corresponde al campo "ACuentaTerceros" en el CFDI.
      */
-    ThirdParty: {
+    ThirdPartyInput: {
       /** Nombre o razón social del tercero. */
       legal_name?: string
       /** RFC del tercero. */
@@ -2778,7 +2818,7 @@ export interface components {
         | components['schemas']['HidroYPetroComplementInput']
         | components['schemas']['IeduComplementInput']
       third_party?: Record<string, unknown> &
-        components['schemas']['ThirdParty']
+        components['schemas']['ThirdPartyInput']
       /** Números de cuenta para el impuesto predial. */
       property_tax_account?: string[]
     }
@@ -2808,7 +2848,7 @@ export interface components {
         | components['schemas']['HidroYPetroComplementInput']
         | components['schemas']['IeduComplementInput']
       third_party?: Record<string, unknown> &
-        components['schemas']['ThirdParty']
+        components['schemas']['ThirdPartyInput']
     }
     /**
      * LineItem
@@ -3312,10 +3352,12 @@ export interface components {
     }
     NominaReceptorNestedInput: {
       /** Arreglo de objetos para expresar información sobre la empresa que se beneficia del trabajo del empleado, en casos donde el emisor preste servicios de subcontratación. */
-      sub_contratacion?: (components['schemas']['NominaSubContratacionRequiredProperties'] &
-        components['schemas']['NominaSubContratacionProperties'])[]
+      sub_contratacion?: components['schemas']['NominaSubContratacionInput'][]
     }
-    NominaSubContratacionRequiredProperties: Record<string, unknown>
+    NominaSubContratacionInput: WithRequired<
+      components['schemas']['NominaSubContratacionProperties'],
+      'rfc_labora' | 'porcentaje_tiempo'
+    >
     NominaSubContratacionProperties: {
       /** RFC de la persona o empresa que subcontrata, es decir, de la persona o empresa en donde el trabajador prestó directamente sus servicios. */
       rfc_labora?: string
@@ -4121,7 +4163,10 @@ export interface components {
       /** Datos del transporte ferroviario utilizado. */
       TransporteFerroviario?: components['schemas']['CartaPorteTransporteFerroviario']
     }
-    NamespaceRequiredProperties: Record<string, unknown>
+    NamespaceInput: WithRequired<
+      components['schemas']['NamespaceProperties'],
+      'prefix' | 'uri' | 'schema_location'
+    >
     /** Namespace */
     NamespaceProperties: {
       /** Prefijo o nombre del namespace. */
@@ -4208,7 +4253,7 @@ export interface components {
       )[]
     }
     /** Webhook */
-    WebhookCreateEdit: {
+    WebhookUpdateInput: {
       /**
        * Estatus del webhook
        * @enum {string}
@@ -4254,6 +4299,7 @@ export interface components {
        */
       sat_validated_at?: Date | null
     }
+    CustomerUpdateInput: components['schemas']['CustomerProperties']
     CustomerProperties: components['schemas']['CustomerCommonProperties'] & {
       address?: components['schemas']['CommonAddressProperties'] & {
         /** Si el país es México ("MEX"), contiene el nombre del Estado o Entidad Federativa. Para extranjeros contiene el código de Estado de acuerdo al estándar [ISO 3166-2](https://en.wikipedia.org/wiki/ISO_3166-2), que puedes consultar en nuestro [Catálogo de Estados](https://dashboard.facturapi.io/catalogs/state). */
@@ -4389,7 +4435,7 @@ export interface components {
     /** Product */
     LineItemProductInput: components['schemas']['ProductProperties']
     /** Product */
-    LineItemProductEgresoInput: components['schemas']['ProductEgresoProperties']
+    LineItemProductEgresoInput: components['schemas']['ProductEgresoInput']
     /** Product */
     LineItemTrasladoProductInput: {
       /** Descripción del bien o servicio como aparecerá en la factura. */
@@ -4443,10 +4489,12 @@ export interface components {
     ProductSearchResult: components['schemas']['SearchResult'] & {
       data: components['schemas']['Product'][]
     }
+    ProductCreateInput: components['schemas']['ProductProperties']
     ProductProperties: WithRequired<
       components['schemas']['ProductEditableProperties'],
       'description' | 'product_key' | 'price'
     >
+    ProductUpdateInput: components['schemas']['ProductEditableProperties']
     ProductEditableProperties: {
       /** Descripción del bien o servicio como aparecerá en la factura. */
       description?: string
@@ -4511,7 +4559,7 @@ export interface components {
       /** Identificador de uso interno designado por la empresa. Puede tener cualquier valor. */
       sku?: string
     }
-    ProductEgresoProperties: {
+    ProductEgresoInput: {
       /** Resumen de la operación en una sola descripción. Deben mencionarse cada uno de los productos que contempla el descuento, devolución o bonificación aplicada y que contienen las facturas relacionadas. Si el egreso está basado en un pocentaje (como al aplicar un 30% de descuento), dicho porcentaje debe incluirse en la descripción junto al nombre del producto que corresponda. */
       description: string
       /**
@@ -4804,7 +4852,6 @@ export interface components {
     InvoiceSearchResult: components['schemas']['SearchResult'] & {
       data: components['schemas']['Invoice'][]
     }
-    InvoiceRequiredProperties: Record<string, unknown>
     InvoiceProperties: {
       /**
        * Estado actual de la factura. `failed` indica que el timbrado en segundo plano o la recuperación automática del CFDI terminó sin éxito.
@@ -5040,8 +5087,7 @@ export interface components {
        * Si incluiste el parámetro `complements`, este campo es opcional; en cambio si incluiste el parámetro `addenda`, debes enviar la información necesaria para incluir estos namespaces en el documento XML.
        * @default []
        */
-      namespaces?: (components['schemas']['NamespaceRequiredProperties'] &
-        components['schemas']['NamespaceProperties'])[]
+      namespaces?: components['schemas']['NamespaceInput'][]
       /** Configura qué campos opcionales se quieren mostrar en el PDF. El SAT no obliga a mostrar estos campos, pero pueden activarse según la preferencia del cliente para la factura en curso. Utiliza este campo para peticiones de generación de facturas en las cuales necesites utilizar una configuración distinta al campo pdf_extra de la organización. */
       pdf_options?: {
         /**
@@ -5109,6 +5155,11 @@ export interface components {
          * @default false
          */
         repeat_signature?: boolean
+        /**
+         * Mostrar el lugar de expedición de la factura en vez de la dirección de la organización. Solo se muestra una dirección.
+         * @default false
+         */
+        use_expedition_address?: boolean
         payroll_options?: {
           /** @default false */
           tipo_contrato?: boolean
@@ -5139,8 +5190,7 @@ export interface components {
        */
       addenda?: string
       /** Si incluiste el parámetro `complements`, este campo es opcional; en cambio si incluiste el parámetro `addenda`, debes enviar la información necesaria para incluir estos namespaces en el documento XML. */
-      namespaces?: (components['schemas']['NamespaceRequiredProperties'] &
-        components['schemas']['NamespaceProperties'])[]
+      namespaces?: components['schemas']['NamespaceInput'][]
       /** Configura qué campos opcionales se quieren mostrar en el PDF. El SAT no obliga a mostrar estos campos, pero pueden activarse según la preferencia del cliente para la factura en curso. Utiliza este campo para peticiones de generación de facturas en las cuales necesites utilizar una configuración distinta al campo pdf_extra de la organización. */
       pdf_options?: {
         /**
@@ -5208,6 +5258,11 @@ export interface components {
          * @default false
          */
         repeat_signature?: boolean
+        /**
+         * Mostrar el lugar de expedición de la factura en vez de la dirección de la organización. Solo se muestra una dirección.
+         * @default false
+         */
+        use_expedition_address?: boolean
         payroll_options?: {
           /** @default false */
           tipo_contrato?: boolean
@@ -5222,7 +5277,7 @@ export interface components {
     }
     /** Cliente receptor de la factura. */
     InvoiceCustomerInput: components['schemas']['CustomerCreateInput'] | string
-    InvoiceCommonInputProperties: {
+    InvoiceCommonInput: {
       customer?: components['schemas']['InvoiceCustomerInput']
       /**
        * Estado inicial de la factura. Si se envía `draft`, la factura se guardará como borrador y no se timbrará ni se
@@ -5251,7 +5306,7 @@ export interface components {
        */
       idempotency_key?: string
     } & components['schemas']['InvoiceableCommonInput']
-    InvoiceCommonEditInputProperties: {
+    InvoiceCommonEditInput: {
       /**
        * Estado de la factura. El valor `draft` identifica un borrador que no se ha timbrado ni enviado al SAT.
        *     Sólo es posible editar facturas con este estado; al editarlas, no se puede cambiar `status`.
@@ -5275,7 +5330,7 @@ export interface components {
        */
       idempotency_key?: string
     } & components['schemas']['InvoiceableCommonEditInput']
-    InvoiceDraftInputProperties: components['schemas']['InvoiceCommonEditInputProperties'] & {
+    InvoiceDraftCommonInput: components['schemas']['InvoiceCommonEditInput'] & {
       /** Cliente receptor de la factura. */
       customer?: null | components['schemas']['CustomerCreateInput'] | string
     }
@@ -5440,7 +5495,7 @@ export interface components {
        * @default []
        */
       complements?: components['schemas']['InvoiceComplementInput'][]
-    } & components['schemas']['InvoiceCommonInputProperties']
+    } & components['schemas']['InvoiceCommonInput']
     /** Egreso */
     InvoiceEgresoInput: {
       /** @enum {string} */
@@ -5489,7 +5544,7 @@ export interface components {
        * @default []
        */
       complements?: components['schemas']['InvoiceComplementInput'][]
-    } & components['schemas']['InvoiceCommonInputProperties']
+    } & components['schemas']['InvoiceCommonInput']
     /** Pago */
     InvoicePagoInput: {
       /** @enum {string} */
@@ -5500,10 +5555,10 @@ export interface components {
        */
       related_documents?: components['schemas']['RelatedDocumentInput'][]
       third_party?: Record<string, unknown> &
-        components['schemas']['ThirdParty']
+        components['schemas']['ThirdPartyInput']
       /** Complementos a incluir en la factura. */
       complements: components['schemas']['InvoiceComplementInput'][]
-    } & components['schemas']['InvoiceCommonInputProperties']
+    } & components['schemas']['InvoiceCommonInput']
     /** Nómina */
     InvoiceNominaInput: {
       /** @enum {string} */
@@ -5515,7 +5570,7 @@ export interface components {
        * @default []
        */
       related_documents?: components['schemas']['RelatedDocumentInput'][]
-    } & components['schemas']['InvoiceCommonInputProperties']
+    } & components['schemas']['InvoiceCommonInput']
     /** Traslado */
     InvoiceTrasladoInput: {
       /** @enum {string} */
@@ -5557,7 +5612,7 @@ export interface components {
        * @default []
        */
       related_documents?: components['schemas']['RelatedDocumentInput'][]
-    } & components['schemas']['InvoiceCommonInputProperties']
+    } & components['schemas']['InvoiceCommonInput']
     /** Ingreso */
     InvoiceIngresoEditInput: {
       /**
@@ -5639,7 +5694,7 @@ export interface components {
        *     parámetro `pdf_custom_section`.
        */
       complements?: components['schemas']['InvoiceComplementInput'][]
-    } & components['schemas']['InvoiceDraftInputProperties']
+    } & components['schemas']['InvoiceDraftCommonInput']
     /** Egreso */
     InvoiceEgresoEditInput: {
       /**
@@ -5677,7 +5732,7 @@ export interface components {
        *     del complemento al PDF por separado usando el parámetro `pdf_custom_section`.
        */
       complements?: components['schemas']['InvoiceComplementInput'][]
-    } & components['schemas']['InvoiceDraftInputProperties']
+    } & components['schemas']['InvoiceDraftCommonInput']
     /** Pago */
     InvoicePagoEditInput: {
       /**
@@ -5688,10 +5743,10 @@ export interface components {
       /** Documentos relacionados con la factura. */
       related_documents?: components['schemas']['RelatedDocumentInput'][]
       third_party?: Record<string, unknown> &
-        components['schemas']['ThirdParty']
+        components['schemas']['ThirdPartyInput']
       /** Complementos a incluir en la factura. */
       complements?: components['schemas']['InvoiceComplementInput'][]
-    } & components['schemas']['InvoiceDraftInputProperties']
+    } & components['schemas']['InvoiceDraftCommonInput']
     /** Nómina */
     InvoiceNominaEditInput: {
       customer?: components['schemas']['InvoiceCustomerInput']
@@ -5704,7 +5759,7 @@ export interface components {
       complements?: components['schemas']['InvoiceComplementInput'][]
       /** Documentos relacionados con la factura. */
       related_documents?: components['schemas']['RelatedDocumentInput'][]
-    } & components['schemas']['InvoiceCommonEditInputProperties']
+    } & components['schemas']['InvoiceCommonEditInput']
     /** Traslado */
     InvoiceTrasladoEditInput: {
       customer?: components['schemas']['InvoiceCustomerInput']
@@ -5741,7 +5796,7 @@ export interface components {
       exchange?: number
       /** Documentos relacionados con el comprobante. */
       related_documents?: components['schemas']['RelatedDocumentInput'][]
-    } & components['schemas']['InvoiceCommonEditInputProperties']
+    } & components['schemas']['InvoiceCommonEditInput']
     /** Objeto Receipt */
     Receipt: components['schemas']['ResourceAutoGeneratedProps'] &
       components['schemas']['ReceiptProperties'] & {
@@ -5851,14 +5906,14 @@ export interface components {
     } & components['schemas']['InvoiceableCommonInput']
     /** Las fechas son opcionales al seleccionar por periodo. Al enviar receipts se requieren from y to. La periodicidad predeterminada viene de la configuración de la organización. */
     GlobalInvoiceInput:
-      | (components['schemas']['GlobalInvoiceInputProperties'] & {
+      | (components['schemas']['GlobalInvoiceCommonInput'] & {
           receipts?: never
         })
       | WithRequired<
-          components['schemas']['GlobalInvoiceInputProperties'],
+          components['schemas']['GlobalInvoiceCommonInput'],
           'receipts' | 'from' | 'to'
         >
-    GlobalInvoiceInputProperties: {
+    GlobalInvoiceCommonInput: {
       /**
        * Fecha inicial de los recibos que se incluirán en la factura global.
        *     Por default, este valor es el inicio del último periodo (día, semana,
@@ -6188,8 +6243,7 @@ export interface components {
        */
       addenda?: string
       /** Namespaces a insertar en el nodo raíz de la factura. Requerido en `addenda`. */
-      namespaces?: (components['schemas']['NamespaceRequiredProperties'] &
-        components['schemas']['NamespaceProperties'])[]
+      namespaces?: components['schemas']['NamespaceInput'][]
     }
     OrganizationAddress: components['schemas']['CommonAddressProperties'] & {
       /** Nombre del Estado o Entidad Federativa. */
@@ -6309,6 +6363,11 @@ export interface components {
            * @default false
            */
           repeat_signature?: boolean
+          /**
+           * Mostrar el lugar de expedición de la factura en vez de la dirección de la organización. Solo se muestra una dirección.
+           * @default false
+           */
+          use_expedition_address?: boolean
           /**
            * Renderizar el complemento de Instituciones Educativas Privadas en el PDF.
            * @default false
@@ -6589,6 +6648,11 @@ export interface components {
          * @default false
          */
         repeat_signature?: boolean
+        /**
+         * Mostrar el lugar de expedición de la factura en vez de la dirección de la organización. Solo se muestra una dirección.
+         * @default false
+         */
+        use_expedition_address?: boolean
         payroll_options?: {
           /** @default false */
           tipo_contrato?: boolean
@@ -6656,9 +6720,9 @@ export interface components {
      *     guión (-) y guión bajo (_). Debe empezar con una letra y
      *     terminar en letra o número.
      */
-    DomainField: string
+    DomainInput: string
     OrganizationDomainInput: {
-      domain: components['schemas']['DomainField']
+      domain: components['schemas']['DomainInput']
     }
     OrganizationSeriesCreateInput: {
       /** Nombre de la serie. */
@@ -6960,7 +7024,7 @@ export interface components {
     /** Identificador de la solicitud de ZIP. */
     InvoiceZipRequestId: string
     /** Objeto con rango de fechas solicitado. */
-    SearchDate: components['schemas']['DateRange']
+    SearchDate: components['schemas']['DateRangeInput']
     /** Página de resultados a regresar, empezando desde la página 1. El máximo no es fijo; junto con `limit` debe caber dentro del tope de 3,000 resultados (con el `limit` por defecto de 100, la página máxima es 30). */
     SearchPage: number
     /** Número del 1 al 100 que representa la cantidad máxima de resultados a regresar con motivos de paginación. */
@@ -6980,17 +7044,17 @@ export interface components {
     }
     CustomerEdit: {
       content: {
-        'application/json': components['schemas']['CustomerProperties']
+        'application/json': components['schemas']['CustomerUpdateInput']
       }
     }
     ProductCreate: {
       content: {
-        'application/json': components['schemas']['ProductProperties']
+        'application/json': components['schemas']['ProductCreateInput']
       }
     }
     ProductEdit: {
       content: {
-        'application/json': components['schemas']['ProductEditableProperties']
+        'application/json': components['schemas']['ProductUpdateInput']
       }
     }
     InvoiceCreate: {
@@ -7150,7 +7214,7 @@ export interface components {
     }
     WebhookEdit: {
       content: {
-        'application/json': components['schemas']['WebhookCreateEdit']
+        'application/json': components['schemas']['WebhookUpdateInput']
       }
     }
   }
@@ -7159,6 +7223,62 @@ export interface components {
 }
 export type $defs = Record<string, never>
 export interface operations {
+  searchNominaDeductions: {
+    parameters: {
+      query: {
+        /** Prefijo para buscar en `key` o `description`. */
+        q: string
+        page?: number
+        limit?: number
+      }
+      header?: never
+      path?: never
+      cookie?: never
+    }
+    requestBody?: never
+    responses: {
+      /** Búsqueda exitosa */
+      200: {
+        headers: {
+          [name: string]: unknown
+        }
+        content: {
+          'application/json': components['schemas']['SearchKeyDescriptionResult']
+        }
+      }
+      400: components['responses']['BadRequest']
+      401: components['responses']['Unauthenticated']
+      429: components['responses']['RateLimited']
+    }
+  }
+  searchNominaPerceptions: {
+    parameters: {
+      query: {
+        /** Prefijo para buscar en `key` o `description`. */
+        q: string
+        page?: number
+        limit?: number
+      }
+      header?: never
+      path?: never
+      cookie?: never
+    }
+    requestBody?: never
+    responses: {
+      /** Búsqueda exitosa */
+      200: {
+        headers: {
+          [name: string]: unknown
+        }
+        content: {
+          'application/json': components['schemas']['SearchKeyDescriptionResult']
+        }
+      }
+      400: components['responses']['BadRequest']
+      401: components['responses']['Unauthenticated']
+      429: components['responses']['RateLimited']
+    }
+  }
   searchCartaPorteAirTransportCodes: {
     parameters: {
       query: {
@@ -8028,7 +8148,7 @@ export interface operations {
         /** Filtrar por estado de pago. Coincidencia exacta. */
         payment_status?: 'paid' | 'unpaid'
         /** Objeto con rango de fechas solicitado. El rango filtra el campo `date` de la factura. */
-        date?: components['schemas']['DateRange']
+        date?: components['schemas']['DateRangeInput']
         /** Página de resultados a regresar, empezando desde la página 1. El máximo no es fijo; junto con `limit` debe caber dentro del tope de 3,000 resultados (con el `limit` por defecto de 100, la página máxima es 30). */
         page?: number
         /** Número del 1 al 100 que representa la cantidad máxima de resultados a regresar con motivos de paginación. */
@@ -9811,7 +9931,7 @@ export interface operations {
   checkDomainAvailability: {
     parameters: {
       query: {
-        domain: components['schemas']['DomainField']
+        domain: components['schemas']['DomainInput']
       }
       header?: never
       path?: never

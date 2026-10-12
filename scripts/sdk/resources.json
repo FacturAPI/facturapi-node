@@ -584,5 +584,13 @@
         "extension": "validateSignature"
       }
     }
+  },
+  "nominaCatalogs": {
+    "className": "NominaCatalogs",
+    "directory": "tools",
+    "methods": {
+      "searchDeductions": "searchNominaDeductions",
+      "searchPerceptions": "searchNominaPerceptions"
+    }
   }
 }
