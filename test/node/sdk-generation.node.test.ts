@@ -184,7 +184,7 @@ it('documents SDK arguments, binary returns and absolute links from the public s
   )
 })
 
-it('resolves moving refs once and reads merged YAML properties from the pinned commit', async () => {
+it('resolves moving refs once and reads standard YAML aliases from the pinned commit', async () => {
   const content = Buffer.from(
     `openapi: 3.1.0
 info: { title: Test, version: '1' }
@@ -193,14 +193,14 @@ components:
   schemas:
     Shared:
       type: object
-      properties: &shared
+      properties:
         example: { type: string, description: A real field. }
-        code: { type: string, enum: ['01'] }
+        code: &code { type: string, enum: ['01'] }
     Future:
       type: object
       properties:
-        <<: *shared
         example: { type: string, description: Overridden field. }
+        code: *code
 `,
   )
   const revision = 'a'.repeat(40)
@@ -241,6 +241,19 @@ components:
       readSpecification({ ...source, revision: 'main' }),
     ).rejects.toThrow('complete documentation commit SHA')
     expect(fetch).toHaveBeenCalledTimes(2)
+    fetch.mockResolvedValueOnce(
+      new Response(`openapi: 3.1.0
+info: { title: Test, version: '1' }
+paths: {}
+components:
+  schemas:
+    Invalid:
+      <<: { type: object }
+`),
+    )
+    await expect(readSpecification(source)).rejects.toThrow(
+      'YAML merge keys are not supported',
+    )
   } finally {
     vi.unstubAllGlobals()
   }

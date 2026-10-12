@@ -4394,6 +4394,8 @@ export interface components {
       external_id?: string | null
       /** Uso de CFDI por defecto. */
       default_invoice_use?: string | null
+      /** Requerido para clientes nacionales. Clave del régimen fiscal del cliente, del catálogo de [Regímenes Fiscales](#r%C3%A9gimen-fiscal). */
+      tax_system?: string | null
       address?: {
         /** Nombre de la calle */
         street?: string | null
@@ -4407,17 +4409,15 @@ export interface components {
         city?: string | null
         /** Municipio o delegación */
         municipality?: string | null
-        /** Código postal */
-        zip?: string | null
         state?: string | null
         /**
          * ISO 3166-1 alpha-3.
          * @default MEX
          */
         country?: string | null
+        /** Código postal */
+        zip?: string | null
       } | null
-      /** Requerido para clientes nacionales. Clave del régimen fiscal del cliente, del catálogo de [Regímenes Fiscales](#r%C3%A9gimen-fiscal). */
-      tax_system?: string | null
     }
     CustomerCreateCommonInput: {
       /** Nombre Fiscal o Razón Social del cliente. *sin* el régimen societario (ej.: S.A. de C.V.). */
@@ -5031,6 +5031,14 @@ export interface components {
        * @default []
        */
       target_invoice_ids?: string[]
+      /**
+       * Al recuperar el detalle de un CFDI de ingreso o egreso, este arreglo contiene los IDs de los
+       *     CFDI del tipo opuesto relacionados mediante `related_documents`. Para un ingreso incluye los
+       *     egresos que referencian su UUID; para un egreso incluye los ingresos cuyos UUID están en sus
+       *     documentos relacionados. Solo incluye CFDI registrados en la misma organización y ambiente.
+       * @default []
+       */
+      related_invoice_ids?: string[]
       /** Código de la moneda, acorde al estándar [ISO 4217](https://es.wikipedia.org/wiki/ISO_4217). */
       currency: string
       /** Tipo de cambio conforme a la moneda usada. Representa el número de pesos mexicanos que equivalen a una unidad de la divisa señalada en el atributo `currency`. */
@@ -5163,10 +5171,10 @@ export interface components {
          */
         repeat_signature?: boolean
         /**
-         * Mostrar el lugar de expedición de la factura en vez de la dirección de la organización. Solo se muestra una dirección.
+         * Mostrar el domicilio fiscal de la organización en vez del lugar de expedición de la factura. Solo se muestra una dirección.
          * @default false
          */
-        use_expedition_address?: boolean
+        render_organization_address?: boolean
         payroll_options?: {
           /** @default false */
           tipo_contrato?: boolean
@@ -5266,10 +5274,10 @@ export interface components {
          */
         repeat_signature?: boolean
         /**
-         * Mostrar el lugar de expedición de la factura en vez de la dirección de la organización. Solo se muestra una dirección.
+         * Mostrar el domicilio fiscal de la organización en vez del lugar de expedición de la factura. Solo se muestra una dirección.
          * @default false
          */
-        use_expedition_address?: boolean
+        render_organization_address?: boolean
         payroll_options?: {
           /** @default false */
           tipo_contrato?: boolean
@@ -6371,10 +6379,10 @@ export interface components {
            */
           repeat_signature?: boolean
           /**
-           * Mostrar el lugar de expedición de la factura en vez de la dirección de la organización. Solo se muestra una dirección.
+           * Mostrar el domicilio fiscal de la organización en vez del lugar de expedición de la factura. Solo se muestra una dirección.
            * @default false
            */
-          use_expedition_address?: boolean
+          render_organization_address?: boolean
           /**
            * Renderizar el complemento de Instituciones Educativas Privadas en el PDF.
            * @default false
@@ -6656,10 +6664,10 @@ export interface components {
          */
         repeat_signature?: boolean
         /**
-         * Mostrar el lugar de expedición de la factura en vez de la dirección de la organización. Solo se muestra una dirección.
+         * Mostrar el domicilio fiscal de la organización en vez del lugar de expedición de la factura. Solo se muestra una dirección.
          * @default false
          */
-        use_expedition_address?: boolean
+        render_organization_address?: boolean
         payroll_options?: {
           /** @default false */
           tipo_contrato?: boolean

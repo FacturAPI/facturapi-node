@@ -38,9 +38,7 @@ export async function readSpecification(source) {
     `Could not read the public specification: HTTP ${response.status}`,
   )
   const content = Buffer.from(await response.arrayBuffer())
-  const spec = yaml.load(content.toString('utf8'), {
-    schema: yaml.CORE_SCHEMA.withTags(yaml.mergeTag),
-  })
+  const spec = yaml.load(content.toString('utf8'))
   assert(spec.openapi === '3.1.0', 'Expected the public OpenAPI 3.1 contract.')
   const presentation = new Set([
     'x-codeSamples',
@@ -69,6 +67,10 @@ export async function readSpecification(source) {
   ])
   return JSON.parse(
     JSON.stringify(spec, function (key, value) {
+      assert(
+        key !== '<<',
+        'YAML merge keys are not supported in the public specification.',
+      )
       if (value && typeof value === 'object' && dictionaryKeys.has(key))
         dictionaries.add(value)
       return presentation.has(key) && !dictionaries.has(this)
