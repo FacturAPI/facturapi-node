@@ -325,6 +325,7 @@ expectType<string>(receipt.key)
 
 declare const customer: Customer
 expectType<Date>(customer.created_at)
+expectType<string | undefined>(customer.email)
 expectType<Date | null | undefined>(customer.sat_validated_at)
 expectType<Date | null | undefined>(customer.edit_link_expires_at)
 declare const product: Product
@@ -426,6 +427,7 @@ expectNotAssignable<
 
 // Incomplete customer information is accepted only when an edit link is requested.
 client.customers.create({}, { createEditLink: true })
+client.customers.create({ email: null }, { createEditLink: true })
 client.customers.create(
   { email: 'cliente@example.com' },
   { createEditLink: true },
