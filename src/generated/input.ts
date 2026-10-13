@@ -4323,7 +4323,7 @@ export interface components {
       tax_id?: string | null
       /**
        * Format: email
-       * Correo electrónico del cliente. Un valor null se trata como omitido.
+       * Correo electrónico del cliente. En una actualización, null elimina el correo.
        */
       email?: string | null
       /** Teléfono del cliente. */
@@ -4354,9 +4354,14 @@ export interface components {
         country?: string | null
       } | null
     }
+    /** En una actualización, los campos omitidos conservan su valor. Un valor null borra los campos opcionales. No se permite null en legal_name, tax_id, tax_system ni address. */
     CustomerUpdateInput: components['schemas']['CustomerEditableInput'] & {
-      /** Requerido para clientes nacionales. Clave del régimen fiscal del cliente, del catálogo de [Regímenes Fiscales](#r%C3%A9gimen-fiscal). */
-      tax_system?: string | null
+      legal_name?: string
+      tax_id?: string
+      tax_system?: (string | null) & string
+      address?: {
+        country?: string
+      }
     }
     /** Omite los parámetros para eliminar un borrador. Los documentos emitidos requieren motivo; los motivos 01 y 04 también requieren substitution. */
     CancellationQueryInput:
@@ -4386,7 +4391,7 @@ export interface components {
       tax_id?: string | null
       /**
        * Format: email
-       * Correo electrónico del cliente. Un valor null se trata como omitido.
+       * Correo electrónico del cliente. En una actualización, null elimina el correo.
        */
       email?: string | null
       /** Teléfono del cliente. */
@@ -4424,7 +4429,7 @@ export interface components {
       legal_name: string
       /**
        * Format: email
-       * Correo electrónico del cliente. Un valor null se trata como omitido.
+       * Correo electrónico del cliente. En una actualización, null elimina el correo.
        */
       email?: string | null
       /** Teléfono del cliente. */

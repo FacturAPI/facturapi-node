@@ -582,7 +582,13 @@ client.customers.create(
   { address: { zip: null, state: null, country: null } },
   { createEditLink: true },
 )
-client.customers.update('cus_ejemplo', { legal_name: null, address: null })
+client.customers.update('cus_ejemplo', { email: null, external_id: null })
+// @ts-expect-error Fiscal fields cannot be cleared during an update.
+client.customers.update('cus_ejemplo', { legal_name: null })
+// @ts-expect-error A customer tax regime cannot be cleared during an update.
+client.customers.update('cus_ejemplo', { tax_system: null })
+// @ts-expect-error A customer address cannot be cleared during an update.
+client.customers.update('cus_ejemplo', { address: null })
 
 // Explicit creation methods select their own contract without narrowing a free country string.
 client.customers.createNational({
