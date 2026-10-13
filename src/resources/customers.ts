@@ -287,16 +287,77 @@ export default class Customers {
   /**
    * Editar cliente
    *
+   * En una actualización sin createEditLink=true, los campos omitidos conservan su valor. Un valor null borra los campos que admiten null; un campo opcional puede omitirse sin que necesariamente admita null. No se permite null en legal_name, tax_id, tax_system ni address.
+   *
    * Actualiza la información de un cliente existente, asignando los valores de los parámetros enviados. Los parámetros que no se envíen en la petición no se modificarán.
+   *
+   * Con createEditLink=true, los campos omitidos conservan su valor y null borra el valor existente, incluidos los datos fiscales. Los valores no nulos deben ser válidos.
    *
    * @param id - ID del objeto a editar
    * @param data - Datos de la solicitud.
    * @param params - Parámetros de consulta.
+   * @param params.createEditLink - Si pasas el valor `true`, se generará un enlace para que el cliente pueda editar
+   * su información fiscal. Este enlace estará disponible en el campo "edit_link", será
+   * válido por 3 días y sólo se podrá usar una vez. Pasar el valor `true` al editar
+   * **no** desactivará la validación de información fiscal con el SAT.
+   *
    * @returns Objeto `Customer` editado correctamente
    */
   update(
     id: string,
-    data: OperationBody<'editCustomer'>,
+    data: InputComponents['schemas']['CustomerUpdateWithEditLinkInput'],
+    params: OperationQuery<'editCustomer'> & { createEditLink: true },
+  ): Promise<OperationResponse<'editCustomer'>>
+
+  /**
+   * Editar cliente
+   *
+   * En una actualización sin createEditLink=true, los campos omitidos conservan su valor. Un valor null borra los campos que admiten null; un campo opcional puede omitirse sin que necesariamente admita null. No se permite null en legal_name, tax_id, tax_system ni address.
+   *
+   * Actualiza la información de un cliente existente, asignando los valores de los parámetros enviados. Los parámetros que no se envíen en la petición no se modificarán.
+   *
+   * Con createEditLink=true, los campos omitidos conservan su valor y null borra el valor existente, incluidos los datos fiscales. Los valores no nulos deben ser válidos.
+   *
+   * @param id - ID del objeto a editar
+   * @param data - Datos de la solicitud.
+   * @param params - Parámetros de consulta.
+   * @param params.createEditLink - Si pasas el valor `true`, se generará un enlace para que el cliente pueda editar
+   * su información fiscal. Este enlace estará disponible en el campo "edit_link", será
+   * válido por 3 días y sólo se podrá usar una vez. Pasar el valor `true` al editar
+   * **no** desactivará la validación de información fiscal con el SAT.
+   *
+   * @returns Objeto `Customer` editado correctamente
+   */
+  update(
+    id: string,
+    data: InputComponents['schemas']['CustomerUpdateInput'],
+    params?: OperationQuery<'editCustomer'> | null,
+  ): Promise<OperationResponse<'editCustomer'>>
+
+  /**
+   * Editar cliente
+   *
+   * En una actualización sin createEditLink=true, los campos omitidos conservan su valor. Un valor null borra los campos que admiten null; un campo opcional puede omitirse sin que necesariamente admita null. No se permite null en legal_name, tax_id, tax_system ni address.
+   *
+   * Actualiza la información de un cliente existente, asignando los valores de los parámetros enviados. Los parámetros que no se envíen en la petición no se modificarán.
+   *
+   * Con createEditLink=true, los campos omitidos conservan su valor y null borra el valor existente, incluidos los datos fiscales. Los valores no nulos deben ser válidos.
+   *
+   * @param id - ID del objeto a editar
+   * @param data - Datos de la solicitud.
+   * @param params - Parámetros de consulta.
+   * @param params.createEditLink - Si pasas el valor `true`, se generará un enlace para que el cliente pueda editar
+   * su información fiscal. Este enlace estará disponible en el campo "edit_link", será
+   * válido por 3 días y sólo se podrá usar una vez. Pasar el valor `true` al editar
+   * **no** desactivará la validación de información fiscal con el SAT.
+   *
+   * @returns Objeto `Customer` editado correctamente
+   */
+  update(
+    id: string,
+    data:
+      | OperationBody<'editCustomer'>
+      | InputComponents['schemas']['CustomerUpdateWithEditLinkInput'],
     params?: OperationQuery<'editCustomer'> | null,
   ): Promise<OperationResponse<'editCustomer'>> {
     if (!id) return Promise.reject(new Error('id is required'))

@@ -21,7 +21,11 @@ export function methodDocumentation(spec, operation, entry) {
     operation.summary,
     entry.bodySchema && spec.components.schemas[entry.bodySchema].description,
     operation.description,
+    entry.operation === 'editCustomer' &&
+      entry.bodyByQueryFlag &&
+      spec.components.schemas[entry.bodyByQueryFlag.true].description,
     entry.bodySchema &&
+      entry.operation === 'createCustomer' &&
       'Este método conserva los campos requeridos de su variante. Para crear un cliente con datos incompletos, usa create(data, { createEditLink: true }).',
   ]
     .filter(Boolean)

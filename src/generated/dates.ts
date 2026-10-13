@@ -486,6 +486,7 @@ export const componentDatePlans = {
   CustomerCommonProperties: 0,
   CustomerEditableInput: 0,
   CustomerUpdateInput: 0,
+  CustomerUpdateWithEditLinkInput: 0,
   CancellationQueryInput: 0,
   CustomerCreateWithEditLinkInput: 0,
   CustomerCreateCommonInput: 0,

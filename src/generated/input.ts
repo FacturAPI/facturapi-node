@@ -4354,7 +4354,7 @@ export interface components {
         country?: string | null
       } | null
     }
-    /** En una actualización, los campos omitidos conservan su valor. Un valor null borra los campos opcionales. No se permite null en legal_name, tax_id, tax_system ni address. */
+    /** En una actualización sin createEditLink=true, los campos omitidos conservan su valor. Un valor null borra los campos que admiten null; un campo opcional puede omitirse sin que necesariamente admita null. No se permite null en legal_name, tax_id, tax_system ni address. */
     CustomerUpdateInput: components['schemas']['CustomerEditableInput'] & {
       legal_name?: string
       tax_id?: string
@@ -4362,6 +4362,47 @@ export interface components {
       address?: {
         country?: string
       }
+    }
+    /** Con createEditLink=true, los campos omitidos conservan su valor y null borra el valor existente, incluidos los datos fiscales. Los valores no nulos deben ser válidos. */
+    CustomerUpdateWithEditLinkInput: {
+      /** Nombre Fiscal o Razón Social del cliente. *sin* el régimen societario (ej.: S.A. de C.V.). */
+      legal_name?: string | null
+      /** En clientes de México contiene el RFC del cliente. Para extranjeros es opcional y representa el número de registro de identificación tributaria, es decir, el equivalente al RFC en el país del cliente. */
+      tax_id?: string | null
+      /**
+       * Format: email
+       * Correo electrónico del cliente. En una actualización, null elimina el correo.
+       */
+      email?: string | null
+      /** Teléfono del cliente. */
+      phone?: string | null
+      external_id?: string | null
+      /** Uso de CFDI por defecto. */
+      default_invoice_use?: string | null
+      /** Requerido para clientes nacionales. Clave del régimen fiscal del cliente, del catálogo de [Regímenes Fiscales](#r%C3%A9gimen-fiscal). */
+      tax_system?: string | null
+      address?: {
+        /** Nombre de la calle */
+        street?: string | null
+        /** Número exterior. */
+        exterior?: string | null
+        /** Número interior. */
+        interior?: string | null
+        /** Colonia */
+        neighborhood?: string | null
+        /** Ciudad */
+        city?: string | null
+        /** Municipio o delegación */
+        municipality?: string | null
+        state?: string | null
+        /**
+         * ISO 3166-1 alpha-3.
+         * @default MEX
+         */
+        country?: string | null
+        /** Código postal */
+        zip?: string | null
+      } | null
     }
     /** Omite los parámetros para eliminar un borrador. Los documentos emitidos requieren motivo; los motivos 01 y 04 también requieren substitution. */
     CancellationQueryInput:
@@ -7064,7 +7105,9 @@ export interface components {
     }
     CustomerEdit: {
       content: {
-        'application/json': components['schemas']['CustomerUpdateInput']
+        'application/json':
+          | components['schemas']['CustomerUpdateInput']
+          | components['schemas']['CustomerUpdateWithEditLinkInput']
       }
     }
     ProductCreate: {

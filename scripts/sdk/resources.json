@@ -24,7 +24,14 @@
       },
       "list": "listCustomers",
       "retrieve": "getCustomer",
-      "update": "editCustomer",
+      "update": {
+        "operation": "editCustomer",
+        "bodySchema": "CustomerUpdateInput",
+        "bodyByQueryFlag": {
+          "property": "createEditLink",
+          "true": "CustomerUpdateWithEditLinkInput"
+        }
+      },
       "del": "deleteCustomer",
       "validateTaxInfo": "validateCustomerTaxInfo",
       "sendEditLinkByEmail": {

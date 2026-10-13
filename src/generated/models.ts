@@ -219,6 +219,8 @@ export type CustomerCommonProperties =
   Output['schemas']['CustomerCommonProperties']
 export type CustomerEditableInput = Input['schemas']['CustomerEditableInput']
 export type CustomerUpdateInput = Input['schemas']['CustomerUpdateInput']
+export type CustomerUpdateWithEditLinkInput =
+  Input['schemas']['CustomerUpdateWithEditLinkInput']
 export type CancellationQueryInput = Input['schemas']['CancellationQueryInput']
 export type CustomerCreateWithEditLinkInput =
   Input['schemas']['CustomerCreateWithEditLinkInput']

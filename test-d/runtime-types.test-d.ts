@@ -702,3 +702,10 @@ expectNotAssignable<NominaSubContratacionInput>({ rfc_labora: 'ABC101010111' })
 
 client.nominaCatalogs.searchDeductions({ q: '001', page: 0, limit: 10 })
 client.nominaCatalogs.searchPerceptions({ q: '001' })
+
+client.customers.update(
+  'cus_ejemplo',
+  { legal_name: null, tax_id: null, tax_system: null, address: null },
+  { createEditLink: true },
+)
+client.customers.update('cus_ejemplo', {}, { createEditLink: true })

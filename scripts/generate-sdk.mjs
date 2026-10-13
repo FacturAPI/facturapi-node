@@ -314,7 +314,7 @@ validateSignature<T extends ApiEventType = any>(data: { secret: string; signatur
         `import type { components as InputComponents } from '../generated/input';`,
       )
       methods.push(
-        `${documentation}${entry.name}(${entry.body.argument}: InputComponents['schemas']['${entry.bodyByQueryFlag.true}'], ${entry.params.argument}: OperationQuery<'${entry.operation}'> & { ${entry.bodyByQueryFlag.property}: true }): Promise<OperationResponse<'${entry.operation}'>>;`,
+        `${documentation}${entry.name}(${entry.arguments.map((argument, index) => (argument.name === entry.body.argument ? `${entry.body.argument}: InputComponents['schemas']['${entry.bodyByQueryFlag.true}']` : argument.name === entry.params.argument ? `${entry.params.argument}: OperationQuery<'${entry.operation}'> & { ${entry.bodyByQueryFlag.property}: true }` : argumentsList[index])).join(', ')}): Promise<OperationResponse<'${entry.operation}'>>;`,
       )
       methods.push(
         `${documentation}${entry.name}(${argumentsList.join(', ')}): Promise<OperationResponse<'${entry.operation}'>>;`,
