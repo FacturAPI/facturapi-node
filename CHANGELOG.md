@@ -11,6 +11,7 @@ and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.
 
 - Response timestamps are consistently returned as `Date` objects. SAT stamp timestamps and calendar dates remain strings.
 - Request and response types now follow the API contract, with more precise CFDI and complement inputs. TypeScript integrations may need adjustments; see the [migration guide from v3, v4, and v5](README.md#actualizar-desde-v3-v4-o-v5).
+- Certificate deletion returns its update timestamp, global receipt invoicing may return `null`, and domain availability requires an explicit domain. The cancellation type no longer declares `last_checked`. See the concrete v5 migration cases in the README.
 - Import from `facturapi`; direct imports into internal package files such as `facturapi/dist/...` are no longer supported.
 
 ### Fixed
