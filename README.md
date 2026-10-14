@@ -236,7 +236,7 @@ Los tipos de CFDI distinguen emisión, borrador y edición; cada complemento rel
 
 **Recibos.** `receipts.toInvoice(data)` distingue la factura creada del resumen devuelto con `dry_run: true`. Si el flag es dinámico, comprueba qué respuesta recibiste antes de acceder a campos exclusivos de una factura. En `createGlobalInvoice()`, si proporcionas `receipts`, incluye `from` y `to`; si tu petición ya los incluía, no necesitas cambiarla.
 
-Si consultabas `invoice.cancellation`, usa `invoice.cancellation_status` para el estado y `invoice.canceled_at` para la fecha de cancelación. En solicitudes de ZIP, utiliza las fechas documentadas como `created_at` y `scheduled_at`; `updated_at` no forma parte de esa respuesta.
+`invoice.cancellation` sigue disponible, incluidos su estado, motivo, factura sustituta y fechas. `cancellation.last_checked` se conserva como `Date` y representa el inicio de la última consulta del estado; no garantiza que haya terminado correctamente. También puedes consultar el estado con `invoice.cancellation_status` y la fecha de cancelación con `invoice.canceled_at`. En solicitudes de ZIP, utiliza las fechas documentadas como `created_at`, `scheduled_at`, `generated_at` y `content_as_of`; `updated_at` no forma parte de esa respuesta.
 
 ### Desde v4: tipos de respuesta
 

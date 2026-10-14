@@ -24,8 +24,8 @@ and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.
 - Autocompletion and editor documentation for request fields, method arguments, and responses across SDK operations.
 - More precise input types for CFDI variants, drafts, structured complements, and customer creation. Related fields are checked by TypeScript in supported cases, helping catch incomplete or incompatible inputs before sending a request.
 - Receipt invoicing distinguishes invoice creation from `dry_run` summaries in its return types.
-- Methods to create national, foreign, and generic RFC customers with specific input types; assign receipt customers; upload FIEL certificates; check API health; and search payroll perception and deduction catalogs.
-- Monthly invoice ZIP requests: request a package with `invoices.createZipRequest`, list and retrieve requests, and download the ZIP or obtain its download URL. Filter invoices and ZIP requests by SAT import provenance, inspect package freshness with `is_current`, and access generation and content dates as `Date` objects.
+- Methods to create national, foreign, and generic RFC customers with specific input types; assign receipt customers; upload FIEL certificates; and check API health.
+- Filter invoice searches and monthly ZIP requests with `sat_imported`, inspect ZIP freshness with `is_current`, and access `generated_at` and `content_as_of` as `Date` objects.
 - CommonJS supports `const Facturapi = require('facturapi')` directly, while retaining `.default` compatibility. CommonJS and ESM include matching TypeScript definitions.
 
 ## [5.2.0] 2026-10-07
@@ -82,38 +82,53 @@ and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.
 - Add draft support methods for retentions: `retentions.updateDraft`, `retentions.copyToDraft`, and `retentions.stampDraft`.
 
 ## [4.18.0] 2026-06-06
+
 ### Added
+
 - Expose structured API error metadata through `FacturapiError`, including `status`, `code`, `path`, `location`, `errors`, `logId`, and response `headers`.
 
 ## [4.17.0] 2026-04-27
+
 ### Added
+
 - Add support for custom request headers through the `Facturapi` constructor options.
 - Add `receipts.toInvoice` to create customer invoices from multiple receipt keys.
 - Add `receipts.previewToInvoicePdf` to generate PDF previews for to-invoice payloads.
 
 ## [4.16.0] 2026-04-23
+
 ### Added
+
 - Add new export catalogs for customs regimes, transport keys, SCT permits, COFEPRIS sectors, pharmaceutical forms, special transport conditions, customs documents, transport types, transport figures, ISTMO registry, loading keys, maritime configurations, rail traffic, containers, rail cars, rail service types, transfer reasons, incoterms, and customs units.
 - Expose the new enums on the `Facturapi` class as static getters for namespace-style access.
 
 ## [4.15.0] 2026-04-13
+
 ### Added
+
 - Add `organizations.updateDefaultSeries` to set an organization default series by type.
 
 ### Fixed
-- Return blob if content-type is octet-stream. This is the coverage for zip files 
+
+- Return blob if content-type is octet-stream. This is the coverage for zip files
 
 ## [4.14.2] 2026-03-31
+
 ### Fixed
+
 - Add `TaxFactor.EXENTO` (`"Exento"`) to align SDK enums with the API/OpenAPI allowed tax factor values.
 
 ## [4.14.1] 2026-03-31
+
 ### Fixed
+
 - Fix `organizations.checkDomainIsAvailable` to call `GET /organizations/domain-check` with query params (instead of an unsupported `PUT` payload flow).
 - Align method input naming to query semantics for clearer usage (`query`).
 
 ## [4.14.0] 2026-03-04
+
 ### Added
+
 - Add `facturapi.comercioExteriorCatalogs.searchTariffFractions` method for Fracción Arancelaria SAT catalog
 - Add organization team/access management methods under `organizations`:
   `listTeamAccess`, `retrieveTeamAccess`, `removeTeamAccess`,
@@ -128,6 +143,7 @@ and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.
 - Include `rfc_provider_cert` in stamp-related invoice typings and responses (thanks to @tetexxr).
 
 ### Changed
+
 - Use `PUT` for role reassignment/update methods:
   `organizations.updateTeamAccessRole` and `organizations.updateTeamRole`.
 - Use `Authorization: Bearer <apiKey>` by default in SDK requests (API supports this scheme).
@@ -136,6 +152,7 @@ and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.
 - Pin `npm` to `10.9.2` in CI/deploy workflows for deterministic lockfile validation across Node versions.
 
 ### Fixed
+
 - Improve non-OK HTTP error handling fallback when JSON error bodies are malformed or missing, returning clearer text/status errors.
 - Handle `ReadableStream` read failures during binary download conversion to Node streams to avoid unhandled rejections.
 - Strengthen WebCrypto webhook signature validation by using `subtle.verify` and explicit hex signature validation.
@@ -167,7 +184,7 @@ and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.
 
 ### Added
 
-- Add new catalogs for cartaporte 
+- Add new catalogs for cartaporte
 - `searchAirTransportCodes`, `searchTransportConfigs`,`searchRightsOfPassage`,`searchCustomsDocuments`,`searchPackagingTypes`,`searchTrailerTypes`, `searchHazardousMaterials`, `searchNavalAuthorizations`, `searchPortStations`, `searchMarineContainers`
 
 ## [4.10.0] 2025-09-04
