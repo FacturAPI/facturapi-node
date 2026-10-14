@@ -24,7 +24,7 @@ and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.
 - Autocompletion and editor documentation for request fields, method arguments, and responses across SDK operations.
 - More precise input types for CFDI variants, drafts, structured complements, and customer creation. Related fields are checked by TypeScript in supported cases, helping catch incomplete or incompatible inputs before sending a request.
 - Receipt invoicing distinguishes invoice creation from `dry_run` summaries in its return types.
-- Methods to create national, foreign, and generic RFC customers with specific input types; assign receipt customers; upload FIEL certificates; and check API health.
+- Methods to create national, foreign, and generic RFC customers with specific input types; assign receipt customers with `receipts.updateCustomer`; upload FIEL certificates; and check API health.
 - Filter invoice searches and monthly ZIP requests with `sat_imported`, inspect ZIP freshness with `is_current`, and access `generated_at` and `content_as_of` as `Date` objects.
 - CommonJS supports `const Facturapi = require('facturapi')` directly, while retaining `.default` compatibility. CommonJS and ESM include matching TypeScript definitions.
 

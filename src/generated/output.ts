@@ -713,7 +713,7 @@ export interface paths {
      * Descargar acuse de cancelación
      * Descarga en XML o PDF el acuse emitido por el SAT al solicitar la cancelación mediante Facturapi. El acuse contiene el resultado inmediato de la solicitud y no necesariamente acredita que el CFDI ya esté cancelado; consulta el estado de la factura para confirmar el desenlace.
      */
-    get: operations['downloadCancellationReceiptXml'];
+    get: operations['downloadCancellationReceipt'];
     put?: never;
     post?: never;
     delete?: never;
@@ -8719,7 +8719,7 @@ export interface operations {
       500: components['responses']['UnexpectedError'];
     };
   };
-  downloadCancellationReceiptXml: {
+  downloadCancellationReceipt: {
     parameters: {
       query?: never;
       header?: never;

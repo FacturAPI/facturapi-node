@@ -130,6 +130,8 @@ try {
 }
 ```
 
+En aplicaciones que mezclan ESM y CommonJS, cada build tiene su propia clase `FacturapiError`. Usa el mismo sistema de imports para el cliente y la clase de error; `instanceof` puede fallar si provienen de builds distintos.
+
 Usa `error.code` y los detalles de validación para decidir cómo responder; evita depender del texto del mensaje. Consulta la [referencia de errores](https://docs.facturapi.io/docs/getting-started/errors).
 
 ### Crear clientes con tipos específicos
@@ -169,11 +171,11 @@ Los tres métodos usan la misma operación de la API. `create()` sigue disponibl
 
 ## Compatibilidad
 
-| Entorno      | Soporte                                                                         |
-| ------------ | ------------------------------------------------------------------------------- |
-| Node.js      | 18 o superior; CI ejecuta pruebas en Node 18 y 24                               |
-| Navegador    | Requiere `fetch`, `FormData` y `Blob`; probado en Chromium                      |
-| React Native | Requiere esas APIs globales; no se ejecuta una suite específica de React Native |
+| Entorno      | Soporte                                                                                                                  |
+| ------------ | ------------------------------------------------------------------------------------------------------------------------ |
+| Node.js      | 18 o superior; CI ejecuta smokes de compatibilidad sobre el paquete construido en Node 18 y la suite completa en Node 24 |
+| Navegador    | Requiere `fetch`, `FormData` y `Blob`; probado en Chromium                                                               |
+| React Native | Requiere esas APIs globales; no se ejecuta una suite específica de React Native                                          |
 
 Mantén las llaves secretas en tu servidor. La compatibilidad de runtime con navegadores no convierte una llave secreta en pública.
 
@@ -270,7 +272,7 @@ Para ver las novedades de cada versión, consulta el [changelog](CHANGELOG.md).
 
 Para dudas de integración, consulta la [documentación](https://docs.facturapi.io) o escribe a [contacto@facturapi.io](mailto:contacto@facturapi.io).
 
-Para contribuir, instala las dependencias con la versión de pnpm indicada en `package.json` y Node.js 24.11 o superior compatible con las herramientas de build:
+Para contribuir, instala las dependencias con la versión de pnpm indicada en `package.json` y Node.js 24 o superior compatible con las herramientas de build:
 
 ```sh
 pnpm install

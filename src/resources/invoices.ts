@@ -433,14 +433,14 @@ export default class Invoices {
    */
   downloadCancellationReceiptXml(
     id: string,
-  ): Promise<OperationResponse<'downloadCancellationReceiptXml'>> {
+  ): Promise<OperationResponse<'downloadCancellationReceipt'>> {
     if (!id) return Promise.reject(new Error('id is required'));
 
     return this.client.request<
-      OperationResponse<'downloadCancellationReceiptXml'>
+      OperationResponse<'downloadCancellationReceipt'>
     >(`/invoices/${encodeURIComponent(id)}/cancellation_receipt/xml`, {
       method: 'GET',
-      datePlan: operationDatePlans.downloadCancellationReceiptXml,
+      datePlan: operationDatePlans.downloadCancellationReceipt,
     });
   }
 
@@ -454,14 +454,14 @@ export default class Invoices {
    */
   downloadCancellationReceiptPdf(
     id: string,
-  ): Promise<OperationResponse<'downloadCancellationReceiptXml'>> {
+  ): Promise<OperationResponse<'downloadCancellationReceipt'>> {
     if (!id) return Promise.reject(new Error('id is required'));
 
     return this.client.request<
-      OperationResponse<'downloadCancellationReceiptXml'>
+      OperationResponse<'downloadCancellationReceipt'>
     >(`/invoices/${encodeURIComponent(id)}/cancellation_receipt/pdf`, {
       method: 'GET',
-      datePlan: operationDatePlans.downloadCancellationReceiptXml,
+      datePlan: operationDatePlans.downloadCancellationReceipt,
     });
   }
 

@@ -639,7 +639,7 @@ export const operationDatePlans = {
   previewInvoicePdfUrl: 33,
   downloadInvoice: 0,
   getInvoiceDownloadUrl: 33,
-  downloadCancellationReceiptXml: 0,
+  downloadCancellationReceipt: 0,
   getCancellationReceiptDownloadUrl: 33,
   sendInvoiceByEmail: 0,
   listInvoiceZipRequests: 69,

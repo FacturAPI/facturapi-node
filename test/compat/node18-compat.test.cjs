@@ -108,3 +108,50 @@ test('node18: validates webhook signatures locally with node crypto', async () =
     /Invalid signature/,
   );
 });
+
+test('node18: FIEL upload, receipt customer assignment, and API health use the built package', async () => {
+  const client = createClient();
+  const paths = [];
+  globalThis.fetch = async (url, options) => {
+    const path = new URL(String(url)).pathname;
+    paths.push(path);
+    if (path === '/v2/organizations/org_123/fiel') {
+      assert.equal(options.method, 'PUT');
+      assert.ok(options.body instanceof FormData);
+      assert.equal(await options.body.get('cer').text(), 'certificate');
+      assert.equal(await options.body.get('key').text(), 'private-key');
+      assert.equal(options.body.get('password'), 'test-password');
+      return Response.json({ id: 'org_123' });
+    }
+    if (path === '/v2/receipts/rec_123') {
+      assert.equal(options.method, 'PUT');
+      assert.deepEqual(JSON.parse(options.body), { customer: 'cus_123' });
+      return Response.json({ id: 'rec_123' });
+    }
+    assert.equal(path, '/v2/check');
+    assert.equal(options.method, 'GET');
+    return Response.json({ ok: true });
+  };
+  assert.equal(
+    (
+      await client.organizations.uploadFiel(
+        'org_123',
+        Buffer.from('certificate'),
+        Buffer.from('private-key'),
+        'test-password',
+      )
+    ).id,
+    'org_123',
+  );
+  assert.equal(
+    (await client.receipts.updateCustomer('rec_123', { customer: 'cus_123' }))
+      .id,
+    'rec_123',
+  );
+  assert.deepEqual(await client.tools.checkApiHealth(), { ok: true });
+  assert.deepEqual(paths, [
+    '/v2/organizations/org_123/fiel',
+    '/v2/receipts/rec_123',
+    '/v2/check',
+  ]);
+});

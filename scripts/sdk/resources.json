@@ -110,13 +110,13 @@
       "downloadZipRequest": "downloadInvoiceZipRequest",
       "downloadZipRequestUrl": "getInvoiceZipRequestDownloadUrl",
       "downloadCancellationReceiptXml": {
-        "operation": "downloadCancellationReceiptXml",
+        "operation": "downloadCancellationReceipt",
         "path": {
           "format": "xml"
         }
       },
       "downloadCancellationReceiptPdf": {
-        "operation": "downloadCancellationReceiptXml",
+        "operation": "downloadCancellationReceipt",
         "path": {
           "format": "pdf"
         }
