@@ -21,6 +21,7 @@ describe('invoice ZIP requests', () => {
     const data = {
       year: 2025,
       month: 3,
+      sat_imported: true,
       issuer_type: IssuingType.ISSUING,
       invoice_types: [InvoiceType.INGRESO, InvoiceType.EGRESO],
     }
@@ -74,11 +75,19 @@ describe('invoice ZIP requests', () => {
         'https://api.test.local/v2/invoices/zip-requests/zip_request_123',
       )
       expect(options?.method).toBe('GET')
-      return Response.json({ id: 'zip_request_123' })
+      return Response.json({
+        id: 'zip_request_123',
+        generated_at: '2026-10-14T10:00:00.000Z',
+        content_as_of: '2026-10-14T09:00:00.000Z',
+        is_current: true,
+      })
     }) as typeof fetch
 
     const result = await client.invoices.retrieveZipRequest('zip_request_123')
     expect(result.id).toBe('zip_request_123')
+    expect(result.generated_at).toEqual(new Date('2026-10-14T10:00:00.000Z'))
+    expect(result.content_as_of).toEqual(new Date('2026-10-14T09:00:00.000Z'))
+    expect(result.is_current).toBe(true)
   })
 
   it('downloads the generated ZIP', async () => {
@@ -115,9 +124,8 @@ describe('invoice ZIP requests', () => {
       })
     }) as typeof fetch
 
-    const result = await client.invoices.downloadZipRequestUrl(
-      'zip_request_123',
-    )
+    const result =
+      await client.invoices.downloadZipRequestUrl('zip_request_123')
     expect(result.filename).toBe('2025-03.zip')
   })
 

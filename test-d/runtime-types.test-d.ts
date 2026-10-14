@@ -709,3 +709,11 @@ client.customers.update(
   { createEditLink: true },
 )
 client.customers.update('cus_ejemplo', {}, { createEditLink: true })
+
+client.invoices.list({ sat_imported: true })
+client.invoices.listZipRequests({ sat_imported: false })
+client.invoices.createZipRequest({ year: 2026, month: 10, sat_imported: true })
+expectType<Date | undefined>(zipRequest.generated_at)
+expectType<Date | undefined>(zipRequest.content_as_of)
+// @ts-expect-error Forced refresh is not part of the public ZIP request contract.
+client.invoices.createZipRequest({ year: 2026, month: 10, refresh: true })

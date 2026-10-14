@@ -313,11 +313,14 @@ export default class Invoices {
    *
    * Crea una solicitud para generar un archivo ZIP con las facturas de un mes, o recupera la solicitud existente con los mismos filtros.
    *
-   * La operación es idempotente. Los tipos de factura se normalizan, por lo que `["I", "E"]` y `["E", "I"]` corresponden a la misma solicitud. Las llamadas concurrentes idénticas también regresan la misma solicitud.
+   * Mientras el contenido siga vigente, los mismos filtros recuperan la misma solicitud. Los tipos se normalizan: `["I", "E"]` y `["E", "I"]` son equivalentes. Las llamadas concurrentes con los mismos filtros comparten una generación activa.
    *
    * Si una solicitud anterior tiene status `failed`, volver a llamar este método reintentará su procesamiento. Antes del nuevo intento se limpian el error, la tarea anterior, el progreso procesado y la lista de documentos fallidos. Si no es posible programar la generación, la solicitud se guarda con status `failed` y la API regresa un error `5xx`.
    *
    * Este método requiere una llave de API de organización en ambiente Live, una suscripción activa y permiso para leer facturas. Las llaves de ambiente Test regresan HTTP 402.
+   * Los nuevos ZIPs incluyen XML y PDF de facturas vigentes y canceladas. Los archivos de facturas canceladas se agrupan en `canceladas/`. La procedencia también distingue solicitudes con el mismo mes, tipo de emisión y tipos de factura.
+   *
+   * Se reutilizan paquetes terminados mientras su contenido siga vigente. Crear, importar, cancelar, editar o eliminar facturas puede dejar un paquete anterior desactualizado. Solicita nuevamente los mismos filtros para generar un paquete vigente cuando haya cambios. Los IDs anteriores siguen descargando su paquete original. Puedes exportar el mes en curso; los cambios durante la preparación pueden dejar el resultado desactualizado. Consulta `is_current` antes de reutilizarlo. El paso del tiempo por sí solo no deja un paquete desactualizado.
    *
    * @param data - Datos de la solicitud.
    * @returns Solicitud de ZIP creada o recuperada correctamente.

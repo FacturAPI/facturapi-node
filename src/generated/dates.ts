@@ -211,6 +211,8 @@ export const datePlans: DatePlan[] = [
     kind: 'object',
     properties: {
       created_at: 1,
+      generated_at: 1,
+      content_as_of: 1,
       start_date: 1,
       end_date: 1,
       scheduled_at: 1,
