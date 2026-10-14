@@ -1,8 +1,8 @@
 {
   "common": {
-    "Address": "Output['CommonAddressProperties']",
+    "Address": "Output['Address']",
     "InvoiceItemPart": "Output['Parts']",
-    "InvoiceItemThirdParty": "Input['ThirdPartyInput']",
+    "InvoiceItemThirdParty": "Output['ThirdParty']",
     "Tax": "Output['BaseTax'] | Output['IepsTax']",
     "ProductInfo": "Output['InvoiceItemProduct']",
     "XmlNamespace": "Output['NamespaceProperties']",

@@ -2680,7 +2680,7 @@ export interface components {
       /** Tasa del impuesto en fracción decimal. */
       rate: number;
       /** Base del impuesto. Si se omite, se utiliza el subtotal completo del concepto. */
-      base?: number;
+      base?: number | null;
       /** Nombre del impuesto. Texto libre. */
       type: string;
       /**
@@ -2696,7 +2696,7 @@ export interface components {
       /** Tasa del impuesto en fracción decimal. */
       rate: number;
       /** Base del impuesto. Si se omite, se calcula a partir del subtotal del concepto y el factor del impuesto. Para el factor Cuota, se utiliza la cantidad de unidades. */
-      base?: number;
+      base?: number | null;
       /**
        * Tipo de impuesto.
        * @default IVA
@@ -2770,11 +2770,11 @@ export interface components {
       product: components['schemas']['InvoiceItemProduct'];
       /** Números de pedimento asociados a este concepto. Se omite cuando no existen. */
       customs_keys?: string[];
-      third_party?: components['schemas']['ThirdPartyInput'];
+      third_party?: components['schemas']['ThirdParty'];
       complement?:
         | string
-        | components['schemas']['HidroYPetroComplementInput']
-        | components['schemas']['IeduComplementInput'];
+        | components['schemas']['HidroYPetroComplement']
+        | components['schemas']['IeduComplement'];
       /** Objeto con información de las partes de la factura. */
       parts?: components['schemas']['Parts'][];
     };
@@ -2783,7 +2783,7 @@ export interface components {
      *
      *     Corresponde al campo "ACuentaTerceros" en el CFDI.
      */
-    ThirdPartyInput: {
+    ThirdParty: {
       /** Nombre o razón social del tercero. */
       legal_name?: string;
       /** RFC del tercero. */
@@ -2793,6 +2793,7 @@ export interface components {
       /** Código postal del tercero. */
       zip?: string;
     };
+    ThirdPartyInput: components['schemas']['ThirdParty'];
     /**
      * InvoiceItem
      * Conceptos incluidos en el documento
@@ -2884,12 +2885,12 @@ export interface components {
       };
     };
     /** HidroYPetroComplement */
-    HidroYPetroComplementInput: {
+    HidroYPetroComplement: {
       /**
        * Tipo de permiso otorgado por la autoridad competente, conforme al [Catálogo Hidrocarburos Petrolíferos](#cat%C3%A1logos-hidrocarburos-petrol%C3%ADferos).
        * @enum {string}
        */
-      tipo_permiso:
+      tipo_permiso?:
         | 'PER01'
         | 'PER02'
         | 'PER03'
@@ -2902,12 +2903,12 @@ export interface components {
         | 'PER10'
         | 'PER11';
       /** Número de permiso otorgado por la autoridad competente, conforme a la nomenclatura del catálogo c_TipoPermiso. */
-      numero_permiso: string;
+      numero_permiso?: string;
       /**
        * Subtipo del hidrocarburo o petrolífero, conforme al [Catálogo Hidrocarburos Petrolíferos](#cat%C3%A1logos-hidrocarburos-petrol%C3%ADferos).
        * @enum {string}
        */
-      sub_producto_hyp:
+      sub_producto_hyp?:
         | 'SP16'
         | 'SP17'
         | 'SP18'
@@ -2925,32 +2926,40 @@ export interface components {
        */
       clave_hyp?: '15101514' | '15101515' | '15101505';
     };
+    HidroYPetroComplementInput: WithRequired<
+      components['schemas']['HidroYPetroComplement'],
+      'tipo_permiso' | 'numero_permiso' | 'sub_producto_hyp'
+    >;
     /**
      * IeduComplement
      * Complemento concepto de Instituciones Educativas Privadas versión 1.0.
      *
      *     Se incluye a nivel concepto dentro de `items[].complement`.
      */
-    IeduComplementInput: {
+    IeduComplement: {
       /** Nombre del alumno. */
-      nombreAlumno: string;
+      nombreAlumno?: string;
       /** CURP del alumno de la institución educativa. */
-      CURP: string;
+      CURP?: string;
       /**
        * Nivel educativo que cursa el alumno.
        * @enum {string}
        */
-      nivelEducativo:
+      nivelEducativo?:
         | 'Preescolar'
         | 'Primaria'
         | 'Secundaria'
         | 'Profesional técnico'
         | 'Bachillerato o su equivalente';
       /** Clave del centro de trabajo o reconocimiento de validez oficial de estudios de la institución educativa privada donde se realiza el pago. */
-      autRVOE: string;
+      autRVOE?: string;
       /** RFC de quien realiza el pago cuando sea diferente a quien recibe el servicio. */
       rfcPago?: string;
     };
+    IeduComplementInput: WithRequired<
+      components['schemas']['IeduComplement'],
+      'nombreAlumno' | 'CURP' | 'nivelEducativo' | 'autRVOE'
+    >;
     /**
      * string
      * Format: xml
@@ -4185,6 +4194,21 @@ export interface components {
        */
       schema_location?: string;
     };
+    Address: {
+      state?: string;
+      country?: string;
+    } & components['schemas']['CommonAddressProperties'];
+    CustomerAddress: {
+      street?: string | null;
+      exterior?: string | null;
+      interior?: string | null;
+      neighborhood?: string | null;
+      city?: string | null;
+      municipality?: string | null;
+      zip?: string | null;
+      state?: string | null;
+      country?: string | null;
+    } | null;
     CommonAddressProperties: {
       /** Nombre de la calle */
       street?: string;
@@ -4301,19 +4325,11 @@ export interface components {
       sat_validated_at?: Date | string | null;
     };
     CustomerProperties: components['schemas']['CustomerCommonProperties'] & {
-      address?: components['schemas']['CommonAddressProperties'] & {
-        /** Si el país es México ("MEX"), contiene el nombre del Estado o Entidad Federativa. Para extranjeros contiene el código de Estado de acuerdo al estándar [ISO 3166-2](https://en.wikipedia.org/wiki/ISO_3166-2), que puedes consultar en nuestro [Catálogo de Estados](https://dashboard.facturapi.io/catalogs/state). */
-        state?: string;
-        /**
-         * Código de país acorde al estándar [ISO 3166-1 alpha-3](https://en.wikipedia.org/wiki/ISO_3166-1_alpha-3), del [Catálogo de Países](https://dashboard.facturapi.io/catalogs/country).
-         * @default MEX
-         */
-        country?: string;
-      };
+      address?: components['schemas']['CustomerAddress'];
     };
     CustomerCommonProperties: {
       /** Nombre Fiscal o Razón Social del cliente. *sin* el régimen societario (ej.: S.A. de C.V.). */
-      legal_name?: string;
+      legal_name?: string | null;
       /** En clientes de México contiene el RFC del cliente. Para extranjeros es opcional y representa el número de registro de identificación tributaria, es decir, el equivalente al RFC en el país del cliente. */
       tax_id?: string | null;
       /** Requerido para clientes nacionales. Clave del régimen fiscal del cliente, del catálogo de [Regímenes Fiscales](#r%C3%A9gimen-fiscal). */
@@ -4328,16 +4344,17 @@ export interface components {
       /** Uso de CFDI por defecto. */
       default_invoice_use?: string;
     };
+    /** Format: email */
+    CustomerEmailInput: string | null;
+    /** En una actualización, null, una cadena vacía o sólo espacios eliminan el correo. */
+    CustomerEmailUpdateInput:
+      components['schemas']['CustomerEmailInput'] | string;
     CustomerEditableInput: {
       /** Nombre Fiscal o Razón Social del cliente. *sin* el régimen societario (ej.: S.A. de C.V.). */
       legal_name?: string | null;
       /** En clientes de México contiene el RFC del cliente. Para extranjeros es opcional y representa el número de registro de identificación tributaria, es decir, el equivalente al RFC en el país del cliente. */
       tax_id?: string | null;
-      /**
-       * Format: email
-       * Correo electrónico del cliente. En una actualización, null elimina el correo.
-       */
-      email?: string | null;
+      email?: components['schemas']['CustomerEmailUpdateInput'];
       /** Teléfono del cliente. */
       phone?: string | null;
       external_id?: string | null;
@@ -4366,7 +4383,7 @@ export interface components {
         country?: string | null;
       } | null;
     };
-    /** En una actualización sin createEditLink=true, los campos omitidos conservan su valor. Un valor null borra los campos que admiten null; un campo opcional puede omitirse sin que necesariamente admita null. No se permite null en legal_name, tax_id, tax_system ni address. */
+    /** En una actualización sin createEditLink=true, los campos omitidos conservan su valor. Un valor null borra los campos que admiten null; un campo opcional puede omitirse sin que necesariamente admita null. No se permite null en legal_name, tax_id, tax_system ni address. En email, phone y los campos opcionales street, exterior, interior, neighborhood, city, municipality y state del domicilio, una cadena vacía o sólo espacios se normaliza a null. El código postal vacío no se acepta. */
     CustomerUpdateInput: components['schemas']['CustomerEditableInput'] & {
       legal_name?: string;
       tax_id?: string;
@@ -4375,17 +4392,13 @@ export interface components {
         country?: string;
       };
     };
-    /** Con createEditLink=true, los campos omitidos conservan su valor y null borra el valor existente, incluidos los datos fiscales. Los valores no nulos deben ser válidos. */
+    /** Con createEditLink=true, los campos omitidos conservan su valor y null borra el valor existente, incluidos los datos fiscales. Los valores no nulos deben ser válidos. En email, phone y los campos opcionales street, exterior, interior, neighborhood, city, municipality y state del domicilio, una cadena vacía o sólo espacios se normaliza a null. El código postal vacío no se acepta. */
     CustomerUpdateWithEditLinkInput: {
       /** Nombre Fiscal o Razón Social del cliente. *sin* el régimen societario (ej.: S.A. de C.V.). */
       legal_name?: string | null;
       /** En clientes de México contiene el RFC del cliente. Para extranjeros es opcional y representa el número de registro de identificación tributaria, es decir, el equivalente al RFC en el país del cliente. */
       tax_id?: string | null;
-      /**
-       * Format: email
-       * Correo electrónico del cliente. En una actualización, null elimina el correo.
-       */
-      email?: string | null;
+      email?: components['schemas']['CustomerEmailUpdateInput'];
       /** Teléfono del cliente. */
       phone?: string | null;
       external_id?: string | null;
@@ -4442,10 +4455,7 @@ export interface components {
       legal_name?: string | null;
       /** En clientes de México contiene el RFC del cliente. Para extranjeros es opcional y representa el número de registro de identificación tributaria, es decir, el equivalente al RFC en el país del cliente. */
       tax_id?: string | null;
-      /**
-       * Format: email
-       * Correo electrónico del cliente. En una actualización, null elimina el correo.
-       */
+      /** Format: email */
       email?: string | null;
       /** Teléfono del cliente. */
       phone?: string | null;
@@ -4480,10 +4490,7 @@ export interface components {
     CustomerCreateCommonInput: {
       /** Nombre Fiscal o Razón Social del cliente. *sin* el régimen societario (ej.: S.A. de C.V.). */
       legal_name: string;
-      /**
-       * Format: email
-       * Correo electrónico del cliente. En una actualización, null elimina el correo.
-       */
+      /** Format: email */
       email?: string | null;
       /** Teléfono del cliente. */
       phone?: string | null;
@@ -4497,9 +4504,9 @@ export interface components {
       state?: string;
       /**
        * @default MEX
-       * @constant
+       * @enum {string|null}
        */
-      country?: 'MEX';
+      country?: 'MEX' | '' | null;
     };
     CustomerForeignAddressInput: components['schemas']['CommonAddressProperties'] & {
       /** Código ISO 3166-1 alpha-3 distinto de MEX. Es necesario para aplicar las reglas de cliente extranjero. */
@@ -4614,15 +4621,25 @@ export interface components {
     ProductSearchResult: components['schemas']['SearchResult'] & {
       data: components['schemas']['Product'][];
     };
-    ProductCreateInput: WithRequired<
+    ProductCreateInput: {
+      unit_name?: string;
+    } & WithRequired<
       components['schemas']['ProductCommonProperties'],
       'description' | 'product_key' | 'price'
     >;
-    ProductProperties: WithRequired<
+    ProductProperties: {
+      /**
+       * Palabra que representa la unidad de medida de tu producto. Debe estar relacionada con la clave de unidad `unit_key`.
+       * @default Elemento
+       */
+      unit_name?: string | null;
+    } & WithRequired<
       components['schemas']['ProductCommonProperties'],
       'description' | 'product_key' | 'price'
     >;
-    ProductUpdateInput: components['schemas']['ProductCommonProperties'];
+    ProductUpdateInput: {
+      unit_name?: string;
+    } & components['schemas']['ProductCommonProperties'];
     ProductCommonProperties: {
       /** Descripción del bien o servicio como aparecerá en la factura. */
       description?: string;
@@ -4679,11 +4696,6 @@ export interface components {
        * @default H87
        */
       unit_key?: string;
-      /**
-       * Palabra que representa la unidad de medida de tu producto. Debe estar relacionada con la clave de unidad `unit_key`.
-       * @default Elemento
-       */
-      unit_name?: string;
       /** Identificador de uso interno designado por la empresa. Puede tener cualquier valor. */
       sku?: string;
     };
@@ -4873,17 +4885,11 @@ export interface components {
       /** ID del objeto `customer` relacionado a la factura, en caso de no haber sido eliminado */
       id?: string;
       /** Nombre Fiscal o Razón Social del cliente, *sin* incluir el régimen societario (ej.: S.A. de C.V.). */
-      legal_name?: string;
+      legal_name?: string | null;
       /** RFC del cliente. */
-      tax_id?: string;
-      address?: {
-        /**
-         * Format: ISO 3166-1 alpha-3
-         * Código de País acorde al estándar ISO 3166-1 alpha-3, del Catálogo de Países.
-         */
-        country?: string;
-        zip?: string;
-      };
+      tax_id?: string | null;
+      address?: components['schemas']['Address'];
+      phone?: string | null;
       tax_system?: string | null;
     };
     /** Objeto con información parcial del cliente receptor del comprobante. Para obtener el objeto `Customer` completo, deberás consultarlo con el método de [Obtener Cliente]('#/operation/getCustomer'). */
@@ -5050,7 +5056,7 @@ export interface components {
        * Fecha de expedición en formato ISO8601. Puede ser null en borradores.
        */
       date: Date | string | null;
-      address?: components['schemas']['CommonAddressProperties'] & {
+      address?: components['schemas']['Address'] & {
         /** Nombre del Estado o Entidad Federativa. */
         state?: string;
       };
@@ -5898,6 +5904,7 @@ export interface components {
         organization?: string;
       };
     ReceiptProperties: {
+      address?: components['schemas']['Address'];
       /**
        * Format: date-time
        * Fecha de emisión del recibo.
@@ -5925,7 +5932,7 @@ export interface components {
       /** Monto total de la operación */
       total: number;
       /** ID de la factura asociada, en caso de estar facturado. */
-      invoice?: string;
+      invoice?: string | null;
       /** ID del cliente asociado al recibo, en caso de haberse asignado. */
       customer?: string;
       /** Autogenerado. Identificador único alfanumérico corto, útil para acceder a la autofactura desde tu micrositio en factura.space */
@@ -6149,7 +6156,7 @@ export interface components {
        * Format: uri
        * Dirección URL para verificar el estado de la retención en el portal del SAT. Este link es el mismo que aparece en el código QR, en el PDF de la retención.
        */
-      verification_url?: string;
+      verification_url?: string | null;
       /**
        * Tipo de comprobante.
        * @enum {string}
@@ -6159,7 +6166,7 @@ export interface components {
        * Format: uuid
        * Folio fiscal de la retención, asignado por el SAT.
        */
-      uuid?: string;
+      uuid?: string | null;
       stamp?: components['schemas']['Stamp'] | null;
       customer?: components['schemas']['CustomerInfo'] | null;
       /**
@@ -6170,7 +6177,7 @@ export interface components {
     };
     RetentionProperties: {
       /** Clave de la retención o información de pagos de acuerdo al catálogo del SAT. */
-      cve_retenc?: string;
+      cve_retenc?: string | null;
       /**
        * Format: date-time
        * Fecha de expedición del comprobante en formato ISO8601 (UTC String).
@@ -6188,7 +6195,7 @@ export interface components {
         mes_fin?: number;
         /** Año o ejercicio fiscal en que se realizó la retención. */
         ejerc?: number;
-      };
+      } | null;
       /** Información sobre el total de retenciones efectuadas en el periodo correspondiente. */
       totales?: {
         /** Monto total de la operación, con precisión de hasta 6 decimales. */
@@ -6219,14 +6226,14 @@ export interface components {
            */
           tipo_pago_ret?: '01' | '02' | '03' | '04';
         }[];
-      };
+      } | null;
       /** Identificador opcional que puedes usar para relacionar esta retención con tus registros y poder hacer búsquedas usando este identificador. Facturapi no valida que este campo sea único. */
-      external_id?: string;
+      external_id?: string | null;
       /**
        * Identificador único que puedes usar para evitar duplicados al reintentar una petición. Puede ser cualquier cadena de texto, mientras sea única para cada documento.
        *     Si se deja en blanco, no se tomará en cuenta.
        */
-      idempotency_key?: string;
+      idempotency_key?: string | null;
       /**
        * Arreglo de complementos a incluir en la factura. Cada elemento contiene
        *     un `string` con el código XML del complemento.
@@ -6238,11 +6245,8 @@ export interface components {
        * En caso de que necesites incluir más información en el PDF, este campo te permite insertar código HTML con tu propio contenido.
        */
       pdf_custom_section?: string;
-      /**
-       * Format: xml
-       * Código XML con la Addenda que se necesite agregar a la factura.
-       */
-      addenda?: string;
+      /** Código XML con la Addenda que se necesite agregar a la factura. */
+      addenda?: string[];
       /** Namespaces a insertar en el nodo raíz de la factura. Requerido en `addenda`. */
       namespaces?: components['schemas']['NamespaceProperties'][];
     };
@@ -6332,11 +6336,8 @@ export interface components {
        * En caso de que necesites incluir más información en el PDF, este campo te permite insertar código HTML con tu propio contenido.
        */
       pdf_custom_section?: string;
-      /**
-       * Format: xml
-       * Código XML con la Addenda que se necesite agregar a la factura.
-       */
-      addenda?: string;
+      /** Código XML con la Addenda que se necesite agregar a la factura. */
+      addenda?: string[];
       /** Namespaces a insertar en el nodo raíz de la factura. Requerido en `addenda`. */
       namespaces?: components['schemas']['NamespaceInput'][];
     };
@@ -6834,10 +6835,16 @@ export interface components {
     OrganizationSeriesCreateInput: {
       /** Nombre de la serie. */
       series: string;
-      /** Número de folio que se asignará a la siguiente factura en ambiente Live (y que se incrementará automáticamente por cada nueva factura). */
-      next_folio: number;
-      /** Número de folio que se asignará a la siguiente factura en ambiente Test (y que se incrementará automáticamente por cada nueva factura). */
-      next_folio_test: number;
+      /**
+       * Número de folio que se asignará a la siguiente factura en ambiente Live (y que se incrementará automáticamente por cada nueva factura).
+       * @default 1
+       */
+      next_folio?: number;
+      /**
+       * Número de folio que se asignará a la siguiente factura en ambiente Test (y que se incrementará automáticamente por cada nueva factura).
+       * @default 1
+       */
+      next_folio_test?: number;
     };
     OrganizationSeriesUpdateInput: {
       /** Número de folio que se asignará a la siguiente factura en ambiente Live (y que se incrementará automáticamente por cada nueva factura). */
@@ -6855,6 +6862,15 @@ export interface components {
       /** Nombre de la serie. */
       series: string;
     };
+    OrganizationSeriesDeletion: {
+      series?: string;
+      livemode?: boolean;
+      next_folio?: number;
+      /** Format: date-time */
+      created_at?: Date | string;
+      /** Format: date-time */
+      updated_at?: Date | string;
+    } | null;
     /** Objeto Series */
     OrganizationSeriesGroup: {
       /** Nombre de la serie. */
@@ -8429,7 +8445,9 @@ export interface operations {
           [name: string]: unknown;
         };
         content: {
-          'application/json': components['schemas']['Invoice'];
+          'application/json':
+            | components['schemas']['Invoice']
+            | components['schemas']['InvoiceDraft'];
         };
       };
       400: components['responses']['BadRequest'];
@@ -9191,15 +9209,9 @@ export interface operations {
           'application/pdf': BinaryInput;
         };
       };
-      /** No se encontraron recibos elegibles para las keys enviadas */
-      204: {
-        headers: {
-          [name: string]: unknown;
-        };
-        content?: never;
-      };
       400: components['responses']['BadRequest'];
       401: components['responses']['Unauthenticated'];
+      404: components['responses']['NotFound'];
       500: components['responses']['UnexpectedError'];
     };
   };
@@ -10300,7 +10312,7 @@ export interface operations {
           [name: string]: unknown;
         };
         content: {
-          'application/json': components['schemas']['OrganizationSeriesGroup'];
+          'application/json': components['schemas']['OrganizationSeriesGroup'][];
         };
       };
       400: components['responses']['BadRequest'];
@@ -10327,7 +10339,7 @@ export interface operations {
           [name: string]: unknown;
         };
         content: {
-          'application/json': components['schemas']['OkResponse'];
+          'application/json': components['schemas']['Organization'];
         };
       };
       400: components['responses']['BadRequest'];
@@ -10356,7 +10368,7 @@ export interface operations {
           [name: string]: unknown;
         };
         content: {
-          'application/json': components['schemas']['OrganizationSeriesGroup'];
+          'application/json': components['schemas']['OrganizationSeriesGroup'][];
         };
       };
       400: components['responses']['BadRequest'];
@@ -10385,7 +10397,7 @@ export interface operations {
           [name: string]: unknown;
         };
         content: {
-          'application/json': components['schemas']['OrganizationSeriesGroup'];
+          'application/json': components['schemas']['OrganizationSeriesDeletion'][];
         };
       };
       400: components['responses']['BadRequest'];

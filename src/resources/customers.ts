@@ -287,11 +287,11 @@ export default class Customers {
   /**
    * Editar cliente
    *
-   * En una actualización sin createEditLink=true, los campos omitidos conservan su valor. Un valor null borra los campos que admiten null; un campo opcional puede omitirse sin que necesariamente admita null. No se permite null en legal_name, tax_id, tax_system ni address.
+   * En una actualización sin createEditLink=true, los campos omitidos conservan su valor. Un valor null borra los campos que admiten null; un campo opcional puede omitirse sin que necesariamente admita null. No se permite null en legal_name, tax_id, tax_system ni address. En email, phone y los campos opcionales street, exterior, interior, neighborhood, city, municipality y state del domicilio, una cadena vacía o sólo espacios se normaliza a null. El código postal vacío no se acepta.
    *
    * Actualiza la información de un cliente existente, asignando los valores de los parámetros enviados. Los parámetros que no se envíen en la petición no se modificarán.
    *
-   * Con createEditLink=true, los campos omitidos conservan su valor y null borra el valor existente, incluidos los datos fiscales. Los valores no nulos deben ser válidos.
+   * Con createEditLink=true, los campos omitidos conservan su valor y null borra el valor existente, incluidos los datos fiscales. Los valores no nulos deben ser válidos. En email, phone y los campos opcionales street, exterior, interior, neighborhood, city, municipality y state del domicilio, una cadena vacía o sólo espacios se normaliza a null. El código postal vacío no se acepta.
    *
    * @param id - ID del objeto a editar
    * @param data - Datos de la solicitud.
@@ -312,11 +312,11 @@ export default class Customers {
   /**
    * Editar cliente
    *
-   * En una actualización sin createEditLink=true, los campos omitidos conservan su valor. Un valor null borra los campos que admiten null; un campo opcional puede omitirse sin que necesariamente admita null. No se permite null en legal_name, tax_id, tax_system ni address.
+   * En una actualización sin createEditLink=true, los campos omitidos conservan su valor. Un valor null borra los campos que admiten null; un campo opcional puede omitirse sin que necesariamente admita null. No se permite null en legal_name, tax_id, tax_system ni address. En email, phone y los campos opcionales street, exterior, interior, neighborhood, city, municipality y state del domicilio, una cadena vacía o sólo espacios se normaliza a null. El código postal vacío no se acepta.
    *
    * Actualiza la información de un cliente existente, asignando los valores de los parámetros enviados. Los parámetros que no se envíen en la petición no se modificarán.
    *
-   * Con createEditLink=true, los campos omitidos conservan su valor y null borra el valor existente, incluidos los datos fiscales. Los valores no nulos deben ser válidos.
+   * Con createEditLink=true, los campos omitidos conservan su valor y null borra el valor existente, incluidos los datos fiscales. Los valores no nulos deben ser válidos. En email, phone y los campos opcionales street, exterior, interior, neighborhood, city, municipality y state del domicilio, una cadena vacía o sólo espacios se normaliza a null. El código postal vacío no se acepta.
    *
    * @param id - ID del objeto a editar
    * @param data - Datos de la solicitud.
@@ -337,11 +337,11 @@ export default class Customers {
   /**
    * Editar cliente
    *
-   * En una actualización sin createEditLink=true, los campos omitidos conservan su valor. Un valor null borra los campos que admiten null; un campo opcional puede omitirse sin que necesariamente admita null. No se permite null en legal_name, tax_id, tax_system ni address.
+   * En una actualización sin createEditLink=true, los campos omitidos conservan su valor. Un valor null borra los campos que admiten null; un campo opcional puede omitirse sin que necesariamente admita null. No se permite null en legal_name, tax_id, tax_system ni address. En email, phone y los campos opcionales street, exterior, interior, neighborhood, city, municipality y state del domicilio, una cadena vacía o sólo espacios se normaliza a null. El código postal vacío no se acepta.
    *
    * Actualiza la información de un cliente existente, asignando los valores de los parámetros enviados. Los parámetros que no se envíen en la petición no se modificarán.
    *
-   * Con createEditLink=true, los campos omitidos conservan su valor y null borra el valor existente, incluidos los datos fiscales. Los valores no nulos deben ser válidos.
+   * Con createEditLink=true, los campos omitidos conservan su valor y null borra el valor existente, incluidos los datos fiscales. Los valores no nulos deben ser válidos. En email, phone y los campos opcionales street, exterior, interior, neighborhood, city, municipality y state del domicilio, una cadena vacía o sólo espacios se normaliza a null. El código postal vacío no se acepta.
    *
    * @param id - ID del objeto a editar
    * @param data - Datos de la solicitud.

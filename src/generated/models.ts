@@ -39,13 +39,16 @@ export type BaseTax = Output['schemas']['BaseTax'];
 export type IepsTax = Output['schemas']['IepsTax'];
 export type Stamp = Output['schemas']['Stamp'];
 export type InvoiceItem = Output['schemas']['InvoiceItem'];
+export type ThirdParty = Output['schemas']['ThirdParty'];
 export type ThirdPartyInput = Input['schemas']['ThirdPartyInput'];
 export type InvoiceItemInput = Input['schemas']['InvoiceItemInput'];
 export type InvoiceItemEgresoInput = Input['schemas']['InvoiceItemEgresoInput'];
 export type InvoiceItemTrasladoInput =
   Input['schemas']['InvoiceItemTrasladoInput'];
+export type HidroYPetroComplement = Output['schemas']['HidroYPetroComplement'];
 export type HidroYPetroComplementInput =
   Input['schemas']['HidroYPetroComplementInput'];
+export type IeduComplement = Output['schemas']['IeduComplement'];
 export type IeduComplementInput = Input['schemas']['IeduComplementInput'];
 export type CustomComplementData = Output['schemas']['CustomComplementData'];
 export type CustomComplementProperties =
@@ -207,6 +210,7 @@ export type CartaPorteDomicilio = Output['schemas']['CartaPorteDomicilio'];
 export type CartaPorteMercancias = Output['schemas']['CartaPorteMercancias'];
 export type NamespaceInput = Input['schemas']['NamespaceInput'];
 export type NamespaceProperties = Output['schemas']['NamespaceProperties'];
+export type CustomerAddress = Output['schemas']['CustomerAddress'];
 export type CommonAddressProperties =
   Output['schemas']['CommonAddressProperties'];
 export type WebhookSearchResult = Output['schemas']['WebhookSearchResult'];
@@ -220,6 +224,9 @@ export type CustomerNonEditableProperties =
 export type CustomerProperties = Output['schemas']['CustomerProperties'];
 export type CustomerCommonProperties =
   Output['schemas']['CustomerCommonProperties'];
+export type CustomerEmailInput = Input['schemas']['CustomerEmailInput'];
+export type CustomerEmailUpdateInput =
+  Input['schemas']['CustomerEmailUpdateInput'];
 export type CustomerEditableInput = Input['schemas']['CustomerEditableInput'];
 export type CustomerUpdateInput = Input['schemas']['CustomerUpdateInput'];
 export type CustomerUpdateWithEditLinkInput =
@@ -351,6 +358,8 @@ export type OrganizationSeriesUpdateInput =
   Input['schemas']['OrganizationSeriesUpdateInput'];
 export type OrganizationSeriesDefaultInput =
   Input['schemas']['OrganizationSeriesDefaultInput'];
+export type OrganizationSeriesDeletion =
+  Output['schemas']['OrganizationSeriesDeletion'];
 export type OrganizationSeriesGroup =
   Output['schemas']['OrganizationSeriesGroup'];
 export type OkResponse = Output['schemas']['OkResponse'];

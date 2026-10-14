@@ -8,9 +8,9 @@ import type {
 } from '../generated/contracts';
 type Input = InputComponents['schemas'];
 type Output = OutputComponents['schemas'];
-export type Address = Output['CommonAddressProperties'];
+export type Address = Output['Address'];
 export type InvoiceItemPart = Output['Parts'];
-export type InvoiceItemThirdParty = Input['ThirdPartyInput'];
+export type InvoiceItemThirdParty = Output['ThirdParty'];
 export type Tax = Output['BaseTax'] | Output['IepsTax'];
 export type ProductInfo = Output['InvoiceItemProduct'];
 export type XmlNamespace = Output['NamespaceProperties'];
