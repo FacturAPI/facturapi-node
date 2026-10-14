@@ -51,6 +51,7 @@ import Facturapi, {
   Receipt,
   Retention,
   SearchResult,
+  Series,
   SignedDownloadUrl,
   TaxFactor,
   ToInvoiceSummary,
@@ -721,3 +722,7 @@ expectType<Date | undefined>(zipRequest.generated_at);
 expectType<Date | undefined>(zipRequest.content_as_of);
 // @ts-expect-error Forced refresh is not part of the public ZIP request contract.
 client.invoices.createZipRequest({ year: 2026, month: 10, refresh: true });
+
+expectType<Promise<Series[]>>(
+  client.organizations.listSeriesGroup('org_example'),
+);

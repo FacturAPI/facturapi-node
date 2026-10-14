@@ -10258,9 +10258,7 @@ export interface operations {
           [name: string]: unknown;
         };
         content: {
-          'application/json': {
-            data?: components['schemas']['OrganizationSeriesGroup'][];
-          };
+          'application/json': components['schemas']['OrganizationSeriesGroup'][];
         };
       };
       400: components['responses']['BadRequest'];
