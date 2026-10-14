@@ -1,53 +1,53 @@
-import crypto from 'node:crypto'
-import { Writable } from 'node:stream'
-import { afterEach, describe, expect, it, vi } from 'vitest'
+import crypto from 'node:crypto';
+import { Writable } from 'node:stream';
+import { afterEach, describe, expect, it, vi } from 'vitest';
 
-import Facturapi, { FacturapiError } from '../../src'
+import Facturapi, { FacturapiError } from '../../src';
 
-const originalFetch = globalThis.fetch
+const originalFetch = globalThis.fetch;
 
 function createClient() {
-  const client = new Facturapi('sk_test_123')
-  client.BASE_URL = 'https://api.test.local/v2'
-  return client
+  const client = new Facturapi('sk_test_123');
+  client.BASE_URL = 'https://api.test.local/v2';
+  return client;
 }
 
 function getHeader(
   headers: HeadersInit | undefined,
   name: string,
 ): string | undefined {
-  if (!headers) return undefined
-  if (headers instanceof Headers) return headers.get(name) || undefined
+  if (!headers) return undefined;
+  if (headers instanceof Headers) return headers.get(name) || undefined;
   if (Array.isArray(headers)) {
     const match = headers.find(
       ([key]) => key.toLowerCase() === name.toLowerCase(),
-    )
-    return match?.[1]
+    );
+    return match?.[1];
   }
-  const map = headers as Record<string, string>
-  return map[name] || map[name.toLowerCase()]
+  const map = headers as Record<string, string>;
+  return map[name] || map[name.toLowerCase()];
 }
 
 afterEach(() => {
-  globalThis.fetch = originalFetch
-  vi.restoreAllMocks()
-})
+  globalThis.fetch = originalFetch;
+  vi.restoreAllMocks();
+});
 
 describe('runtime compatibility (node)', () => {
   it('sends bearer auth header in Node', async () => {
-    const client = createClient()
-    const expected = 'Bearer sk_test_123'
+    const client = createClient();
+    const expected = 'Bearer sk_test_123';
 
     globalThis.fetch = vi.fn(async (_url, options) => {
-      expect(getHeader(options?.headers, 'Authorization')).toBe(expected)
+      expect(getHeader(options?.headers, 'Authorization')).toBe(expected);
       return new Response(JSON.stringify({ id: 'inv_123' }), {
         status: 200,
         headers: { 'content-type': 'application/json' },
-      })
-    }) as typeof fetch
+      });
+    }) as typeof fetch;
 
-    await client.invoices.retrieve('inv_123')
-  })
+    await client.invoices.retrieve('inv_123');
+  });
 
   it('sends custom headers in Node', async () => {
     const client = new Facturapi('sk_test_123', {
@@ -56,43 +56,43 @@ describe('runtime compatibility (node)', () => {
         authorization: 'Bearer ignored',
         'content-type': 'text/plain',
       },
-    })
-    client.BASE_URL = 'https://api.test.local/v2'
+    });
+    client.BASE_URL = 'https://api.test.local/v2';
 
     globalThis.fetch = vi.fn(async (_url, options) => {
       expect(getHeader(options?.headers, 'Authorization')).toBe(
         'Bearer sk_test_123',
-      )
-      expect(getHeader(options?.headers, 'x-facturapi-client')).toBe('MCP')
+      );
+      expect(getHeader(options?.headers, 'x-facturapi-client')).toBe('MCP');
       expect(getHeader(options?.headers, 'Content-Type')).toBe(
         'application/json',
-      )
+      );
 
       return new Response(JSON.stringify({ id: 'org_123' }), {
         status: 200,
         headers: { 'content-type': 'application/json' },
-      })
-    }) as typeof fetch
+      });
+    }) as typeof fetch;
 
-    await client.organizations.me()
-  })
+    await client.organizations.me();
+  });
 
   it('parses retrieved and created invoice responses and sends auth headers', async () => {
-    const client = createClient()
+    const client = createClient();
 
     globalThis.fetch = vi.fn(async (url, options) => {
       expect(url).toBe(
         options?.method === 'POST'
           ? 'https://api.test.local/v2/invoices'
           : 'https://api.test.local/v2/invoices/inv_123',
-      )
-      expect(['GET', 'POST']).toContain(options?.method)
+      );
+      expect(['GET', 'POST']).toContain(options?.method);
       expect(getHeader(options?.headers, 'Authorization')).toBe(
         'Bearer sk_test_123',
-      )
+      );
       expect(getHeader(options?.headers, 'Content-Type')).toBe(
         'application/json',
-      )
+      );
 
       return new Response(
         JSON.stringify({
@@ -136,45 +136,45 @@ describe('runtime compatibility (node)', () => {
           status: 200,
           headers: { 'content-type': 'application/json' },
         },
-      )
-    }) as typeof fetch
+      );
+    }) as typeof fetch;
 
-    const invoice = await client.invoices.retrieve('inv_123')
-    expect(invoice.id).toBe('inv_123')
-    expect(invoice.created_at).toEqual(new Date('2026-09-17T12:00:00.000Z'))
-    expect(invoice.date).toEqual(new Date('2026-09-17T11:00:00.000Z'))
-    expect(invoice.canceled_at).toEqual(new Date('2026-09-17T12:59:16.000Z'))
+    const invoice = await client.invoices.retrieve('inv_123');
+    expect(invoice.id).toBe('inv_123');
+    expect(invoice.created_at).toEqual(new Date('2026-09-17T12:00:00.000Z'));
+    expect(invoice.date).toEqual(new Date('2026-09-17T11:00:00.000Z'));
+    expect(invoice.canceled_at).toEqual(new Date('2026-09-17T12:59:16.000Z'));
     expect(invoice.cancellation?.requested_at).toEqual(
       new Date('2026-09-17T12:50:00.000Z'),
-    )
+    );
     expect(invoice.cancellation?.canceled_at).toEqual(
       new Date('2026-09-17T12:59:16.000Z'),
-    )
-    expect(invoice.stamp?.date).toBe('2026-09-17T06:59:16')
-    expect((invoice as any).metadata.date).toBe('2026-09-17T12:00:00.000Z')
+    );
+    expect(invoice.stamp?.date).toBe('2026-09-17T06:59:16');
+    expect((invoice as any).metadata.date).toBe('2026-09-17T12:00:00.000Z');
     expect((invoice as any).metadata.expires_at).toBe(
       '2026-09-18T12:00:00.000Z',
-    )
+    );
     expect(
       invoice.complements?.find((complement) => complement.type === 'pago')
         ?.data[0].date,
-    ).toEqual(new Date('2026-09-17T12:00:00.000Z'))
+    ).toEqual(new Date('2026-09-17T12:00:00.000Z'));
     expect(
       invoice.complements?.find((complement) => complement.type === 'nomina')
         ?.data.fecha_pago,
-    ).toBe('2026-09-17')
+    ).toBe('2026-09-17');
     expect(
       invoice.complements?.find((complement) => complement.type === 'nomina')
         ?.data.fecha_inicial_pago,
-    ).toEqual(new Date('2026-09-17T06:00:00.000Z'))
+    ).toEqual(new Date('2026-09-17T06:00:00.000Z'));
     expect(
       invoice.complements?.find((complement) => complement.type === 'nomina')
         ?.data.fecha_final_pago,
-    ).toEqual(new Date('2026-09-17T06:00:00.000Z'))
+    ).toEqual(new Date('2026-09-17T06:00:00.000Z'));
     expect(
       invoice.complements?.find((complement) => complement.type === 'custom')
         ?.data,
-    ).toBe('<Example date="2026-09-17T12:00:00.000Z"/>')
+    ).toBe('<Example date="2026-09-17T12:00:00.000Z"/>');
     const created = await client.invoices.create({
       customer: 'cus_123',
       payment_form: '28',
@@ -188,28 +188,28 @@ describe('runtime compatibility (node)', () => {
           },
         },
       ],
-    })
-    expect(created.created_at).toEqual(new Date('2026-09-17T12:00:00.000Z'))
-    expect(created.date).toEqual(new Date('2026-09-17T11:00:00.000Z'))
-    expect(created.stamp?.date).toBe('2026-09-17T06:59:16')
+    });
+    expect(created.created_at).toEqual(new Date('2026-09-17T12:00:00.000Z'));
+    expect(created.date).toEqual(new Date('2026-09-17T11:00:00.000Z'));
+    expect(created.stamp?.date).toBe('2026-09-17T06:59:16');
     expect(
       created.complements?.find((complement) => complement.type === 'nomina')
         ?.data.fecha_pago,
-    ).toEqual(new Date('2026-09-17T06:00:00.000Z'))
-  })
+    ).toEqual(new Date('2026-09-17T06:00:00.000Z'));
+  });
 
   it('serializes payroll Date values as ISO timestamps and preserves date strings', async () => {
-    const client = createClient()
+    const client = createClient();
     globalThis.fetch = vi.fn(async (_url, options) => {
       expect(JSON.parse(options?.body as string).complements[0].data).toEqual({
         fecha_pago: '2026-09-17T06:00:00.000Z',
         fecha_inicial_pago: '2026-09-01',
         fecha_final_pago: '2026-09-17T00:00:00-06:00',
-      })
+      });
       return new Response(JSON.stringify({ id: 'inv_123', status: 'draft' }), {
         headers: { 'content-type': 'application/json' },
-      })
-    }) as typeof fetch
+      });
+    }) as typeof fetch;
     await client.invoices.create({
       type: 'N',
       status: 'draft',
@@ -223,63 +223,63 @@ describe('runtime compatibility (node)', () => {
           },
         },
       ],
-    })
-  })
+    });
+  });
 
   it('searches payroll catalogs through the generated resource', async () => {
-    const client = createClient()
+    const client = createClient();
     globalThis.fetch = vi.fn(async (url, options) => {
       expect(new URL(String(url)).pathname).toMatch(
         /^\/v2\/catalogs\/(deductions|perceptions)$/,
-      )
-      expect(new URL(String(url)).searchParams.get('q')).toBe('001')
-      expect(new URL(String(url)).searchParams.get('page')).toBe('0')
-      expect(options?.method).toBe('GET')
-      return Response.json({ data: [{ key: '001', description: 'Example' }] })
-    }) as typeof fetch
+      );
+      expect(new URL(String(url)).searchParams.get('q')).toBe('001');
+      expect(new URL(String(url)).searchParams.get('page')).toBe('0');
+      expect(options?.method).toBe('GET');
+      return Response.json({ data: [{ key: '001', description: 'Example' }] });
+    }) as typeof fetch;
     expect(
       (await client.nominaCatalogs.searchDeductions({ q: '001', page: 0 }))
         .data[0].key,
-    ).toBe('001')
+    ).toBe('001');
     expect(
       (await client.nominaCatalogs.searchPerceptions({ q: '001', page: 0 }))
         .data[0].key,
-    ).toBe('001')
+    ).toBe('001');
     expect(
       vi
         .mocked(globalThis.fetch)
         .mock.calls.map(([url]) => new URL(String(url)).pathname),
-    ).toEqual(['/v2/catalogs/deductions', '/v2/catalogs/perceptions'])
-  })
+    ).toEqual(['/v2/catalogs/deductions', '/v2/catalogs/perceptions']);
+  });
 
   it('checks domain availability via GET query params', async () => {
-    const client = createClient()
+    const client = createClient();
 
     globalThis.fetch = vi.fn(async (url, options) => {
       expect(url).toBe(
         'https://api.test.local/v2/organizations/domain-check?domain=empresa-demo',
-      )
-      expect(options?.method).toBe('GET')
+      );
+      expect(options?.method).toBe('GET');
       expect(getHeader(options?.headers, 'Authorization')).toBe(
         'Bearer sk_test_123',
-      )
+      );
 
       return new Response(JSON.stringify({ available: true }), {
         status: 200,
         headers: { 'content-type': 'application/json' },
-      })
-    }) as typeof fetch
+      });
+    }) as typeof fetch;
 
     const result = await client.organizations.checkDomainIsAvailable({
       domain: 'empresa-demo',
-    })
+    });
 
-    expect(result.available).toBe(true)
-  })
+    expect(result.available).toBe(true);
+  });
 
   it('hydrates organization access, invite, role, and API key timestamps', async () => {
-    const client = createClient()
-    const timestamp = '2026-09-17T12:00:00.000Z'
+    const client = createClient();
+    const timestamp = '2026-09-17T12:00:00.000Z';
     globalThis.fetch = vi.fn(async (url) =>
       Response.json(
         String(url).endsWith('/team')
@@ -302,25 +302,25 @@ describe('runtime compatibility (node)', () => {
                 ]
               : [{ id: 'key_123', created_at: timestamp }],
       ),
-    ) as typeof fetch
+    ) as typeof fetch;
 
-    const access = await client.organizations.listTeamAccess('org_123')
-    expect(access[0].created_at).toEqual(new Date(timestamp))
-    expect(access[0].updated_at).toEqual(new Date(timestamp))
-    const invites = await client.organizations.listSentTeamInvites('org_123')
-    expect(invites[0].created_at).toEqual(new Date(timestamp))
-    expect(invites[0].expires_at).toEqual(new Date(timestamp))
-    const roles = await client.organizations.listTeamRoles('org_123')
-    expect(roles[0].created_at).toEqual(new Date(timestamp))
-    expect(roles[0].updated_at).toEqual(new Date(timestamp))
+    const access = await client.organizations.listTeamAccess('org_123');
+    expect(access[0].created_at).toEqual(new Date(timestamp));
+    expect(access[0].updated_at).toEqual(new Date(timestamp));
+    const invites = await client.organizations.listSentTeamInvites('org_123');
+    expect(invites[0].created_at).toEqual(new Date(timestamp));
+    expect(invites[0].expires_at).toEqual(new Date(timestamp));
+    const roles = await client.organizations.listTeamRoles('org_123');
+    expect(roles[0].created_at).toEqual(new Date(timestamp));
+    expect(roles[0].updated_at).toEqual(new Date(timestamp));
     expect(
       (await client.organizations.listLiveApiKeys('org_123'))[0].created_at,
-    ).toEqual(new Date(timestamp))
-  })
+    ).toEqual(new Date(timestamp));
+  });
 
   it('uses the customer creation endpoint for each explicit input variant', async () => {
-    const client = createClient()
-    const timestamp = '2026-09-17T12:00:00.000Z'
+    const client = createClient();
+    const timestamp = '2026-09-17T12:00:00.000Z';
     const inputs = [
       {
         legal_name: 'Cliente',
@@ -330,12 +330,12 @@ describe('runtime compatibility (node)', () => {
       },
       { legal_name: 'Foreign', address: { country: 'USA' } },
       { legal_name: 'Publico', tax_id: 'XAXX010101000' },
-    ]
+    ];
     globalThis.fetch = vi.fn(async (url, options) => {
-      expect(new URL(String(url)).pathname).toBe('/v2/customers')
-      expect(options?.method).toBe('POST')
-      return Response.json({ id: 'cus_ejemplo', created_at: timestamp })
-    }) as typeof fetch
+      expect(new URL(String(url)).pathname).toBe('/v2/customers');
+      expect(options?.method).toBe('POST');
+      return Response.json({ id: 'cus_ejemplo', created_at: timestamp });
+    }) as typeof fetch;
     const responses = [
       await client.customers.createNational({
         legal_name: 'Cliente',
@@ -351,22 +351,22 @@ describe('runtime compatibility (node)', () => {
         legal_name: 'Publico',
         tax_id: 'XAXX010101000',
       }),
-    ]
+    ];
     expect(
       responses.every(
         (customer) =>
           customer.created_at?.getTime() === new Date(timestamp).getTime(),
       ),
-    ).toBe(true)
+    ).toBe(true);
     for (const [index, call] of vi
       .mocked(globalThis.fetch)
       .mock.calls.entries())
-      expect(JSON.parse(String(call[1]?.body))).toEqual(inputs[index])
-  })
+      expect(JSON.parse(String(call[1]?.body))).toEqual(inputs[index]);
+  });
 
   it('hydrates dates across resource responses without changing SAT stamp text', async () => {
-    const client = createClient()
-    const timestamp = '2026-09-17T12:00:00.000Z'
+    const client = createClient();
+    const timestamp = '2026-09-17T12:00:00.000Z';
     const responses: Record<string, unknown> = {
       '/v2/customers/cus_123': {
         created_at: timestamp,
@@ -394,113 +394,113 @@ describe('runtime compatibility (node)', () => {
         created_at: timestamp,
         scheduled_at: timestamp,
       },
-    }
+    };
     globalThis.fetch = vi.fn(async (url) =>
       Response.json(responses[new URL(String(url)).pathname]),
-    ) as typeof fetch
+    ) as typeof fetch;
 
-    const customer = await client.customers.retrieve('cus_123')
-    expect(customer.created_at).toEqual(new Date(timestamp))
-    expect(customer.sat_validated_at).toEqual(new Date(timestamp))
-    expect(customer.edit_link_expires_at).toEqual(new Date(timestamp))
+    const customer = await client.customers.retrieve('cus_123');
+    expect(customer.created_at).toEqual(new Date(timestamp));
+    expect(customer.sat_validated_at).toEqual(new Date(timestamp));
+    expect(customer.edit_link_expires_at).toEqual(new Date(timestamp));
     expect((await client.products.retrieve('prod_123')).created_at).toEqual(
       new Date(timestamp),
-    )
-    const receipt = await client.receipts.retrieve('rec_123')
-    expect(receipt.created_at).toEqual(new Date(timestamp))
-    expect(receipt.date).toEqual(new Date(timestamp))
-    expect(receipt.expires_at).toEqual(new Date(timestamp))
-    const retention = await client.retentions.retrieve('ret_123')
-    expect(retention.created_at).toEqual(new Date(timestamp))
-    expect(retention.fecha_exp).toEqual(new Date(timestamp))
-    expect(retention.stamp?.date).toBe('2026-09-17T06:00:00')
-    const organization = await client.organizations.me()
-    expect(organization.created_at).toEqual(new Date(timestamp))
-    expect(organization.certificate.updated_at).toEqual(new Date(timestamp))
-    expect(organization.certificate.expires_at).toEqual(new Date(timestamp))
+    );
+    const receipt = await client.receipts.retrieve('rec_123');
+    expect(receipt.created_at).toEqual(new Date(timestamp));
+    expect(receipt.date).toEqual(new Date(timestamp));
+    expect(receipt.expires_at).toEqual(new Date(timestamp));
+    const retention = await client.retentions.retrieve('ret_123');
+    expect(retention.created_at).toEqual(new Date(timestamp));
+    expect(retention.fecha_exp).toEqual(new Date(timestamp));
+    expect(retention.stamp?.date).toBe('2026-09-17T06:00:00');
+    const organization = await client.organizations.me();
+    expect(organization.created_at).toEqual(new Date(timestamp));
+    expect(organization.certificate.updated_at).toEqual(new Date(timestamp));
+    expect(organization.certificate.expires_at).toEqual(new Date(timestamp));
     expect(organization.pending_add_ons_update?.scheduled_for).toEqual(
       new Date(timestamp),
-    )
+    );
     expect((await client.webhooks.retrieve('wh_123')).created_at).toEqual(
       new Date(timestamp),
-    )
-    const zipRequest = await client.invoices.retrieveZipRequest('zip_123')
-    expect(zipRequest.created_at).toEqual(new Date(timestamp))
-    expect(zipRequest.scheduled_at).toEqual(new Date(timestamp))
-  })
+    );
+    const zipRequest = await client.invoices.retrieveZipRequest('zip_123');
+    expect(zipRequest.created_at).toEqual(new Date(timestamp));
+    expect(zipRequest.scheduled_at).toEqual(new Date(timestamp));
+  });
 
   it('posts multiple receipts to invoice payload to receipts endpoint', async () => {
-    const client = createClient()
+    const client = createClient();
     const payload = {
       keys: ['rcp_key_1', 'rcp_key_2'],
       dry_run: true,
       use: 'G03',
-    }
+    };
 
     globalThis.fetch = vi.fn(async (url, options) => {
-      expect(url).toBe('https://api.test.local/v2/receipts/to-invoice')
-      expect(options?.method).toBe('POST')
+      expect(url).toBe('https://api.test.local/v2/receipts/to-invoice');
+      expect(options?.method).toBe('POST');
       expect(getHeader(options?.headers, 'Authorization')).toBe(
         'Bearer sk_test_123',
-      )
+      );
       expect(getHeader(options?.headers, 'Content-Type')).toBe(
         'application/json',
-      )
-      expect(options?.body).toBe(JSON.stringify(payload))
+      );
+      expect(options?.body).toBe(JSON.stringify(payload));
 
       return new Response(JSON.stringify({ total: 1234 }), {
         status: 200,
         headers: { 'content-type': 'application/json' },
-      })
-    }) as typeof fetch
+      });
+    }) as typeof fetch;
 
-    const result = await client.receipts.toInvoice(payload)
-    expect((result as Record<string, unknown>).total).toBe(1234)
-  })
+    const result = await client.receipts.toInvoice(payload);
+    expect((result as Record<string, unknown>).total).toBe(1234);
+  });
 
   it('downloads multiple receipts to invoice preview pdf', async () => {
-    const client = createClient()
+    const client = createClient();
     const payload = {
       keys: ['rcp_key_1'],
       use: 'G03',
-    }
+    };
 
     globalThis.fetch = vi.fn(async (url, options) => {
-      expect(url).toBe('https://api.test.local/v2/receipts/to-invoice/preview')
-      expect(options?.method).toBe('POST')
+      expect(url).toBe('https://api.test.local/v2/receipts/to-invoice/preview');
+      expect(options?.method).toBe('POST');
       expect(getHeader(options?.headers, 'Authorization')).toBe(
         'Bearer sk_test_123',
-      )
+      );
       expect(getHeader(options?.headers, 'Content-Type')).toBe(
         'application/json',
-      )
-      expect(options?.body).toBe(JSON.stringify(payload))
+      );
+      expect(options?.body).toBe(JSON.stringify(payload));
 
       return new Response(new Blob([Buffer.from('pdf-binary-content')]), {
         status: 200,
         headers: { 'content-type': 'application/pdf' },
-      })
-    }) as typeof fetch
+      });
+    }) as typeof fetch;
 
-    const pdf = await client.receipts.previewToInvoicePdf(payload)
+    const pdf = await client.receipts.previewToInvoicePdf(payload);
 
-    expect(pdf instanceof Blob).toBe(false)
-    expect(typeof (pdf as any).pipe).toBe('function')
+    expect(pdf instanceof Blob).toBe(false);
+    expect(typeof (pdf as any).pipe).toBe('function');
 
-    const chunks: Buffer[] = []
+    const chunks: Buffer[] = [];
     await new Promise<void>((resolve, reject) => {
-      ;(pdf as any).on('data', (chunk: unknown) => {
-        chunks.push(Buffer.from(chunk as Uint8Array))
-      })
-      ;(pdf as any).on('error', reject)
-      ;(pdf as any).on('end', resolve)
-    })
+      (pdf as any).on('data', (chunk: unknown) => {
+        chunks.push(Buffer.from(chunk as Uint8Array));
+      });
+      (pdf as any).on('error', reject);
+      (pdf as any).on('end', resolve);
+    });
 
-    expect(Buffer.concat(chunks).toString('utf8')).toBe('pdf-binary-content')
-  })
+    expect(Buffer.concat(chunks).toString('utf8')).toBe('pdf-binary-content');
+  });
 
   it('surfaces API message from non-OK JSON responses', async () => {
-    const client = createClient()
+    const client = createClient();
 
     globalThis.fetch = vi.fn(async () => {
       return new Response(
@@ -511,16 +511,16 @@ describe('runtime compatibility (node)', () => {
           status: 404,
           headers: { 'content-type': 'application/json' },
         },
-      )
-    }) as typeof fetch
+      );
+    }) as typeof fetch;
 
     await expect(client.invoices.retrieve('inv_123')).rejects.toThrow(
       'invoice not found',
-    )
-  })
+    );
+  });
 
   it('surfaces structured API errors and response headers in Node', async () => {
-    const client = createClient()
+    const client = createClient();
 
     globalThis.fetch = vi.fn(async () => {
       return new Response(
@@ -547,22 +547,22 @@ describe('runtime compatibility (node)', () => {
             'x-facturapi-log-id': 'log_123',
           },
         },
-      )
-    }) as typeof fetch
+      );
+    }) as typeof fetch;
 
     try {
-      await client.invoices.retrieve('inv_123')
-      throw new Error('Expected request to fail')
+      await client.invoices.retrieve('inv_123');
+      throw new Error('Expected request to fail');
     } catch (error) {
-      expect(error).toBeInstanceOf(FacturapiError)
+      expect(error).toBeInstanceOf(FacturapiError);
       expect((error as FacturapiError).message).toBe(
         'Se excedió el límite de solicitudes.',
-      )
-      expect((error as FacturapiError).status).toBe(429)
-      expect((error as FacturapiError).code).toBe('RATE_LIMIT_EXCEEDED')
-      expect((error as FacturapiError).path).toBe('date')
-      expect((error as FacturapiError).location).toBe('query')
-      expect((error as FacturapiError).logId).toBe('log_123')
+      );
+      expect((error as FacturapiError).status).toBe(429);
+      expect((error as FacturapiError).code).toBe('RATE_LIMIT_EXCEEDED');
+      expect((error as FacturapiError).path).toBe('date');
+      expect((error as FacturapiError).location).toBe('query');
+      expect((error as FacturapiError).logId).toBe('log_123');
       expect((error as FacturapiError).errors).toEqual([
         {
           code: 'required',
@@ -570,104 +570,104 @@ describe('runtime compatibility (node)', () => {
           path: 'date',
           location: 'query',
         },
-      ])
-      expect((error as FacturapiError).headers['retry-after']).toBe('3')
+      ]);
+      expect((error as FacturapiError).headers['retry-after']).toBe('3');
       expect((error as FacturapiError).headers['x-facturapi-log-id']).toBe(
         'log_123',
-      )
+      );
     }
-  })
+  });
 
   it('falls back to raw text when non-OK JSON body is malformed', async () => {
-    const client = createClient()
+    const client = createClient();
 
     globalThis.fetch = vi.fn(async () => {
       return new Response('not-a-json-body', {
         status: 500,
         headers: { 'content-type': 'application/json' },
-      })
-    }) as typeof fetch
+      });
+    }) as typeof fetch;
 
     await expect(client.invoices.retrieve('inv_123')).rejects.toThrow(
       'not-a-json-body',
-    )
-  })
+    );
+  });
 
   it('falls back to status text when non-OK body is empty', async () => {
-    const client = createClient()
+    const client = createClient();
 
     globalThis.fetch = vi.fn(async () => {
       return new Response('', {
         status: 400,
         statusText: 'Bad Request',
         headers: { 'content-type': 'text/plain' },
-      })
-    }) as typeof fetch
+      });
+    }) as typeof fetch;
 
     await expect(client.invoices.retrieve('inv_123')).rejects.toThrow(
       'Bad Request',
-    )
-  })
+    );
+  });
 
   it('returns a pipeable stream-like object for binary downloads', async () => {
-    const client = createClient()
+    const client = createClient();
 
     globalThis.fetch = vi.fn(async () => {
       return new Response(new Blob([Buffer.from('zip-binary-content')]), {
         status: 200,
         headers: { 'content-type': 'application/zip' },
-      })
-    }) as typeof fetch
+      });
+    }) as typeof fetch;
 
-    const zip = await client.invoices.downloadZip('inv_123')
+    const zip = await client.invoices.downloadZip('inv_123');
 
-    expect(zip instanceof Blob).toBe(false)
-    expect(typeof (zip as any).pipe).toBe('function')
+    expect(zip instanceof Blob).toBe(false);
+    expect(typeof (zip as any).pipe).toBe('function');
 
-    const chunks: Buffer[] = []
+    const chunks: Buffer[] = [];
     await new Promise<void>((resolve, reject) => {
-      ;(zip as any).on('data', (chunk: unknown) => {
-        chunks.push(Buffer.from(chunk as Uint8Array))
-      })
-      ;(zip as any).on('error', reject)
-      ;(zip as any).on('end', resolve)
-    })
+      (zip as any).on('data', (chunk: unknown) => {
+        chunks.push(Buffer.from(chunk as Uint8Array));
+      });
+      (zip as any).on('error', reject);
+      (zip as any).on('end', resolve);
+    });
 
-    expect(Buffer.concat(chunks).toString('utf8')).toBe('zip-binary-content')
-  })
+    expect(Buffer.concat(chunks).toString('utf8')).toBe('zip-binary-content');
+  });
 
   it('pipes binary downloads to a Node writable stream', async () => {
-    const client = createClient()
+    const client = createClient();
 
     globalThis.fetch = vi.fn(async () => {
       return new Response(new Blob([Buffer.from('zip-binary-content')]), {
         status: 200,
         headers: { 'content-type': 'application/zip' },
-      })
-    }) as typeof fetch
+      });
+    }) as typeof fetch;
 
-    const zip = await client.invoices.downloadZip('inv_123')
+    const zip = await client.invoices.downloadZip('inv_123');
 
-    const written: Buffer[] = []
+    const written: Buffer[] = [];
     const writable = new Writable({
       write(chunk, _encoding, callback) {
-        written.push(Buffer.from(chunk))
-        callback()
+        written.push(Buffer.from(chunk));
+        callback();
       },
-    })
+    });
 
     await new Promise<void>((resolve, reject) => {
-      writable.on('finish', resolve)
-      writable.on('error', reject)
-      ;(zip as any).on('error', reject)
-      ;(zip as any).pipe(writable)
-    })
+      writable.on('finish', resolve);
+      writable.on('error', reject);
+      (zip as any).on('error', reject);
+      (zip as any).pipe(writable);
+    });
 
-    expect(Buffer.concat(written).toString('utf8')).toBe('zip-binary-content')
-  })
+    expect(Buffer.concat(written).toString('utf8')).toBe('zip-binary-content');
+  });
 
   it('propagates stream reader errors for binary downloads', async () => {
-    const client = createClient()
+    const client = createClient();
 
     globalThis.fetch = vi.fn(async () => {
       return {
@@ -676,57 +676,57 @@ describe('runtime compatibility (node)', () => {
           get(name: string) {
             return name.toLowerCase() === 'content-type'
               ? 'application/zip'
-              : null
+              : null;
           },
         },
         body: {
           getReader() {
             return {
               read: async () => {
-                throw new Error('reader failed')
+                throw new Error('reader failed');
               },
               cancel: async () => undefined,
-            }
+            };
           },
         },
         async blob() {
-          return new Blob(['fallback'])
+          return new Blob(['fallback']);
         },
         async json() {
-          return {}
+          return {};
         },
         async text() {
-          return ''
+          return '';
         },
-      } as unknown as Response
-    }) as typeof fetch
+      } as unknown as Response;
+    }) as typeof fetch;
 
-    const zip = await client.invoices.downloadZip('inv_123')
+    const zip = await client.invoices.downloadZip('inv_123');
     await expect(
       new Promise((resolve, reject) => {
-        ;(zip as any).on('error', reject)
-        ;(zip as any).on('end', resolve)
-        ;(zip as any).on('close', resolve)
-        ;(zip as any).on('data', () => undefined)
+        (zip as any).on('error', reject);
+        (zip as any).on('end', resolve);
+        (zip as any).on('close', resolve);
+        (zip as any).on('data', () => undefined);
       }),
-    ).rejects.toThrow('reader failed')
-  })
+    ).rejects.toThrow('reader failed');
+  });
 
   it('validates webhook signatures locally in Node crypto', async () => {
-    const client = createClient()
-    const payload = '{"id":"evt_123","type":"invoice.created"}'
-    const secret = 'whsec_test_fixed'
+    const client = createClient();
+    const payload = '{"id":"evt_123","type":"invoice.created"}';
+    const secret = 'whsec_test_fixed';
     const precomputedSignature =
-      'cebe006de72ff7836e0a39b2dcb7c6304f27039441ae21b52fba413f24516d6e'
+      'cebe006de72ff7836e0a39b2dcb7c6304f27039441ae21b52fba413f24516d6e';
 
     const event = await client.webhooks.validateSignature({
       secret,
       signature: precomputedSignature,
       payload,
-    })
+    });
 
-    expect(event.id).toBe('evt_123')
-    expect(event.type).toBe('invoice.created')
+    expect(event.id).toBe('evt_123');
+    expect(event.type).toBe('invoice.created');
 
     await expect(
       client.webhooks.validateSignature({
@@ -737,7 +737,7 @@ describe('runtime compatibility (node)', () => {
           .digest('hex'),
         payload,
       }),
-    ).rejects.toThrow('Invalid signature')
+    ).rejects.toThrow('Invalid signature');
 
     await expect(
       client.webhooks.validateSignature({
@@ -748,12 +748,12 @@ describe('runtime compatibility (node)', () => {
           .update('invalid-json-example')
           .digest('hex'),
       }),
-    ).rejects.toThrow(/^Invalid webhook event JSON$/)
-  })
+    ).rejects.toThrow(/^Invalid webhook event JSON$/);
+  });
 
   it('hydrates dates in locally validated webhook events', async () => {
-    const client = createClient()
-    const secret = 'whsec_test_dates'
+    const client = createClient();
+    const secret = 'whsec_test_dates';
     const payload = JSON.stringify({
       type: 'invoice.status_updated',
       created_at: '2026-09-17T12:00:00.000Z',
@@ -765,7 +765,7 @@ describe('runtime compatibility (node)', () => {
           stamp: { date: '2026-09-17T06:59:16' },
         },
       },
-    })
+    });
 
     const event = await client.webhooks.validateSignature({
       secret,
@@ -774,66 +774,66 @@ describe('runtime compatibility (node)', () => {
         .update(payload)
         .digest('hex'),
       payload,
-    })
+    });
 
-    expect(event.created_at).toEqual(new Date('2026-09-17T12:00:00.000Z'))
+    expect(event.created_at).toEqual(new Date('2026-09-17T12:00:00.000Z'));
     expect(event.data.object.created_at).toEqual(
       new Date('2026-09-17T11:00:00.000Z'),
-    )
+    );
     expect(event.data.object.canceled_at).toEqual(
       new Date('2026-09-17T12:59:16.000Z'),
-    )
-    expect(event.data.object.stamp?.date).toBe('2026-09-17T06:59:16')
-  })
+    );
+    expect(event.data.object.stamp?.date).toBe('2026-09-17T06:59:16');
+  });
 
   it('falls back to API validation when local crypto is unavailable', async () => {
-    const client = createClient()
+    const client = createClient();
     const payload = JSON.stringify({
       id: 'evt_remote_123',
       type: 'invoice.status_updated',
       created_at: '2026-09-30T12:00:00.000Z',
-    })
-    const originalBuffer = (globalThis as any).Buffer
+    });
+    const originalBuffer = (globalThis as any).Buffer;
     const cryptoDescriptor = Object.getOwnPropertyDescriptor(
       globalThis,
       'crypto',
-    )
+    );
 
-    ;(globalThis as any).Buffer = undefined
+    (globalThis as any).Buffer = undefined;
     Object.defineProperty(globalThis, 'crypto', {
       value: undefined,
       configurable: true,
       writable: true,
-    })
+    });
 
     globalThis.fetch = vi.fn(async (url, options) => {
-      expect(url).toBe('https://api.test.local/v2/webhooks/validate-signature')
-      expect(options?.method).toBe('POST')
+      expect(url).toBe('https://api.test.local/v2/webhooks/validate-signature');
+      expect(options?.method).toBe('POST');
       expect(getHeader(options?.headers, 'Authorization')).toBe(
         'Bearer sk_test_123',
-      )
+      );
       expect(JSON.parse(options?.body as string)).toEqual({
         secret: 'whsec_test',
         signature: 'deadbeef',
         payload,
-      })
+      });
       return {
         ok: true,
         headers: {
           get(name: string) {
             return name.toLowerCase() === 'content-type'
               ? 'application/json'
-              : null
+              : null;
           },
         },
         async json() {
-          return payload
+          return payload;
         },
         async text() {
-          return ''
+          return '';
         },
-      } as unknown as Response
-    }) as typeof fetch
+      } as unknown as Response;
+    }) as typeof fetch;
 
     try {
       for (const eventPayload of [payload, JSON.parse(payload)]) {
@@ -841,33 +841,33 @@ describe('runtime compatibility (node)', () => {
           secret: 'whsec_test',
           signature: 'deadbeef',
           payload: eventPayload,
-        })
-        expect(event.id).toBe('evt_remote_123')
-        expect(event.type).toBe('invoice.status_updated')
-        expect(event.created_at).toEqual(new Date('2026-09-30T12:00:00.000Z'))
+        });
+        expect(event.id).toBe('evt_remote_123');
+        expect(event.type).toBe('invoice.status_updated');
+        expect(event.created_at).toEqual(new Date('2026-09-30T12:00:00.000Z'));
       }
     } finally {
-      ;(globalThis as any).Buffer = originalBuffer
+      (globalThis as any).Buffer = originalBuffer;
       if (cryptoDescriptor) {
-        Object.defineProperty(globalThis, 'crypto', cryptoDescriptor)
+        Object.defineProperty(globalThis, 'crypto', cryptoDescriptor);
       }
     }
-  })
+  });
 
   it('rejects unsupported upload inputs with a clear error', async () => {
-    const client = createClient()
+    const client = createClient();
     await expect(
       client.organizations.uploadLogo('org_123', { invalid: true } as any),
-    ).rejects.toThrow(/Unsupported file input type/)
-  })
+    ).rejects.toThrow(/Unsupported file input type/);
+  });
 
   it('serializes flat params with URLSearchParams encoding and arrays with repeated keys', async () => {
-    const client = createClient()
+    const client = createClient();
 
     globalThis.fetch = vi.fn(async (url) => {
       expect(url).toBe(
         'https://api.test.local/v2/invoices?search=a+b&page=2&active=true&empty=&tags=x&tags=y',
-      )
+      );
       return new Response(
         JSON.stringify({
           data: [],
@@ -876,8 +876,8 @@ describe('runtime compatibility (node)', () => {
           status: 200,
           headers: { 'content-type': 'application/json' },
         },
-      )
-    }) as typeof fetch
+      );
+    }) as typeof fetch;
 
     await client.invoices.list({
       search: 'a b',
@@ -885,6 +885,6 @@ describe('runtime compatibility (node)', () => {
       active: true,
       empty: '',
       tags: ['x', 'y'] as unknown as string,
-    })
-  })
-})
+    });
+  });
+});

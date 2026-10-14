@@ -3,7 +3,7 @@ import {
   expectNotAssignable,
   expectType,
   expectError,
-} from 'tsd'
+} from 'tsd';
 import Facturapi, {
   BinaryDownload,
   ApiKeys,
@@ -56,17 +56,19 @@ import Facturapi, {
   ToInvoiceSummary,
   Webhook,
   ZipRequest,
-} from '../dist'
+} from '../dist';
 
-const client = new Facturapi('sk_test_123')
+const client = new Facturapi('sk_test_123');
 
-declare const createdInvoice: Awaited<ReturnType<typeof client.invoices.create>>
-expectAssignable<Invoice | InvoiceDraft>(createdInvoice)
-expectAssignable<Date | null | undefined>(createdInvoice.date)
-expectAssignable<Invoice['stamp'] | undefined>(createdInvoice.stamp)
+declare const createdInvoice: Awaited<
+  ReturnType<typeof client.invoices.create>
+>;
+expectAssignable<Invoice | InvoiceDraft>(createdInvoice);
+expectAssignable<Date | null | undefined>(createdInvoice.date);
+expectAssignable<Invoice['stamp'] | undefined>(createdInvoice.stamp);
 
-expectAssignable<InvoiceNominaEditInput>({ type: 'N' })
-expectError<InvoiceNominaEditInput>({ type: 'P' })
+expectAssignable<InvoiceNominaEditInput>({ type: 'N' });
+expectError<InvoiceNominaEditInput>({ type: 'P' });
 expectAssignable<InvoiceCreateInput>({
   status: 'draft',
   complements: [
@@ -75,20 +77,20 @@ expectAssignable<InvoiceCreateInput>({
       data: { leyendas: [{ texto_leyenda: 'Ejemplo' }] },
     },
   ],
-})
+});
 expectAssignable<NominaPercepcionInput>({
   tipo_percepcion: '001',
   clave: 'ABC',
   importe_gravado: 1,
   importe_exento: 0,
-})
+});
 expectError<NominaPercepcionInput>({
   tipo_percepcion: '019',
   clave: 'ABC',
   importe_gravado: 1,
   importe_exento: 0,
-})
-expectError<NominaPercepcionInput>({ tipo_percepcion: '001', clave: 'ABC' })
+});
+expectError<NominaPercepcionInput>({ tipo_percepcion: '001', clave: 'ABC' });
 expectAssignable<NominaPercepcionInput>({
   tipo_percepcion: '019',
   clave: 'ABC',
@@ -97,65 +99,65 @@ expectAssignable<NominaPercepcionInput>({
   horas_extra: [
     { dias: 1, tipo_horas: '01', horas_extra: 1, importe_pagado: 1 },
   ],
-})
+});
 expectError<NominaHorasExtraInput>({
   dias: 1,
   tipo_horas: '01',
   horas_extra: 1,
-})
+});
 expectAssignable<NominaEntidadSncfInput>({
   origen_recurso: 'IM',
   monto_recurso_propio: 1,
-})
-expectAssignable<NominaEntidadSncfInput>({ origen_recurso: 'IF' })
-expectError<NominaEntidadSncfInput>({ origen_recurso: 'IM' })
-expectError<NominaEmisorInput>({ entidad_sncf: { origen_recurso: 'IM' } })
+});
+expectAssignable<NominaEntidadSncfInput>({ origen_recurso: 'IF' });
+expectError<NominaEntidadSncfInput>({ origen_recurso: 'IM' });
+expectError<NominaEmisorInput>({ entidad_sncf: { origen_recurso: 'IM' } });
 expectError(
   client.invoices.create({
     type: 'P',
     customer: 'cus',
     complements: [{ type: 'pago', data: { tipo_nomina: 'O' } }],
   }),
-)
+);
 expectError<InvoiceCreateInput>({
   type: 'P',
   customer: 'cus',
   payment_method: 'PPD',
   complements: [],
-})
-client.invoices.updateDraft('draft', { type: 'N' })
+});
+client.invoices.updateDraft('draft', { type: 'N' });
 expectAssignable<BaseTax>({
   type: TaxType.IEPS,
   rate: 0.08,
   ieps_mode: IepsMode.UNIT,
-})
+});
 expectError<CartaPorteAutotransporte>({
   PermSCT: 'TPAF01',
   NumPermisoSCT: 'Example',
-})
+});
 
-expectAssignable<InvoiceCreateInput>({ status: 'draft', date: new Date() })
-expectAssignable<InvoiceCreateInput>({ type: 'E', status: 'draft' })
-expectAssignable<InvoiceCreateInput>({ type: 'P', status: 'draft' })
-expectAssignable<InvoiceCreateInput>({ type: 'N', status: 'draft' })
-expectAssignable<InvoiceCreateInput>({ type: 'T', status: 'draft' })
-expectError<InvoiceCreateInput>({ type: 'I', status: 'pending' })
-expectError<InvoiceCreateInput>({ type: 'E', status: 'pending' })
-expectError<InvoiceCreateInput>({ type: 'P', status: 'pending' })
-expectError<InvoiceCreateInput>({ type: 'N', status: 'pending' })
-expectError<InvoiceCreateInput>({ type: 'T', status: 'pending' })
-expectError<InvoiceCreateInput>({})
-declare const invoiceInput: InvoiceCreateInput
+expectAssignable<InvoiceCreateInput>({ status: 'draft', date: new Date() });
+expectAssignable<InvoiceCreateInput>({ type: 'E', status: 'draft' });
+expectAssignable<InvoiceCreateInput>({ type: 'P', status: 'draft' });
+expectAssignable<InvoiceCreateInput>({ type: 'N', status: 'draft' });
+expectAssignable<InvoiceCreateInput>({ type: 'T', status: 'draft' });
+expectError<InvoiceCreateInput>({ type: 'I', status: 'pending' });
+expectError<InvoiceCreateInput>({ type: 'E', status: 'pending' });
+expectError<InvoiceCreateInput>({ type: 'P', status: 'pending' });
+expectError<InvoiceCreateInput>({ type: 'N', status: 'pending' });
+expectError<InvoiceCreateInput>({ type: 'T', status: 'pending' });
+expectError<InvoiceCreateInput>({});
+declare const invoiceInput: InvoiceCreateInput;
 if (invoiceInput.status !== 'draft') {
-  expectNotAssignable<undefined>(invoiceInput.customer)
+  expectNotAssignable<undefined>(invoiceInput.customer);
   if (invoiceInput.type === 'P') {
-    expectNotAssignable<undefined>(invoiceInput.complements)
+    expectNotAssignable<undefined>(invoiceInput.complements);
   }
 }
 expectAssignable<InvoiceCreateInput>({
   status: 'draft',
   date: '2026-09-30T12:00:00Z',
-})
+});
 expectAssignable<InvoiceCreateInput>({
   customer: 'cus',
   payment_form: '28',
@@ -165,15 +167,15 @@ expectAssignable<InvoiceCreateInput>({
       product: { description: 'Ejemplo', product_key: '60131324', price: 1 },
     },
   ],
-})
+});
 expectAssignable<InvoiceCreateInput>({
   status: 'draft',
   customer: null,
   payment_form: null,
   use: null,
-})
-client.invoices.updateDraft('draft', { type: 'E', customer: null })
-expectError<InvoiceNominaEditInput>({ type: 'N', customer: null })
+});
+client.invoices.updateDraft('draft', { type: 'E', customer: null });
+expectError<InvoiceNominaEditInput>({ type: 'N', customer: null });
 client.invoices.create({
   type: 'P',
   customer: 'cus',
@@ -194,27 +196,27 @@ client.invoices.create({
       },
     },
   ],
-})
+});
 expectError(
   client.webhooks.create({
     url: 'https://example.com/webhook',
     enabled_events: ['*'],
     secret: 'caller-secret',
   }),
-)
+);
 expectType<Promise<Invoice>>(
   client.receipts.toInvoice({ keys: ['receipt-key'] }),
-)
+);
 expectType<Promise<ToInvoiceSummary>>(
   client.receipts.toInvoice({ keys: ['receipt-key'], dry_run: true }),
-)
-declare const dryRun: boolean
+);
+declare const dryRun: boolean;
 expectType<Promise<Invoice | ToInvoiceSummary>>(
   client.receipts.toInvoice({ keys: ['receipt-key'], dry_run: dryRun }),
-)
+);
 
-const zipPromise = client.invoices.downloadZip('inv_123')
-expectType<Promise<BinaryDownload>>(zipPromise)
+const zipPromise = client.invoices.downloadZip('inv_123');
+expectType<Promise<BinaryDownload>>(zipPromise);
 
 expectType<Promise<ZipRequest>>(
   client.invoices.createZipRequest({
@@ -223,7 +225,7 @@ expectType<Promise<ZipRequest>>(
     issuer_type: IssuingType.ISSUING,
     invoice_types: [InvoiceType.INGRESO, InvoiceType.EGRESO],
   }),
-)
+);
 expectType<Promise<SearchResult<ZipRequest>>>(
   client.invoices.listZipRequests({
     year: 2025,
@@ -232,220 +234,222 @@ expectType<Promise<SearchResult<ZipRequest>>>(
     limit: 20,
     page: 1,
   }),
-)
+);
 expectType<Promise<ZipRequest>>(
   client.invoices.retrieveZipRequest('zip_request_123'),
-)
+);
 expectType<Promise<BinaryDownload>>(
   client.invoices.downloadZipRequest('zip_request_123'),
-)
+);
 
-declare const signedDownloadUrl: SignedDownloadUrl
-expectType<string>(signedDownloadUrl.url)
-expectType<Date>(signedDownloadUrl.expires_at)
-expectType<string>(signedDownloadUrl.content_type)
-expectType<string>(signedDownloadUrl.filename)
+declare const signedDownloadUrl: SignedDownloadUrl;
+expectType<string>(signedDownloadUrl.url);
+expectType<Date>(signedDownloadUrl.expires_at);
+expectType<string>(signedDownloadUrl.content_type);
+expectType<string>(signedDownloadUrl.filename);
 expectType<Promise<SignedDownloadUrl>>(
   client.invoices.downloadPdfUrl('inv_123'),
-)
+);
 expectType<Promise<SignedDownloadUrl>>(
   client.invoices.downloadXmlUrl('inv_123'),
-)
+);
 expectType<Promise<SignedDownloadUrl>>(
   client.invoices.downloadZipUrl('inv_123'),
-)
+);
 expectType<Promise<SignedDownloadUrl>>(
   client.invoices.downloadCancellationReceiptPdfUrl('inv_123'),
-)
+);
 expectType<Promise<SignedDownloadUrl>>(
   client.invoices.downloadCancellationReceiptXmlUrl('inv_123'),
-)
+);
 expectType<Promise<SignedDownloadUrl>>(
   client.invoices.downloadZipRequestUrl('zip_request_123'),
-)
+);
 expectType<Promise<SignedDownloadUrl>>(
   client.invoices.previewPdfUrl({ customer: 'cus_123', items: [] }),
-)
+);
 expectType<Promise<SignedDownloadUrl>>(
   client.receipts.downloadPdfUrl('rec_123'),
-)
+);
 expectType<Promise<SignedDownloadUrl>>(
   client.receipts.previewToInvoicePdfUrl({ keys: ['receipt-key'] }),
-)
+);
 expectType<Promise<SignedDownloadUrl>>(
   client.retentions.downloadPdfUrl('ret_123'),
-)
+);
 expectType<Promise<SignedDownloadUrl>>(
   client.retentions.downloadXmlUrl('ret_123'),
-)
+);
 expectType<Promise<SignedDownloadUrl>>(
   client.retentions.downloadZipUrl('ret_123'),
-)
+);
 
-declare const nodeLike: NodeLikeReadableStream
+declare const nodeLike: NodeLikeReadableStream;
 nodeLike.on('data', (chunk) => {
-  expectType<unknown>(chunk)
-})
+  expectType<unknown>(chunk);
+});
 
 if (nodeLike.pipe) {
-  const destination = { write: (_chunk: unknown) => undefined }
-  expectType<typeof destination>(nodeLike.pipe(destination))
+  const destination = { write: (_chunk: unknown) => undefined };
+  expectType<typeof destination>(nodeLike.pipe(destination));
 }
 
-declare const binary: BinaryDownload
-expectError(binary.pipe({}))
+declare const binary: BinaryDownload;
+expectError(binary.pipe({}));
 
 if ('pipe' in binary && typeof binary.pipe === 'function') {
-  const destination = { write: (_chunk: unknown) => undefined }
-  expectType<typeof destination>(binary.pipe(destination))
+  const destination = { write: (_chunk: unknown) => undefined };
+  expectType<typeof destination>(binary.pipe(destination));
 }
 
-expectAssignable<TaxFactor>(TaxFactor.EXENTO)
+expectAssignable<TaxFactor>(TaxFactor.EXENTO);
 
-declare const invoiceItem: InvoiceItem
-expectType<string[] | undefined>(invoiceItem.property_tax_account)
-expectAssignable<unknown[]>(invoiceItem.product.taxes)
+declare const invoiceItem: InvoiceItem;
+expectType<string[] | undefined>(invoiceItem.property_tax_account);
+expectAssignable<unknown[]>(invoiceItem.product.taxes);
 
-declare const invoice: Invoice
-expectType<Date>(invoice.created_at)
-expectType<Date | null>(invoice.date)
-expectType<Date | null | undefined>(invoice.canceled_at)
-expectType<Date | undefined>(invoice.cancellation?.requested_at)
-expectType<Date | undefined>(invoice.cancellation?.canceled_at)
-expectType<number>(invoice.total)
-expectType<InvoiceStatus>(invoice.status)
-expectType<string[] | undefined>(invoiceItem.customs_keys)
-expectType<string | undefined>(invoice.stamp?.date)
+declare const invoice: Invoice;
+expectType<Date>(invoice.created_at);
+expectType<Date | null>(invoice.date);
+expectType<Date | null | undefined>(invoice.canceled_at);
+expectType<Date | undefined>(invoice.cancellation?.requested_at);
+expectType<Date | undefined>(invoice.cancellation?.canceled_at);
+expectType<number>(invoice.total);
+expectType<InvoiceStatus>(invoice.status);
+expectType<string[] | undefined>(invoiceItem.customs_keys);
+expectType<string | undefined>(invoice.stamp?.date);
 
-declare const receipt: Receipt
-expectType<Date>(receipt.created_at)
-expectType<Date>(receipt.date)
-expectType<Date>(receipt.expires_at)
-expectType<number>(receipt.total)
-expectType<string>(receipt.key)
+declare const receipt: Receipt;
+expectType<Date>(receipt.created_at);
+expectType<Date>(receipt.date);
+expectType<Date>(receipt.expires_at);
+expectType<number>(receipt.total);
+expectType<string>(receipt.key);
 
-declare const customer: Customer
-expectType<Date>(customer.created_at)
-expectType<string | undefined>(customer.email)
-expectType<string>(customer.organization)
-expectType<Date | null | undefined>(customer.sat_validated_at)
-expectType<Date | null | undefined>(customer.edit_link_expires_at)
-declare const product: Product
-expectType<Date>(product.created_at)
-declare const organization: Organization
-expectType<Date>(organization.created_at)
-expectType<Date | undefined>(organization.certificate.expires_at)
-expectType<Date | undefined>(organization.pending_add_ons_update?.scheduled_for)
-declare const draftResponse: InvoiceDraft
-expectType<InvoiceStatus>(draftResponse.status)
-expectAssignable<Invoice>(draftResponse)
-expectType<number>(invoice.amount_due)
-expectType<string | null | undefined>(invoice.uuid)
-expectAssignable<InvoiceDraft['customer']>(null)
-expectType<CustomerInfo | null | undefined>(draftResponse.customer)
+declare const customer: Customer;
+expectType<Date>(customer.created_at);
+expectType<string | undefined>(customer.email);
+expectType<string>(customer.organization);
+expectType<Date | null | undefined>(customer.sat_validated_at);
+expectType<Date | null | undefined>(customer.edit_link_expires_at);
+declare const product: Product;
+expectType<Date>(product.created_at);
+declare const organization: Organization;
+expectType<Date>(organization.created_at);
+expectType<Date | undefined>(organization.certificate.expires_at);
+expectType<Date | undefined>(
+  organization.pending_add_ons_update?.scheduled_for,
+);
+declare const draftResponse: InvoiceDraft;
+expectType<InvoiceStatus>(draftResponse.status);
+expectAssignable<Invoice>(draftResponse);
+expectType<number>(invoice.amount_due);
+expectType<string | null | undefined>(invoice.uuid);
+expectAssignable<InvoiceDraft['customer']>(null);
+expectType<CustomerInfo | null | undefined>(draftResponse.customer);
 expectError(
   client.webhooks.create({
     url: 'https://example.com/hooks',
     enabled_events: ['*'],
   }),
-)
+);
 expectError(
   client.webhooks.update('hook_example', {
     status: 'enabled',
     enabled_events: ['*'],
   }),
-)
-declare const webhook: Webhook
-expectAssignable<NonNullable<Webhook['enabled_events']>[number]>('*')
-expectType<Date>(webhook.created_at)
-declare const event: ApiEvent
-expectType<Date>(event.created_at)
-declare const payment: PagoComplementData
-expectType<Date>(payment.date)
+);
+declare const webhook: Webhook;
+expectAssignable<NonNullable<Webhook['enabled_events']>[number]>('*');
+expectType<Date>(webhook.created_at);
+declare const event: ApiEvent;
+expectType<Date>(event.created_at);
+declare const payment: PagoComplementData;
+expectType<Date>(payment.date);
 expectType<'01' | '02' | '03' | '04' | '05' | '06' | '07' | '08' | undefined>(
   payment.related_documents[0].taxability,
-)
-declare const zipRequest: ZipRequest
-expectType<Date>(zipRequest.created_at)
-expectType<Date | undefined>(zipRequest.scheduled_at)
-expectError(zipRequest.updated_at)
+);
+declare const zipRequest: ZipRequest;
+expectType<Date>(zipRequest.created_at);
+expectType<Date | undefined>(zipRequest.scheduled_at);
+expectError(zipRequest.updated_at);
 
-declare const retention: Retention
-expectType<Date | null>(retention.fecha_exp)
-expectType<string | undefined>(retention.stamp?.date)
+declare const retention: Retention;
+expectType<Date | null>(retention.fecha_exp);
+expectType<string | undefined>(retention.stamp?.date);
 
-declare const apiKey: ApiKeys
-expectType<Date>(apiKey.created_at)
-declare const access: OrganizationUserAccess
-expectType<Date>(access.created_at)
-expectType<Date>(access.updated_at)
-declare const invite: OrganizationInvite
-expectType<Date>(invite.created_at)
-expectType<Date | null>(invite.expires_at)
-declare const role: OrganizationTeamRole
-expectType<Date | null>(role.created_at)
-expectType<Date | null>(role.updated_at)
+declare const apiKey: ApiKeys;
+expectType<Date>(apiKey.created_at);
+declare const access: OrganizationUserAccess;
+expectType<Date>(access.created_at);
+expectType<Date>(access.updated_at);
+declare const invite: OrganizationInvite;
+expectType<Date>(invite.created_at);
+expectType<Date | null>(invite.expires_at);
+declare const role: OrganizationTeamRole;
+expectType<Date | null>(role.created_at);
+expectType<Date | null>(role.updated_at);
 
-declare const apiError: FacturapiError
-expectType<number>(apiError.status)
-expectType<string | undefined>(apiError.code)
-expectType<string | undefined>(apiError.path)
-expectType<string | undefined>(apiError.location)
-expectType<string | undefined>(apiError.logId)
-expectType<Record<string, string>>(apiError.headers)
+declare const apiError: FacturapiError;
+expectType<number>(apiError.status);
+expectType<string | undefined>(apiError.code);
+expectType<string | undefined>(apiError.path);
+expectType<string | undefined>(apiError.location);
+expectType<string | undefined>(apiError.logId);
+expectType<Record<string, string>>(apiError.headers);
 
 // Pagination params document the two modes; both return the same envelope.
-expectAssignable<PageSearchParams>({ page: 2 })
-expectAssignable<CursorSearchParams>({ pagination: 'cursor', limit: 50 })
+expectAssignable<PageSearchParams>({ page: 2 });
+expectAssignable<CursorSearchParams>({ pagination: 'cursor', limit: 50 });
 expectType<Promise<SearchResult<Invoice>>>(
   client.invoices.list({ page: 2, limit: 50 }),
-)
+);
 expectType<Promise<SearchResult<Invoice>>>(
   client.invoices.list({ pagination: 'cursor', limit: 50 }),
-)
+);
 expectType<Promise<SearchResult<Invoice>>>(
   client.invoices.list({ after: 'cursor-token' }),
-)
-const looseParams: Record<string, any> = { page: 2 }
-expectType<Promise<SearchResult<Invoice>>>(client.invoices.list(looseParams))
-expectType<Promise<SearchResult<Invoice>>>(client.invoices.list())
+);
+const looseParams: Record<string, any> = { page: 2 };
+expectType<Promise<SearchResult<Invoice>>>(client.invoices.list(looseParams));
+expectType<Promise<SearchResult<Invoice>>>(client.invoices.list());
 // Totals and cursors are optional because cursor pages omit them.
 expectType<Promise<number | undefined>>(
   client.invoices.list({ page: 1 }).then((result) => result.total_results),
-)
+);
 expectType<Promise<string | null | undefined>>(
   client.invoices.list({ after: 'token' }).then((result) => result.next_cursor),
-)
+);
 
 declare const paymentSummary: Awaited<
   ReturnType<typeof client.invoices.paymentSummary>
->
+>;
 expectAssignable<PagoComplementData['related_documents'][number]>(
   paymentSummary,
-)
+);
 expectNotAssignable<
   PagoComplementData['related_documents'][number]['taxability']
->(1)
+>(1);
 
 // Incomplete customer information is accepted only when an edit link is requested.
-client.customers.create({}, { createEditLink: true })
-client.customers.create({ email: null }, { createEditLink: true })
-client.customers.sendEditLinkByEmail('cus_ejemplo', { email: null })
+client.customers.create({}, { createEditLink: true });
+client.customers.create({ email: null }, { createEditLink: true });
+client.customers.sendEditLinkByEmail('cus_ejemplo', { email: null });
 client.customers.create(
   { email: 'cliente@example.com' },
   { createEditLink: true },
-)
+);
 client.customers.create(
   { address: { city: 'Hermosillo' } },
   { createEditLink: true },
-)
-expectError(client.customers.create({}))
-expectError(client.customers.create({}, { createEditLink: false }))
+);
+expectError(client.customers.create({}));
+expectError(client.customers.create({}, { createEditLink: false }));
 expectError(
   client.customers.create({}, { createEditLink: Math.random() > 0.5 }),
-)
-expectError(client.customers.create({ address: { zip: '83200' } }))
-expectError(client.customers.create({ email: 123 }, { createEditLink: true }))
+);
+expectError(client.customers.create({ address: { zip: '83200' } }));
+expectError(client.customers.create({ email: 123 }, { createEditLink: true }));
 
 // Country and RFC variants preserve the requirements of customer creation.
 client.customers.create({
@@ -453,142 +457,142 @@ client.customers.create({
   tax_id: 'ABC101010111',
   tax_system: '601',
   address: { zip: '83200' },
-})
+});
 client.customers.create({
   legal_name: 'Foreign customer',
   address: { country: 'USA' },
-})
+});
 client.customers.create({
   legal_name: 'Foreign customer',
   tax_id: null,
   tax_system: null,
   address: { country: 'USA' },
-})
+});
 client.customers.create({
   legal_name: 'PUBLICO EN GENERAL',
   tax_id: 'XAXX010101000',
-})
+});
 expectNotAssignable<CustomerNationalCreateInput>({
   legal_name: 'Cliente',
   tax_system: '601',
   address: { zip: '83200' },
-})
+});
 expectNotAssignable<CustomerNationalCreateInput>({
   legal_name: 'Cliente',
   tax_id: 'ABC101010111',
   address: { zip: '83200' },
-})
+});
 expectNotAssignable<CustomerNationalCreateInput>({
   legal_name: 'Cliente',
   tax_id: 'ABC101010111',
   tax_system: '601',
   address: {},
-})
+});
 expectNotAssignable<CustomerForeignCreateInput>({
   legal_name: 'Foreign',
   tax_system: '601',
   address: { country: 'USA' },
-})
+});
 expectNotAssignable<CustomerGenericCreateInput>({
   legal_name: 'Publico',
   tax_id: 'XAXX010101000',
   tax_system: '601',
-})
-expectError(client.customers.create({ legal_name: 'Foreign', address: {} }))
+});
+expectError(client.customers.create({ legal_name: 'Foreign', address: {} }));
 
 // A default period needs no fields; explicit receipt selection needs both dates.
-client.receipts.createGlobalInvoice({})
+client.receipts.createGlobalInvoice({});
 client.receipts.createGlobalInvoice({
   receipts: ['rec_ejemplo'],
   from: '2026-01-01',
   to: new Date(),
-})
-expectError(client.receipts.createGlobalInvoice({ receipts: ['rec_ejemplo'] }))
+});
+expectError(client.receipts.createGlobalInvoice({ receipts: ['rec_ejemplo'] }));
 expectError(
   client.receipts.createGlobalInvoice({
     receipts: ['rec_ejemplo'],
     from: new Date(),
   }),
-)
+);
 
 // Draft deletion needs no query; replacement motives need a substitution.
-client.invoices.cancel('inv_ejemplo')
-client.retentions.cancel('ret_ejemplo')
-client.invoices.cancel('inv_ejemplo', { motive: '02' })
-client.retentions.cancel('ret_ejemplo', { motive: '03' })
+client.invoices.cancel('inv_ejemplo');
+client.retentions.cancel('ret_ejemplo');
+client.invoices.cancel('inv_ejemplo', { motive: '02' });
+client.retentions.cancel('ret_ejemplo', { motive: '03' });
 client.invoices.cancel('inv_ejemplo', {
   motive: '01',
   substitution: 'inv_sustituto',
-})
+});
 client.retentions.cancel('ret_ejemplo', {
   motive: '04',
   substitution: 'ret_sustituto',
-})
-expectError(client.invoices.cancel('inv_ejemplo', { motive: '01' }))
-expectError(client.invoices.cancel('inv_ejemplo', { motive: '04' }))
-expectError(client.retentions.cancel('ret_ejemplo', { motive: '01' }))
-expectError(client.retentions.cancel('ret_ejemplo', { motive: '04' }))
+});
+expectError(client.invoices.cancel('inv_ejemplo', { motive: '01' }));
+expectError(client.invoices.cancel('inv_ejemplo', { motive: '04' }));
+expectError(client.retentions.cancel('ret_ejemplo', { motive: '01' }));
+expectError(client.retentions.cancel('ret_ejemplo', { motive: '04' }));
 expectError(
   client.invoices.cancel('inv_ejemplo', { substitution: 'inv_sustituto' }),
-)
+);
 expectError(
   client.customers.create({
     legal_name: undefined,
     address: { country: 'USA' },
   }),
-)
+);
 expectNotAssignable<CustomerNationalCreateInput>({
   legal_name: 'Cliente',
   tax_id: 'ABC101010111',
   tax_system: undefined,
   address: { zip: '83200' },
-})
+});
 expectNotAssignable<CustomerNationalCreateInput>({
   legal_name: 'Cliente',
   tax_id: 'ABC101010111',
   tax_system: '601',
   address: { zip: undefined },
-})
+});
 expectError(
   client.receipts.createGlobalInvoice({
     receipts: ['rec_ejemplo'],
     from: undefined,
     to: undefined,
   }),
-)
+);
 
 // Existing public aliases use the same conditional contract as the method.
-expectNotAssignable<CancelInvoiceOptions>({ motive: '01' })
+expectNotAssignable<CancelInvoiceOptions>({ motive: '01' });
 expectAssignable<CancelInvoiceOptions>({
   motive: '04',
   substitution: 'inv_sustituto',
-})
-declare const customerWithIncompleteFiscalInfo: Customer
-expectType<string | null | undefined>(customerWithIncompleteFiscalInfo.tax_id)
+});
+declare const customerWithIncompleteFiscalInfo: Customer;
+expectType<string | null | undefined>(customerWithIncompleteFiscalInfo.tax_id);
 expectType<string | null | undefined>(
   customerWithIncompleteFiscalInfo.tax_system,
-)
-expectType<string | null | undefined>(customerWithIncompleteFiscalInfo.phone)
+);
+expectType<string | null | undefined>(customerWithIncompleteFiscalInfo.phone);
 expectType<Date | null | undefined>(
   customerWithIncompleteFiscalInfo.edit_link_expires_at,
-)
-client.customers.create({ tax_id: null }, { createEditLink: true })
-client.customers.update('cus_ejemplo', { phone: null })
+);
+client.customers.create({ tax_id: null }, { createEditLink: true });
+client.customers.update('cus_ejemplo', { phone: null });
 client.customers.create(
   { legal_name: null, tax_system: null, external_id: null, address: null },
   { createEditLink: true },
-)
+);
 client.customers.create(
   { address: { zip: null, state: null, country: null } },
   { createEditLink: true },
-)
-client.customers.update('cus_ejemplo', { email: null, external_id: null })
+);
+client.customers.update('cus_ejemplo', { email: null, external_id: null });
 // @ts-expect-error Fiscal fields cannot be cleared during an update.
-client.customers.update('cus_ejemplo', { legal_name: null })
+client.customers.update('cus_ejemplo', { legal_name: null });
 // @ts-expect-error A customer tax regime cannot be cleared during an update.
-client.customers.update('cus_ejemplo', { tax_system: null })
+client.customers.update('cus_ejemplo', { tax_system: null });
 // @ts-expect-error A customer address cannot be cleared during an update.
-client.customers.update('cus_ejemplo', { address: null })
+client.customers.update('cus_ejemplo', { address: null });
 
 // Explicit creation methods select their own contract without narrowing a free country string.
 client.customers.createNational({
@@ -596,37 +600,37 @@ client.customers.createNational({
   tax_id: 'ABC101010111',
   tax_system: '601',
   address: { zip: '83200' },
-})
+});
 client.customers.createForeign({
   legal_name: 'Foreign',
   address: { country: 'USA' },
-})
+});
 client.customers.createForeign({
   legal_name: 'Foreign',
   address: { country: 'MEX' },
-})
+});
 client.customers.createGeneric({
   legal_name: 'Publico',
   tax_id: 'XAXX010101000',
-})
+});
 client.customers.createGeneric({
   legal_name: 'Generic foreign',
   tax_id: 'XEXX010101000',
-})
+});
 expectError(
   client.customers.createNational({
     legal_name: 'Cliente',
     tax_system: '601',
     address: { country: 'MEX', zip: '83200' },
   }),
-)
+);
 expectError(
   client.customers.createNational({
     legal_name: 'Cliente',
     tax_id: 'ABC101010111',
     address: { zip: '83200' },
   }),
-)
+);
 expectError(
   client.customers.createNational({
     legal_name: 'Cliente',
@@ -634,86 +638,86 @@ expectError(
     tax_system: '601',
     address: {},
   }),
-)
+);
 expectError(
   client.customers.createForeign({ legal_name: 'Foreign', address: {} }),
-)
+);
 expectError(
   client.customers.createGeneric({
     legal_name: 'Cliente',
     tax_id: 'ABC101010111',
   }),
-)
+);
 expectError(
   client.customers.createGeneric({
     legal_name: 'Publico',
     tax_id: 'XAXX010101000',
     tax_system: '601',
   }),
-)
+);
 // Incomplete creation remains an explicit option of the general method.
-expectError(client.customers.createNational({}, { createEditLink: true }))
-client.customers.create({}, { createEditLink: true })
+expectError(client.customers.createNational({}, { createEditLink: true }));
+client.customers.create({}, { createEditLink: true });
 
 // Updating a product does not require resending its creation fields.
-client.products.update('prod_ejemplo', { price: 456.7 })
-client.products.update('prod_ejemplo', { description: 'Actualizado' })
+client.products.update('prod_ejemplo', { price: 456.7 });
+client.products.update('prod_ejemplo', { description: 'Actualizado' });
 expectError(
   client.products.update('prod_ejemplo', { email: 'jdoe@example.com' }),
-)
-expectError(client.products.create({ price: 456.7 }))
+);
+expectError(client.products.create({ price: 456.7 }));
 
 // Native Node streams are valid upload inputs without casts.
-import type { ReadStream } from 'node:fs'
-declare const nativeReadStream: ReadStream
-client.organizations.uploadLogo('org_ejemplo', nativeReadStream)
+import type { ReadStream } from 'node:fs';
+declare const nativeReadStream: ReadStream;
+client.organizations.uploadLogo('org_ejemplo', nativeReadStream);
 client.organizations.uploadCertificate(
   'org_ejemplo',
   nativeReadStream,
   nativeReadStream,
   'example-password',
-)
+);
 
 // Public input helpers preserve the same date representations as method inputs.
-expectAssignable<InvoiceCommonInput>({ date: '2026-01-01T00:00:00Z' })
-expectAssignable<InvoiceCommonEditInput>({ date: '2026-01-01T00:00:00Z' })
-expectAssignable<InvoiceDraftCommonInput>({ date: '2026-01-01T00:00:00Z' })
+expectAssignable<InvoiceCommonInput>({ date: '2026-01-01T00:00:00Z' });
+expectAssignable<InvoiceCommonEditInput>({ date: '2026-01-01T00:00:00Z' });
+expectAssignable<InvoiceDraftCommonInput>({ date: '2026-01-01T00:00:00Z' });
 expectAssignable<GlobalInvoiceCommonInput>({
   from: '2026-01-01',
   to: new Date(),
-})
+});
 expectAssignable<DateRangeInput>({
   gte: '2026-01-01T00:00:00Z',
   lt: new Date(),
-})
-declare const webhookUpdate: WebhookUpdateInput
-client.webhooks.update('hook_ejemplo', webhookUpdate)
+});
+declare const webhookUpdate: WebhookUpdateInput;
+client.webhooks.update('hook_ejemplo', webhookUpdate);
 expectAssignable<NamespaceInput>({
   prefix: 'example',
   uri: 'https://example.com',
   schema_location: 'https://example.com/schema.xsd',
-})
-expectNotAssignable<NamespaceInput>({ prefix: 'example' })
+});
+expectNotAssignable<NamespaceInput>({ prefix: 'example' });
 expectAssignable<NominaSubContratacionInput>({
   rfc_labora: 'ABC101010111',
   porcentaje_tiempo: 100,
-})
-expectNotAssignable<NominaSubContratacionInput>({ rfc_labora: 'ABC101010111' })
+});
+expectNotAssignable<NominaSubContratacionInput>({ rfc_labora: 'ABC101010111' });
 
-client.nominaCatalogs.searchDeductions({ q: '001', page: 0, limit: 10 })
-client.nominaCatalogs.searchPerceptions({ q: '001' })
+client.nominaCatalogs.searchDeductions({ q: '001', page: 0, limit: 10 });
+client.nominaCatalogs.searchPerceptions({ q: '001' });
 
 client.customers.update(
   'cus_ejemplo',
   { legal_name: null, tax_id: null, tax_system: null, address: null },
   { createEditLink: true },
-)
-client.customers.update('cus_ejemplo', {}, { createEditLink: true })
+);
+client.customers.update('cus_ejemplo', {}, { createEditLink: true });
 
-client.invoices.list({ sat_imported: true })
-client.invoices.listZipRequests({ sat_imported: false })
-client.invoices.createZipRequest({ year: 2026, month: 10, sat_imported: true })
-expectType<Date | undefined>(zipRequest.generated_at)
-expectType<Date | undefined>(zipRequest.content_as_of)
+client.invoices.list({ sat_imported: true });
+client.invoices.listZipRequests({ sat_imported: false });
+client.invoices.createZipRequest({ year: 2026, month: 10, sat_imported: true });
+expectType<Date | undefined>(zipRequest.generated_at);
+expectType<Date | undefined>(zipRequest.content_as_of);
 // @ts-expect-error Forced refresh is not part of the public ZIP request contract.
-client.invoices.createZipRequest({ year: 2026, month: 10, refresh: true })
+client.invoices.createZipRequest({ year: 2026, month: 10, refresh: true });

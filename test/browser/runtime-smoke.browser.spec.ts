@@ -58,7 +58,10 @@ test.describe('browser smoke (real chromium)', () => {
         return;
       }
 
-      if (url === '/api/v2/organizations/org_123/logo' && req.method === 'PUT') {
+      if (
+        url === '/api/v2/organizations/org_123/logo' &&
+        req.method === 'PUT'
+      ) {
         latestUploadContentType = req.headers['content-type'];
         req.on('data', () => undefined);
         req.on('end', () => {
@@ -129,7 +132,9 @@ test.describe('browser smoke (real chromium)', () => {
     expect(latestUploadContentType).not.toContain('application/json');
   });
 
-  test('non-ok JSON errors surface message in browser runtime', async ({ page }) => {
+  test('non-ok JSON errors surface message in browser runtime', async ({
+    page,
+  }) => {
     await page.goto(`${baseUrl}/index.html`);
 
     const message = await page.evaluate(async () => {

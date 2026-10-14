@@ -3,9 +3,9 @@ import Facturapi, {
   InvoiceType,
   PaymentForm,
   type InvoiceCreateInput,
-} from 'facturapi'
+} from 'facturapi';
 
-const facturapi = new Facturapi('sk_test_solo_editor')
+const facturapi = new Facturapi('sk_test_solo_editor');
 
 export const ingreso = {
   customer: 'cus_ejemplo',
@@ -16,7 +16,7 @@ export const ingreso = {
       product: { description: 'Ejemplo', product_key: '60131324', price: 100 },
     },
   ],
-} satisfies InvoiceCreateInput
+} satisfies InvoiceCreateInput;
 
 export const pago = {
   type: InvoiceType.PAGO,
@@ -38,50 +38,50 @@ export const pago = {
       },
     },
   ],
-} satisfies InvoiceCreateInput
+} satisfies InvoiceCreateInput;
 
 // Estas funciones sirven para explorar IntelliSense; no se llaman al abrir el archivo.
 export async function explorarRespuestas() {
-  const factura = await facturapi.invoices.create(ingreso)
+  const factura = await facturapi.invoices.create(ingreso);
   const resultados = await facturapi.invoices.list({
     pagination: 'cursor',
     limit: 10,
-  })
+  });
   return {
     fecha: factura.date?.toISOString(),
     fechaTimbrado: factura.stamp?.date,
     facturas: resultados.data,
-  }
+  };
 }
 
 export async function explorarDryRun() {
   const resumen = await facturapi.receipts.toInvoice({
     keys: ['rec_ejemplo'],
     dry_run: true,
-  })
-  const factura = await facturapi.receipts.toInvoice({ keys: ['rec_ejemplo'] })
-  return { resumen, factura }
+  });
+  const factura = await facturapi.receipts.toInvoice({ keys: ['rec_ejemplo'] });
+  return { resumen, factura };
 }
 
 export function explorarDescargas() {
-  return facturapi.invoices.downloadPdf('inv_ejemplo')
+  return facturapi.invoices.downloadPdf('inv_ejemplo');
 }
 
 // Explora los tipos de respuesta o cambia los campos de entrada.
 export async function explorarUrls() {
-  const download = await facturapi.invoices.downloadPdfUrl('inv_ejemplo')
+  const download = await facturapi.invoices.downloadPdfUrl('inv_ejemplo');
   return {
     url: download.url,
     expiresAt: download.expires_at.toISOString(),
     filename: download.filename,
     contentType: download.content_type,
-  }
+  };
 }
 
 export async function explorarResumenDePago() {
   const summary = await facturapi.invoices.paymentSummary('inv_ejemplo', {
     amount: 100,
-  })
+  });
   return facturapi.invoices.create({
     type: 'P',
     customer: 'cus_ejemplo',
@@ -91,5 +91,5 @@ export async function explorarResumenDePago() {
         data: { payment_form: '28', related_documents: [summary] },
       },
     ],
-  })
+  });
 }

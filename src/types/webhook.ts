@@ -1,5 +1,5 @@
-import type { components } from '../generated/output'
-import type { components as Input } from '../generated/input'
+import type { components } from '../generated/output';
+import type { components as Input } from '../generated/input';
 
 export enum ApiEventType {
   RECEIPT_SELF_INVOICE_COMPLETE = 'receipt.self_invoice_complete',
@@ -22,16 +22,16 @@ export enum WebhookEndpointStatus {
   DISABLED = 'disabled',
 }
 
-export type Webhook = components['schemas']['Webhook']
+export type Webhook = components['schemas']['Webhook'];
 export type ApiEvent<T extends ApiEventType | '' = ''> = Extract<
   components['schemas']['ApiEvent'],
   { type: T extends '' ? `${ApiEventType}` : `${T}` }
->
+>;
 export type ApiEventData<T extends ApiEventDataType | '' = ''> = Extract<
   ApiEvent['data'],
   { type: T extends '' ? `${ApiEventDataType}` : `${T}` }
->
+>;
 export type ApiEventPayload<T extends ApiEventType | '' = ''> = Extract<
   Input['schemas']['ApiEvent'],
   { type: T extends '' ? `${ApiEventType}` : `${T}` }
->
+>;

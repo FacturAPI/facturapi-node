@@ -1,5 +1,5 @@
-import { defineConfig } from 'rolldown'
-import { dts } from 'rolldown-plugin-dts'
+import { defineConfig } from 'rolldown';
+import { dts } from 'rolldown-plugin-dts';
 
 export default defineConfig({
   input: 'src/index.ts',
@@ -9,4 +9,4 @@ export default defineConfig({
     format: 'es',
     entryFileNames: '[name].mjs',
   },
-})
+});

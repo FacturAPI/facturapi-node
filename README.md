@@ -23,9 +23,9 @@ También puedes instalarlo con `pnpm add facturapi` o `yarn add facturapi`.
 Guarda lo siguiente en `primera-factura.mjs`. Los datos del receptor son ficticios para este ejemplo en ambiente Test. No necesitas crear previamente un cliente o un producto: puedes incluir sus datos en la misma petición.
 
 ```js
-import Facturapi, { PaymentForm } from 'facturapi'
+import Facturapi, { PaymentForm } from 'facturapi';
 
-const facturapi = new Facturapi(process.env.FACTURAPI_KEY)
+const facturapi = new Facturapi(process.env.FACTURAPI_KEY);
 
 const invoice = await facturapi.invoices.create({
   customer: {
@@ -47,9 +47,9 @@ const invoice = await facturapi.invoices.create({
   ],
   use: 'G01',
   payment_form: PaymentForm.TARJETA_DE_DEBITO,
-})
+});
 
-console.log({ id: invoice.id, status: invoice.status, total: invoice.total })
+console.log({ id: invoice.id, status: invoice.status, total: invoice.total });
 ```
 
 Ejecuta `node primera-factura.mjs` con la variable de entorno configurada. Si todo salió bien, verás el ID, el estado y el total de tu primera factura. Guarda `invoice.id`: lo usaremos en los siguientes ejemplos.
@@ -61,14 +61,14 @@ Para emitir en producción, configura los datos fiscales y el CSD de la organiza
 Elige la forma de importar que ya usas en tu proyecto. Con ESM o TypeScript:
 
 ```ts
-import Facturapi, { InvoiceType, type Invoice } from 'facturapi'
+import Facturapi, { InvoiceType, type Invoice } from 'facturapi';
 ```
 
 Con CommonJS:
 
 ```js
-const Facturapi = require('facturapi')
-const { InvoiceType, FacturapiError } = Facturapi
+const Facturapi = require('facturapi');
+const { InvoiceType, FacturapiError } = Facturapi;
 ```
 
 Los tipos y enums públicos se importan desde `facturapi`. El paquete incluye declaraciones para ESM y CommonJS; no necesitas instalar un paquete de tipos adicional para el SDK.
@@ -80,24 +80,24 @@ Ya tienes una factura. Ahora puedes consultarla, descargarla o enviarla por corr
 ### Consultar y buscar facturas
 
 ```js
-const savedInvoice = await facturapi.invoices.retrieve(invoice.id)
+const savedInvoice = await facturapi.invoices.retrieve(invoice.id);
 const results = await facturapi.invoices.list({
   limit: 10,
   date: { gte: new Date('2026-01-01T00:00:00Z') },
-})
+});
 
-console.log(savedInvoice.status, results.data)
+console.log(savedInvoice.status, results.data);
 ```
 
 ### Entregar el PDF o enviarlo por correo
 
 ```js
-const download = await facturapi.invoices.downloadPdfUrl(invoice.id)
-console.log(download.url, download.expires_at)
+const download = await facturapi.invoices.downloadPdfUrl(invoice.id);
+console.log(download.url, download.expires_at);
 
 await facturapi.invoices.sendByEmail(invoice.id, {
   email: 'cliente@example.com',
-})
+});
 ```
 
 La URL de descarga es temporal y permite acceder al archivo a quien la tenga. Compártela solo con el destinatario correspondiente. También existen `downloadXmlUrl` y `downloadZipUrl`.
@@ -105,27 +105,27 @@ La URL de descarga es temporal y permite acceder al archivo a quien la tenga. Co
 Si necesitas recibir los archivos en tu aplicación, `downloadPdf`, `downloadXml` y `downloadZip` devuelven un stream en Node.js y un `Blob` en navegador. Por ejemplo, para guardar un ZIP en Node.js:
 
 ```js
-import { createWriteStream } from 'node:fs'
+import { createWriteStream } from 'node:fs';
 
-const file = await facturapi.invoices.downloadZip(invoice.id)
+const file = await facturapi.invoices.downloadZip(invoice.id);
 if ('pipe' in file && typeof file.pipe === 'function') {
-  file.pipe(createWriteStream('factura.zip'))
+  file.pipe(createWriteStream('factura.zip'));
 }
 ```
 
 ### Manejar errores
 
 ```js
-import { FacturapiError } from 'facturapi'
+import { FacturapiError } from 'facturapi';
 
 try {
-  await facturapi.invoices.retrieve(invoice.id)
+  await facturapi.invoices.retrieve(invoice.id);
 } catch (error) {
   if (error instanceof FacturapiError) {
-    console.error(error.status, error.code, error.message)
-    console.error(error.errors) // Detalles de validación, cuando existen
+    console.error(error.status, error.code, error.message);
+    console.error(error.errors); // Detalles de validación, cuando existen
   } else {
-    throw error
+    throw error;
   }
 }
 ```
@@ -142,30 +142,30 @@ await facturapi.customers.createNational({
   tax_id: 'ABC101010111',
   tax_system: '601',
   address: { zip: '83200' },
-})
+});
 await facturapi.customers.createForeign({
   legal_name: 'Example Company',
   address: { country: 'USA' },
-})
+});
 await facturapi.customers.createGeneric({
   legal_name: 'PUBLICO EN GENERAL',
   tax_id: 'XAXX010101000',
-})
+});
 ```
 
 Los tres métodos usan la misma operación de la API. `create()` sigue disponible si decides el caso dinámicamente, o si quieres guardar datos incompletos con `{ createEditLink: true }`. Las validaciones siguen siendo responsabilidad de la API.
 
 ## Qué puedes integrar
 
-| Necesitas…                                | Recurso o guía                                                                                                      |
-| ----------------------------------------- | ------------------------------------------------------------------------------------------------------------------- |
-| Emitir ingresos, egresos y complementos   | `facturapi.invoices` · [Guías de facturas](https://docs.facturapi.io/docs/guides/invoices)                          |
-| Reutilizar clientes y productos           | `facturapi.customers` y `facturapi.products`                                                                        |
-| Ofrecer autofactura con recibos digitales | `facturapi.receipts` · [Guía de recibos](https://docs.facturapi.io/docs/guides/receipts)                            |
-| Administrar emisores y certificados       | `facturapi.organizations` · [Configuración](https://docs.facturapi.io/docs/getting-started/organization-onboarding) |
-| Emitir retenciones                        | `facturapi.retentions` · [Guía de retenciones](https://docs.facturapi.io/docs/guides/invoices/retencion)            |
-| Consultar catálogos del SAT               | `facturapi.catalogs`, `facturapi.nominaCatalogs`, `facturapi.cartaPorteCatalogs` y `facturapi.comercioExteriorCatalogs`                         |
-| Recibir eventos y validar firmas          | `facturapi.webhooks` · [Referencia de la API](https://docs.facturapi.io/api/)                                       |
+| Necesitas…                                | Recurso o guía                                                                                                          |
+| ----------------------------------------- | ----------------------------------------------------------------------------------------------------------------------- |
+| Emitir ingresos, egresos y complementos   | `facturapi.invoices` · [Guías de facturas](https://docs.facturapi.io/docs/guides/invoices)                              |
+| Reutilizar clientes y productos           | `facturapi.customers` y `facturapi.products`                                                                            |
+| Ofrecer autofactura con recibos digitales | `facturapi.receipts` · [Guía de recibos](https://docs.facturapi.io/docs/guides/receipts)                                |
+| Administrar emisores y certificados       | `facturapi.organizations` · [Configuración](https://docs.facturapi.io/docs/getting-started/organization-onboarding)     |
+| Emitir retenciones                        | `facturapi.retentions` · [Guía de retenciones](https://docs.facturapi.io/docs/guides/invoices/retencion)                |
+| Consultar catálogos del SAT               | `facturapi.catalogs`, `facturapi.nominaCatalogs`, `facturapi.cartaPorteCatalogs` y `facturapi.comercioExteriorCatalogs` |
+| Recibir eventos y validar firmas          | `facturapi.webhooks` · [Referencia de la API](https://docs.facturapi.io/api/)                                           |
 
 ## Compatibilidad
 
@@ -183,8 +183,8 @@ Puedes pasar directamente a v6; no necesitas instalar las versiones intermedias.
 
 | Tu versión | Qué revisar                                                     |
 | ---------- | --------------------------------------------------------------- |
-| 5.x        | Fechas, imports y tipos de entrada                               |
-| 4.x        | Lo anterior y tipos de respuesta                                 |
+| 5.x        | Fechas, imports y tipos de entrada                              |
+| 4.x        | Lo anterior y tipos de respuesta                                |
 | 3.x        | Los tres apartados, incluidos los métodos renombrados y Node.js |
 
 ### ✅ Cuándo puedes actualizar sin cambiar tu código
@@ -207,7 +207,7 @@ Actualiza la dependencia con `npm install facturapi@^6` (o el equivalente de tu 
 Si usabas métodos de string como `.slice()` o `.split()`, convierte primero la fecha. Comprueba `null` cuando el campo lo permita:
 
 ```js
-const invoiceDate = invoice.date?.toISOString() ?? null
+const invoiceDate = invoice.date?.toISOString() ?? null;
 ```
 
 Si ya usabas métodos de `Date`, o no leías esos campos, no necesitas adaptarlos. `JSON.stringify()` convierte los objetos `Date` a strings ISO automáticamente, aunque su formato puede normalizarse (por ejemplo, incluir milisegundos); no dependas de conservar el texto exacto de la respuesta anterior.
@@ -269,6 +269,8 @@ pnpm install
 pnpm test
 pnpm run lint
 ```
+
+Los commits ejecutan ESLint y Prettier sobre los archivos preparados mediante Husky y lint-staged. Prettier usa puntos y coma. Para corregir todo el repositorio, ejecuta `pnpm lint:fix` y `pnpm format`.
 
 ### Explora los tipos y el autocompletado
 
