@@ -21,7 +21,10 @@ export const datePlans: DatePlan[] = [
       complements: 9,
     },
   },
-  { kind: 'object', properties: { requested_at: 1, canceled_at: 1 } },
+  {
+    kind: 'object',
+    properties: { requested_at: 1, last_checked: 1, canceled_at: 1 },
+  },
   { kind: 'array', items: 10 },
   {
     kind: 'union',

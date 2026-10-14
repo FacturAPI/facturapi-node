@@ -373,6 +373,9 @@ describe('runtime compatibility (node)', () => {
         sat_validated_at: timestamp,
         edit_link_expires_at: timestamp,
       },
+      '/v2/invoices/inv_checked': {
+        cancellation: { status: 'none', last_checked: timestamp },
+      },
       '/v2/products/prod_123': { created_at: timestamp },
       '/v2/receipts/rec_123': {
         created_at: timestamp,
@@ -424,6 +427,10 @@ describe('runtime compatibility (node)', () => {
     expect((await client.webhooks.retrieve('wh_123')).created_at).toEqual(
       new Date(timestamp),
     );
+    expect(
+      (await client.invoices.retrieve('inv_checked')).cancellation
+        ?.last_checked,
+    ).toEqual(new Date(timestamp));
     const zipRequest = await client.invoices.retrieveZipRequest('zip_123');
     expect(zipRequest.created_at).toEqual(new Date(timestamp));
     expect(zipRequest.scheduled_at).toEqual(new Date(timestamp));

@@ -2750,6 +2750,10 @@ export interface components {
       signature?: string;
       /** FechaTimbrado del SAT: fecha y hora local sin offset de zona horaria. Se conserva como texto. */
       date?: string;
+      /** Cadena original del timbre fiscal digital. */
+      complement_string?: string | null;
+      /** RFC del proveedor que certificó el comprobante. */
+      rfc_provider_cert?: string;
       /** Número de serie del certificado del SAT usado para timbrar. */
       sat_cert_number?: string;
       /** Sello digital del timbre fiscal digital. */
@@ -2766,6 +2770,11 @@ export interface components {
       product: components['schemas']['InvoiceItemProduct'];
       /** Números de pedimento asociados a este concepto. Se omite cuando no existen. */
       customs_keys?: string[];
+      third_party?: components['schemas']['ThirdPartyInput'];
+      complement?:
+        | string
+        | components['schemas']['HidroYPetroComplementInput']
+        | components['schemas']['IeduComplementInput'];
       /** Objeto con información de las partes de la factura. */
       parts?: components['schemas']['Parts'][];
     };
@@ -4991,6 +5000,11 @@ export interface components {
       requested_at?: Date | string;
       /**
        * Format: date-time
+       * Fecha y hora de inicio de la última consulta del estado de cancelación. No garantiza que la consulta haya terminado correctamente.
+       */
+      last_checked?: Date | string;
+      /**
+       * Format: date-time
        * Fecha y hora en que se completó la cancelación, cuando aplica.
        */
       canceled_at?: Date | string;
@@ -6327,6 +6341,7 @@ export interface components {
       namespaces?: components['schemas']['NamespaceInput'][];
     };
     OrganizationAddress: components['schemas']['CommonAddressProperties'] & {
+      country?: string;
       /** Nombre del Estado o Entidad Federativa. */
       state?: string;
     };
@@ -6367,6 +6382,10 @@ export interface components {
         name?: string;
         /** Nombre Fiscal o Razón Social de la organización, *sin* el régimen societario (ej.: S.A. de C.V.). */
         legal_name?: string;
+        tax_id?: string;
+        /** Format: email */
+        support_email?: string;
+        curp?: string;
         /** Código de Régimen Fiscal, del [catálogo del SAT](#régimen-fiscal). */
         tax_system?: string;
         /** Sitio web de la organización, que se utilizará al enviar la factura por correo electrónico. */
@@ -6381,6 +6400,13 @@ export interface components {
        *     las preferencias de PDFs de la organización. Estos datos se pueden actualizar en cualquier momento.
        */
       customization?: {
+        default_series?: {
+          I?: string;
+          E?: string;
+          P?: string;
+          N?: string;
+          T?: string;
+        };
         /** Indica si la organización ya tiene un logotipo cargado. */
         has_logo?: boolean;
         /**

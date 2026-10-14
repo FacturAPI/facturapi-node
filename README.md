@@ -222,12 +222,11 @@ Si ya usabas métodos de `Date`, o no leías esos campos, no necesitas adaptarlo
 
 **Cambios concretos de tipos desde v5.** Estos cambios no modifican las peticiones o respuestas en ejecución, pero pueden requerir ajustes al compilar:
 
-| Método o campo                               | Ajuste en v6                                                                                                                                                                                                         |
-| -------------------------------------------- | -------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
-| `organizations.deleteCertificate(id)`        | Devuelve `{ updated_at?: Date }`, no una organización. Si necesitas la organización actualizada, consúltala con `organizations.retrieve(id)`.                                                                        |
-| `invoice.cancellation.last_checked`          | Ya no está declarado en el tipo de cancelación. Usa `invoice.cancellation_status` para consultar el estado y `invoice.canceled_at` para la fecha de cancelación; ninguno sustituye una fecha de última comprobación. |
-| `receipts.createGlobalInvoice(data)`         | La respuesta puede ser `null` cuando no hay recibos que facturar. Comprueba el resultado antes de acceder a la factura.                                                                                              |
-| `organizations.checkDomainIsAvailable(data)` | La entrada requiere `{ domain: string }`. Envía el dominio explícitamente en lugar de un objeto genérico.                                                                                                            |
+| Método o campo                               | Ajuste en v6                                                                                                                                  |
+| -------------------------------------------- | --------------------------------------------------------------------------------------------------------------------------------------------- |
+| `organizations.deleteCertificate(id)`        | Devuelve `{ updated_at?: Date }`, no una organización. Si necesitas la organización actualizada, consúltala con `organizations.retrieve(id)`. |
+| `receipts.createGlobalInvoice(data)`         | La respuesta puede ser `null` cuando no hay recibos que facturar. Comprueba el resultado antes de acceder a la factura.                       |
+| `organizations.checkDomainIsAvailable(data)` | La entrada requiere `{ domain: string }`. Envía el dominio explícitamente en lugar de un objeto genérico.                                     |
 
 Los tipos de CFDI distinguen emisión, borrador y edición; cada complemento relaciona su `type` con la estructura de `data`. En nómina, las entradas usan las claves del catálogo de percepciones publicado: `019` requiere `horas_extra`, y el origen de recursos `IM` requiere `monto_recurso_propio`. Si incluyes autotransporte de Carta Porte, completa su vehículo y seguro de responsabilidad civil. Estas relaciones ayudan a detectar errores al compilar; la API sigue siendo responsable de validar los datos.
 

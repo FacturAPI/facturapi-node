@@ -726,3 +726,14 @@ client.invoices.createZipRequest({ year: 2026, month: 10, refresh: true });
 expectType<Promise<Series[]>>(
   client.organizations.listSeriesGroup('org_example'),
 );
+
+expectType<Date | undefined>(createdInvoice.cancellation?.last_checked);
+expectType<string | null | undefined>(createdInvoice.stamp?.complement_string);
+expectType<string | undefined>(createdInvoice.stamp?.rfc_provider_cert);
+declare const restoredOrganization: Organization;
+expectType<string | undefined>(restoredOrganization.legal?.tax_id);
+expectType<string | undefined>(restoredOrganization.legal?.support_email);
+expectType<string | undefined>(restoredOrganization.legal?.curp);
+expectType<string | undefined>(
+  restoredOrganization.customization?.default_series?.I,
+);
