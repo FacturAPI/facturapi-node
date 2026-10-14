@@ -17,7 +17,9 @@ import type { BinaryInput, NodeLikeReadableStream } from '../types';
 import { SearchResult } from '../types/common';
 import { streamToBytes } from '../utils/streamToBytes';
 
-function isNodeLikeReadableStream(value: unknown): value is NodeLikeReadableStream {
+function isNodeLikeReadableStream(
+  value: unknown,
+): value is NodeLikeReadableStream {
   return (
     typeof value === 'object' &&
     value !== null &&
@@ -63,14 +65,13 @@ const prepareFile = async (
   }
 
   const type = file === null ? 'null' : typeof file;
-  const constructorName = (
+  const constructorName =
     file &&
     typeof file === 'object' &&
     'constructor' in file &&
     (file as { constructor?: { name?: string } }).constructor?.name
-  )
-    ? ` (${(file as { constructor: { name: string } }).constructor.name})`
-    : '';
+      ? ` (${(file as { constructor: { name: string } }).constructor.name})`
+      : '';
   throw new Error(`Unsupported file input type: ${type}${constructorName}`);
 };
 export default class Organizations {
@@ -178,19 +179,13 @@ export default class Organizations {
    * @param file Logo file
    * @returns Organization object
    */
-  async uploadLogo(
-    id: string,
-    file: BinaryInput,
-  ): Promise<Organization> {
+  async uploadLogo(id: string, file: BinaryInput): Promise<Organization> {
     if (typeof FormData === 'undefined') {
       throw new Error(
         'FormData is not available in this runtime. Use Node.js 18+ or provide a FormData implementation.',
       );
     }
-    const preparedFile = await prepareFile(
-      file,
-      'application/octet-stream',
-    );
+    const preparedFile = await prepareFile(file, 'application/octet-stream');
     const formData = new FormData();
     formData.append('file', preparedFile, 'file');
     return this.client.put('/organizations/' + id + '/logo', { formData });
@@ -469,7 +464,9 @@ export default class Organizations {
    * @returns Array of organization invite objects
    */
   listSentTeamInvites(organizationId: string): Promise<OrganizationInvite[]> {
-    return this.client.get('/organizations/' + organizationId + '/team/invites');
+    return this.client.get(
+      '/organizations/' + organizationId + '/team/invites',
+    );
   }
 
   /**
@@ -482,9 +479,12 @@ export default class Organizations {
     organizationId: string,
     data: OrganizationInviteCreateInput,
   ): Promise<OrganizationInvite> {
-    return this.client.post('/organizations/' + organizationId + '/team/invites', {
-      body: data,
-    });
+    return this.client.post(
+      '/organizations/' + organizationId + '/team/invites',
+      {
+        body: data,
+      },
+    );
   }
 
   /**
@@ -520,9 +520,12 @@ export default class Organizations {
     inviteKey: string,
     data: OrganizationInviteResponseInput,
   ): Promise<{ ok: boolean }> {
-    return this.client.post('/organizations/invites/' + inviteKey + '/response', {
-      body: data,
-    });
+    return this.client.post(
+      '/organizations/invites/' + inviteKey + '/response',
+      {
+        body: data,
+      },
+    );
   }
 
   /**
@@ -583,9 +586,12 @@ export default class Organizations {
     organizationId: string,
     data: OrganizationTeamRoleCreateInput,
   ): Promise<OrganizationTeamRole> {
-    return this.client.post('/organizations/' + organizationId + '/team/roles', {
-      body: data,
-    });
+    return this.client.post(
+      '/organizations/' + organizationId + '/team/roles',
+      {
+        body: data,
+      },
+    );
   }
 
   /**

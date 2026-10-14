@@ -194,9 +194,7 @@ export default class Invoices {
    * @param id Invoice Id
    * @returns XML file in a stream (Node.js) or Blob (browser)
    */
-  downloadCancellationReceiptXml(
-    id: string,
-  ): Promise<BinaryDownload> {
+  downloadCancellationReceiptXml(id: string): Promise<BinaryDownload> {
     return this.client.get('/invoices/' + id + '/cancellation_receipt/xml');
   }
 
@@ -205,9 +203,7 @@ export default class Invoices {
    * @param id Invoice Id
    * @returns PDF file in a stream (Node.js) or Blob (browser)
    */
-  downloadCancellationReceiptPdf(
-    id: string,
-  ): Promise<BinaryDownload> {
+  downloadCancellationReceiptPdf(id: string): Promise<BinaryDownload> {
     return this.client.get('/invoices/' + id + '/cancellation_receipt/pdf');
   }
 

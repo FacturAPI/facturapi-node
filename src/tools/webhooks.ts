@@ -1,9 +1,4 @@
-import {
-  SearchResult,
-  Webhook,
-  ApiEvent,
-  ApiEventType,
-} from '../types';
+import { SearchResult, Webhook, ApiEvent, ApiEventType } from '../types';
 import { WrapperClient } from '../wrapper';
 
 function hasBuffer(): boolean {
@@ -112,10 +107,7 @@ export default class Webhooks {
       payloadString = new TextDecoder().decode(payload);
     } else if (payload instanceof ArrayBuffer) {
       payloadString = new TextDecoder().decode(new Uint8Array(payload));
-    } else if (
-      typeof Buffer !== 'undefined' &&
-      Buffer.isBuffer(payload)
-    ) {
+    } else if (typeof Buffer !== 'undefined' && Buffer.isBuffer(payload)) {
       payloadString = payload.toString('utf8');
     } else if (typeof payload === 'object') {
       payloadString = JSON.stringify(payload);
@@ -133,9 +125,7 @@ export default class Webhooks {
 
       if (nodeCrypto) {
         const hmac = nodeCrypto.createHmac('sha256', secret);
-        const digestBuffer = hmac
-          .update(payloadString)
-          .digest();
+        const digestBuffer = hmac.update(payloadString).digest();
         // Compare the digest with the signature and prevent timing attacks
         // by using a constant-time comparison
         const signatureBuffer = Buffer.from(signature, 'hex');

@@ -1,8 +1,4 @@
-import {
-  BASE_URL,
-  BASE_URL_V1,
-  DEFAULT_API_VERSION,
-} from './constants';
+import { BASE_URL, BASE_URL_V1, DEFAULT_API_VERSION } from './constants';
 
 const getRuntimeFetch = () => {
   const runtimeFetch = globalThis.fetch;
@@ -137,7 +133,6 @@ const buildQueryString = (params: Record<string, unknown>): string => {
   return pairs.length ? new URLSearchParams(pairs).toString() : '';
 };
 
-
 const stringFrom = (value: unknown): string | undefined =>
   typeof value === 'string' ? value : undefined;
 
@@ -192,8 +187,7 @@ const responseInterceptor = async (response: Response) => {
     });
   }
   const contentType = response.headers.get('content-type') || '';
-  const contentDisposition =
-    response.headers.get('content-disposition') || '';
+  const contentDisposition = response.headers.get('content-disposition') || '';
   const looksLikeZip = /filename=.*\.zip\b/i.test(contentDisposition);
   const looksLikeDownload =
     /attachment/i.test(contentDisposition) || looksLikeZip;
@@ -214,7 +208,8 @@ const responseInterceptor = async (response: Response) => {
         const { Readable } = await import('stream');
         return new Readable({
           read() {
-            reader.read()
+            reader
+              .read()
               .then(({ done, value }) => {
                 if (done) {
                   this.push(null); // end stream

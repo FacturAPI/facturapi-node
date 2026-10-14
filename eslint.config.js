@@ -1,7 +1,7 @@
-const js = require('@eslint/js')
-const tseslint = require('typescript-eslint')
-const globals = require('globals')
-const eslintConfigPrettier = require('eslint-config-prettier')
+const js = require('@eslint/js');
+const tseslint = require('typescript-eslint');
+const globals = require('globals');
+const eslintConfigPrettier = require('eslint-config-prettier');
 
 module.exports = [
   {
@@ -18,7 +18,6 @@ module.exports = [
       },
     },
     rules: {
-      semi: ['error', 'never'],
       quotes: ['error', 'single', { avoidEscape: true }],
       curly: ['error', 'multi-line'],
       'space-before-function-paren': ['error', 'always'],
@@ -30,4 +29,10 @@ module.exports = [
     },
   },
   eslintConfigPrettier,
-]
+  {
+    files: ['**/*.{js,cjs,mjs,ts}'],
+    rules: {
+      semi: ['error', 'always'],
+    },
+  },
+];

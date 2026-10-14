@@ -8,13 +8,13 @@ import {
   SendEmailBody,
   SignedDownloadUrl,
   PreviewReceiptsToInvoicePdfInput,
-} from '../types'
-import { WrapperClient } from '../wrapper'
+} from '../types';
+import { WrapperClient } from '../wrapper';
 
 export default class Receipts {
-  client: WrapperClient
+  client: WrapperClient;
   constructor(client: WrapperClient) {
-    this.client = client
+    this.client = client;
   }
 
   /**
@@ -23,7 +23,7 @@ export default class Receipts {
    * @returns Receipt object
    */
   create(data: Record<string, any>): Promise<Receipt> {
-    return this.client.post('/receipts', { body: data })
+    return this.client.post('/receipts', { body: data });
   }
 
   /**
@@ -32,8 +32,8 @@ export default class Receipts {
    * @returns Search results object. The object contains a `data` property with the list of receipts.
    */
   list(params?: Record<string, any> | null): Promise<SearchResult<Receipt>> {
-    if (!params) params = {}
-    return this.client.get('/receipts', { params })
+    if (!params) params = {};
+    return this.client.get('/receipts', { params });
   }
 
   /**
@@ -42,8 +42,8 @@ export default class Receipts {
    * @returns Receipt object
    */
   retrieve(id: string): Promise<Receipt> {
-    if (!id) return Promise.reject(new Error('id is required'))
-    return this.client.get('/receipts/' + id)
+    if (!id) return Promise.reject(new Error('id is required'));
+    return this.client.get('/receipts/' + id);
   }
 
   /**
@@ -53,7 +53,7 @@ export default class Receipts {
    * @returns Invoice object
    */
   invoice(id: string, data: Record<string, any>): Promise<Invoice> {
-    return this.client.post('/receipts/' + id + '/invoice', { body: data })
+    return this.client.post('/receipts/' + id + '/invoice', { body: data });
   }
 
   /**
@@ -62,7 +62,7 @@ export default class Receipts {
    * @returns
    */
   createGlobalInvoice(data: Record<string, any>): Promise<Invoice> {
-    return this.client.post('/receipts/global-invoice', { body: data })
+    return this.client.post('/receipts/global-invoice', { body: data });
   }
 
   /**
@@ -72,7 +72,7 @@ export default class Receipts {
    * @returns Invoice object or dry-run summary
    */
   toInvoice(data: ReceiptsToInvoiceInput): Promise<Invoice> {
-    return this.client.post('/receipts/to-invoice', { body: data })
+    return this.client.post('/receipts/to-invoice', { body: data });
   }
 
   /**
@@ -85,7 +85,7 @@ export default class Receipts {
   ): Promise<BinaryDownload> {
     return this.client.post('/receipts/to-invoice/preview', {
       body: data,
-    })
+    });
   }
 
   /** Gets a short-lived URL for a receipts-to-invoice PDF preview. */
@@ -94,7 +94,7 @@ export default class Receipts {
   ): Promise<SignedDownloadUrl> {
     return this.client.post('/receipts/to-invoice/preview/download-url', {
       body: data,
-    })
+    });
   }
 
   /**
@@ -103,7 +103,7 @@ export default class Receipts {
    * @returns
    */
   cancel(id: string): Promise<Receipt> {
-    return this.client.delete('/receipts/' + id)
+    return this.client.delete('/receipts/' + id);
   }
 
   /**
@@ -114,7 +114,7 @@ export default class Receipts {
    * @returns Email sent confirmation
    */
   sendByEmail(id: string, data?: SendEmailBody): Promise<GenericResponse> {
-    return this.client.post('/receipts/' + id + '/email', { body: data })
+    return this.client.post('/receipts/' + id + '/email', { body: data });
   }
 
   /**
@@ -123,7 +123,7 @@ export default class Receipts {
    * @returns PDF file in a stream (Node.js) or Blob (browser)
    */
   downloadPdf(id: string): Promise<BinaryDownload> {
-    return this.client.get('/receipts/' + id + '/pdf')
+    return this.client.get('/receipts/' + id + '/pdf');
   }
 
   /**
@@ -136,7 +136,7 @@ export default class Receipts {
    * @returns Signed download URL and its metadata
    */
   downloadPdfUrl(id: string): Promise<SignedDownloadUrl> {
-    if (!id) return Promise.reject(new Error('id is required'))
-    return this.client.get('/receipts/' + id + '/download-url/pdf')
+    if (!id) return Promise.reject(new Error('id is required'));
+    return this.client.get('/receipts/' + id + '/download-url/pdf');
   }
 }

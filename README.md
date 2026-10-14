@@ -12,10 +12,10 @@ If you've used [Stripe](https://stripe.com) or [Conekta](https://conekta.io), yo
 
 ## Compatibility
 
-| Runtime | Support |
-| --- | --- |
-| Node.js | `>=18` (CI tested on 18, 20, 22, 24) |
-| Browser | Environments with `fetch`, `FormData`, and `Blob` |
+| Runtime      | Support                                                      |
+| ------------ | ------------------------------------------------------------ |
+| Node.js      | `>=18` (CI tested on 18, 20, 22, 24)                         |
+| Browser      | Environments with `fetch`, `FormData`, and `Blob`            |
 | React Native | Versions that provide global `fetch`, `FormData`, and `Blob` |
 
 ## Install
@@ -42,6 +42,17 @@ CommonJS:
 
 ```javascript
 const Facturapi = require('facturapi').default;
+```
+
+### Payroll catalogs
+
+```ts
+const deductions = await facturapi.nominaCatalogs.searchDeductions({
+  q: '001',
+});
+const perceptions = await facturapi.nominaCatalogs.searchPerceptions({
+  q: '001',
+});
 ```
 
 ### Create a customer
@@ -76,6 +87,7 @@ const invoice = await facturapi.invoices.create({
 #### Download your invoice
 
 `downloadZip`, `downloadPdf` and `downloadXml` return a binary result:
+
 - Node.js: stream-like object
 - Browser: `Blob`
 

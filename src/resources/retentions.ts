@@ -5,13 +5,13 @@ import {
   SearchResult,
   SendEmailBody,
   SignedDownloadUrl,
-} from '../types'
-import { WrapperClient } from '../wrapper'
+} from '../types';
+import { WrapperClient } from '../wrapper';
 
 export default class Retentions {
-  client: WrapperClient
+  client: WrapperClient;
   constructor(client: WrapperClient) {
-    this.client = client
+    this.client = client;
   }
 
   /**
@@ -20,7 +20,7 @@ export default class Retentions {
    * @returns
    */
   create(data: Record<string, any>): Promise<Retention> {
-    return this.client.post('/retentions', { body: data })
+    return this.client.post('/retentions', { body: data });
   }
 
   /**
@@ -29,8 +29,8 @@ export default class Retentions {
    * @returns
    */
   list(params?: Record<string, any> | null): Promise<SearchResult<Retention>> {
-    if (!params) params = {}
-    return this.client.get('/retentions', { params })
+    if (!params) params = {};
+    return this.client.get('/retentions', { params });
   }
 
   /**
@@ -39,8 +39,8 @@ export default class Retentions {
    * @returns
    */
   retrieve(id: string): Promise<Retention> {
-    if (!id) return Promise.reject(new Error('id is required'))
-    return this.client.get('/retentions/' + id)
+    if (!id) return Promise.reject(new Error('id is required'));
+    return this.client.get('/retentions/' + id);
   }
 
   /**
@@ -50,7 +50,7 @@ export default class Retentions {
    * @returns
    */
   cancel(id: string, params?: Record<string, any>): Promise<Retention> {
-    return this.client.delete('/retentions/' + id, { params })
+    return this.client.delete('/retentions/' + id, { params });
   }
 
   /**
@@ -60,7 +60,7 @@ export default class Retentions {
    * @returns Edited retention
    */
   updateDraft(id: string, data: Record<string, any>): Promise<Retention> {
-    return this.client.put('/retentions/' + id, { body: data })
+    return this.client.put('/retentions/' + id, { body: data });
   }
 
   /**
@@ -69,7 +69,7 @@ export default class Retentions {
    * @returns Stamped retention
    */
   stampDraft(id: string): Promise<Retention> {
-    return this.client.post('/retentions/' + id + '/stamp')
+    return this.client.post('/retentions/' + id + '/stamp');
   }
 
   /**
@@ -78,7 +78,7 @@ export default class Retentions {
    * @returns Draft retention
    */
   copyToDraft(id: string): Promise<Retention> {
-    return this.client.post('/retentions/' + id + '/copy')
+    return this.client.post('/retentions/' + id + '/copy');
   }
 
   /**
@@ -89,7 +89,7 @@ export default class Retentions {
    * @returns
    */
   sendByEmail(id: string, data?: SendEmailBody): Promise<GenericResponse> {
-    return this.client.post('/retentions/' + id + '/email', { body: data })
+    return this.client.post('/retentions/' + id + '/email', { body: data });
   }
 
   /**
@@ -98,7 +98,7 @@ export default class Retentions {
    * @returns PDF file in a stream (Node.js) or Blob (browser)
    */
   downloadPdf(id: string): Promise<BinaryDownload> {
-    return this.client.get('/retentions/' + id + '/pdf')
+    return this.client.get('/retentions/' + id + '/pdf');
   }
 
   /**
@@ -107,7 +107,7 @@ export default class Retentions {
    * @returns XML file in a stream (Node.js) or Blob (browser)
    */
   downloadXml(id: string): Promise<BinaryDownload> {
-    return this.client.get('/retentions/' + id + '/xml')
+    return this.client.get('/retentions/' + id + '/xml');
   }
 
   /**
@@ -116,7 +116,7 @@ export default class Retentions {
    * @returns ZIP file in a stream (Node.js) or Blob (browser)
    */
   downloadZip(id: string): Promise<BinaryDownload> {
-    return this.client.get('/retentions/' + id + '/zip')
+    return this.client.get('/retentions/' + id + '/zip');
   }
 
   /**
@@ -126,19 +126,19 @@ export default class Retentions {
    * @returns Signed download URL and its metadata
    */
   downloadPdfUrl(id: string): Promise<SignedDownloadUrl> {
-    if (!id) return Promise.reject(new Error('id is required'))
-    return this.client.get('/retentions/' + id + '/download-url/pdf')
+    if (!id) return Promise.reject(new Error('id is required'));
+    return this.client.get('/retentions/' + id + '/download-url/pdf');
   }
 
   /** Gets a short-lived URL for downloading a retention XML file. */
   downloadXmlUrl(id: string): Promise<SignedDownloadUrl> {
-    if (!id) return Promise.reject(new Error('id is required'))
-    return this.client.get('/retentions/' + id + '/download-url/xml')
+    if (!id) return Promise.reject(new Error('id is required'));
+    return this.client.get('/retentions/' + id + '/download-url/xml');
   }
 
   /** Gets a short-lived URL for downloading a retention ZIP file. */
   downloadZipUrl(id: string): Promise<SignedDownloadUrl> {
-    if (!id) return Promise.reject(new Error('id is required'))
-    return this.client.get('/retentions/' + id + '/download-url/zip')
+    if (!id) return Promise.reject(new Error('id is required'));
+    return this.client.get('/retentions/' + id + '/download-url/zip');
   }
 }
