@@ -326,6 +326,7 @@ expectType<Date>(receipt.date);
 expectType<Date>(receipt.expires_at);
 expectType<number>(receipt.total);
 expectType<string>(receipt.key);
+expectType<string | null | undefined>(receipt.invoice);
 
 declare const customer: Customer;
 expectType<Date>(customer.created_at);
@@ -378,6 +379,10 @@ expectError(zipRequest.updated_at);
 declare const retention: Retention;
 expectType<Date | null>(retention.fecha_exp);
 expectType<string | undefined>(retention.stamp?.date);
+expectType<string[] | undefined>(retention.addenda);
+expectType<Promise<import('../dist').OrganizationSeriesGroup[]>>(
+  client.organizations.createSeriesGroup('org_123', { series: 'A' }),
+);
 
 declare const apiKey: ApiKeys;
 expectType<Date>(apiKey.created_at);
