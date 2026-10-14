@@ -1,7 +1,7 @@
 {
   "name": "facturapi",
   "version": "6.0.0",
-  "description": "SDK oficial de Facturapi para Node.js y navegadores. Integra facturaci\u00f3n electr\u00f3nica en M\u00e9xico (CFDI) de forma simple y obt\u00e9n una perspectiva fiscal completa de tu operaci\u00f3n, con b\u00fasquedas indexadas, env\u00edo de documentos y trazabilidad.",
+  "description": "SDK oficial de Facturapi para Node.js y navegadores. Integra facturación electrónica en México (CFDI) de forma simple y obtén una perspectiva fiscal completa de tu operación, con búsquedas indexadas, envío de documentos y trazabilidad.",
   "main": "dist/index.cjs",
   "module": "dist/index.mjs",
   "types": "dist/index.d.cts",
@@ -53,13 +53,13 @@
     "sat-mexico",
     "mexico",
     "sat",
-    "facturaci\u00f3n",
+    "facturación",
     "facturapi"
   ],
-  "author": "Facturaci\u00f3n Espacial <contacto@facturapi.io>",
+  "author": "Facturación Espacial <contacto@facturapi.io>",
   "contributors": [
     {
-      "name": "Ra\u00fal S\u00e1nchez"
+      "name": "Raúl Sánchez"
     },
     {
       "name": "Javier Rosas"
@@ -73,21 +73,21 @@
   "devDependencies": {
     "@eslint/js": "^10.0.1",
     "@playwright/test": "1.63.0",
-    "@types/node": "^26.6.3",
-    "eslint": "^10.11.0",
+    "@types/node": "^26.6.5",
+    "eslint": "^10.12.0",
     "eslint-config-prettier": "^10.1.8",
-    "globals": "^17.12.0",
+    "globals": "^17.13.0",
     "js-yaml": "5.4.2",
-    "jsdom": "^30.1.1",
+    "jsdom": "^30.1.2",
     "openapi-typescript": "7.13.0",
-    "prettier": "^3.9.9",
+    "prettier": "^3.9.10",
     "rolldown": "^1.2.11",
     "rolldown-plugin-dts": "^0.28.6",
     "tsd": "^0.33.0",
     "typescript": "^6.0.3",
-    "typescript-eslint": "^8.70.1",
-    "vite": "8.3.1",
-    "vitest": "^5.0.2"
+    "typescript-eslint": "^8.71.2",
+    "vite": "8.3.4",
+    "vitest": "^5.0.4"
   },
   "exports": {
     ".": {

@@ -27,6 +27,12 @@ and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.
 - Monthly invoice ZIP requests: create or retrieve a package with `invoices.createZipRequest`, list and retrieve requests, and download the ZIP or obtain its download URL. Filter invoices and ZIP requests by SAT import provenance, inspect package freshness with `is_current`, and access generation and content dates as `Date` objects.
 - CommonJS supports `const Facturapi = require('facturapi')` directly, while retaining `.default` compatibility. CommonJS and ESM include matching TypeScript definitions.
 
+## [5.2.0] 2026-10-07
+
+### Added
+
+- Add `nominaCatalogs.searchDeductions` and `nominaCatalogs.searchPerceptions` to search the SAT payroll deduction and perception catalogs.
+
 ## [5.1.0] 2026-09-12
 
 ### Added
