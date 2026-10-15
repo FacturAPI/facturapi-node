@@ -5023,7 +5023,9 @@ export interface components {
         date: Date;
         /** Format: uuid */
         uuid: string;
-        stamp: WithRequired<
+        stamp: {
+          complement_string: string;
+        } & WithRequired<
           components['schemas']['Stamp'],
           | 'date'
           | 'sat_signature'
