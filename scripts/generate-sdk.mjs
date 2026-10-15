@@ -50,11 +50,13 @@ for (const filename of enumSources) {
       enums.push({
         name: node.name.text,
         values,
+        members: node.members.map((member) => member.name.getText(source)),
         filename: filename.replace('src/', '../').replace('.ts', ''),
       });
   }
 }
-for (const [pointer, name] of Object.entries(enumBindings)) {
+for (const [pointer, binding] of Object.entries(enumBindings)) {
+  const name = typeof binding === 'string' ? binding : binding.name;
   const schema = pointer
     .slice(2)
     .split('/')
@@ -63,16 +65,20 @@ for (const [pointer, name] of Object.entries(enumBindings)) {
       spec,
     );
   const enumeration = enums.find((enumeration) => enumeration.name === name);
+  const values =
+    schema?.enum || (schema?.const !== undefined ? [schema.const] : []);
   assert(
-    schema?.enum &&
+    values.length &&
       enumeration &&
-      schema.enum.length === enumeration.values.length &&
-      enumeration.values.every((value) => schema.enum.includes(value)),
+      (binding.subset
+        ? values.every((value) => enumeration.values.includes(value))
+        : values.length === enumeration.values.length &&
+          enumeration.values.every((value) => values.includes(value))),
     `Public enum drift at ${pointer}. Update its named SDK enum.`,
   );
   // A generation-only annotation keeps semantic aliases independent of the
   // transform hook's traversal path (which can omit properties/items/allOf).
-  schema['x-sdk-enum'] = name;
+  schema['x-sdk-enum'] = binding;
 }
 for (const mode of ['input', 'output']) {
   const imports = new Map();
@@ -115,12 +121,24 @@ for (const mode of ['input', 'output']) {
         );
       }
       if (mode === 'output' && schema['x-sdk-enum']) {
+        const binding = schema['x-sdk-enum'];
         const match = enums.find(
-          (enumeration) => enumeration.name === schema['x-sdk-enum'],
+          (enumeration) =>
+            enumeration.name ===
+            (typeof binding === 'string' ? binding : binding.name),
         );
         if (match) {
           imports.set(match.name, match.filename);
-          const types = [ts.factory.createTypeReferenceNode(match.name)];
+          const types = binding.subset
+            ? (schema.enum || [schema.const]).map((value) =>
+                ts.factory.createTypeReferenceNode(
+                  ts.factory.createQualifiedName(
+                    ts.factory.createIdentifier(match.name),
+                    match.members[match.values.indexOf(value)],
+                  ),
+                ),
+              )
+            : [ts.factory.createTypeReferenceNode(match.name)];
           if (Array.isArray(schema.type) && schema.type.includes('null'))
             types.push(
               ts.factory.createLiteralTypeNode(ts.factory.createNull()),

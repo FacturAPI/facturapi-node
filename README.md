@@ -234,13 +234,15 @@ Si ya usabas métodos de `Date`, o no leías esos campos, no necesitas adaptarlo
 
 Los tipos de CFDI distinguen emisión, borrador y edición; cada complemento relaciona su `type` con la estructura de `data`. En nómina, las entradas usan las claves del catálogo de percepciones publicado: `019` requiere `horas_extra`, y el origen de recursos `IM` requiere `monto_recurso_propio`. Si incluyes autotransporte de Carta Porte, completa su vehículo y seguro de responsabilidad civil. Estas relaciones ayudan a detectar errores al compilar; la API sigue siendo responsable de validar los datos.
 
+Las respuestas `Invoice` distinguen los estados `draft`, `pending`, `failed` y `valid`/`canceled`. Al comprobar que `status` es `valid` o `canceled`, TypeScript garantiza `uuid`, `date` y el timbre con sus sellos y fecha. También puedes importar los tipos `InvoiceDraft`, `InvoicePending`, `InvoiceFailed` e `InvoiceStamped`. No necesitas modificar los datos que envías al crear una factura.
+
 **Clientes.** No necesitas reemplazar `customers.create()`: los métodos `createNational()`, `createForeign()` y `createGeneric()` son opcionales. Para crear datos incompletos, usa `customers.create(data, { createEditLink: true })`. El flag debe ser literalmente `true` para que TypeScript seleccione esa entrada; un boolean dinámico conserva los campos del contrato normal. Los métodos específicos conservan sus campos requeridos aunque envíes ese flag.
 
 **Cancelaciones.** Cuando uses los motivos `01` o `04`, incluye `substitution`. Los motivos `02` y `03` no lo requieren. Para eliminar un borrador, puedes seguir llamando a `cancel(id)` sin parámetros.
 
 **Recibos.** `receipts.toInvoice(data)` distingue la factura creada del resumen devuelto con `dry_run: true`. Si el flag es dinámico, comprueba qué respuesta recibiste antes de acceder a campos exclusivos de una factura. En `createGlobalInvoice()`, si proporcionas `receipts`, incluye `from` y `to`; si tu petición ya los incluía, no necesitas cambiarla.
 
-`invoice.cancellation` sigue disponible, incluidos su estado, motivo, factura sustituta y fechas. `cancellation.last_checked` se conserva como `Date` y representa el inicio de la última consulta del estado; no garantiza que haya terminado correctamente. También puedes consultar el estado con `invoice.cancellation_status` y la fecha de cancelación con `invoice.canceled_at`. En solicitudes de ZIP, utiliza las fechas documentadas como `created_at`, `scheduled_at`, `generated_at` y `content_as_of`; `updated_at` no forma parte de esa respuesta.
+`invoice.cancellation` sigue disponible, incluidos su estado, motivo, factura sustituta y fechas. `cancellation.last_checked` se conserva como `Date` y representa el inicio de la última consulta del estado; se omite si nunca se ha consultado y no garantiza que haya terminado correctamente. También puedes consultar el estado con `invoice.cancellation_status` y la fecha de cancelación con `invoice.canceled_at`. En solicitudes de ZIP, utiliza las fechas documentadas como `created_at`, `scheduled_at`, `generated_at` y `content_as_of`; `updated_at` no forma parte de esa respuesta.
 
 ### Desde v4: tipos de respuesta
 

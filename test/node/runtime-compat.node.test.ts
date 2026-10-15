@@ -98,6 +98,7 @@ describe('runtime compatibility (node)', () => {
         JSON.stringify({
           id: 'inv_123',
           object: 'invoice',
+          status: 'canceled',
           created_at: '2026-09-17T12:00:00.000Z',
           date: '2026-09-17T11:00:00.000Z',
           canceled_at: '2026-09-17T12:59:16.000Z',
@@ -374,6 +375,7 @@ describe('runtime compatibility (node)', () => {
         edit_link_expires_at: timestamp,
       },
       '/v2/invoices/inv_checked': {
+        status: 'valid',
         cancellation: { status: 'none', last_checked: timestamp },
       },
       '/v2/products/prod_123': { created_at: timestamp },
@@ -767,6 +769,7 @@ describe('runtime compatibility (node)', () => {
       data: {
         type: 'invoice',
         object: {
+          status: 'canceled',
           created_at: '2026-09-17T11:00:00.000Z',
           canceled_at: '2026-09-17T12:59:16.000Z',
           stamp: { date: '2026-09-17T06:59:16' },

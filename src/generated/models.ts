@@ -280,10 +280,15 @@ export type InvoiceZipRequest = Output['schemas']['InvoiceZipRequest'];
 export type InvoiceZipRequestSearchResult =
   Output['schemas']['InvoiceZipRequestSearchResult'];
 export type Invoice = Output['schemas']['Invoice'];
+export type InvoiceStamped = Output['schemas']['InvoiceStamped'];
+export type InvoicePending = Output['schemas']['InvoicePending'];
+export type InvoiceFailed = Output['schemas']['InvoiceFailed'];
 export type InvoiceCancellation = Output['schemas']['InvoiceCancellation'];
 export type InvoiceDraft = Output['schemas']['InvoiceDraft'];
 export type InvoiceSearchResult = Output['schemas']['InvoiceSearchResult'];
 export type InvoiceProperties = Output['schemas']['InvoiceProperties'];
+export type InvoiceCommonProperties =
+  Output['schemas']['InvoiceCommonProperties'];
 export type InvoiceDraftProperties =
   Output['schemas']['InvoiceDraftProperties'];
 export type InvoiceableCommonInput = Input['schemas']['InvoiceableCommonInput'];

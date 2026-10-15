@@ -316,9 +316,22 @@ expectType<Date | null | undefined>(invoice.canceled_at);
 expectType<Date | undefined>(invoice.cancellation?.requested_at);
 expectType<Date | undefined>(invoice.cancellation?.canceled_at);
 expectType<number>(invoice.total);
-expectType<InvoiceStatus>(invoice.status);
+expectAssignable<InvoiceStatus>(invoice.status);
 expectType<string[] | undefined>(invoiceItem.customs_keys);
 expectType<string | undefined>(invoice.stamp?.date);
+if (invoice.status === 'valid' || invoice.status === 'canceled') {
+  expectAssignable<{
+    uuid: string;
+    date: Date;
+    stamp: {
+      date: string;
+      signature: string;
+      sat_signature: string;
+      sat_cert_number: string;
+      complement_string: string | null;
+    };
+  }>(invoice);
+}
 
 declare const receipt: Receipt;
 expectType<Date>(receipt.created_at);
@@ -343,7 +356,7 @@ expectType<Date | undefined>(
   organization.pending_add_ons_update?.scheduled_for,
 );
 declare const draftResponse: InvoiceDraft;
-expectType<InvoiceStatus>(draftResponse.status);
+expectType<InvoiceStatus.DRAFT>(draftResponse.status);
 expectAssignable<Invoice>(draftResponse);
 expectType<number>(invoice.amount_due);
 expectType<string | null | undefined>(invoice.uuid);

@@ -10,11 +10,11 @@
   "#/components/schemas/PaymentInput/properties/related_documents/items/properties/taxes/items/properties/type": "TaxType",
   "#/components/schemas/PaymentInput/properties/related_documents/items/properties/taxes/items/properties/factor": "TaxFactor",
   "#/components/schemas/InvoiceZipRequestInvoiceType": "InvoiceType",
-  "#/components/schemas/InvoiceProperties/properties/status": "InvoiceStatus",
-  "#/components/schemas/InvoiceProperties/properties/cancellation_status": "CancellationStatus",
-  "#/components/schemas/InvoiceProperties/properties/type": "InvoiceType",
-  "#/components/schemas/InvoiceProperties/properties/payment_method/anyOf/0": "PaymentMethod",
-  "#/components/schemas/InvoiceProperties/properties/global/properties/periodicity": "GlobalInvoicePeriodicity",
+  "#/components/schemas/InvoiceCommonProperties/properties/status": "InvoiceStatus",
+  "#/components/schemas/InvoiceCommonProperties/properties/cancellation_status": "CancellationStatus",
+  "#/components/schemas/InvoiceCommonProperties/properties/type": "InvoiceType",
+  "#/components/schemas/InvoiceCommonProperties/properties/payment_method/anyOf/0": "PaymentMethod",
+  "#/components/schemas/InvoiceCommonProperties/properties/global/properties/periodicity": "GlobalInvoicePeriodicity",
   "#/components/schemas/InvoiceIngresoInput/allOf/0/properties/payment_method": "PaymentMethod",
   "#/components/schemas/InvoiceIngresoInput/allOf/0/properties/global/properties/periodicity": "GlobalInvoicePeriodicity",
   "#/components/schemas/InvoiceIngresoEditInput/allOf/0/properties/payment_method": "PaymentMethod",
@@ -27,5 +27,21 @@
   "#/components/schemas/ReceiptInvoiceSummaryTax/properties/factor": "TaxFactor",
   "#/components/schemas/IepsMode": "IepsMode",
   "#/paths/~1invoices~1{invoice_id}~1payment-summary/get/responses/200/content/application~1json/schema/properties/taxes/items/properties/type": "TaxType",
-  "#/paths/~1invoices~1{invoice_id}~1payment-summary/get/responses/200/content/application~1json/schema/properties/taxes/items/properties/factor": "TaxFactor"
+  "#/paths/~1invoices~1{invoice_id}~1payment-summary/get/responses/200/content/application~1json/schema/properties/taxes/items/properties/factor": "TaxFactor",
+  "#/components/schemas/InvoiceStamped/allOf/2/properties/status": {
+    "name": "InvoiceStatus",
+    "subset": true
+  },
+  "#/components/schemas/InvoicePending/allOf/2/properties/status": {
+    "name": "InvoiceStatus",
+    "subset": true
+  },
+  "#/components/schemas/InvoiceFailed/allOf/2/properties/status": {
+    "name": "InvoiceStatus",
+    "subset": true
+  },
+  "#/components/schemas/InvoiceDraftProperties/allOf/1/properties/status": {
+    "name": "InvoiceStatus",
+    "subset": true
+  }
 }
