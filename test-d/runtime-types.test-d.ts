@@ -343,7 +343,7 @@ expectType<string | null | undefined>(receipt.invoice);
 
 declare const customer: Customer;
 expectType<Date>(customer.created_at);
-expectType<string | undefined>(customer.email);
+expectType<string | null | undefined>(customer.email);
 expectType<string>(customer.organization);
 expectType<Date | null | undefined>(customer.sat_validated_at);
 expectType<Date | null | undefined>(customer.edit_link_expires_at);

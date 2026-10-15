@@ -4345,7 +4345,7 @@ export interface components {
        * Format: email
        * Dirección de correo electrónico al cual enviar las facturas generadas.
        */
-      email?: string;
+      email?: string | null;
       /** Teléfono del cliente. */
       phone?: string | null;
       /** Uso de CFDI por defecto. */
