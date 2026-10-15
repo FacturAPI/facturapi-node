@@ -513,6 +513,7 @@ export const componentDatePlans = {
   LeyendasFiscalesData: 0,
   CartaPorteDataProperties: 0,
   CartaPorteDataInput: 0,
+  ComercioExteriorCommonProperties: 0,
   ComercioExteriorDataProperties: 0,
   ComercioExteriorDataInput: 0,
   ComercioExteriorDomicilio: 0,

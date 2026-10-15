@@ -157,6 +157,8 @@ export type LeyendasFiscalesData = Output['schemas']['LeyendasFiscalesData'];
 export type CartaPorteDataProperties =
   Output['schemas']['CartaPorteDataProperties'];
 export type CartaPorteDataInput = Input['schemas']['CartaPorteDataInput'];
+export type ComercioExteriorCommonProperties =
+  Output['schemas']['ComercioExteriorCommonProperties'];
 export type ComercioExteriorDataProperties =
   Output['schemas']['ComercioExteriorDataProperties'];
 export type ComercioExteriorDataInput =

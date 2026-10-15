@@ -3734,7 +3734,7 @@ export interface components {
      * ComercioExterior
      * Complemento Comercio Exterior versión 2.0.
      */
-    ComercioExteriorDataProperties: {
+    ComercioExteriorCommonProperties: {
       /**
        * @default 2.0
        * @enum {string}
@@ -3766,16 +3766,23 @@ export interface components {
         | components['schemas']['ComercioExteriorPropietario']
         | components['schemas']['CustomerComercioExterior']
       )[];
-      Receptor?:
-        | components['schemas']['ComercioExteriorReceptor']
-        | components['schemas']['CustomerComercioExterior'];
       Destinatario?: (
         | components['schemas']['ComercioExteriorDestinatario']
         | components['schemas']['CustomerComercioExterior']
       )[];
       Mercancias: components['schemas']['ComercioExteriorMercancias'];
     };
-    ComercioExteriorDataInput: components['schemas']['ComercioExteriorDataProperties'];
+    ComercioExteriorDataProperties: {
+      Receptor?:
+        | components['schemas']['ComercioExteriorReceptor']
+        | components['schemas']['CustomerComercioExterior'];
+    } & components['schemas']['ComercioExteriorCommonProperties'];
+    ComercioExteriorDataInput: {
+      Receptor?:
+        | components['schemas']['ComercioExteriorReceptor']
+        | components['schemas']['CustomerComercioExterior']
+        | string;
+    } & components['schemas']['ComercioExteriorCommonProperties'];
     ComercioExteriorDomicilio: {
       Calle: string;
       NumeroExterior?: string;
@@ -4622,6 +4629,7 @@ export interface components {
       data: components['schemas']['Product'][];
     };
     ProductCreateInput: {
+      /** Palabra que representa la unidad de medida de tu producto. Debe estar relacionada con la clave de unidad `unit_key`. */
       unit_name?: string;
     } & WithRequired<
       components['schemas']['ProductCommonProperties'],
@@ -4638,6 +4646,7 @@ export interface components {
       'description' | 'product_key' | 'price'
     >;
     ProductUpdateInput: {
+      /** Palabra que representa la unidad de medida de tu producto. Debe estar relacionada con la clave de unidad `unit_key`. */
       unit_name?: string;
     } & components['schemas']['ProductCommonProperties'];
     ProductCommonProperties: {
@@ -6292,7 +6301,7 @@ export interface components {
        * En caso de que necesites incluir más información en el PDF, este campo te permite insertar código HTML con tu propio contenido.
        */
       pdf_custom_section?: string;
-      /** Código XML con la Addenda que se necesite agregar a la factura. */
+      /** Lista de fragmentos XML que se incluirán como addendas en la retención. */
       addenda?: string[];
       /** Namespaces a insertar en el nodo raíz de la factura. Requerido en `addenda`. */
       namespaces?: components['schemas']['NamespaceProperties'][];
@@ -6383,7 +6392,7 @@ export interface components {
        * En caso de que necesites incluir más información en el PDF, este campo te permite insertar código HTML con tu propio contenido.
        */
       pdf_custom_section?: string;
-      /** Código XML con la Addenda que se necesite agregar a la factura. */
+      /** Lista de fragmentos XML que se incluirán como addendas en la retención. */
       addenda?: string[];
       /** Namespaces a insertar en el nodo raíz de la factura. Requerido en `addenda`. */
       namespaces?: components['schemas']['NamespaceInput'][];
