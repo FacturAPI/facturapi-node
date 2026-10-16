@@ -2754,7 +2754,7 @@ export interface components {
       signature?: string;
       /** FechaTimbrado del SAT: fecha y hora local sin offset de zona horaria. Se conserva como texto. */
       date?: string;
-      /** Cadena original del timbre fiscal digital. Es null cuando los datos disponibles del timbre no permiten reconstruirla. */
+      /** Cadena original del timbre fiscal digital. */
       complement_string?: string | null;
       /** RFC del proveedor que certificó el comprobante. */
       rfc_provider_cert?: string;
@@ -5021,7 +5021,9 @@ export interface components {
         date: Date | string;
         /** Format: uuid */
         uuid: string;
-        stamp: WithRequired<
+        stamp: {
+          complement_string: string;
+        } & WithRequired<
           components['schemas']['Stamp'],
           | 'date'
           | 'sat_signature'
