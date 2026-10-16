@@ -2759,11 +2759,20 @@ export interface components {
     };
     /** Información sobre el timbre fiscal digital agregado por el PAC. */
     Stamp: {
+      /**
+       * Format: uuid
+       * UUID tal como aparece en el timbre fiscal digital.
+       */
+      uuid?: string;
+      /** Versión del timbre fiscal digital. */
+      version?: string;
+      /** Leyenda opcional incluida en el timbre fiscal digital. */
+      legend?: string;
       /** Sello digital del comprobante fiscal. */
       signature?: string;
       /** FechaTimbrado del SAT: fecha y hora local sin offset de zona horaria. Se conserva como texto. */
       date?: string;
-      /** Cadena original del timbre fiscal digital. */
+      /** Cadena original del timbre fiscal digital. Es null cuando los datos disponibles del timbre no permiten reconstruirla. */
       complement_string?: string | null;
       /** RFC del proveedor que certificó el comprobante. */
       rfc_provider_cert?: string;
@@ -5032,9 +5041,7 @@ export interface components {
         date: Date;
         /** Format: uuid */
         uuid: string;
-        stamp: {
-          complement_string: string;
-        } & WithRequired<
+        stamp: WithRequired<
           components['schemas']['Stamp'],
           | 'date'
           | 'sat_signature'

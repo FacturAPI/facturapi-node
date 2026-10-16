@@ -328,7 +328,7 @@ if (invoice.status === 'valid' || invoice.status === 'canceled') {
       signature: string;
       sat_signature: string;
       sat_cert_number: string;
-      complement_string: string;
+      complement_string: string | null;
     };
   }>(invoice);
 }
