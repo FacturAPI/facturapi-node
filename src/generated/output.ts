@@ -2759,11 +2759,6 @@ export interface components {
     };
     /** Información sobre el timbre fiscal digital agregado por el PAC. */
     Stamp: {
-      /**
-       * Format: uuid
-       * UUID tal como aparece en el timbre fiscal digital.
-       */
-      uuid?: string;
       /** Versión del timbre fiscal digital. */
       version?: string;
       /** Leyenda opcional incluida en el timbre fiscal digital. */
