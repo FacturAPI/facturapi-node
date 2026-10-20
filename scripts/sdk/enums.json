@@ -11,7 +11,6 @@
   "#/components/schemas/PaymentInput/properties/related_documents/items/properties/taxes/items/properties/factor": "TaxFactor",
   "#/components/schemas/InvoiceZipRequestInvoiceType": "InvoiceType",
   "#/components/schemas/InvoiceCommonProperties/properties/status": "InvoiceStatus",
-  "#/components/schemas/InvoiceCommonProperties/properties/cancellation_status": "CancellationStatus",
   "#/components/schemas/InvoiceCommonProperties/properties/type": "InvoiceType",
   "#/components/schemas/InvoiceCommonProperties/properties/payment_method/anyOf/0": "PaymentMethod",
   "#/components/schemas/InvoiceCommonProperties/properties/global/properties/periodicity": "GlobalInvoicePeriodicity",
@@ -43,5 +42,6 @@
   "#/components/schemas/InvoiceDraftProperties/allOf/1/properties/status": {
     "name": "InvoiceStatus",
     "subset": true
-  }
+  },
+  "#/components/schemas/InvoiceCancellationStatus": "CancellationStatus"
 }

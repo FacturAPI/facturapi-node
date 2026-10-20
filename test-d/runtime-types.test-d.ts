@@ -320,6 +320,8 @@ expectAssignable<InvoiceStatus>(invoice.status);
 expectType<string[] | undefined>(invoiceItem.customs_keys);
 expectType<string | undefined>(invoice.stamp?.date);
 if (invoice.status === 'valid' || invoice.status === 'canceled') {
+  expectType<string | undefined>(invoice.stamp.version);
+  expectType<string | undefined>(invoice.stamp.legend);
   expectAssignable<{
     uuid: string;
     date: Date;

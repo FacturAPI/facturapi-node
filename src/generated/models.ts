@@ -38,6 +38,8 @@ export type LocalTax = Output['schemas']['LocalTax'];
 export type BaseTax = Output['schemas']['BaseTax'];
 export type IepsTax = Output['schemas']['IepsTax'];
 export type Stamp = Output['schemas']['Stamp'];
+export type InvoiceStamp = Output['schemas']['InvoiceStamp'];
+export type StampProperties = Output['schemas']['StampProperties'];
 export type InvoiceItem = Output['schemas']['InvoiceItem'];
 export type ThirdParty = Output['schemas']['ThirdParty'];
 export type ThirdPartyInput = Input['schemas']['ThirdPartyInput'];
@@ -286,6 +288,8 @@ export type InvoiceStamped = Output['schemas']['InvoiceStamped'];
 export type InvoicePending = Output['schemas']['InvoicePending'];
 export type InvoiceFailed = Output['schemas']['InvoiceFailed'];
 export type InvoiceCancellation = Output['schemas']['InvoiceCancellation'];
+export type InvoiceCancellationStatus =
+  Output['schemas']['InvoiceCancellationStatus'];
 export type InvoiceDraft = Output['schemas']['InvoiceDraft'];
 export type InvoiceSearchResult = Output['schemas']['InvoiceSearchResult'];
 export type InvoiceProperties = Output['schemas']['InvoiceProperties'];
