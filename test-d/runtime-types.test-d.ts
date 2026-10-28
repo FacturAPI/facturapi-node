@@ -320,7 +320,10 @@ expectAssignable<InvoiceStatus>(invoice.status);
 expectType<string[] | undefined>(invoiceItem.customs_keys);
 expectType<string | undefined>(invoice.stamp?.date);
 if (invoice.status === 'valid' || invoice.status === 'canceled') {
-  expectType<string | undefined>(invoice.stamp.version);
+  expectType<'1.0' | '1.1'>(invoice.stamp.version);
+  if (invoice.stamp.version === '1.1') {
+    expectType<string>(invoice.stamp.rfc_provider_cert);
+  }
   expectType<string | undefined>(invoice.stamp.legend);
   expectAssignable<{
     uuid: string;

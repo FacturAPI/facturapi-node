@@ -2761,13 +2761,24 @@ export interface components {
       /** Cadena original del timbre fiscal digital. */
       complement_string?: string | null;
     };
-    InvoiceStamp: WithRequired<
+    InvoiceStamp: (WithRequired<
       components['schemas']['StampProperties'],
-      'date' | 'sat_signature' | 'sat_cert_number' | 'signature'
+      'version' | 'date' | 'sat_signature' | 'sat_cert_number' | 'signature'
     > & {
       /** Cadena original del timbre fiscal digital. */
       complement_string: string;
-    };
+    }) &
+      (
+        | {
+            /** @enum {string} */
+            version: '1.0';
+          }
+        | {
+            /** @enum {string} */
+            version: '1.1';
+            rfc_provider_cert: string;
+          }
+      );
     /** Información sobre el timbre fiscal digital agregado por el PAC. */
     StampProperties: {
       /** Versión del timbre fiscal digital. */
