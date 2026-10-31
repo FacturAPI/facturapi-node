@@ -5,6 +5,31 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](http://keepachangelog.com/en/1.0.0/)
 and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.html).
 
+## [6.0.0] Unreleased
+
+### Breaking
+
+- Response timestamps are consistently returned as `Date` objects. SAT stamp timestamps and calendar dates remain strings.
+- Request and response types now follow the API contract, with more precise CFDI and complement inputs. TypeScript integrations may need adjustments; see the [migration guide from v3, v4, and v5](README.md#actualizar-desde-v3-v4-o-v5).
+- Certificate deletion returns its update timestamp, global receipt invoicing may return `null`, and domain availability requires an explicit domain. See the concrete v5 migration cases in the README.
+- Series mutations return arrays, retention addendas use `string[]`, and uninvoiced receipts expose a nullable invoice reference. These type corrections match existing API responses.
+- Import from `facturapi`; direct imports into internal package files such as `facturapi/dist/...` are no longer supported.
+
+### Fixed
+
+- Correct request typing for partial product updates and native Node.js file uploads.
+- Webhook signature validation consistently returns parsed events with converted dates in Node.js and browsers.
+
+### Added
+
+- Autocompletion and editor documentation for request fields, method arguments, and responses across SDK operations.
+- More precise input types for CFDI variants, drafts, structured complements, and customer creation. Related fields are checked by TypeScript in supported cases, helping catch incomplete or incompatible inputs before sending a request.
+- Invoice responses distinguish draft, pending, failed, and stamped states; checking the status exposes the guaranteed UUID and stamp fields.
+- Receipt invoicing distinguishes invoice creation from `dry_run` summaries in its return types.
+- Methods to create national, foreign, and generic RFC customers with specific input types; assign receipt customers with `receipts.updateCustomer`; upload FIEL certificates; and check API health.
+- Filter invoice searches and monthly ZIP requests with `sat_imported`, inspect ZIP freshness with `is_current`, and access `generated_at` and `content_as_of` as `Date` objects.
+- CommonJS supports `const Facturapi = require('facturapi')` directly, while retaining `.default` compatibility. CommonJS and ESM include matching TypeScript definitions.
+
 ## [5.2.0] 2026-10-07
 
 ### Added

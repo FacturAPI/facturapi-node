@@ -3,6 +3,8 @@
 test.js
 lib/
 dist/
+test-results/
+playwright-report/
 
 # Created by https://www.gitignore.io/api/node,macos,linux,windows,visualstudiocode
 
