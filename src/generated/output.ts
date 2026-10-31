@@ -4374,7 +4374,7 @@ export interface components {
       address?: components['schemas']['CustomerAddress'];
     };
     CustomerCommonProperties: {
-      /** Nombre Fiscal o Razón Social del cliente. *sin* el régimen societario (ej.: S.A. de C.V.). */
+      /** Nombre fiscal o razón social del cliente, *sin* el régimen societario (ej.: S.A. de C.V.). */
       legal_name?: string | null;
       /** En clientes de México contiene el RFC del cliente. Para extranjeros es opcional y representa el número de registro de identificación tributaria, es decir, el equivalente al RFC en el país del cliente. */
       tax_id?: string | null;
@@ -4396,7 +4396,7 @@ export interface components {
     CustomerEmailUpdateInput:
       components['schemas']['CustomerEmailInput'] | string;
     CustomerEditableInput: {
-      /** Nombre Fiscal o Razón Social del cliente. *sin* el régimen societario (ej.: S.A. de C.V.). */
+      /** Nombre fiscal o razón social del cliente, *sin* el régimen societario (ej.: S.A. de C.V.). */
       legal_name?: string | null;
       /** En clientes de México contiene el RFC del cliente. Para extranjeros es opcional y representa el número de registro de identificación tributaria, es decir, el equivalente al RFC en el país del cliente. */
       tax_id?: string | null;
@@ -4404,7 +4404,7 @@ export interface components {
       /** Teléfono del cliente. */
       phone?: string | null;
       external_id?: string | null;
-      /** Uso de CFDI por defecto. */
+      /** Uso de CFDI que se utiliza en facturas de ingreso cuando se omite use o se envía null. Si el cliente no tiene un uso configurado, se utiliza G03. Para clientes extranjeros o con RFC genérico sólo se admite S01; omitirlo, enviar null o una cadena vacía asigna S01. */
       default_invoice_use?: string | null;
       address?: {
         /** Nombre de la calle */
@@ -4431,7 +4431,7 @@ export interface components {
     };
     /** En una actualización sin createEditLink=true, los campos omitidos conservan su valor. Un valor null borra los campos que admiten null; un campo opcional puede omitirse sin que necesariamente admita null. No se permite null en legal_name, tax_id, tax_system ni address. En email, phone y los campos opcionales street, exterior, interior, neighborhood, city, municipality y state del domicilio, una cadena vacía o sólo espacios se normaliza a null. El código postal vacío no se acepta. */
     CustomerUpdateInput: {
-      /** Nombre Fiscal o Razón Social del cliente. *sin* el régimen societario (ej.: S.A. de C.V.). */
+      /** Nombre fiscal o razón social del cliente, *sin* el régimen societario (ej.: S.A. de C.V.). */
       legal_name?: string;
       /** En clientes de México contiene el RFC del cliente. Para extranjeros es opcional y representa el número de registro de identificación tributaria, es decir, el equivalente al RFC en el país del cliente. */
       tax_id?: string;
@@ -4439,7 +4439,7 @@ export interface components {
       /** Teléfono del cliente. */
       phone?: string | null;
       external_id?: string | null;
-      /** Uso de CFDI por defecto. */
+      /** Uso de CFDI que se utiliza en facturas de ingreso cuando se omite use o se envía null. Si el cliente no tiene un uso configurado, se utiliza G03. Para clientes extranjeros o con RFC genérico sólo se admite S01; omitirlo, enviar null o una cadena vacía asigna S01. */
       default_invoice_use?: string | null;
       /** Requerido para clientes nacionales. Clave del régimen fiscal del cliente, del catálogo de [Regímenes Fiscales](#r%C3%A9gimen-fiscal). */
       tax_system?: string;
@@ -4468,7 +4468,7 @@ export interface components {
     };
     /** Con createEditLink=true, los campos omitidos conservan su valor y null borra el valor existente, incluidos los datos fiscales. Los valores no nulos deben ser válidos. En email, phone y los campos opcionales street, exterior, interior, neighborhood, city, municipality y state del domicilio, una cadena vacía o sólo espacios se normaliza a null. El código postal vacío no se acepta. */
     CustomerUpdateWithEditLinkInput: {
-      /** Nombre Fiscal o Razón Social del cliente. *sin* el régimen societario (ej.: S.A. de C.V.). */
+      /** Nombre fiscal o razón social del cliente, *sin* el régimen societario (ej.: S.A. de C.V.). */
       legal_name?: string | null;
       /** En clientes de México contiene el RFC del cliente. Para extranjeros es opcional y representa el número de registro de identificación tributaria, es decir, el equivalente al RFC en el país del cliente. */
       tax_id?: string | null;
@@ -4476,7 +4476,7 @@ export interface components {
       /** Teléfono del cliente. */
       phone?: string | null;
       external_id?: string | null;
-      /** Uso de CFDI por defecto. */
+      /** Uso de CFDI que se utiliza en facturas de ingreso cuando se omite use o se envía null. Si el cliente no tiene un uso configurado, se utiliza G03. Para clientes extranjeros o con RFC genérico sólo se admite S01; omitirlo, enviar null o una cadena vacía asigna S01. */
       default_invoice_use?: string | null;
       /** Requerido para clientes nacionales. Clave del régimen fiscal del cliente, del catálogo de [Regímenes Fiscales](#r%C3%A9gimen-fiscal). */
       tax_system?: string | null;
@@ -4525,7 +4525,7 @@ export interface components {
      * La información del cliente puede estar incompleta cuando createEditLink=true. Los campos opcionales con valor null se tratan como omitidos. Los valores no nulos deben conservar formatos válidos.
      */
     CustomerCreateWithEditLinkInput: {
-      /** Nombre Fiscal o Razón Social del cliente. *sin* el régimen societario (ej.: S.A. de C.V.). */
+      /** Nombre fiscal o razón social del cliente, *sin* el régimen societario (ej.: S.A. de C.V.). */
       legal_name?: string | null;
       /** En clientes de México contiene el RFC del cliente. Para extranjeros es opcional y representa el número de registro de identificación tributaria, es decir, el equivalente al RFC en el país del cliente. */
       tax_id?: string | null;
@@ -4534,7 +4534,7 @@ export interface components {
       /** Teléfono del cliente. */
       phone?: string | null;
       external_id?: string | null;
-      /** Uso de CFDI por defecto. */
+      /** Uso de CFDI que se utiliza en facturas de ingreso cuando se omite use o se envía null. Si el cliente no tiene un uso configurado, se utiliza G03. Para clientes extranjeros o con RFC genérico sólo se admite S01; omitirlo, enviar null o una cadena vacía asigna S01. */
       default_invoice_use?: string | null;
       /** Requerido para clientes nacionales. Clave del régimen fiscal del cliente, del catálogo de [Regímenes Fiscales](#r%C3%A9gimen-fiscal). */
       tax_system?: string | null;
@@ -4562,14 +4562,14 @@ export interface components {
       } | null;
     };
     CustomerCreateCommonInput: {
-      /** Nombre Fiscal o Razón Social del cliente. *sin* el régimen societario (ej.: S.A. de C.V.). */
+      /** Nombre fiscal o razón social del cliente, *sin* el régimen societario (ej.: S.A. de C.V.). */
       legal_name: string;
       /** Format: email */
       email?: string | null;
       /** Teléfono del cliente. */
       phone?: string | null;
-      /** Uso de CFDI por defecto. */
-      default_invoice_use?: string;
+      /** Uso de CFDI que se utiliza en facturas de ingreso cuando se omite use o se envía null. Si el cliente no tiene un uso configurado, se utiliza G03. Para clientes extranjeros o con RFC genérico sólo se admite S01; omitirlo, enviar null o una cadena vacía asigna S01. */
+      default_invoice_use?: string | null;
     };
     CustomerNationalAddressInput: WithRequired<
       components['schemas']['CommonAddressProperties'],
@@ -4611,23 +4611,57 @@ export interface components {
        * @enum {string|null}
        */
       tax_system?: '616' | null | '';
+      /**
+       * Sólo se admite S01. Omitirlo, enviar null o una cadena vacía asigna S01.
+       * @default S01
+       * @enum {unknown}
+       */
+      default_invoice_use?: 'S01' | '' | null;
       address: components['schemas']['CustomerForeignAddressInput'];
     };
     /**
      * RFC genérico
-     * RFC de público en general XAXX010101000 o RFC genérico extranjero XEXX010101000. Requiere razón social y RFC. El régimen fiscal predeterminado es 616. Si se envía domicilio mexicano, requiere código postal.
+     * RFC de público en general XAXX010101000 o RFC genérico extranjero XEXX010101000. Requiere razón social y RFC. El régimen fiscal predeterminado es 616. El código postal es opcional; null o una cadena vacía se tratan como omitidos.
      */
     CustomerGenericCreateInput: components['schemas']['CustomerCreateCommonInput'] & {
+      /** Nombre fiscal o razón social del receptor, sin el régimen societario (ej.: S.A. de C.V.). Para una factura individual con RFC genérico, envía el nombre del receptor y omite global. Para una factura global de ingreso, usa PUBLICO EN GENERAL con el RFC XAXX010101000 y envía global con periodicity, months y year. */
+      legal_name?: string;
       /** @enum {string} */
       tax_id: 'XAXX010101000' | 'XEXX010101000';
       /**
+       * Régimen fiscal del receptor. Con RFC genérico, si se omite se utiliza 616 (Sin obligaciones fiscales); si se envía explícitamente, sólo se admite 616.
        * @default 616
        * @enum {string}
        */
       tax_system?: '616';
-      address?:
-        | components['schemas']['CustomerNationalAddressInput']
-        | components['schemas']['CustomerForeignAddressInput'];
+      /**
+       * Sólo se admite S01. Omitirlo, enviar null o una cadena vacía asigna S01.
+       * @default S01
+       * @enum {unknown}
+       */
+      default_invoice_use?: 'S01' | '' | null;
+      address?: {
+        /** Nombre de la calle */
+        street?: string | null;
+        /** Número exterior. */
+        exterior?: string | null;
+        /** Número interior. */
+        interior?: string | null;
+        /** Colonia */
+        neighborhood?: string | null;
+        /** Ciudad */
+        city?: string | null;
+        /** Municipio o delegación */
+        municipality?: string | null;
+        state?: string | null;
+        /**
+         * ISO 3166-1 alpha-3.
+         * @default MEX
+         */
+        country?: string | ('' | null);
+        /** Código postal opcional. Para México, si se proporciona debe tener cinco dígitos. */
+        zip?: string | null;
+      } & unknown;
     };
     /**
      * Customer
@@ -4960,7 +4994,7 @@ export interface components {
     CustomerInfo: {
       /** ID del objeto `customer` relacionado a la factura, en caso de no haber sido eliminado */
       id?: string;
-      /** Nombre Fiscal o Razón Social del cliente, *sin* incluir el régimen societario (ej.: S.A. de C.V.). */
+      /** Nombre fiscal o razón social del cliente, *sin* incluir el régimen societario (ej.: S.A. de C.V.). */
       legal_name?: string | null;
       /** RFC del cliente. */
       tax_id?: string | null;
@@ -5652,13 +5686,13 @@ export interface components {
        */
       payment_method?: PaymentMethod;
       /**
-       * Si se omite o es null, se utiliza el uso configurado en el cliente; si no tiene uno, se utiliza G03. Para clientes extranjeros o público en general se utiliza S01.
+       * Si se omite o es null, se utiliza el uso configurado en el cliente; si no tiene uno, se utiliza G03. Para clientes extranjeros o con RFC genérico se utiliza S01, incluso si se envía otro uso válido del catálogo.
        *
        *     Código de Uso CFDI según el catálogo del SAT. Puedes ver los códigos
        *     en [esta tabla](#uso-cfdi), o utilizar las constantes incluidas en
        *     nuestras librerías.
        *
-       *     Para factura global debe ingresarse la clave `S01`.
+       *     En una factura global, el uso es `S01`.
        */
       use?: string | null;
       /**
@@ -5679,7 +5713,7 @@ export interface components {
        * @default []
        */
       related_documents?: components['schemas']['RelatedDocumentInput'][];
-      /** Objeto requerido al crear una factura global. */
+      /** Información del periodo que abarca una factura global. En una factura de ingreso, este objeto es obligatorio cuando el receptor tiene `tax_id=XAXX010101000` y `legal_name=PUBLICO EN GENERAL`. Incluye periodicity, months y year. */
       global?: {
         /**
          * Periodicidad que abarca la factura global.
@@ -5880,7 +5914,7 @@ export interface components {
       conditions?: string;
       /** Documentos relacionados con la factura. */
       related_documents?: components['schemas']['RelatedDocumentInput'][];
-      /** Objeto requerido al crear una factura global. */
+      /** Información del periodo que abarca una factura global. En una factura de ingreso, este objeto es obligatorio cuando el receptor tiene `tax_id=XAXX010101000` y `legal_name=PUBLICO EN GENERAL`. Incluye periodicity, months y year. */
       global?: {
         /**
          * Periodicidad que abarca la factura global.

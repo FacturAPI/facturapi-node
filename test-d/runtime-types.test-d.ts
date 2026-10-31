@@ -522,6 +522,16 @@ expectNotAssignable<CustomerGenericCreateInput>({
   tax_id: 'XAXX010101000',
   tax_system: '601',
 });
+expectNotAssignable<CustomerForeignCreateInput>({
+  legal_name: 'Foreign',
+  address: { country: 'USA' },
+  default_invoice_use: 'G03',
+});
+expectNotAssignable<CustomerGenericCreateInput>({
+  legal_name: 'Publico',
+  tax_id: 'XAXX010101000',
+  default_invoice_use: 'G03',
+});
 expectError(client.customers.create({ legal_name: 'Foreign', address: {} }));
 
 // A default period needs no fields; explicit receipt selection needs both dates.
@@ -636,10 +646,14 @@ client.customers.createForeign({
 client.customers.createGeneric({
   legal_name: 'Publico',
   tax_id: 'XAXX010101000',
+  address: { country: 'MEX' },
+  default_invoice_use: null,
 });
 client.customers.createGeneric({
   legal_name: 'Generic foreign',
   tax_id: 'XEXX010101000',
+  address: { zip: null },
+  default_invoice_use: '',
 });
 expectError(
   client.customers.createNational({

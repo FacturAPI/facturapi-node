@@ -208,7 +208,7 @@ export default class Customers {
   /**
    * Crear cliente
    *
-   * RFC de público en general XAXX010101000 o RFC genérico extranjero XEXX010101000. Requiere razón social y RFC. El régimen fiscal predeterminado es 616. Si se envía domicilio mexicano, requiere código postal.
+   * RFC de público en general XAXX010101000 o RFC genérico extranjero XEXX010101000. Requiere razón social y RFC. El régimen fiscal predeterminado es 616. El código postal es opcional; null o una cadena vacía se tratan como omitidos.
    *
    * Registra un nuevo cliente en Facturapi.
    *
