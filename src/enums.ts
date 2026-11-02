@@ -731,6 +731,9 @@ export enum InvoiceComplementType {
   CUSTOM = 'custom',
   PAGO = 'pago',
   NOMINA = 'nomina',
+  CARTA_PORTE = 'carta_porte',
+  COMERCIO_EXTERIOR = 'comercio_exterior',
+  LEYENDAS_FISCALES = 'leyendas_fiscales',
 }
 
 export enum CancellationMotive {

@@ -1,9 +1,10 @@
 name: Deploy to npm
 
 on:
-  push:
-    branches:
-      - main
+  workflow_run:
+    workflows: [CI]
+    types: [completed]
+    branches: [main]
 
 permissions:
   id-token: write # Required for OIDC authentication
@@ -11,11 +12,20 @@ permissions:
 
 jobs:
   deploy:
+    if: >-
+      github.event.workflow_run.conclusion == 'success' &&
+      github.event.workflow_run.event == 'push' &&
+      github.event.workflow_run.head_branch == 'main'
+    env:
+      RELEASE_SHA: ${{ github.event.workflow_run.head_sha }}
     runs-on: ubuntu-latest
 
     steps:
       - name: Checkout repository
         uses: actions/checkout@v7
+        with:
+          ref: ${{ github.event.workflow_run.head_sha }}
+          persist-credentials: false
 
       - name: Setup pnpm
         uses: pnpm/action-setup@v6
@@ -101,7 +111,7 @@ jobs:
                 fields: [
                   { type: 'mrkdwn', text: `*Package:* \`${packageName}@${version}\`` },
                   { type: 'mrkdwn', text: `*Branch:* \`${process.env.GITHUB_REF_NAME}\`` },
-                  { type: 'mrkdwn', text: `*Commit:* \`${process.env.GITHUB_SHA}\`` },
+                  { type: 'mrkdwn', text: `*Commit:* \`${process.env.RELEASE_SHA}\`` },
                   { type: 'mrkdwn', text: `*Actor:* \`${process.env.GITHUB_ACTOR}\`` },
                 ],
               },
@@ -113,7 +123,7 @@ jobs:
                     '*Useful links*',
                     `• npm: <https://www.npmjs.com/package/${packageName}/v/${version}|View package>`,
                     `• Workflow run: <${process.env.GITHUB_SERVER_URL}/${process.env.GITHUB_REPOSITORY}/actions/runs/${process.env.GITHUB_RUN_ID}|Open run>`,
-                    `• Changelog: <${process.env.GITHUB_SERVER_URL}/${process.env.GITHUB_REPOSITORY}/blob/${process.env.GITHUB_SHA}/CHANGELOG.md|Read changes>`,
+                    `• Changelog: <${process.env.GITHUB_SERVER_URL}/${process.env.GITHUB_REPOSITORY}/blob/${process.env.RELEASE_SHA}/CHANGELOG.md|Read changes>`,
                   ].join('\n'),
                 },
               },
@@ -156,7 +166,7 @@ jobs:
                   text: [
                     `*Node SDK ${packageJson.version} publish failed*`,
                     `• Workflow run: <${process.env.GITHUB_SERVER_URL}/${process.env.GITHUB_REPOSITORY}/actions/runs/${process.env.GITHUB_RUN_ID}|Open run>`,
-                    `• Commit: \`${process.env.GITHUB_SHA}\``,
+                    `• Commit: \`${process.env.RELEASE_SHA}\``,
                   ].join('\n'),
                 },
               },

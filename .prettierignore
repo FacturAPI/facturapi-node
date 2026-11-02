@@ -1,0 +1,7 @@
+dist/
+coverage/
+test-results/
+playwright-report/
+
+# Preserve published changelog entries as written.
+CHANGELOG.md

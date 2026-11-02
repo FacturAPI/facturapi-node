@@ -8,30 +8,6 @@ on:
   workflow_dispatch:
 
 jobs:
-  quality:
-    runs-on: ubuntu-latest
-    steps:
-      - name: Checkout
-        uses: actions/checkout@v7
-
-      - name: Setup pnpm
-        uses: pnpm/action-setup@v6
-
-      - name: Setup Node
-        uses: actions/setup-node@v6
-        with:
-          node-version: 24
-          cache: pnpm
-
-      - name: Install dependencies
-        run: pnpm install --frozen-lockfile
-
-      - name: Check formatting
-        run: pnpm run format:check
-
-      - name: Run linter
-        run: pnpm run lint
-
   build-dist:
     runs-on: ubuntu-latest
     steps:
@@ -52,6 +28,9 @@ jobs:
 
       - name: Build package
         run: pnpm run build
+
+      - name: Verify generated SDK
+        run: pnpm run generate:sdk:check
 
       - name: Upload dist artifact
         uses: actions/upload-artifact@v7
@@ -80,7 +59,7 @@ jobs:
           path: dist
 
       - name: Run Node 18 runtime compatibility smoke
-        run: node --test test/compat/node18-compat.test.cjs
+        run: node --test test/compat/*.test.cjs test/compat/*.test.mjs
 
   node-runtime:
     runs-on: ubuntu-latest
@@ -148,6 +127,9 @@ jobs:
 
       - name: Run type contract tests
         run: pnpm run test:types
+
+      - name: Lint
+        run: pnpm run lint
 
   browser-smoke:
     runs-on: ubuntu-latest

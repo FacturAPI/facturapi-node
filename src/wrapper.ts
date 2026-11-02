@@ -1,3 +1,5 @@
+import { deserializeResponseDates } from './runtime/dates';
+export { deserializeResponseDates } from './runtime/dates';
 import { BASE_URL, BASE_URL_V1, DEFAULT_API_VERSION } from './constants';
 
 const getRuntimeFetch = () => {
@@ -149,7 +151,7 @@ const statusFrom = (value: unknown, fallback: number): number => {
   return fallback;
 };
 
-const responseInterceptor = async (response: Response) => {
+const responseInterceptor = async (response: Response, datePlan = 0) => {
   if (!response.ok) {
     const contentType = response.headers.get('content-type') || '';
     let bodyText: string | null = null;
@@ -234,7 +236,7 @@ const responseInterceptor = async (response: Response) => {
       return response.blob();
     }
   } else if (contentType.includes('application/json')) {
-    return response.json();
+    return deserializeResponseDates(await response.json(), datePlan);
   }
   return response.text();
 };
@@ -257,16 +259,18 @@ export const createWrapper = (
     set baseURL(url: string) {
       baseURL = url;
     },
-    async request(
+    async request<T = unknown>(
       url: string,
       options?: {
         params?: Record<string, any> | null;
         body?: any;
         formData?: UniversalFormData;
         method?: string;
+        datePlan?: number;
       },
-    ) {
-      const { params, body, formData, ...restOptions } = options || {};
+    ): Promise<T> {
+      const { params, body, formData, datePlan, ...restOptions } =
+        options || {};
       const serializedQuery = params ? buildQueryString(params) : '';
       const queryString = serializedQuery ? `?${serializedQuery}` : '';
       const requestHeaders = new Headers(defaultHeaders);
@@ -286,10 +290,8 @@ export const createWrapper = (
         baseURL + url + queryString,
         fetchOptions,
       );
-      return responseInterceptor(response);
-    },
-    get(url: string, options?: { params?: Record<string, any> | null }) {
-      return this.request(url, { method: 'GET', ...options });
+      // The operation's generated contract owns the response type at this HTTP boundary.
+      return (await responseInterceptor(response, datePlan)) as T;
     },
     post(
       url: string,
@@ -300,19 +302,6 @@ export const createWrapper = (
       },
     ) {
       return this.request(url, { method: 'POST', ...options });
-    },
-    put(
-      url: string,
-      options?: {
-        body?: any;
-        formData?: UniversalFormData;
-        params?: Record<string, any> | null;
-      },
-    ) {
-      return this.request(url, { method: 'PUT', ...options });
-    },
-    delete(url: string, options?: { params?: Record<string, any> | null }) {
-      return this.request(url, { method: 'DELETE', ...options });
     },
   };
 

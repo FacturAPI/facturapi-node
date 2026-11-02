@@ -1,0 +1,48 @@
+{
+  "common": {
+    "Address": "Output['Address']",
+    "InvoiceItemPart": "Output['Parts']",
+    "InvoiceItemThirdParty": "Output['ThirdParty']",
+    "Tax": "Output['BaseTax'] | Output['IepsTax']",
+    "ProductInfo": "Output['InvoiceItemProduct']",
+    "XmlNamespace": "Output['NamespaceProperties']",
+    "GenericResponse": "Output['OkResponse']",
+    "SendEmailBody": "OperationBody<'sendInvoiceByEmail'>"
+  },
+  "customer": {
+    "TaxInfoValidation": "OperationResponse<'validateCustomerTaxInfo'>",
+    "TaxInfoValidationError": "TaxInfoValidation['errors'][number]"
+  },
+  "invoice": {
+    "GlobalInfo": "NonNullable<Output['InvoiceProperties']['global']>",
+    "InvoiceComplement": "NonNullable<Output['InvoiceProperties']['complements']>[number]",
+    "CancelInvoiceOptions": "Input['CancellationQueryInput']",
+    "CreateZipRequestData": "OperationBody<'createInvoiceZipRequest'>",
+    "ListZipRequestsParams": "OperationQuery<'listInvoiceZipRequests'>",
+    "ZipRequest": "Output['InvoiceZipRequest']",
+    "PaymentSummaryParams": "OperationQuery<'getInvoicePaymentSummary'>",
+    "PaymentSummary": "OperationResponse<'getInvoicePaymentSummary'>",
+    "PaymentSummaryTax": "NonNullable<PaymentSummary['taxes']>[number]"
+  },
+  "organization": {
+    "Series": "Output['OrganizationSeriesGroup']",
+    "OrganizationDefaultSeriesUpdateInput": "Input['OrganizationSeriesDefaultInput']",
+    "ApiKeys": "OperationResponse<'listLiveApiKeys'>[number]",
+    "OrganizationInviteResponseInput": "Input['OrganizationInviteRespondInput']",
+    "OrganizationTeamRole": "Output['OrganizationPermissionRole']",
+    "OrganizationTeamRoleCreateInput": "Input['OrganizationPermissionRoleCreateInput']",
+    "OrganizationTeamRoleUpdateInput": "Input['OrganizationPermissionRoleUpdateInput']",
+    "OrganizationTeamRoleTemplate": "Output['OrganizationPermissionRoleTemplate']"
+  },
+  "receipt": {
+    "ReceiptsToInvoiceInput": "Input['ToInvoiceInput']",
+    "PreviewReceiptsToInvoicePdfInput": "Input['ToInvoicePreviewInput']"
+  },
+  "complements": {
+    "PagoComplementData": "Output['PaymentProperties']",
+    "PaymentRelatedDocument": "NonNullable<PagoComplementData['related_documents']>[number]",
+    "PaymentRelatedDocumentTax": "NonNullable<PaymentRelatedDocument['taxes']>[number]",
+    "NominaReceptor": "Output['NominaReceptorProperties']",
+    "NominaComplementData": "Output['NominaComplementDataProperties']"
+  }
+}
