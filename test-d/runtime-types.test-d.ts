@@ -5,6 +5,9 @@ import {
   expectError,
 } from 'tsd';
 import Facturapi, {
+  CatalogEntrySearchResult,
+  ZipCodeSearchResult,
+  ZipCodeDetail,
   BinaryDownload,
   ApiKeys,
   ApiEvent,
@@ -774,3 +777,24 @@ expectType<string | undefined>(restoredOrganization.legal?.curp);
 expectType<string | undefined>(
   restoredOrganization.customization?.default_series?.I,
 );
+
+expectType<Promise<ZipCodeSearchResult>>(
+  client.catalogs.searchZipCodes({ q: '01', state: 'CMX', limit: 10 }),
+);
+expectType<Promise<ZipCodeDetail>>(client.catalogs.getZipCode('01000'));
+expectType<Promise<CatalogEntrySearchResult>>(
+  client.catalogs.searchCountries({ q: 'México' }),
+);
+expectType<Promise<CatalogEntrySearchResult>>(
+  client.catalogs.searchTaxSystems(),
+);
+expectType<Promise<CatalogEntrySearchResult>>(
+  client.catalogs.searchInvoiceUses({ page: 2 }),
+);
+expectError(client.catalogs.getZipCode(1000));
+expectError(client.catalogs.searchZipCodes({ state: 9 }));
+
+client.cartaPorteCatalogs.searchAirTransportCodes({ page: 1 });
+client.comercioExteriorCatalogs.searchTariffFractions({ limit: 10 });
+client.nominaCatalogs.searchDeductions();
+client.nominaCatalogs.searchPerceptions({ page: 2 });

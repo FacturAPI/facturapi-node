@@ -17,6 +17,12 @@ export type ReceiptStatusUpdatedEvent =
 export type CustomerEditLinkCompletedEvent =
   Output['schemas']['CustomerEditLinkCompletedEvent'];
 export type SignedDownloadUrl = Output['schemas']['SignedDownloadUrl'];
+export type CatalogEntry = Output['schemas']['CatalogEntry'];
+export type CatalogEntrySearchResult =
+  Output['schemas']['CatalogEntrySearchResult'];
+export type ZipCode = Output['schemas']['ZipCode'];
+export type ZipCodeDetail = Output['schemas']['ZipCodeDetail'];
+export type ZipCodeSearchResult = Output['schemas']['ZipCodeSearchResult'];
 export type SearchKeyDescriptionResult =
   Output['schemas']['SearchKeyDescriptionResult'];
 export type RelatedResourceMessage =

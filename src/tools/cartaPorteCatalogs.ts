@@ -14,11 +14,10 @@ export default class CartaPorteCatalogs {
    * Devuelve entradas del catálogo de aerolíneas que coinciden con la consulta. Usado para el complemento Carta Porte.
    *
    * @param params - Parámetros de consulta.
-   * @param params.q - Prefijo para buscar en `key`, `airline_name` o `icao_designator`.
    * @returns Búsqueda exitosa
    */
   searchAirTransportCodes(
-    params: OperationQuery<'searchCartaPorteAirTransportCodes'> | null,
+    params?: OperationQuery<'searchCartaPorteAirTransportCodes'> | null,
   ): Promise<OperationResponse<'searchCartaPorteAirTransportCodes'>> {
     return this.client.request<
       OperationResponse<'searchCartaPorteAirTransportCodes'>
@@ -35,11 +34,10 @@ export default class CartaPorteCatalogs {
    * Devuelve configuraciones de transporte (p. ej., camión/semirremolque).
    *
    * @param params - Parámetros de consulta.
-   * @param params.q - Prefijo para buscar en `key` o `description`.
    * @returns Búsqueda exitosa
    */
   searchTransportConfigs(
-    params: OperationQuery<'searchCartaPorteTransportConfigs'> | null,
+    params?: OperationQuery<'searchCartaPorteTransportConfigs'> | null,
   ): Promise<OperationResponse<'searchCartaPorteTransportConfigs'>> {
     return this.client.request<
       OperationResponse<'searchCartaPorteTransportConfigs'>
@@ -56,11 +54,10 @@ export default class CartaPorteCatalogs {
    * Devuelve derechos de paso ferroviarios que coinciden con la consulta.
    *
    * @param params - Parámetros de consulta.
-   * @param params.q - Prefijo para buscar en `key`, `right_of_passage` o `concessionaire`.
    * @returns Búsqueda exitosa
    */
   searchRightsOfPassage(
-    params: OperationQuery<'searchCartaPorteRightsOfPassage'> | null,
+    params?: OperationQuery<'searchCartaPorteRightsOfPassage'> | null,
   ): Promise<OperationResponse<'searchCartaPorteRightsOfPassage'>> {
     return this.client.request<
       OperationResponse<'searchCartaPorteRightsOfPassage'>
@@ -77,11 +74,10 @@ export default class CartaPorteCatalogs {
    * Devuelve tipos de documentos aduaneros.
    *
    * @param params - Parámetros de consulta.
-   * @param params.q - Prefijo para buscar en `key` o `description`.
    * @returns Búsqueda exitosa
    */
   searchCustomsDocuments(
-    params: OperationQuery<'searchCartaPorteCustomsDocuments'> | null,
+    params?: OperationQuery<'searchCartaPorteCustomsDocuments'> | null,
   ): Promise<OperationResponse<'searchCartaPorteCustomsDocuments'>> {
     return this.client.request<
       OperationResponse<'searchCartaPorteCustomsDocuments'>
@@ -98,11 +94,10 @@ export default class CartaPorteCatalogs {
    * Devuelve tipos de empaque para mercancías.
    *
    * @param params - Parámetros de consulta.
-   * @param params.q - Prefijo para buscar en `key` o `description`.
    * @returns Búsqueda exitosa
    */
   searchPackagingTypes(
-    params: OperationQuery<'searchCartaPortePackagingTypes'> | null,
+    params?: OperationQuery<'searchCartaPortePackagingTypes'> | null,
   ): Promise<OperationResponse<'searchCartaPortePackagingTypes'>> {
     return this.client.request<
       OperationResponse<'searchCartaPortePackagingTypes'>
@@ -119,11 +114,10 @@ export default class CartaPorteCatalogs {
    * Devuelve tipos de remolque/semirremolque.
    *
    * @param params - Parámetros de consulta.
-   * @param params.q - Prefijo para buscar en `key` o `description`.
    * @returns Búsqueda exitosa
    */
   searchTrailerTypes(
-    params: OperationQuery<'searchCartaPorteTrailerTypes'> | null,
+    params?: OperationQuery<'searchCartaPorteTrailerTypes'> | null,
   ): Promise<OperationResponse<'searchCartaPorteTrailerTypes'>> {
     return this.client.request<
       OperationResponse<'searchCartaPorteTrailerTypes'>
@@ -140,11 +134,10 @@ export default class CartaPorteCatalogs {
    * Devuelve entradas del catálogo de materiales peligrosos.
    *
    * @param params - Parámetros de consulta.
-   * @param params.q - Prefijo para buscar en `key`, `description` o `class_division`.
    * @returns Búsqueda exitosa
    */
   searchHazardousMaterials(
-    params: OperationQuery<'searchCartaPorteHazardousMaterials'> | null,
+    params?: OperationQuery<'searchCartaPorteHazardousMaterials'> | null,
   ): Promise<OperationResponse<'searchCartaPorteHazardousMaterials'>> {
     return this.client.request<
       OperationResponse<'searchCartaPorteHazardousMaterials'>
@@ -161,11 +154,10 @@ export default class CartaPorteCatalogs {
    * Devuelve códigos de autorización naval (solo `key`).
    *
    * @param params - Parámetros de consulta.
-   * @param params.q - Prefijo para buscar en `key`.
    * @returns Búsqueda exitosa
    */
   searchNavalAuthorizations(
-    params: OperationQuery<'searchCartaPorteNavalAuthorizations'> | null,
+    params?: OperationQuery<'searchCartaPorteNavalAuthorizations'> | null,
   ): Promise<OperationResponse<'searchCartaPorteNavalAuthorizations'>> {
     return this.client.request<
       OperationResponse<'searchCartaPorteNavalAuthorizations'>
@@ -182,11 +174,10 @@ export default class CartaPorteCatalogs {
    * Devuelve entradas de estaciones aéreas/marítimas/terrestres.
    *
    * @param params - Parámetros de consulta.
-   * @param params.q - Prefijo para buscar en `key`, `description` o `iata_designator`.
    * @returns Búsqueda exitosa
    */
   searchPortStations(
-    params: OperationQuery<'searchCartaPortePortStations'> | null,
+    params?: OperationQuery<'searchCartaPortePortStations'> | null,
   ): Promise<OperationResponse<'searchCartaPortePortStations'>> {
     return this.client.request<
       OperationResponse<'searchCartaPortePortStations'>
@@ -203,11 +194,10 @@ export default class CartaPorteCatalogs {
    * Devuelve tipos de contenedores marítimos.
    *
    * @param params - Parámetros de consulta.
-   * @param params.q - Prefijo para buscar en `key` o `description`.
    * @returns Búsqueda exitosa
    */
   searchMarineContainers(
-    params: OperationQuery<'searchCartaPorteMarineContainers'> | null,
+    params?: OperationQuery<'searchCartaPorteMarineContainers'> | null,
   ): Promise<OperationResponse<'searchCartaPorteMarineContainers'>> {
     return this.client.request<
       OperationResponse<'searchCartaPorteMarineContainers'>

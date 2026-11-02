@@ -14,11 +14,10 @@ export default class NominaCatalogs {
    * Devuelve tipos de deducción que coinciden con la consulta.
    *
    * @param params - Parámetros de consulta.
-   * @param params.q - Prefijo para buscar en `key` o `description`.
    * @returns Búsqueda exitosa
    */
   searchDeductions(
-    params: OperationQuery<'searchNominaDeductions'>,
+    params?: OperationQuery<'searchNominaDeductions'> | null,
   ): Promise<OperationResponse<'searchNominaDeductions'>> {
     return this.client.request<OperationResponse<'searchNominaDeductions'>>(
       `/catalogs/deductions`,
@@ -36,11 +35,10 @@ export default class NominaCatalogs {
    * Devuelve tipos de percepción que coinciden con la consulta.
    *
    * @param params - Parámetros de consulta.
-   * @param params.q - Prefijo para buscar en `key` o `description`.
    * @returns Búsqueda exitosa
    */
   searchPerceptions(
-    params: OperationQuery<'searchNominaPerceptions'>,
+    params?: OperationQuery<'searchNominaPerceptions'> | null,
   ): Promise<OperationResponse<'searchNominaPerceptions'>> {
     return this.client.request<OperationResponse<'searchNominaPerceptions'>>(
       `/catalogs/perceptions`,

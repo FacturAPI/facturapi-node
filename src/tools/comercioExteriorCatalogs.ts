@@ -14,11 +14,10 @@ export default class ComercioExteriorCatalogs {
    * Devuelve fracciones arancelarias que coinciden con la consulta.
    *
    * @param params - Parámetros de consulta.
-   * @param params.q - Prefijo para buscar en `key` o `description`.
    * @returns Búsqueda exitosa
    */
   searchTariffFractions(
-    params: OperationQuery<'searchComercioExteriorTariffFractions'>,
+    params?: OperationQuery<'searchComercioExteriorTariffFractions'> | null,
   ): Promise<OperationResponse<'searchComercioExteriorTariffFractions'>> {
     return this.client.request<
       OperationResponse<'searchComercioExteriorTariffFractions'>
