@@ -9,11 +9,11 @@ and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.
 
 ### Fixed
 
-- Allow browsing Carta Porte, Comercio Exterior, and payroll catalogs without a search string, matching the API contract.
+- Allow omitting search text for Carta Porte, Comercio Exterior, and payroll catalogs, matching the API contract. Empty queries return no matches.
 
 ### Added
 
-- Search Mexican postal codes, countries, tax regimes, and CFDI uses through `catalogs`, and retrieve postal-code details including neighborhoods.
+- Search Mexican postal codes, countries, tax regimes, and CFDI uses through `catalogs`, and retrieve postal-code details including neighborhoods. Postal-code searches support page and cursor pagination.
 
 ## [6.0.0] Unreleased
 

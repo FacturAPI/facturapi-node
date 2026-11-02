@@ -64,6 +64,35 @@ describe('address and fiscal catalogs', () => {
     );
   });
 
+  it('forwards postal cursor boundaries and preserves cursor metadata', async () => {
+    const client = new Facturapi('sk_test_example');
+    client.BASE_URL = 'https://api.example.com/v2';
+    const result = {
+      data: [{ key: '01000' }],
+      next_cursor: 'next',
+      previous_cursor: null,
+    };
+    const fetch = vi.fn(async () => Response.json(result));
+    vi.stubGlobal('fetch', fetch);
+    expect(
+      await client.catalogs.searchZipCodes({
+        q: '01',
+        pagination: 'cursor',
+        after: 'boundary',
+        limit: 10,
+      }),
+    ).toEqual(result);
+    expect(fetch).toHaveBeenLastCalledWith(
+      'https://api.example.com/v2/catalogs/zip-codes?q=01&pagination=cursor&after=boundary&limit=10',
+      expect.objectContaining({ method: 'GET' }),
+    );
+    await client.catalogs.searchZipCodes({ q: '01', before: 'boundary' });
+    expect(fetch).toHaveBeenLastCalledWith(
+      'https://api.example.com/v2/catalogs/zip-codes?q=01&before=boundary',
+      expect.objectContaining({ method: 'GET' }),
+    );
+  });
+
   it('retrieves postal-code details and URL-encodes the code argument', async () => {
     const client = new Facturapi('sk_test_example');
     client.BASE_URL = 'https://api.example.com/v2';

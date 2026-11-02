@@ -798,3 +798,12 @@ client.cartaPorteCatalogs.searchAirTransportCodes({ page: 1 });
 client.comercioExteriorCatalogs.searchTariffFractions({ limit: 10 });
 client.nominaCatalogs.searchDeductions();
 client.nominaCatalogs.searchPerceptions({ page: 2 });
+
+client.catalogs.searchZipCodes({
+  q: '01',
+  pagination: 'cursor',
+  after: 'cursor',
+  limit: 10,
+});
+client.catalogs.searchZipCodes({ q: '01', before: 'cursor', limit: 10 });
+expectError(client.catalogs.searchZipCodes({ pagination: 'other' }));

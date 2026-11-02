@@ -11474,6 +11474,12 @@ export interface operations {
   searchZipCodes: {
     parameters: {
       query?: {
+        /** Modo de paginación de la búsqueda. `page` (por defecto) o `cursor` (recomendado para listas grandes). */
+        pagination?: components['parameters']['SearchPagination'];
+        /** Devuelve los resultados posteriores al cursor indicado. Solo con `pagination=cursor`; mutuamente excluyente con `before`. */
+        after?: components['parameters']['SearchAfter'];
+        /** Devuelve los resultados anteriores al cursor indicado. Solo con `pagination=cursor`; mutuamente excluyente con `after`. */
+        before?: components['parameters']['SearchBefore'];
         /** Código o prefijo numérico. */
         q?: string;
         page?: number;
