@@ -127,6 +127,21 @@ describe('address and fiscal catalogs', () => {
     }
   });
 
+  it('forwards state names in postal search text', async () => {
+    const client = new Facturapi('sk_test_example');
+    client.BASE_URL = 'https://api.example.com/v2';
+    const response = { page: 0, total_pages: 0, total_results: 0, data: [] };
+    const fetch = vi.fn(async () => Response.json(response));
+    vi.stubGlobal('fetch', fetch);
+    expect(
+      await client.catalogs.searchZipCodes({ q: 'Nuevo León', state: 'NLE' }),
+    ).toEqual(response);
+    expect(fetch).toHaveBeenCalledExactlyOnceWith(
+      'https://api.example.com/v2/catalogs/zip-codes?q=Nuevo+Le%C3%B3n&state=NLE',
+      expect.objectContaining({ method: 'GET' }),
+    );
+  });
+
   it('retrieves postal-code details and URL-encodes the code argument', async () => {
     const client = new Facturapi('sk_test_example');
     client.BASE_URL = 'https://api.example.com/v2';

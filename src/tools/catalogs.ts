@@ -53,7 +53,7 @@ export default class Catalogs {
   /**
    * Buscar códigos postales
    *
-   * Busca códigos postales mexicanos. Una consulta de 1 a 5 dígitos busca por código o prefijo; el texto busca nombres de colonia, localidad/ciudad o municipio, sin distinguir mayúsculas ni diacríticos. Las coincidencias exactas de nombre preceden a las parciales. Cada código postal aparece una sola vez e incluye todas sus colonias en neighborhoods. El filtro de estado se aplica en ambos casos. Sin consulta, lista códigos postales. Admite páginas y cursores; los totales de búsquedas textuales pueden estar limitados, indicado por totals_are_capped.
+   * Busca códigos postales mexicanos. Una consulta de 1 a 5 dígitos busca por código o prefijo; el texto busca nombres de colonia, localidad/ciudad, municipio o estado, sin distinguir mayúsculas ni diacríticos. Las coincidencias exactas de nombre preceden a las parciales. Cada código postal aparece una sola vez e incluye todas sus colonias en neighborhoods. El filtro de estado se aplica en ambos casos. Sin consulta, lista códigos postales. Admite páginas y cursores; los totales de búsquedas textuales pueden estar limitados, indicado por totals_are_capped.
    *
    * @param params - Parámetros de consulta.
    * @returns Resultados de búsqueda
