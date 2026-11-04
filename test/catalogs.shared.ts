@@ -166,4 +166,41 @@ describe('address and fiscal catalogs', () => {
       expect.objectContaining({ method: 'GET' }),
     );
   });
+  it('explores categories and filters products without losing key strings', async () => {
+    const client = new Facturapi('sk_test_example');
+    client.BASE_URL = 'https://api.example.com/v2';
+    const category = {
+      key: '432115',
+      description: 'Computadores',
+      parent: '4321',
+    };
+    const detail = { category, ancestors: [], children: [] };
+    const fetch = vi.fn(async () => Response.json(detail));
+    vi.stubGlobal('fetch', fetch);
+    expect(
+      await client.catalogs.getProductCategory('43211507', {
+        pagination: 'cursor',
+        after: 'next',
+        limit: 5,
+      }),
+    ).toEqual(detail);
+    expect(fetch).toHaveBeenLastCalledWith(
+      'https://api.example.com/v2/catalogs/product-categories/43211507?pagination=cursor&after=next&limit=5',
+      expect.objectContaining({ method: 'GET' }),
+    );
+    await client.catalogs.listProductCategories();
+    expect(fetch).toHaveBeenLastCalledWith(
+      'https://api.example.com/v2/catalogs/product-categories',
+      expect.objectContaining({ method: 'GET' }),
+    );
+    await client.catalogs.searchProducts({
+      category: '43',
+      q: 'cómputo',
+      page: 2,
+    });
+    expect(fetch).toHaveBeenLastCalledWith(
+      'https://api.example.com/v2/catalogs/products?category=43&q=c%C3%B3mputo&page=2',
+      expect.objectContaining({ method: 'GET' }),
+    );
+  });
 });

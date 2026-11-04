@@ -51,6 +51,45 @@ export default class Catalogs {
   }
 
   /**
+   * Listar categorías raíz de productos y servicios
+   *
+   * Devuelve las raíces Productos y Servicios. Consulta una raíz por su clave para explorar sus divisiones.
+   *
+   * @returns OK
+   */
+  listProductCategories(): Promise<OperationResponse<'listProductCategories'>> {
+    return this.client.request<OperationResponse<'listProductCategories'>>(
+      `/catalogs/product-categories`,
+      { method: 'GET', datePlan: operationDatePlans.listProductCategories },
+    );
+  }
+
+  /**
+   * Explorar una categoría o consultar la ruta de una clave
+   *
+   * Explora el árbol de categorías de productos y servicios del SAT. Las categorías usan claves de 2, 4 o 6 dígitos. Una clave completa de 8 dígitos devuelve el producto y su ruta; nunca se eliminan ceros finales. La clave especial 01010101 no tiene categoría. Una clase incluye un resultado paginado de productos.
+   *
+   * @param id - Raíz, prefijo de categoría o clave completa de producto/servicio.
+   * @param params - Parámetros de consulta.
+   * @returns OK
+   */
+  getProductCategory(
+    id: string,
+    params?: OperationQuery<'getProductCategory'> | null,
+  ): Promise<OperationResponse<'getProductCategory'>> {
+    if (!id) return Promise.reject(new Error('id is required'));
+
+    return this.client.request<OperationResponse<'getProductCategory'>>(
+      `/catalogs/product-categories/${encodeURIComponent(id)}`,
+      {
+        method: 'GET',
+        datePlan: operationDatePlans.getProductCategory,
+        params: params,
+      },
+    );
+  }
+
+  /**
    * Buscar códigos postales
    *
    * Busca códigos postales mexicanos. Una consulta de 1 a 5 dígitos busca por código o prefijo; el texto busca nombres de colonia, localidad/ciudad, municipio o estado, sin distinguir mayúsculas ni diacríticos. Las coincidencias exactas de nombre preceden a las parciales. Cada código postal aparece una sola vez e incluye todas sus colonias en neighborhoods. El filtro de estado se aplica en ambos casos. Sin consulta, lista códigos postales. Admite páginas y cursores; los totales de búsquedas textuales pueden estar limitados, indicado por totals_are_capped.
