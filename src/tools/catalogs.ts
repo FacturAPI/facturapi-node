@@ -49,4 +49,105 @@ export default class Catalogs {
       },
     );
   }
+
+  /**
+   * Buscar códigos postales
+   *
+   * Busca códigos postales mexicanos. Una consulta de 1 a 5 dígitos busca por código o prefijo; el texto busca nombres de colonia, localidad/ciudad, municipio o estado, sin distinguir mayúsculas ni diacríticos. Las coincidencias exactas de nombre preceden a las parciales. Cada código postal aparece una sola vez e incluye todas sus colonias en neighborhoods. El filtro de estado se aplica en ambos casos. Sin consulta, lista códigos postales. Admite páginas y cursores; los totales de búsquedas textuales pueden estar limitados, indicado por totals_are_capped.
+   *
+   * @param params - Parámetros de consulta.
+   * @returns Resultados de búsqueda
+   */
+  searchZipCodes(
+    params?: OperationQuery<'searchZipCodes'> | null,
+  ): Promise<OperationResponse<'searchZipCodes'>> {
+    return this.client.request<OperationResponse<'searchZipCodes'>>(
+      `/catalogs/zip-codes`,
+      {
+        method: 'GET',
+        datePlan: operationDatePlans.searchZipCodes,
+        params: params,
+      },
+    );
+  }
+
+  /**
+   * Consultar código postal
+   *
+   * Devuelve los datos de domicilio y las colonias de un código postal mexicano.
+   *
+   * @param code - code
+   * @returns Código postal
+   */
+  getZipCode(code: string): Promise<OperationResponse<'getZipCode'>> {
+    if (!code) return Promise.reject(new Error('code is required'));
+
+    return this.client.request<OperationResponse<'getZipCode'>>(
+      `/catalogs/zip-codes/${encodeURIComponent(code)}`,
+      { method: 'GET', datePlan: operationDatePlans.getZipCode },
+    );
+  }
+
+  /**
+   * Buscar países
+   *
+   * Busca países por código ISO de tres letras o nombre. La búsqueda ignora acentos y mayúsculas.
+   *
+   * @param params - Parámetros de consulta.
+   * @returns Resultados de búsqueda
+   */
+  searchCountries(
+    params?: OperationQuery<'searchCountries'> | null,
+  ): Promise<OperationResponse<'searchCountries'>> {
+    return this.client.request<OperationResponse<'searchCountries'>>(
+      `/catalogs/countries`,
+      {
+        method: 'GET',
+        datePlan: operationDatePlans.searchCountries,
+        params: params,
+      },
+    );
+  }
+
+  /**
+   * Buscar regímenes fiscales
+   *
+   * Consulta los regímenes fiscales admitidos por la API. El receptor debe declarar su régimen; esta búsqueda no lo determina.
+   *
+   * @param params - Parámetros de consulta.
+   * @returns Resultados de búsqueda
+   */
+  searchTaxSystems(
+    params?: OperationQuery<'searchTaxSystems'> | null,
+  ): Promise<OperationResponse<'searchTaxSystems'>> {
+    return this.client.request<OperationResponse<'searchTaxSystems'>>(
+      `/catalogs/tax-systems`,
+      {
+        method: 'GET',
+        datePlan: operationDatePlans.searchTaxSystems,
+        params: params,
+      },
+    );
+  }
+
+  /**
+   * Buscar usos CFDI
+   *
+   * Consulta claves de uso CFDI por código o descripción. El uso debe ser declarado por el receptor.
+   *
+   * @param params - Parámetros de consulta.
+   * @returns Resultados de búsqueda
+   */
+  searchInvoiceUses(
+    params?: OperationQuery<'searchInvoiceUses'> | null,
+  ): Promise<OperationResponse<'searchInvoiceUses'>> {
+    return this.client.request<OperationResponse<'searchInvoiceUses'>>(
+      `/catalogs/invoice-uses`,
+      {
+        method: 'GET',
+        datePlan: operationDatePlans.searchInvoiceUses,
+        params: params,
+      },
+    );
+  }
 }

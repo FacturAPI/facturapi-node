@@ -2060,6 +2060,106 @@ export interface paths {
     patch?: never;
     trace?: never;
   };
+  '/catalogs/countries': {
+    parameters: {
+      query?: never;
+      header?: never;
+      path?: never;
+      cookie?: never;
+    };
+    /**
+     * Buscar países
+     * Busca países por código ISO de tres letras o nombre. La búsqueda ignora acentos y mayúsculas.
+     */
+    get: operations['searchCountries'];
+    put?: never;
+    post?: never;
+    delete?: never;
+    options?: never;
+    head?: never;
+    patch?: never;
+    trace?: never;
+  };
+  '/catalogs/tax-systems': {
+    parameters: {
+      query?: never;
+      header?: never;
+      path?: never;
+      cookie?: never;
+    };
+    /**
+     * Buscar regímenes fiscales
+     * Consulta los regímenes fiscales admitidos por la API. El receptor debe declarar su régimen; esta búsqueda no lo determina.
+     */
+    get: operations['searchTaxSystems'];
+    put?: never;
+    post?: never;
+    delete?: never;
+    options?: never;
+    head?: never;
+    patch?: never;
+    trace?: never;
+  };
+  '/catalogs/invoice-uses': {
+    parameters: {
+      query?: never;
+      header?: never;
+      path?: never;
+      cookie?: never;
+    };
+    /**
+     * Buscar usos CFDI
+     * Consulta claves de uso CFDI por código o descripción. El uso debe ser declarado por el receptor.
+     */
+    get: operations['searchInvoiceUses'];
+    put?: never;
+    post?: never;
+    delete?: never;
+    options?: never;
+    head?: never;
+    patch?: never;
+    trace?: never;
+  };
+  '/catalogs/zip-codes': {
+    parameters: {
+      query?: never;
+      header?: never;
+      path?: never;
+      cookie?: never;
+    };
+    /**
+     * Buscar códigos postales
+     * Busca códigos postales mexicanos. Una consulta de 1 a 5 dígitos busca por código o prefijo; el texto busca nombres de colonia, localidad/ciudad, municipio o estado, sin distinguir mayúsculas ni diacríticos. Las coincidencias exactas de nombre preceden a las parciales. Cada código postal aparece una sola vez e incluye todas sus colonias en neighborhoods. El filtro de estado se aplica en ambos casos. Sin consulta, lista códigos postales. Admite páginas y cursores; los totales de búsquedas textuales pueden estar limitados, indicado por totals_are_capped.
+     */
+    get: operations['searchZipCodes'];
+    put?: never;
+    post?: never;
+    delete?: never;
+    options?: never;
+    head?: never;
+    patch?: never;
+    trace?: never;
+  };
+  '/catalogs/zip-codes/{code}': {
+    parameters: {
+      query?: never;
+      header?: never;
+      path?: never;
+      cookie?: never;
+    };
+    /**
+     * Consultar código postal
+     * Devuelve los datos de domicilio y las colonias de un código postal mexicano.
+     */
+    get: operations['getZipCode'];
+    put?: never;
+    post?: never;
+    delete?: never;
+    options?: never;
+    head?: never;
+    patch?: never;
+    trace?: never;
+  };
   '/catalogs/products': {
     parameters: {
       query?: never;
@@ -2411,6 +2511,26 @@ export interface components {
       content_type: string;
       /** Nombre sugerido del archivo. */
       filename: string;
+    };
+    CatalogEntry: {
+      key: string;
+      description: string;
+    };
+    CatalogEntrySearchResult: components['schemas']['SearchResult'] & {
+      data: components['schemas']['CatalogEntry'][];
+    };
+    ZipCode: {
+      key: string;
+      country: components['schemas']['CatalogEntry'];
+      state: components['schemas']['CatalogEntry'] | null;
+      municipality: components['schemas']['CatalogEntry'] | null;
+      locality: components['schemas']['CatalogEntry'] | null;
+      /** Todas las colonias del código postal, aunque la búsqueda coincida por otro campo. */
+      neighborhoods: components['schemas']['CatalogEntry'][];
+    };
+    ZipCodeDetail: components['schemas']['ZipCode'];
+    ZipCodeSearchResult: components['schemas']['SearchResult'] & {
+      data: components['schemas']['ZipCode'][];
     };
     SearchKeyDescriptionResult: components['schemas']['SearchResult'] & {
       data?: {
@@ -7494,9 +7614,9 @@ export type $defs = Record<string, never>;
 export interface operations {
   searchNominaDeductions: {
     parameters: {
-      query: {
+      query?: {
         /** Prefijo para buscar en `key` o `description`. */
-        q: string;
+        q?: string;
         page?: number;
         limit?: number;
       };
@@ -7522,9 +7642,9 @@ export interface operations {
   };
   searchNominaPerceptions: {
     parameters: {
-      query: {
+      query?: {
         /** Prefijo para buscar en `key` o `description`. */
-        q: string;
+        q?: string;
         page?: number;
         limit?: number;
       };
@@ -7550,7 +7670,7 @@ export interface operations {
   };
   searchCartaPorteAirTransportCodes: {
     parameters: {
-      query: {
+      query?: {
         /** Modo de paginación de la búsqueda. `page` (por defecto) o `cursor` (recomendado para listas grandes). */
         pagination?: components['parameters']['SearchPagination'];
         /** Devuelve los resultados posteriores al cursor indicado. Solo con `pagination=cursor`; mutuamente excluyente con `before`. */
@@ -7558,7 +7678,7 @@ export interface operations {
         /** Devuelve los resultados anteriores al cursor indicado. Solo con `pagination=cursor`; mutuamente excluyente con `after`. */
         before?: components['parameters']['SearchBefore'];
         /** Prefijo para buscar en `key`, `airline_name` o `icao_designator`. */
-        q: string;
+        q?: string;
         /** Página de resultados a regresar, empezando desde la página 1. El máximo no es fijo; junto con `limit` debe caber dentro del tope de 3,000 resultados. */
         page?: number;
         /** Número del 1 al 100 que representa la cantidad máxima de resultados a regresar con motivos de paginación. */
@@ -7588,7 +7708,7 @@ export interface operations {
   };
   searchComercioExteriorTariffFractions: {
     parameters: {
-      query: {
+      query?: {
         /** Modo de paginación de la búsqueda. `page` (por defecto) o `cursor` (recomendado para listas grandes). */
         pagination?: components['parameters']['SearchPagination'];
         /** Devuelve los resultados posteriores al cursor indicado. Solo con `pagination=cursor`; mutuamente excluyente con `before`. */
@@ -7596,7 +7716,7 @@ export interface operations {
         /** Devuelve los resultados anteriores al cursor indicado. Solo con `pagination=cursor`; mutuamente excluyente con `after`. */
         before?: components['parameters']['SearchBefore'];
         /** Prefijo para buscar en `key` o `description`. */
-        q: string;
+        q?: string;
         /** Página de resultados a regresar, empezando desde la página 1. El máximo no es fijo; junto con `limit` debe caber dentro del tope de 3,000 resultados. */
         page?: number;
         /** Número del 1 al 100 que representa la cantidad máxima de resultados a regresar con motivos de paginación. */
@@ -7626,7 +7746,7 @@ export interface operations {
   };
   searchCartaPorteTransportConfigs: {
     parameters: {
-      query: {
+      query?: {
         /** Modo de paginación de la búsqueda. `page` (por defecto) o `cursor` (recomendado para listas grandes). */
         pagination?: components['parameters']['SearchPagination'];
         /** Devuelve los resultados posteriores al cursor indicado. Solo con `pagination=cursor`; mutuamente excluyente con `before`. */
@@ -7634,7 +7754,7 @@ export interface operations {
         /** Devuelve los resultados anteriores al cursor indicado. Solo con `pagination=cursor`; mutuamente excluyente con `after`. */
         before?: components['parameters']['SearchBefore'];
         /** Prefijo para buscar en `key` o `description`. */
-        q: string;
+        q?: string;
         /** Página de resultados a regresar, empezando desde la página 1. El máximo no es fijo; junto con `limit` debe caber dentro del tope de 3,000 resultados. */
         page?: number;
         /** Número del 1 al 100 que representa la cantidad máxima de resultados a regresar con motivos de paginación. */
@@ -7664,7 +7784,7 @@ export interface operations {
   };
   searchCartaPorteRightsOfPassage: {
     parameters: {
-      query: {
+      query?: {
         /** Modo de paginación de la búsqueda. `page` (por defecto) o `cursor` (recomendado para listas grandes). */
         pagination?: components['parameters']['SearchPagination'];
         /** Devuelve los resultados posteriores al cursor indicado. Solo con `pagination=cursor`; mutuamente excluyente con `before`. */
@@ -7672,7 +7792,7 @@ export interface operations {
         /** Devuelve los resultados anteriores al cursor indicado. Solo con `pagination=cursor`; mutuamente excluyente con `after`. */
         before?: components['parameters']['SearchBefore'];
         /** Prefijo para buscar en `key`, `right_of_passage` o `concessionaire`. */
-        q: string;
+        q?: string;
         /** Página de resultados a regresar, empezando desde la página 1. El máximo no es fijo; junto con `limit` debe caber dentro del tope de 3,000 resultados. */
         page?: number;
         /** Número del 1 al 100 que representa la cantidad máxima de resultados a regresar con motivos de paginación. */
@@ -7702,7 +7822,7 @@ export interface operations {
   };
   searchCartaPorteCustomsDocuments: {
     parameters: {
-      query: {
+      query?: {
         /** Modo de paginación de la búsqueda. `page` (por defecto) o `cursor` (recomendado para listas grandes). */
         pagination?: components['parameters']['SearchPagination'];
         /** Devuelve los resultados posteriores al cursor indicado. Solo con `pagination=cursor`; mutuamente excluyente con `before`. */
@@ -7710,7 +7830,7 @@ export interface operations {
         /** Devuelve los resultados anteriores al cursor indicado. Solo con `pagination=cursor`; mutuamente excluyente con `after`. */
         before?: components['parameters']['SearchBefore'];
         /** Prefijo para buscar en `key` o `description`. */
-        q: string;
+        q?: string;
         /** Página de resultados a regresar, empezando desde la página 1. El máximo no es fijo; junto con `limit` debe caber dentro del tope de 3,000 resultados. */
         page?: number;
         /** Número del 1 al 100 que representa la cantidad máxima de resultados a regresar con motivos de paginación. */
@@ -7740,7 +7860,7 @@ export interface operations {
   };
   searchCartaPortePackagingTypes: {
     parameters: {
-      query: {
+      query?: {
         /** Modo de paginación de la búsqueda. `page` (por defecto) o `cursor` (recomendado para listas grandes). */
         pagination?: components['parameters']['SearchPagination'];
         /** Devuelve los resultados posteriores al cursor indicado. Solo con `pagination=cursor`; mutuamente excluyente con `before`. */
@@ -7748,7 +7868,7 @@ export interface operations {
         /** Devuelve los resultados anteriores al cursor indicado. Solo con `pagination=cursor`; mutuamente excluyente con `after`. */
         before?: components['parameters']['SearchBefore'];
         /** Prefijo para buscar en `key` o `description`. */
-        q: string;
+        q?: string;
         /** Página de resultados a regresar, empezando desde la página 1. El máximo no es fijo; junto con `limit` debe caber dentro del tope de 3,000 resultados. */
         page?: number;
         /** Número del 1 al 100 que representa la cantidad máxima de resultados a regresar con motivos de paginación. */
@@ -7778,7 +7898,7 @@ export interface operations {
   };
   searchCartaPorteTrailerTypes: {
     parameters: {
-      query: {
+      query?: {
         /** Modo de paginación de la búsqueda. `page` (por defecto) o `cursor` (recomendado para listas grandes). */
         pagination?: components['parameters']['SearchPagination'];
         /** Devuelve los resultados posteriores al cursor indicado. Solo con `pagination=cursor`; mutuamente excluyente con `before`. */
@@ -7786,7 +7906,7 @@ export interface operations {
         /** Devuelve los resultados anteriores al cursor indicado. Solo con `pagination=cursor`; mutuamente excluyente con `after`. */
         before?: components['parameters']['SearchBefore'];
         /** Prefijo para buscar en `key` o `description`. */
-        q: string;
+        q?: string;
         /** Página de resultados a regresar, empezando desde la página 1. El máximo no es fijo; junto con `limit` debe caber dentro del tope de 3,000 resultados. */
         page?: number;
         /** Número del 1 al 100 que representa la cantidad máxima de resultados a regresar con motivos de paginación. */
@@ -7816,7 +7936,7 @@ export interface operations {
   };
   searchCartaPorteHazardousMaterials: {
     parameters: {
-      query: {
+      query?: {
         /** Modo de paginación de la búsqueda. `page` (por defecto) o `cursor` (recomendado para listas grandes). */
         pagination?: components['parameters']['SearchPagination'];
         /** Devuelve los resultados posteriores al cursor indicado. Solo con `pagination=cursor`; mutuamente excluyente con `before`. */
@@ -7824,7 +7944,7 @@ export interface operations {
         /** Devuelve los resultados anteriores al cursor indicado. Solo con `pagination=cursor`; mutuamente excluyente con `after`. */
         before?: components['parameters']['SearchBefore'];
         /** Prefijo para buscar en `key`, `description` o `class_division`. */
-        q: string;
+        q?: string;
         /** Página de resultados a regresar, empezando desde la página 1. El máximo no es fijo; junto con `limit` debe caber dentro del tope de 3,000 resultados. */
         page?: number;
         /** Número del 1 al 100 que representa la cantidad máxima de resultados a regresar con motivos de paginación. */
@@ -7854,7 +7974,7 @@ export interface operations {
   };
   searchCartaPorteNavalAuthorizations: {
     parameters: {
-      query: {
+      query?: {
         /** Modo de paginación de la búsqueda. `page` (por defecto) o `cursor` (recomendado para listas grandes). */
         pagination?: components['parameters']['SearchPagination'];
         /** Devuelve los resultados posteriores al cursor indicado. Solo con `pagination=cursor`; mutuamente excluyente con `before`. */
@@ -7862,7 +7982,7 @@ export interface operations {
         /** Devuelve los resultados anteriores al cursor indicado. Solo con `pagination=cursor`; mutuamente excluyente con `after`. */
         before?: components['parameters']['SearchBefore'];
         /** Prefijo para buscar en `key`. */
-        q: string;
+        q?: string;
         /** Página de resultados a regresar, empezando desde la página 1. El máximo no es fijo; junto con `limit` debe caber dentro del tope de 3,000 resultados. */
         page?: number;
         /** Número del 1 al 100 que representa la cantidad máxima de resultados a regresar con motivos de paginación. */
@@ -7896,7 +8016,7 @@ export interface operations {
   };
   searchCartaPortePortStations: {
     parameters: {
-      query: {
+      query?: {
         /** Modo de paginación de la búsqueda. `page` (por defecto) o `cursor` (recomendado para listas grandes). */
         pagination?: components['parameters']['SearchPagination'];
         /** Devuelve los resultados posteriores al cursor indicado. Solo con `pagination=cursor`; mutuamente excluyente con `before`. */
@@ -7904,7 +8024,7 @@ export interface operations {
         /** Devuelve los resultados anteriores al cursor indicado. Solo con `pagination=cursor`; mutuamente excluyente con `after`. */
         before?: components['parameters']['SearchBefore'];
         /** Prefijo para buscar en `key`, `description` o `iata_designator`. */
-        q: string;
+        q?: string;
         /** Página de resultados a regresar, empezando desde la página 1. El máximo no es fijo; junto con `limit` debe caber dentro del tope de 3,000 resultados. */
         page?: number;
         /** Número del 1 al 100 que representa la cantidad máxima de resultados a regresar con motivos de paginación. */
@@ -7934,7 +8054,7 @@ export interface operations {
   };
   searchCartaPorteMarineContainers: {
     parameters: {
-      query: {
+      query?: {
         /** Modo de paginación de la búsqueda. `page` (por defecto) o `cursor` (recomendado para listas grandes). */
         pagination?: components['parameters']['SearchPagination'];
         /** Devuelve los resultados posteriores al cursor indicado. Solo con `pagination=cursor`; mutuamente excluyente con `before`. */
@@ -7942,7 +8062,7 @@ export interface operations {
         /** Devuelve los resultados anteriores al cursor indicado. Solo con `pagination=cursor`; mutuamente excluyente con `after`. */
         before?: components['parameters']['SearchBefore'];
         /** Prefijo para buscar en `key` o `description`. */
-        q: string;
+        q?: string;
         /** Página de resultados a regresar, empezando desde la página 1. El máximo no es fijo; junto con `limit` debe caber dentro del tope de 3,000 resultados. */
         page?: number;
         /** Número del 1 al 100 que representa la cantidad máxima de resultados a regresar con motivos de paginación. */
@@ -11244,6 +11364,157 @@ export interface operations {
       };
       400: components['responses']['BadRequest'];
       401: components['responses']['Unauthenticated'];
+      429: components['responses']['RateLimited'];
+      500: components['responses']['UnexpectedError'];
+    };
+  };
+  searchCountries: {
+    parameters: {
+      query?: {
+        /** Código o texto a buscar. */
+        q?: string;
+        page?: number;
+        limit?: number;
+      };
+      header?: never;
+      path?: never;
+      cookie?: never;
+    };
+    requestBody?: never;
+    responses: {
+      /** Resultados de búsqueda */
+      200: {
+        headers: {
+          [name: string]: unknown;
+        };
+        content: {
+          'application/json': components['schemas']['CatalogEntrySearchResult'];
+        };
+      };
+      400: components['responses']['BadRequest'];
+      401: components['responses']['Unauthenticated'];
+      429: components['responses']['RateLimited'];
+      500: components['responses']['UnexpectedError'];
+    };
+  };
+  searchTaxSystems: {
+    parameters: {
+      query?: {
+        /** Código o texto a buscar. */
+        q?: string;
+        page?: number;
+        limit?: number;
+      };
+      header?: never;
+      path?: never;
+      cookie?: never;
+    };
+    requestBody?: never;
+    responses: {
+      /** Resultados de búsqueda */
+      200: {
+        headers: {
+          [name: string]: unknown;
+        };
+        content: {
+          'application/json': components['schemas']['CatalogEntrySearchResult'];
+        };
+      };
+      400: components['responses']['BadRequest'];
+      401: components['responses']['Unauthenticated'];
+      429: components['responses']['RateLimited'];
+      500: components['responses']['UnexpectedError'];
+    };
+  };
+  searchInvoiceUses: {
+    parameters: {
+      query?: {
+        /** Código o texto a buscar. */
+        q?: string;
+        page?: number;
+        limit?: number;
+      };
+      header?: never;
+      path?: never;
+      cookie?: never;
+    };
+    requestBody?: never;
+    responses: {
+      /** Resultados de búsqueda */
+      200: {
+        headers: {
+          [name: string]: unknown;
+        };
+        content: {
+          'application/json': components['schemas']['CatalogEntrySearchResult'];
+        };
+      };
+      400: components['responses']['BadRequest'];
+      401: components['responses']['Unauthenticated'];
+      429: components['responses']['RateLimited'];
+      500: components['responses']['UnexpectedError'];
+    };
+  };
+  searchZipCodes: {
+    parameters: {
+      query?: {
+        /** Modo de paginación de la búsqueda. `page` (por defecto) o `cursor` (recomendado para listas grandes). */
+        pagination?: components['parameters']['SearchPagination'];
+        /** Devuelve los resultados posteriores al cursor indicado. Solo con `pagination=cursor`; mutuamente excluyente con `before`. */
+        after?: components['parameters']['SearchAfter'];
+        /** Devuelve los resultados anteriores al cursor indicado. Solo con `pagination=cursor`; mutuamente excluyente con `after`. */
+        before?: components['parameters']['SearchBefore'];
+        /** Código o prefijo de 1 a 5 dígitos, o nombre de colonia, localidad/ciudad, municipio o estado. */
+        q?: string;
+        page?: number;
+        limit?: number;
+        /** Clave de estado de tres letras (por ejemplo ZAC). */
+        state?: string;
+      };
+      header?: never;
+      path?: never;
+      cookie?: never;
+    };
+    requestBody?: never;
+    responses: {
+      /** Resultados de búsqueda */
+      200: {
+        headers: {
+          [name: string]: unknown;
+        };
+        content: {
+          'application/json': components['schemas']['ZipCodeSearchResult'];
+        };
+      };
+      400: components['responses']['BadRequest'];
+      401: components['responses']['Unauthenticated'];
+      429: components['responses']['RateLimited'];
+      500: components['responses']['UnexpectedError'];
+    };
+  };
+  getZipCode: {
+    parameters: {
+      query?: never;
+      header?: never;
+      path: {
+        code: string;
+      };
+      cookie?: never;
+    };
+    requestBody?: never;
+    responses: {
+      /** Código postal */
+      200: {
+        headers: {
+          [name: string]: unknown;
+        };
+        content: {
+          'application/json': components['schemas']['ZipCodeDetail'];
+        };
+      };
+      400: components['responses']['BadRequest'];
+      401: components['responses']['Unauthenticated'];
+      404: components['responses']['NotFound'];
       429: components['responses']['RateLimited'];
       500: components['responses']['UnexpectedError'];
     };

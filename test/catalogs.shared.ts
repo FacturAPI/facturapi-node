@@ -1,0 +1,169 @@
+import { afterEach, describe, expect, it, vi } from 'vitest';
+import Facturapi from '../src';
+
+afterEach(() => vi.unstubAllGlobals());
+
+describe('address and fiscal catalogs', () => {
+  it('sends search parameters through HTTP and preserves catalog keys', async () => {
+    const client = new Facturapi('sk_test_example');
+    client.BASE_URL = 'https://api.example.com/v2';
+    const page = {
+      page: 2,
+      total_pages: 3,
+      total_results: 25,
+      data: [{ key: '01000', description: 'Catalog entry' }],
+    };
+    const fetch = vi.fn(async () => Response.json(page));
+    vi.stubGlobal('fetch', fetch);
+    for (const [method, path] of [
+      ['searchZipCodes', 'zip-codes'],
+      ['searchCountries', 'countries'],
+      ['searchTaxSystems', 'tax-systems'],
+      ['searchInvoiceUses', 'invoice-uses'],
+    ] as const) {
+      fetch.mockClear();
+      expect(
+        await client.catalogs[method]({ q: '01', page: 2, limit: 10 }),
+      ).toEqual(page);
+      expect(fetch).toHaveBeenCalledExactlyOnceWith(
+        `https://api.example.com/v2/catalogs/${path}?q=01&page=2&limit=10`,
+        expect.objectContaining({ method: 'GET' }),
+      );
+    }
+  });
+
+  it('browses specialized catalogs without a query string', async () => {
+    const client = new Facturapi('sk_test_example');
+    client.BASE_URL = 'https://api.example.com/v2';
+    const page = { page: 0, total_pages: 0, total_results: 0, data: [] };
+    const fetch = vi.fn(async () => Response.json(page));
+    vi.stubGlobal('fetch', fetch);
+    expect(await client.nominaCatalogs.searchDeductions()).toEqual(page);
+    expect(
+      await client.cartaPorteCatalogs.searchAirTransportCodes({ page: 1 }),
+    ).toEqual(page);
+    expect(
+      await client.comercioExteriorCatalogs.searchTariffFractions({
+        limit: 10,
+      }),
+    ).toEqual(page);
+    expect(fetch).toHaveBeenNthCalledWith(
+      1,
+      'https://api.example.com/v2/catalogs/deductions',
+      expect.objectContaining({ method: 'GET' }),
+    );
+    expect(fetch).toHaveBeenNthCalledWith(
+      2,
+      'https://api.example.com/v2/catalogs/cartaporte/3.1/air-transport-codes?page=1',
+      expect.objectContaining({ method: 'GET' }),
+    );
+    expect(fetch).toHaveBeenNthCalledWith(
+      3,
+      'https://api.example.com/v2/catalogs/comercioexterior/2.0/tariff-fractions?limit=10',
+      expect.objectContaining({ method: 'GET' }),
+    );
+  });
+
+  it('forwards postal cursor boundaries and preserves cursor metadata', async () => {
+    const client = new Facturapi('sk_test_example');
+    client.BASE_URL = 'https://api.example.com/v2';
+    const result = {
+      data: [{ key: '01000' }],
+      next_cursor: 'next',
+      previous_cursor: null,
+    };
+    const fetch = vi.fn(async () => Response.json(result));
+    vi.stubGlobal('fetch', fetch);
+    expect(
+      await client.catalogs.searchZipCodes({
+        q: '01',
+        pagination: 'cursor',
+        after: 'boundary',
+        limit: 10,
+      }),
+    ).toEqual(result);
+    expect(fetch).toHaveBeenLastCalledWith(
+      'https://api.example.com/v2/catalogs/zip-codes?q=01&pagination=cursor&after=boundary&limit=10',
+      expect.objectContaining({ method: 'GET' }),
+    );
+    await client.catalogs.searchZipCodes({ q: '01', before: 'boundary' });
+    expect(fetch).toHaveBeenLastCalledWith(
+      'https://api.example.com/v2/catalogs/zip-codes?q=01&before=boundary',
+      expect.objectContaining({ method: 'GET' }),
+    );
+  });
+
+  it('forwards neighborhood names with case and diacritics intact', async () => {
+    const client = new Facturapi('sk_test_example');
+    client.BASE_URL = 'https://api.example.com/v2';
+    const result = {
+      page: 1,
+      total_pages: 1,
+      total_results: 1,
+      data: [
+        {
+          key: '03810',
+          country: { key: 'MEX', description: 'México' },
+          state: { key: 'CMX', description: 'Ciudad de México' },
+          municipality: null,
+          locality: null,
+          neighborhoods: [
+            { key: '0001', description: 'Nápoles' },
+            { key: '0002', description: 'Norte' },
+          ],
+        },
+      ],
+    };
+    const fetch = vi.fn(async () => Response.json(result));
+    vi.stubGlobal('fetch', fetch);
+    for (const q of ['Nápoles', 'NAPOLES', 'na\u0301poles']) {
+      expect(await client.catalogs.searchZipCodes({ q, state: 'CMX' })).toEqual(
+        result,
+      );
+      expect(fetch).toHaveBeenLastCalledWith(
+        `https://api.example.com/v2/catalogs/zip-codes?q=${encodeURIComponent(q)}&state=CMX`,
+        expect.objectContaining({ method: 'GET' }),
+      );
+    }
+  });
+
+  it('forwards state names in postal search text', async () => {
+    const client = new Facturapi('sk_test_example');
+    client.BASE_URL = 'https://api.example.com/v2';
+    const response = { page: 0, total_pages: 0, total_results: 0, data: [] };
+    const fetch = vi.fn(async () => Response.json(response));
+    vi.stubGlobal('fetch', fetch);
+    expect(
+      await client.catalogs.searchZipCodes({ q: 'Nuevo León', state: 'NLE' }),
+    ).toEqual(response);
+    expect(fetch).toHaveBeenCalledExactlyOnceWith(
+      'https://api.example.com/v2/catalogs/zip-codes?q=Nuevo+Le%C3%B3n&state=NLE',
+      expect.objectContaining({ method: 'GET' }),
+    );
+  });
+
+  it('retrieves postal-code details and URL-encodes the code argument', async () => {
+    const client = new Facturapi('sk_test_example');
+    client.BASE_URL = 'https://api.example.com/v2';
+    const detail = {
+      key: '01000',
+      country: { key: 'MEX', description: 'México' },
+      state: null,
+      municipality: null,
+      locality: null,
+      neighborhoods: [{ key: '0001', description: 'Centro' }],
+    };
+    const fetch = vi.fn(async () => Response.json(detail));
+    vi.stubGlobal('fetch', fetch);
+    expect(await client.catalogs.getZipCode('01000')).toEqual(detail);
+    expect(fetch).toHaveBeenLastCalledWith(
+      'https://api.example.com/v2/catalogs/zip-codes/01000',
+      expect.objectContaining({ method: 'GET' }),
+    );
+    await client.catalogs.getZipCode('01/000');
+    expect(fetch).toHaveBeenLastCalledWith(
+      'https://api.example.com/v2/catalogs/zip-codes/01%2F000',
+      expect.objectContaining({ method: 'GET' }),
+    );
+  });
+});
