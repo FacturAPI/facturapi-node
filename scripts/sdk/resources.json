@@ -539,6 +539,8 @@
           "params": false
         }
       },
+      "listProductCategories": "listProductCategories",
+      "getProductCategory": "getProductCategory",
       "searchZipCodes": "searchZipCodes",
       "getZipCode": {
         "operation": "getZipCode",
