@@ -93,6 +93,36 @@ describe('address and fiscal catalogs', () => {
     );
   });
 
+  it('forwards neighborhood names with case and diacritics intact', async () => {
+    const client = new Facturapi('sk_test_example');
+    client.BASE_URL = 'https://api.example.com/v2';
+    const result = {
+      page: 1,
+      total_pages: 1,
+      total_results: 1,
+      data: [
+        {
+          key: '03810',
+          country: { key: 'MEX', description: 'México' },
+          state: { key: 'CMX', description: 'Ciudad de México' },
+          municipality: null,
+          locality: null,
+        },
+      ],
+    };
+    const fetch = vi.fn(async () => Response.json(result));
+    vi.stubGlobal('fetch', fetch);
+    for (const q of ['Nápoles', 'NAPOLES', 'na\u0301poles']) {
+      expect(await client.catalogs.searchZipCodes({ q, state: 'CMX' })).toEqual(
+        result,
+      );
+      expect(fetch).toHaveBeenLastCalledWith(
+        `https://api.example.com/v2/catalogs/zip-codes?q=${encodeURIComponent(q)}&state=CMX`,
+        expect.objectContaining({ method: 'GET' }),
+      );
+    }
+  });
+
   it('retrieves postal-code details and URL-encodes the code argument', async () => {
     const client = new Facturapi('sk_test_example');
     client.BASE_URL = 'https://api.example.com/v2';

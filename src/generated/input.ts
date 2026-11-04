@@ -2129,7 +2129,7 @@ export interface paths {
     };
     /**
      * Buscar códigos postales
-     * Busca códigos postales mexicanos por código completo o prefijo numérico, ordenados por código. Las colonias se consultan en el detalle. No admite búsqueda por nombre de ciudad.
+     * Busca códigos postales mexicanos. Una consulta de 1 a 5 dígitos busca por código o prefijo; el texto busca nombres de colonia, localidad/ciudad o municipio, sin distinguir mayúsculas ni diacríticos. Las coincidencias exactas de nombre preceden a las parciales. Cada código postal aparece una sola vez. El filtro de estado se aplica en ambos casos. Sin consulta, lista códigos postales. Admite páginas y cursores; los totales de búsquedas textuales pueden estar limitados, indicado por totals_are_capped.
      */
     get: operations['searchZipCodes'];
     put?: never;
@@ -11464,7 +11464,7 @@ export interface operations {
         after?: components['parameters']['SearchAfter'];
         /** Devuelve los resultados anteriores al cursor indicado. Solo con `pagination=cursor`; mutuamente excluyente con `after`. */
         before?: components['parameters']['SearchBefore'];
-        /** Código o prefijo numérico. */
+        /** Código o prefijo de 1 a 5 dígitos, o nombre de colonia, localidad/ciudad o municipio. */
         q?: string;
         page?: number;
         limit?: number;
