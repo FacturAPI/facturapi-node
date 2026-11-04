@@ -13,7 +13,7 @@ and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.
 
 ### Added
 
-- Search Mexican postal codes, countries, tax regimes, and CFDI uses through `catalogs`, and retrieve postal-code details including neighborhoods. Postal-code searches accept numeric prefixes or neighborhood, locality/city, and municipality names, ignore case and diacritics, and support page and cursor pagination.
+- Search Mexican postal codes, countries, tax regimes, and CFDI uses through `catalogs`, and retrieve postal-code details including neighborhoods. Postal-code searches accept numeric prefixes or neighborhood, locality/city, and municipality names, ignore case and diacritics, and support page and cursor pagination. Every postal-code result includes all its neighborhoods.
 
 ## [6.0.0] Unreleased
 

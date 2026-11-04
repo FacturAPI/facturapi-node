@@ -107,6 +107,10 @@ describe('address and fiscal catalogs', () => {
           state: { key: 'CMX', description: 'Ciudad de México' },
           municipality: null,
           locality: null,
+          neighborhoods: [
+            { key: '0001', description: 'Nápoles' },
+            { key: '0002', description: 'Norte' },
+          ],
         },
       ],
     };
