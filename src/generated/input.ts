@@ -2189,7 +2189,7 @@ export interface paths {
     };
     /**
      * Explorar una categoría o consultar la ruta de una clave
-     * Explora el árbol de categorías de productos y servicios del SAT. Las categorías usan claves de 2, 4 o 6 dígitos. Una clave completa de 8 dígitos devuelve el producto y su ruta; nunca se eliminan ceros finales. La clave especial 01010101 no tiene categoría. Una clase incluye un resultado paginado de productos.
+     * Explora el árbol de categorías de productos y servicios del SAT. Las categorías usan claves de 2, 4 o 6 dígitos. Una clave completa de 8 dígitos devuelve el producto y su ruta; nunca se eliminan ceros finales. La clave especial 01010101 no tiene categoría. Consultar una clase de 6 dígitos incluye un resultado paginado de productos. Consultar una clave de 8 dígitos devuelve su ruta sin listar otros productos de la clase.
      */
     get: operations['getProductCategory'];
     put?: never;
