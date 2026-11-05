@@ -761,6 +761,7 @@ export const operationDatePlans = {
   meOrganization: 122,
   getOrganization: 122,
   deleteOrganization: 122,
+  getOrganizationManifiestoDownloadUrl: 37,
   editOrganizationLegal: 122,
   uploadOrganizationCertificate: 122,
   deleteOrganizationCertificate: 127,

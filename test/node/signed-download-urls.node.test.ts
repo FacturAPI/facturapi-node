@@ -116,6 +116,32 @@ describe('signed download URLs', () => {
     expect(result.filename).toBe('receipt.pdf');
   });
 
+  it('requests a signed URL for the organization manifiesto ZIP', async () => {
+    const client = new Facturapi('sk_test_123');
+    client.BASE_URL = 'https://api.test.local/v2';
+    globalThis.fetch = vi.fn(async (url, options) => {
+      expect(url).toBe(
+        'https://api.test.local/v2/organizations/org_123/manifiesto/download-url',
+      );
+      expect(options?.method).toBe('GET');
+      return signedUrlResponse(
+        'application/zip',
+        'manifiesto_AAA010101AAA.zip',
+      );
+    }) as typeof fetch;
+
+    const result =
+      await client.organizations.downloadManifiestoZipUrl('org_123');
+
+    expect(result).toEqual(
+      expect.objectContaining({
+        content_type: 'application/zip',
+        filename: 'manifiesto_AAA010101AAA.zip',
+        expires_at: new Date('2030-01-01T00:00:00.000Z'),
+      }),
+    );
+  });
+
   it.each([
     [
       'PDF',
@@ -189,6 +215,9 @@ describe('signed download URLs', () => {
     await expect(client.retentions.downloadZipUrl('')).rejects.toThrow(
       'id is required',
     );
+    await expect(
+      client.organizations.downloadManifiestoZipUrl(''),
+    ).rejects.toThrow('id is required');
     expect(fetchMock).not.toHaveBeenCalled();
   });
 });
