@@ -1374,6 +1374,28 @@ export interface paths {
     patch?: never;
     trace?: never;
   };
+  '/organizations/{organization_id}/manifiesto/download-url': {
+    parameters: {
+      query?: never;
+      header?: never;
+      path?: never;
+      cookie?: never;
+    };
+    /**
+     * Obtener enlace de descarga de Carta Manifiesto
+     * Devuelve un enlace temporal para descargar en ZIP la Carta Manifiesto firmada que corresponde al RFC del CSD cargado en la organización.
+     *
+     *     La organización debe tener un CSD cargado y debe existir una Carta Manifiesto firmada para el RFC extraído de ese certificado. El enlace da acceso al archivo mientras siga vigente: trátalo como una credencial y no lo almacenes.
+     */
+    get: operations['getOrganizationManifiestoDownloadUrl'];
+    put?: never;
+    post?: never;
+    delete?: never;
+    options?: never;
+    head?: never;
+    patch?: never;
+    trace?: never;
+  };
   '/organizations/{organization_id}/legal': {
     parameters: {
       query?: never;
@@ -9985,6 +10007,35 @@ export interface operations {
       };
       400: components['responses']['BadRequest'];
       401: components['responses']['Unauthenticated'];
+      429: components['responses']['RateLimited'];
+      500: components['responses']['UnexpectedError'];
+    };
+  };
+  getOrganizationManifiestoDownloadUrl: {
+    parameters: {
+      query?: never;
+      header?: never;
+      path: {
+        /** ID de la organización. También puedes usar `me` con una Secret Key de la organización. */
+        organization_id: string;
+      };
+      cookie?: never;
+    };
+    requestBody?: never;
+    responses: {
+      /** Objeto con una URL temporal para descargar la Carta Manifiesto en ZIP, su fecha de expiración, el tipo de contenido y el nombre del archivo. */
+      200: {
+        headers: {
+          [name: string]: unknown;
+        };
+        content: {
+          'application/json': components['schemas']['SignedDownloadUrl'];
+        };
+      };
+      400: components['responses']['BadRequest'];
+      401: components['responses']['Unauthenticated'];
+      404: components['responses']['NotFound'];
+      409: components['responses']['Conflict'];
       429: components['responses']['RateLimited'];
       500: components['responses']['UnexpectedError'];
     };
