@@ -22,6 +22,7 @@ and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.
 
 ### Added
 
+- `organizations.downloadManifiestoZipUrl(id)` to obtain a temporary URL for downloading the signed Carta Manifiesto ZIP associated with the organization's certificate RFC.
 - Autocompletion and editor documentation for request fields, method arguments, and responses across SDK operations.
 - More precise input types for CFDI variants, drafts, structured complements, and customer creation. Related fields are checked by TypeScript in supported cases, helping catch incomplete or incompatible inputs before sending a request.
 - Invoice responses distinguish draft, pending, failed, and stamped states; checking the status exposes the guaranteed UUID and stamp fields.
