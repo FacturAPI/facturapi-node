@@ -157,6 +157,31 @@ await facturapi.customers.createGeneric({
 
 Los tres métodos usan la misma operación de la API. `create()` sigue disponible si decides el caso dinámicamente, o si quieres guardar datos incompletos con `{ createEditLink: true }`. Las validaciones siguen siendo responsabilidad de la API.
 
+### Catálogos de domicilio y datos fiscales
+
+```ts
+const zips = await facturapi.catalogs.searchZipCodes({
+  q: 'Nápoles',
+  state: 'CMX',
+  pagination: 'cursor',
+  limit: 10,
+});
+if (zips.next_cursor) {
+  await facturapi.catalogs.searchZipCodes({
+    q: 'Nápoles',
+    state: 'CMX',
+    after: zips.next_cursor,
+    limit: 10,
+  });
+}
+const zip = await facturapi.catalogs.getZipCode('01000');
+const countries = await facturapi.catalogs.searchCountries({ q: 'México' });
+const taxSystems = await facturapi.catalogs.searchTaxSystems({ q: '601' });
+const uses = await facturapi.catalogs.searchInvoiceUses({ q: 'gastos' });
+```
+
+La búsqueda postal acepta el código completo o un prefijo numérico, o el nombre de una colonia, localidad/ciudad, municipio o estado, y un filtro opcional `state` con la clave de tres letras. Las búsquedas por nombre ignoran mayúsculas y diacríticos, priorizan coincidencias exactas y devuelven cada código postal una sola vez. Cada resultado incluye todas sus colonias en `neighborhoods`, con clave y nombre; el detalle devuelve el mismo objeto. Los códigos postales admiten páginas o cursores (`pagination`, `after`, `before`); conserva los filtros al avanzar. Países, regímenes y usos usan `page` y `limit` (1–100); las claves de catálogo permanecen como strings para conservar ceros iniciales. El régimen y el uso CFDI deben ser declarados por el receptor; consultar el catálogo no los determina.
+
 ## Qué puedes integrar
 
 | Necesitas…                                | Recurso o guía                                                                                                          |

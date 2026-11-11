@@ -5,6 +5,16 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](http://keepachangelog.com/en/1.0.0/)
 and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.html).
 
+## [Unreleased]
+
+### Fixed
+
+- Allow omitting search text for Carta Porte, Comercio Exterior, and payroll catalogs, matching the API contract. Empty queries return no matches.
+
+### Added
+
+- Search Mexican postal codes, countries, tax regimes, and CFDI uses through `catalogs`, and retrieve postal-code details including neighborhoods. Postal-code searches accept numeric prefixes or neighborhood, locality/city, municipality, and state names, ignore case and diacritics, and support page and cursor pagination. Every postal-code result includes all its neighborhoods.
+
 ## [6.0.0] Unreleased
 
 ### Breaking

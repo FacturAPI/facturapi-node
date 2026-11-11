@@ -538,7 +538,17 @@
         "optional": {
           "params": false
         }
-      }
+      },
+      "searchZipCodes": "searchZipCodes",
+      "getZipCode": {
+        "operation": "getZipCode",
+        "argumentNames": {
+          "code": "code"
+        }
+      },
+      "searchCountries": "searchCountries",
+      "searchTaxSystems": "searchTaxSystems",
+      "searchInvoiceUses": "searchInvoiceUses"
     }
   },
   "comercioExteriorCatalogs": {
