@@ -5401,7 +5401,7 @@ export interface components {
       series?: string;
       /** Identificador que puedes usar para relacionar esta factura con tus registros para después buscar por este número. */
       external_id?: string;
-      /** Identificador único que puedes usar para evitar duplicados al reintentar una petición. Puede ser cualquier cadena de texto, mientras sea única para cada documento. */
+      /** Clave que identifica una operación para evitar recursos duplicados. Consulta [Idempotencia](/docs/getting-started/idempotency). */
       idempotency_key?: string;
       /** Código que representa la forma de pago, de acuerdo al [catálogo del SAT](#forma-de-pago). */
       payment_form?: string | null;
@@ -5742,8 +5742,9 @@ export interface components {
       /** Identificador opcional que puedes usar para relacionar esta factura con tus registros y poder hacer búsquedas usando este identificador. Facturapi no valida que este campo sea único. */
       external_id?: string;
       /**
-       * Identificador único que puedes usar para evitar duplicados al reintentar una petición. Puede ser cualquier cadena de texto, mientras sea única para cada documento.
-       *     Si se deja en blanco, no se tomará en cuenta.
+       * Clave que identifica una operación para evitar recursos duplicados al repetir o enviar solicitudes en paralelo. Debe ser única dentro de la misma organización, ambiente y tipo de recurso.
+       *     Si otra solicitud está procesando la clave o si ya está asociada a un recurso, la API responde HTTP `409` con `code: idempotency_key_in_use`; no reproduce la respuesta original.
+       *     Si se deja en blanco, no se toma en cuenta. Consulta [Idempotencia](/docs/getting-started/idempotency).
        */
       idempotency_key?: string;
     } & components['schemas']['InvoiceableCommonInput'];
@@ -5766,8 +5767,9 @@ export interface components {
       /** Identificador opcional que puedes usar para relacionar esta factura con tus registros y poder hacer búsquedas usando este identificador. Facturapi no valida que este campo sea único. */
       external_id?: string;
       /**
-       * Identificador único que puedes usar para evitar duplicados al reintentar una petición. Puede ser cualquier cadena de texto, mientras sea única para cada documento.
-       *     Si se deja en blanco, no se tomará en cuenta.
+       * Clave que identifica una operación para evitar recursos duplicados al repetir o enviar solicitudes en paralelo. Debe ser única dentro de la misma organización, ambiente y tipo de recurso.
+       *     Si otra solicitud está procesando la clave o si ya está asociada a un recurso, la API responde HTTP `409` con `code: idempotency_key_in_use`; no reproduce la respuesta original.
+       *     Si se deja en blanco, no se toma en cuenta. Consulta [Idempotencia](/docs/getting-started/idempotency).
        */
       idempotency_key?: string;
     } & components['schemas']['InvoiceableCommonEditInput'];
@@ -6282,7 +6284,7 @@ export interface components {
       items: components['schemas']['InvoiceItem'][];
       /** Identificador que puedes usar para relacionar este recibo con tus registros para después buscar por este número. */
       external_id?: string;
-      /** Identificador único que puedes usar para evitar duplicados al reintentar una petición. Puede ser cualquier cadena de texto, mientras sea única para cada documento. */
+      /** Clave que identifica una operación para evitar recursos duplicados. Consulta [Idempotencia](/docs/getting-started/idempotency). */
       idempotency_key?: string;
     } & components['schemas']['ReceiptCommonProperties'];
     ReceiptInput: {
@@ -6301,8 +6303,9 @@ export interface components {
       items: components['schemas']['InvoiceItemInput'][];
     } & components['schemas']['ReceiptCommonProperties'] & {
         /**
-         * Identificador único que puedes usar para evitar duplicados al reintentar una petición. Puede ser cualquier cadena de texto, mientras sea única para cada documento.
-         *     Si se deja en blanco, no se tomará en cuenta.
+         * Clave que identifica una operación para evitar recursos duplicados al repetir o enviar solicitudes en paralelo. Debe ser única dentro de la misma organización, ambiente y tipo de recurso.
+         *     Si otra solicitud está procesando la clave o si ya está asociada a un recurso, la API responde HTTP `409` con `code: idempotency_key_in_use`; no reproduce la respuesta original.
+         *     Si se deja en blanco, no se toma en cuenta. Consulta [Idempotencia](/docs/getting-started/idempotency).
          */
         idempotency_key?: string;
       };
@@ -6571,8 +6574,8 @@ export interface components {
       /** Identificador opcional que puedes usar para relacionar esta retención con tus registros y poder hacer búsquedas usando este identificador. Facturapi no valida que este campo sea único. */
       external_id?: string | null;
       /**
-       * Identificador único que puedes usar para evitar duplicados al reintentar una petición. Puede ser cualquier cadena de texto, mientras sea única para cada documento.
-       *     Si se deja en blanco, no se tomará en cuenta.
+       * Clave que identifica una operación para evitar recursos duplicados. Si se deja en blanco, no se toma en cuenta.
+       *     Consulta [Idempotencia](/docs/getting-started/idempotency).
        */
       idempotency_key?: string | null;
       /**
@@ -6663,7 +6666,10 @@ export interface components {
       } | null;
       /** Identificador opcional que puedes usar para relacionar esta retención con tus registros y poder hacer búsquedas usando este identificador. Facturapi no valida que este campo sea único. */
       external_id?: string;
-      /** Identificador único que puedes usar para evitar duplicados al reintentar una petición. Puede ser cualquier cadena de texto, mientras sea única para cada documento. */
+      /**
+       * Clave que identifica una operación para evitar recursos duplicados al repetir o enviar solicitudes en paralelo. Debe ser única dentro de la misma organización, ambiente y tipo de recurso.
+       *     Si otra solicitud está procesando la clave o si ya está asociada a un recurso, la API responde HTTP `409` con `code: idempotency_key_in_use`; no reproduce la respuesta original. Consulta [Idempotencia](/docs/getting-started/idempotency).
+       */
       idempotency_key?: string;
       /**
        * Arreglo de complementos a incluir en la factura. Cada elemento del arreglo deberá contener
@@ -7411,6 +7417,15 @@ export interface components {
     };
     /** Conflicto en la petición. La operación que se intenta realizar no puede completarse debido a conflictos en el estado actual del recurso. */
     Conflict: {
+      headers: {
+        [name: string]: unknown;
+      };
+      content: {
+        'application/json': components['schemas']['GenericError'];
+      };
+    };
+    /** La `idempotency_key` está siendo procesada por otra solicitud o ya está asociada a un recurso. Facturapi no reproduce la respuesta original. */
+    IdempotencyKeyInUse: {
       headers: {
         [name: string]: unknown;
       };
@@ -8686,6 +8701,7 @@ export interface operations {
       400: components['responses']['BadRequest'];
       401: components['responses']['Unauthenticated'];
       404: components['responses']['NotFound'];
+      409: components['responses']['IdempotencyKeyInUse'];
       429: components['responses']['RateLimited'];
       500: components['responses']['UnexpectedError'];
     };
@@ -9392,6 +9408,7 @@ export interface operations {
       400: components['responses']['BadRequest'];
       401: components['responses']['Unauthenticated'];
       404: components['responses']['NotFound'];
+      409: components['responses']['IdempotencyKeyInUse'];
       429: components['responses']['RateLimited'];
       500: components['responses']['UnexpectedError'];
     };
@@ -9765,6 +9782,7 @@ export interface operations {
       400: components['responses']['BadRequest'];
       401: components['responses']['Unauthenticated'];
       404: components['responses']['NotFound'];
+      409: components['responses']['IdempotencyKeyInUse'];
       429: components['responses']['RateLimited'];
       500: components['responses']['UnexpectedError'];
     };
