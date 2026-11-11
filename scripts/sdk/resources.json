@@ -211,6 +211,12 @@
         ]
       },
       "deleteCertificate": "deleteOrganizationCertificate",
+      "downloadManifiestoZipUrl": {
+        "operation": "getOrganizationManifiestoDownloadUrl",
+        "argumentNames": {
+          "organization_id": "id"
+        }
+      },
       "del": "deleteOrganization",
       "getTestApiKey": "getTestApiKey",
       "renewTestApiKey": "renewTestApiKey",

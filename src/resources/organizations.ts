@@ -336,6 +336,29 @@ export default class Organizations {
   }
 
   /**
+   * Obtener enlace de descarga de Carta Manifiesto
+   *
+   * Devuelve un enlace temporal para descargar en ZIP la Carta Manifiesto firmada que corresponde al RFC del CSD cargado en la organización.
+   *
+   * La organización debe tener un CSD cargado y debe existir una Carta Manifiesto firmada para el RFC extraído de ese certificado. El enlace da acceso al archivo mientras siga vigente: trátalo como una credencial y no lo almacenes.
+   *
+   * @param id - ID de la organización. También puedes usar `me` con una Secret Key de la organización.
+   * @returns Objeto SignedDownloadUrl con url, expires_at, content_type y filename.
+   */
+  downloadManifiestoZipUrl(
+    id: string,
+  ): Promise<OperationResponse<'getOrganizationManifiestoDownloadUrl'>> {
+    if (!id) return Promise.reject(new Error('id is required'));
+
+    return this.client.request<
+      OperationResponse<'getOrganizationManifiestoDownloadUrl'>
+    >(`/organizations/${encodeURIComponent(id)}/manifiesto/download-url`, {
+      method: 'GET',
+      datePlan: operationDatePlans.getOrganizationManifiestoDownloadUrl,
+    });
+  }
+
+  /**
    * Eliminar organización
    *
    * Elimina la organización de tu cuenta de Facturapi. Una vez eliminada,

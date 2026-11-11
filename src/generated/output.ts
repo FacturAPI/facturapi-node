@@ -1374,6 +1374,28 @@ export interface paths {
     patch?: never;
     trace?: never;
   };
+  '/organizations/{organization_id}/manifiesto/download-url': {
+    parameters: {
+      query?: never;
+      header?: never;
+      path?: never;
+      cookie?: never;
+    };
+    /**
+     * Obtener enlace de descarga de Carta Manifiesto
+     * Devuelve un enlace temporal para descargar en ZIP la Carta Manifiesto firmada que corresponde al RFC del CSD cargado en la organización.
+     *
+     *     La organización debe tener un CSD cargado y debe existir una Carta Manifiesto firmada para el RFC extraído de ese certificado. El enlace da acceso al archivo mientras siga vigente: trátalo como una credencial y no lo almacenes.
+     */
+    get: operations['getOrganizationManifiestoDownloadUrl'];
+    put?: never;
+    post?: never;
+    delete?: never;
+    options?: never;
+    head?: never;
+    patch?: never;
+    trace?: never;
+  };
   '/organizations/{organization_id}/legal': {
     parameters: {
       query?: never;
@@ -5393,7 +5415,7 @@ export interface components {
       series?: string;
       /** Identificador que puedes usar para relacionar esta factura con tus registros para después buscar por este número. */
       external_id?: string;
-      /** Identificador único que puedes usar para evitar duplicados al reintentar una petición. Puede ser cualquier cadena de texto, mientras sea única para cada documento. */
+      /** Clave que identifica una operación para evitar recursos duplicados. Consulta [Idempotencia](/docs/getting-started/idempotency). */
       idempotency_key?: string;
       /** Código que representa la forma de pago, de acuerdo al [catálogo del SAT](#forma-de-pago). */
       payment_form?: string | null;
@@ -5734,8 +5756,9 @@ export interface components {
       /** Identificador opcional que puedes usar para relacionar esta factura con tus registros y poder hacer búsquedas usando este identificador. Facturapi no valida que este campo sea único. */
       external_id?: string;
       /**
-       * Identificador único que puedes usar para evitar duplicados al reintentar una petición. Puede ser cualquier cadena de texto, mientras sea única para cada documento.
-       *     Si se deja en blanco, no se tomará en cuenta.
+       * Clave que identifica una operación para evitar recursos duplicados al repetir o enviar solicitudes en paralelo. Debe ser única dentro de la misma organización, ambiente y tipo de recurso.
+       *     Si otra solicitud está procesando la clave o si ya está asociada a un recurso, la API responde HTTP `409` con `code: idempotency_key_in_use`; no reproduce la respuesta original.
+       *     Si se deja en blanco, no se toma en cuenta. Consulta [Idempotencia](/docs/getting-started/idempotency).
        */
       idempotency_key?: string;
     } & components['schemas']['InvoiceableCommonInput'];
@@ -5758,8 +5781,9 @@ export interface components {
       /** Identificador opcional que puedes usar para relacionar esta factura con tus registros y poder hacer búsquedas usando este identificador. Facturapi no valida que este campo sea único. */
       external_id?: string;
       /**
-       * Identificador único que puedes usar para evitar duplicados al reintentar una petición. Puede ser cualquier cadena de texto, mientras sea única para cada documento.
-       *     Si se deja en blanco, no se tomará en cuenta.
+       * Clave que identifica una operación para evitar recursos duplicados al repetir o enviar solicitudes en paralelo. Debe ser única dentro de la misma organización, ambiente y tipo de recurso.
+       *     Si otra solicitud está procesando la clave o si ya está asociada a un recurso, la API responde HTTP `409` con `code: idempotency_key_in_use`; no reproduce la respuesta original.
+       *     Si se deja en blanco, no se toma en cuenta. Consulta [Idempotencia](/docs/getting-started/idempotency).
        */
       idempotency_key?: string;
     } & components['schemas']['InvoiceableCommonEditInput'];
@@ -6275,7 +6299,7 @@ export interface components {
       items: components['schemas']['InvoiceItem'][];
       /** Identificador que puedes usar para relacionar este recibo con tus registros para después buscar por este número. */
       external_id?: string;
-      /** Identificador único que puedes usar para evitar duplicados al reintentar una petición. Puede ser cualquier cadena de texto, mientras sea única para cada documento. */
+      /** Clave que identifica una operación para evitar recursos duplicados. Consulta [Idempotencia](/docs/getting-started/idempotency). */
       idempotency_key?: string;
     } & components['schemas']['ReceiptCommonProperties'];
     ReceiptInput: {
@@ -6294,8 +6318,9 @@ export interface components {
       items: components['schemas']['InvoiceItemInput'][];
     } & components['schemas']['ReceiptCommonProperties'] & {
         /**
-         * Identificador único que puedes usar para evitar duplicados al reintentar una petición. Puede ser cualquier cadena de texto, mientras sea única para cada documento.
-         *     Si se deja en blanco, no se tomará en cuenta.
+         * Clave que identifica una operación para evitar recursos duplicados al repetir o enviar solicitudes en paralelo. Debe ser única dentro de la misma organización, ambiente y tipo de recurso.
+         *     Si otra solicitud está procesando la clave o si ya está asociada a un recurso, la API responde HTTP `409` con `code: idempotency_key_in_use`; no reproduce la respuesta original.
+         *     Si se deja en blanco, no se toma en cuenta. Consulta [Idempotencia](/docs/getting-started/idempotency).
          */
         idempotency_key?: string;
       };
@@ -6565,8 +6590,8 @@ export interface components {
       /** Identificador opcional que puedes usar para relacionar esta retención con tus registros y poder hacer búsquedas usando este identificador. Facturapi no valida que este campo sea único. */
       external_id?: string | null;
       /**
-       * Identificador único que puedes usar para evitar duplicados al reintentar una petición. Puede ser cualquier cadena de texto, mientras sea única para cada documento.
-       *     Si se deja en blanco, no se tomará en cuenta.
+       * Clave que identifica una operación para evitar recursos duplicados. Si se deja en blanco, no se toma en cuenta.
+       *     Consulta [Idempotencia](/docs/getting-started/idempotency).
        */
       idempotency_key?: string | null;
       /**
@@ -6657,7 +6682,10 @@ export interface components {
       } | null;
       /** Identificador opcional que puedes usar para relacionar esta retención con tus registros y poder hacer búsquedas usando este identificador. Facturapi no valida que este campo sea único. */
       external_id?: string;
-      /** Identificador único que puedes usar para evitar duplicados al reintentar una petición. Puede ser cualquier cadena de texto, mientras sea única para cada documento. */
+      /**
+       * Clave que identifica una operación para evitar recursos duplicados al repetir o enviar solicitudes en paralelo. Debe ser única dentro de la misma organización, ambiente y tipo de recurso.
+       *     Si otra solicitud está procesando la clave o si ya está asociada a un recurso, la API responde HTTP `409` con `code: idempotency_key_in_use`; no reproduce la respuesta original. Consulta [Idempotencia](/docs/getting-started/idempotency).
+       */
       idempotency_key?: string;
       /**
        * Arreglo de complementos a incluir en la factura. Cada elemento del arreglo deberá contener
@@ -7405,6 +7433,15 @@ export interface components {
     };
     /** Conflicto en la petición. La operación que se intenta realizar no puede completarse debido a conflictos en el estado actual del recurso. */
     Conflict: {
+      headers: {
+        [name: string]: unknown;
+      };
+      content: {
+        'application/json': components['schemas']['GenericError'];
+      };
+    };
+    /** La `idempotency_key` está siendo procesada por otra solicitud o ya está asociada a un recurso. Facturapi no reproduce la respuesta original. */
+    IdempotencyKeyInUse: {
       headers: {
         [name: string]: unknown;
       };
@@ -8680,6 +8717,7 @@ export interface operations {
       400: components['responses']['BadRequest'];
       401: components['responses']['Unauthenticated'];
       404: components['responses']['NotFound'];
+      409: components['responses']['IdempotencyKeyInUse'];
       429: components['responses']['RateLimited'];
       500: components['responses']['UnexpectedError'];
     };
@@ -9386,6 +9424,7 @@ export interface operations {
       400: components['responses']['BadRequest'];
       401: components['responses']['Unauthenticated'];
       404: components['responses']['NotFound'];
+      409: components['responses']['IdempotencyKeyInUse'];
       429: components['responses']['RateLimited'];
       500: components['responses']['UnexpectedError'];
     };
@@ -9759,6 +9798,7 @@ export interface operations {
       400: components['responses']['BadRequest'];
       401: components['responses']['Unauthenticated'];
       404: components['responses']['NotFound'];
+      409: components['responses']['IdempotencyKeyInUse'];
       429: components['responses']['RateLimited'];
       500: components['responses']['UnexpectedError'];
     };
@@ -10160,6 +10200,35 @@ export interface operations {
       };
       400: components['responses']['BadRequest'];
       401: components['responses']['Unauthenticated'];
+      429: components['responses']['RateLimited'];
+      500: components['responses']['UnexpectedError'];
+    };
+  };
+  getOrganizationManifiestoDownloadUrl: {
+    parameters: {
+      query?: never;
+      header?: never;
+      path: {
+        /** ID de la organización. También puedes usar `me` con una Secret Key de la organización. */
+        organization_id: string;
+      };
+      cookie?: never;
+    };
+    requestBody?: never;
+    responses: {
+      /** Objeto con una URL temporal para descargar la Carta Manifiesto en ZIP, su fecha de expiración, el tipo de contenido y el nombre del archivo. */
+      200: {
+        headers: {
+          [name: string]: unknown;
+        };
+        content: {
+          'application/json': components['schemas']['SignedDownloadUrl'];
+        };
+      };
+      400: components['responses']['BadRequest'];
+      401: components['responses']['Unauthenticated'];
+      404: components['responses']['NotFound'];
+      409: components['responses']['Conflict'];
       429: components['responses']['RateLimited'];
       500: components['responses']['UnexpectedError'];
     };

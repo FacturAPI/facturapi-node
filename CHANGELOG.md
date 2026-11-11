@@ -9,15 +9,17 @@ and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.
 
 ### Fixed
 
+- Editor documentation now describes HTTP 409 responses for reused or concurrently processing idempotency keys.
 - Allow omitting search text for Carta Porte, Comercio Exterior, and payroll catalogs, matching the API contract. Empty queries return no matches.
 
 ### Added
 
+- `organizations.downloadManifiestoZipUrl(id)` to obtain a temporary URL for downloading the signed Carta Manifiesto ZIP associated with the organization's certificate RFC.
 - Explore product/service categories and resolve category paths from full product keys. Product searches can filter by category prefix.
 
 - Search Mexican postal codes, countries, tax regimes, and CFDI uses through `catalogs`, and retrieve postal-code details including neighborhoods. Postal-code searches accept numeric prefixes or neighborhood, locality/city, municipality, and state names, ignore case and diacritics, and support page and cursor pagination. Every postal-code result includes all its neighborhoods.
 
-## [6.0.0] Unreleased
+## [6.0.0] - 2026-11-02
 
 ### Breaking
 
