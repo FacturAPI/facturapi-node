@@ -2172,6 +2172,46 @@ export interface paths {
     patch?: never;
     trace?: never;
   };
+  '/catalogs/product-categories': {
+    parameters: {
+      query?: never;
+      header?: never;
+      path?: never;
+      cookie?: never;
+    };
+    /**
+     * Listar categorías raíz de productos y servicios
+     * Devuelve las raíces Productos y Servicios. Consulta una raíz por su clave para explorar sus divisiones.
+     */
+    get: operations['listProductCategories'];
+    put?: never;
+    post?: never;
+    delete?: never;
+    options?: never;
+    head?: never;
+    patch?: never;
+    trace?: never;
+  };
+  '/catalogs/product-categories/{key}': {
+    parameters: {
+      query?: never;
+      header?: never;
+      path?: never;
+      cookie?: never;
+    };
+    /**
+     * Explorar una categoría o consultar la ruta de una clave
+     * Explora el árbol de categorías de productos y servicios del SAT. Las categorías usan claves de 2, 4 o 6 dígitos. Una clave completa de 8 dígitos devuelve el producto y su ruta; nunca se eliminan ceros finales. La clave especial 01010101 no tiene categoría. Consultar una clase de 6 dígitos incluye un resultado paginado de productos. Consultar una clave de 8 dígitos devuelve su ruta sin listar otros productos de la clase.
+     */
+    get: operations['getProductCategory'];
+    put?: never;
+    post?: never;
+    delete?: never;
+    options?: never;
+    head?: never;
+    patch?: never;
+    trace?: never;
+  };
   '/catalogs/products': {
     parameters: {
       query?: never;
@@ -2523,6 +2563,21 @@ export interface components {
       content_type: string;
       /** Nombre sugerido del archivo. */
       filename: string;
+    };
+    ProductCategory: {
+      key: string;
+      description: string;
+      parent: string | null;
+    };
+    ProductCategoryList: {
+      data: components['schemas']['ProductCategory'][];
+    };
+    ProductCategoryDetail: {
+      category: components['schemas']['ProductCategory'] | null;
+      ancestors: components['schemas']['ProductCategory'][];
+      children: components['schemas']['ProductCategory'][];
+      product?: components['schemas']['CatalogEntry'];
+      products?: components['schemas']['CatalogEntrySearchResult'];
     };
     CatalogEntry: {
       key: string;
@@ -11535,7 +11590,30 @@ export interface operations {
       500: components['responses']['UnexpectedError'];
     };
   };
-  searchProducts: {
+  listProductCategories: {
+    parameters: {
+      query?: never;
+      header?: never;
+      path?: never;
+      cookie?: never;
+    };
+    requestBody?: never;
+    responses: {
+      /** OK */
+      200: {
+        headers: {
+          [name: string]: unknown;
+        };
+        content: {
+          'application/json': components['schemas']['ProductCategoryList'];
+        };
+      };
+      401: components['responses']['Unauthenticated'];
+      429: components['responses']['RateLimited'];
+      500: components['responses']['UnexpectedError'];
+    };
+  };
+  getProductCategory: {
     parameters: {
       query?: {
         /** Modo de paginación de la búsqueda. `page` (por defecto) o `cursor` (recomendado para listas grandes). */
@@ -11544,7 +11622,48 @@ export interface operations {
         after?: components['parameters']['SearchAfter'];
         /** Devuelve los resultados anteriores al cursor indicado. Solo con `pagination=cursor`; mutuamente excluyente con `after`. */
         before?: components['parameters']['SearchBefore'];
-        /** Consulta. Texto a buscar en la descripción de la clasificación. */
+        /** Página de resultados a regresar, empezando desde la página 1. El máximo no es fijo; junto con `limit` debe caber dentro del tope de 3,000 resultados (con el `limit` por defecto de 100, la página máxima es 30). */
+        page?: components['parameters']['SearchPage'];
+        /** Número del 1 al 100 que representa la cantidad máxima de resultados a regresar con motivos de paginación. */
+        limit?: components['parameters']['SearchLimit'];
+      };
+      header?: never;
+      path: {
+        /** Raíz, prefijo de categoría o clave completa de producto/servicio. */
+        key: string;
+      };
+      cookie?: never;
+    };
+    requestBody?: never;
+    responses: {
+      /** OK */
+      200: {
+        headers: {
+          [name: string]: unknown;
+        };
+        content: {
+          'application/json': components['schemas']['ProductCategoryDetail'];
+        };
+      };
+      400: components['responses']['BadRequest'];
+      401: components['responses']['Unauthenticated'];
+      404: components['responses']['NotFound'];
+      429: components['responses']['RateLimited'];
+      500: components['responses']['UnexpectedError'];
+    };
+  };
+  searchProducts: {
+    parameters: {
+      query?: {
+        /** Prefijo de categoría de 2, 4 o 6 dígitos. Incluye descendientes y se combina con q. Sin q, lista los productos de la categoría. */
+        category?: string;
+        /** Modo de paginación de la búsqueda. `page` (por defecto) o `cursor` (recomendado para listas grandes). */
+        pagination?: components['parameters']['SearchPagination'];
+        /** Devuelve los resultados posteriores al cursor indicado. Solo con `pagination=cursor`; mutuamente excluyente con `before`. */
+        after?: components['parameters']['SearchAfter'];
+        /** Devuelve los resultados anteriores al cursor indicado. Solo con `pagination=cursor`; mutuamente excluyente con `after`. */
+        before?: components['parameters']['SearchBefore'];
+        /** Busca prefijos de claves, descripciones, palabras similares y nombres de categorías, sin distinguir mayúsculas ni diacríticos. */
         q?: string;
         /** Página de resultados a regresar, empezando desde la página 1. El máximo no es fijo; junto con `limit` debe caber dentro del tope de 3,000 resultados (con el `limit` por defecto de 100, la página máxima es 30). */
         page?: components['parameters']['SearchPage'];

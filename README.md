@@ -182,6 +182,21 @@ const uses = await facturapi.catalogs.searchInvoiceUses({ q: 'gastos' });
 
 La búsqueda postal acepta el código completo o un prefijo numérico, o el nombre de una colonia, localidad/ciudad, municipio o estado, y un filtro opcional `state` con la clave de tres letras. Las búsquedas por nombre ignoran mayúsculas y diacríticos, priorizan coincidencias exactas y devuelven cada código postal una sola vez. Cada resultado incluye todas sus colonias en `neighborhoods`, con clave y nombre; el detalle devuelve el mismo objeto. Los códigos postales admiten páginas o cursores (`pagination`, `after`, `before`); conserva los filtros al avanzar. Países, regímenes y usos usan `page` y `limit` (1–100); las claves de catálogo permanecen como strings para conservar ceros iniciales. El régimen y el uso CFDI deben ser declarados por el receptor; consultar el catálogo no los determina.
 
+### Categorías de productos y servicios
+
+```ts
+const roots = await facturapi.catalogs.listProductCategories();
+const division = await facturapi.catalogs.getProductCategory('43');
+const productPath = await facturapi.catalogs.getProductCategory('43211507');
+const products = await facturapi.catalogs.searchProducts({
+  category: '432115',
+  pagination: 'cursor',
+  limit: 10,
+});
+```
+
+Las raíces son `products` y `services`. Consulta prefijos de 2, 4 o 6 dígitos para obtener una categoría, sus ancestros y sus hijas; una clase también incluye productos paginados. Una clave completa de 8 dígitos devuelve el producto y su ruta. No se eliminan ceros finales: `43211500` sigue siendo una clave de producto válida. `01010101` tiene `category: null`. El filtro `category` incluye descendientes y se puede combinar con `q`; las respuestas de productos conservan clave y descripción.
+
 ## Qué puedes integrar
 
 | Necesitas…                                | Recurso o guía                                                                                                          |

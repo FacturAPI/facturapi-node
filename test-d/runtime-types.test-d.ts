@@ -8,6 +8,8 @@ import Facturapi, {
   CatalogEntrySearchResult,
   ZipCodeSearchResult,
   ZipCodeDetail,
+  ProductCategoryList,
+  ProductCategoryDetail,
   BinaryDownload,
   ApiKeys,
   ApiEvent,
@@ -807,3 +809,16 @@ client.catalogs.searchZipCodes({
 });
 client.catalogs.searchZipCodes({ q: '01', before: 'cursor', limit: 10 });
 expectError(client.catalogs.searchZipCodes({ pagination: 'other' }));
+
+expectType<Promise<ProductCategoryList>>(
+  client.catalogs.listProductCategories(),
+);
+expectType<Promise<ProductCategoryDetail>>(
+  client.catalogs.getProductCategory('43211507', {
+    pagination: 'cursor',
+    limit: 5,
+  }),
+);
+client.catalogs.searchProducts({ category: '4321' });
+expectError(client.catalogs.getProductCategory(432115));
+expectError(client.catalogs.searchProducts({ category: 43 }));

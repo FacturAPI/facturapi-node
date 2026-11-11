@@ -17,6 +17,9 @@ export type ReceiptStatusUpdatedEvent =
 export type CustomerEditLinkCompletedEvent =
   Output['schemas']['CustomerEditLinkCompletedEvent'];
 export type SignedDownloadUrl = Output['schemas']['SignedDownloadUrl'];
+export type ProductCategory = Output['schemas']['ProductCategory'];
+export type ProductCategoryList = Output['schemas']['ProductCategoryList'];
+export type ProductCategoryDetail = Output['schemas']['ProductCategoryDetail'];
 export type CatalogEntry = Output['schemas']['CatalogEntry'];
 export type CatalogEntrySearchResult =
   Output['schemas']['CatalogEntrySearchResult'];
