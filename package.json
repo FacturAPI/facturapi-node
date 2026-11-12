@@ -1,6 +1,6 @@
 {
   "name": "facturapi",
-  "version": "6.0.0",
+  "version": "6.1.0",
   "description": "SDK oficial de Facturapi para Node.js y navegadores. Integra facturación electrónica en México (CFDI) de forma simple y obtén una perspectiva fiscal completa de tu operación, con búsquedas indexadas, envío de documentos y trazabilidad.",
   "main": "dist/index.cjs",
   "module": "dist/index.mjs",
